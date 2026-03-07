@@ -1,0 +1,56 @@
+import os
+
+def generate_html():
+    images_dir = 'images'
+    if not os.path.exists(images_dir):
+        os.makedirs(images_dir)
+    files = os.listdir(images_dir)
+    models = sorted(list(set([f.split('.')[0] for f in files if (f.endswith('.jpg') or f.endswith('.mp4')) and f != '.gitkeep'])))
+
+    html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IHP Standard Cells LEGO Models</title>
+    <style>
+        body { font-family: sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+        h1 { text-align: center; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .card { background-color: #1e1e1e; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border: 1px solid #333; }
+        .card img, .card video { width: 100%; display: block; aspect-ratio: 4 / 3; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .card-title { font-size: 1.1em; font-weight: bold; margin-bottom: 5px; color: #fff; }
+    </style>
+</head>
+<body>
+    <h1>IHP Standard Cells LEGO Models</h1>
+    <div class="gallery">
+"""
+    for model in models:
+        img_path = f"images/{model}.jpg"
+        video_path = f"images/{model}.mp4"
+
+        html += f"""
+        <div class="card">
+            <video autoplay loop muted playsinline poster="{img_path}">
+                <source src="{video_path}" type="video/mp4">
+                <img src="{img_path}" alt="{model}">
+            </video>
+            <div class="card-content">
+                <div class="card-title">{model}</div>
+            </div>
+        </div>
+"""
+
+    html += """
+    </div>
+</body>
+</html>
+"""
+    with open('index.html', 'w') as f:
+        f.write(html)
+
+if __name__ == "__main__":
+    generate_html()

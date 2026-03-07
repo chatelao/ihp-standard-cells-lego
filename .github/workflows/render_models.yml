@@ -9,6 +9,10 @@ on:
 jobs:
   render:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -16,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 ffmpeg
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
@@ -27,15 +31,46 @@ jobs:
       - name: Render models
         run: |
           mkdir -p images
-          rm -f images/*.jpg
+          rm -f images/*.jpg images/*.mp4
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
+            echo "Rendering ${filename}..."
+            # Static image
             ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
+
+            # Animation frames
+            mkdir -p frames
+            for i in $(seq 0 35); do
+              lon=$(expr $i \* 10)
+              frame=$(printf "%02d" $i)
+              ldview "$file" -SaveJPG="frames/frame_${frame}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw -Latitude=25 -Longitude=$lon
+            done
+            # Video
+            ffmpeg -y -framerate 12 -i frames/frame_%02d.jpg -c:v libx264 -pix_fmt yuv420p "images/${filename}.mp4"
+            rm -rf frames
           done
 
-      - name: Commit and push images
+      - name: Generate Gallery
+        run: python3 generate_gallery.py
+
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Auto-render LEGO models to images"
-          file_pattern: 'images/'
+          commit_message: "Auto-render models and update gallery"
+          file_pattern: 'images/*.jpg images/*.mp4 index.html'
           push_options: '--force'
+
+      - name: Setup Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        id: deployment
+        uses: actions/deploy-pages@v4

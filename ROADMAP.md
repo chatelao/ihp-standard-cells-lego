@@ -18,6 +18,7 @@
 - [x] Implement LDR model for D-Flip-Flop (`sg13g2_dfrbp_1`)
 
 ## Next 5 Steps
+- [x] Publish images and videos on GitHub Pages with GH Actions
 - [ ] Refine modeling guidelines based on initial model feedback
 - [ ] Automate the generation of LDR models from LEF coordinates
 - [x] Implement LDR model for AND gate (`sg13g2_and2_1`)
