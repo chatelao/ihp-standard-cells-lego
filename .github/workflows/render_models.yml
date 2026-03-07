@@ -2,11 +2,13 @@ name: Render LEGO Models
 
 on:
   push:
+    branches:
+      - '**'
   workflow_dispatch:
 
 jobs:
   render:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -14,18 +16,13 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri
-
-      - name: Install LDraw parts library
-        run: |
-          mkdir -p ldraw
-          curl -L http://www.ldraw.org/library/updates/complete.zip -o ldraw.zip
-          unzip ldraw.zip -d ldraw
-          rm ldraw.zip
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd ldraw-parts-free
 
       - name: Install LDView
         run: |
-          curl -L https://tc1p.it/ldview-static -o ldview
+          curl -L https://tc1p.it/ldview-static -o ldview.tar.zst
+          zstd -d ldview.tar.zst
+          tar -xf ldview.tar
           chmod +x ldview
           sudo mv ldview /usr/local/bin/
 
@@ -34,7 +31,7 @@ jobs:
           mkdir -p images
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
-            xvfb-run --server-args="-screen 0 1024x768x24" ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=ldraw/ldraw
+            ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
           done
 
       - name: Commit and push images
