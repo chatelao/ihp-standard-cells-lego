@@ -12,6 +12,7 @@
 - [x] Set up GitHub Actions for automated LEGO model rendering
 - [x] Implement LDR model for basic NAND gate (`sg13g2_nand2_1`)
 - [x] Implement LDR model for basic NOR gate (`sg13g2_nor2_1`)
+- [x] Fix GitHub Action rendering by updating OpenGL dependencies
 
 ## Next 5 Steps
 - [ ] Implement LDR model for D-Flip-Flop (`sg13g2_dfrbp_1`)
