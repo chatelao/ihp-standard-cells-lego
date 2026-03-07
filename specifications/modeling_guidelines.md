@@ -1,0 +1,45 @@
+# IHP SG13G2 LEGO Modeling Guidelines
+
+To ensure consistency across all LEGO models of IHP standard cells, the following guidelines must be followed.
+
+## 1. Scale and Dimensions
+The models are designed on a grid where LEGO studs represent the physical dimensions of the semiconductor cell.
+
+- **Horizontal Scale (X and Z):** 1 LEGO Stud = 0.48 µm.
+  - This matches the `CoreSite` width defined in the LEF.
+  - LEF X-coordinate maps to LEGO X-coordinate.
+  - LEF Y-coordinate maps to LEGO Z-coordinate.
+  - Cell height of 3.78 µm ≈ 8 LEGO studs (Actual: 7.875 studs). We will use **8 studs** as the standard cell height (Z-axis).
+- **Vertical Scale (Y):** Each physical layer is represented by a LEGO Plate (1/3 of a brick height).
+  - Layers are stacked from bottom to top.
+  - In LDraw, the negative Y direction is "up". The substrate is at Y=0, Layer 1 at Y=-8, Layer 2 at Y=-16, etc.
+
+## 2. Layer to Color Mapping
+We use standard LDraw colors to represent different semiconductor layers.
+
+| Layer | LEGO Color | LDraw Color ID | Description |
+|-------|------------|----------------|-------------|
+| Substrate | Light Gray | 7 | The base of the model (Y=0). |
+| N-Well | Tan | 19 | Areas of N-type doping. |
+| Diffusion (Active) | Dark Orange | 38 | Transistor active areas. |
+| Polysilicon | Red | 4 | Gate material. |
+| Metal 1 | Blue | 1 | First metal interconnect layer. |
+| Metal 2 | Green | 2 | Second metal interconnect layer. |
+| VDD Rail | Yellow | 14 | Power supply rail (usually on Metal 1). |
+| VSS Rail | Black | 0 | Ground rail (usually on Metal 1). |
+| Vias / Contacts | White | 15 | Vertical connections between layers. |
+
+## 3. LDraw Unit Mapping
+- 1 LEGO Stud = 20 LDraw Units (LDU).
+- 1 LEGO Plate = 8 LDU (Height).
+- 1 LEGO Brick = 24 LDU (Height).
+
+Based on 1 Stud = 0.48 µm:
+- **0.48 µm = 20 LDU**
+- **0.024 µm = 1 LDU**
+
+## 4. Modeling Principles
+- Use **Baseplates** or large plates for the substrate.
+- Use **Plates** (e.g., 1x1, 1x2, 2x4) to represent rectangular areas defined in the LEF.
+- If a geometry is not a multiple of 0.48 µm, round to the nearest LDraw unit or use the closest LEGO plate size.
+- VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis).
