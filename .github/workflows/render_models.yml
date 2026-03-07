@@ -27,6 +27,7 @@ jobs:
       - name: Render models
         run: |
           mkdir -p images
+          rm -f images/*.jpg
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
             ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
@@ -36,4 +37,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Auto-render LEGO models to images"
-          file_pattern: 'images/*.jpg'
+          file_pattern: 'images/'
+          push_options: '--force'
