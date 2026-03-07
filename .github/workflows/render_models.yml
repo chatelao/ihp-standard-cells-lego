@@ -6,6 +6,11 @@ on:
       - '**'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+
 jobs:
   render:
     runs-on: ubuntu-24.04
@@ -16,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd ffmpeg python3
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
@@ -27,15 +32,49 @@ jobs:
       - name: Render models
         run: |
           mkdir -p images
-          rm -f images/*.jpg
+          rm -f images/*.jpg images/*.mp4
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
+            # Render static image
             ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
+
+            # Render frames for rotation video
+            for i in $(seq 0 1 35); do
+              angle=$((i * 10))
+              ldview "$file" -SaveJPG="images/${filename}_tmp_$(printf "%02d" $i).jpg" -Width=400 -Height=300 -Latitude=30 -Longitude=$angle -LDrawDir=/usr/share/ldraw
+            done
+
+            # Compile frames into MP4 video
+            ffmpeg -y -i "images/${filename}_tmp_%02d.jpg" -vcodec libx264 -pix_fmt yuv420p -r 10 "images/${filename}.mp4"
+            rm -f images/${filename}_tmp_*.jpg
           done
 
-      - name: Commit and push images
+      - name: Generate Gallery
+        run: python3 scripts/generate_gallery.py
+
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Auto-render LEGO models to images"
-          file_pattern: 'images/'
+          commit_message: "Auto-render LEGO models, videos and update gallery"
+          file_pattern: 'images/ index.html'
           push_options: '--force'
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: render
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

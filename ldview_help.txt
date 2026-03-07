@@ -1,0 +1,3 @@
+Error setting INI File to /home/jules/.ldviewrc or /home/jules/.config/LDView/ldviewrc
+OSMesa not working!
+viewport: 0, 0, 0, 0
