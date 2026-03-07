@@ -13,6 +13,7 @@
 - [x] Implement LDR model for basic NAND gate (`sg13g2_nand2_1`)
 - [x] Implement LDR model for basic NOR gate (`sg13g2_nor2_1`)
 - [x] Fix GitHub Action rendering by updating OpenGL dependencies
+- [x] Fix GH Action Workflow failure and trigger render on every push
 
 ## Next 5 Steps
 - [ ] Implement LDR model for D-Flip-Flop (`sg13g2_dfrbp_1`)

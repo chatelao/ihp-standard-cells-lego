@@ -2,10 +2,6 @@ name: Render LEGO Models
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'models/*.ldr'
   workflow_dispatch:
 
 jobs:
@@ -18,7 +14,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb unzip curl libgl1 libglu1-mesa
+          sudo apt-get install -y xvfb unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri
 
       - name: Install LDraw parts library
         run: |
@@ -38,7 +34,7 @@ jobs:
           mkdir -p images
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
-            xvfb-run -a ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=ldraw/ldraw
+            xvfb-run --server-args="-screen 0 1024x768x24" ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=ldraw/ldraw
           done
 
       - name: Commit and push images
