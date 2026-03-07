@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
