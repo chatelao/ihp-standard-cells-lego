@@ -6,10 +6,14 @@
 - [x] Create project directory structure (`specifications/`, `models/`, `images/`)
 - [x] Fetch and store IHP SG13G2 standard cell list in `specifications/`
 - [x] Convert cell specifications to Markdown for better readability
+- [x] Fetch and store IHP SG13G2 LEF specification
+- [x] Define LEGO modeling guidelines for semiconductor cells
+- [x] Create the first LEGO LDR model (`sg13g2_inv_1`)
+- [x] Set up GitHub Actions for automated LEGO model rendering
 
 ## Next 5 Steps
-- [ ] Set up GitHub Actions for automated LEGO model rendering
-- [ ] Create the first LEGO LDR model for a basic cell (e.g., `sg13g2_inv_1`)
-- [ ] Research LDraw part libraries for semiconductor modeling
-- [ ] Define a color/part mapping for different semiconductor layers
-- [ ] Implement a basic LDR model for a complex cell (e.g., `sg13g2_nand2_1`)
+- [ ] Implement LDR model for basic NAND gate (`sg13g2_nand2_1`)
+- [ ] Implement LDR model for basic NOR gate (`sg13g2_nor2_1`)
+- [ ] Implement LDR model for D-Flip-Flop (`sg13g2_dfrbp_1`)
+- [ ] Refine modeling guidelines based on initial model feedback
+- [ ] Automate the generation of LDR models from LEF coordinates
