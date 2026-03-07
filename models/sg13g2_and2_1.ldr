@@ -9,23 +9,26 @@
 1 7 90 0 80 1 0 0 0 1 0 0 0 1 3460.dat
 
 0 // VSS Rail (Black)
-0 // LEF: RECT 0 -0.22 2.4 0.22
+0 // Main Rail (5 studs)
 1 0 40 -8 10 1 0 0 0 1 0 0 0 1 3710.dat
 1 0 90 -8 10 1 0 0 0 1 0 0 0 1 3024.dat
+0 // Spur: Vertical 1x3 at X=60, Z=20
+1 0 60 -8 20 0 0 1 0 1 0 -1 0 0 3623.dat
 
 0 // VDD Rail (Yellow)
-0 // LEF: RECT 0 3.56 2.4 4
+0 // Main Rail (5 studs)
 1 14 40 -8 150 1 0 0 0 1 0 0 0 1 3710.dat
 1 14 90 -8 150 1 0 0 0 1 0 0 0 1 3024.dat
+0 // Spurs: Vertical 1x4
+1 14 60 -8 130 0 0 1 0 1 0 -1 0 0 3710.dat
+1 14 20 -8 130 0 0 1 0 1 0 -1 0 0 3710.dat
 
 0 // Pin A (Blue, Plate 1x1)
-0 // LEF: RECT 0.105 0.405 0.78 0.96 -> X ≈ 18, Z ≈ 28
 1 1 18 -16 28 1 0 0 0 1 0 0 0 1 3024.dat
 
 0 // Pin B (Blue, Plate 1x1)
-0 // LEF: RECT 0.78 1.435 1.17 1.87 -> X ≈ 41, Z ≈ 69
 1 1 41 -16 69 1 0 0 0 1 0 0 0 1 3024.dat
 
 0 // Pin X (Blue, Plate 1x4)
-0 // LEF: RECT 1.775 2.14 2.275 3.16 -> X ≈ 84, Z ≈ 81 (center of various RECTs)
-1 1 84 -16 81 1 0 0 0 1 0 0 0 1 3710.dat
+0 // Vertical at X=84, Z=110
+1 1 84 -16 110 0 0 1 0 1 0 -1 0 0 3710.dat
