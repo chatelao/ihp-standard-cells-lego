@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd ffmpeg python3
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd ffmpeg python3 xvfb
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
@@ -35,18 +35,22 @@ jobs:
           rm -f images/*.jpg images/*.mp4
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
-            # Render static image
-            ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
+            echo "Rendering static image for ${filename}..."
+            xvfb-run ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw || true
 
-            # Render frames for rotation video
+            echo "Rendering rotation frames for ${filename}..."
             for i in $(seq 0 1 35); do
               angle=$((i * 10))
-              ldview "$file" -SaveJPG="images/${filename}_tmp_$(printf "%02d" $i).jpg" -Width=400 -Height=300 -Latitude=30 -Longitude=$angle -LDrawDir=/usr/share/ldraw
+              xvfb-run ldview "$file" -SaveJPG="images/${filename}_tmp_$(printf "%02d" $i).jpg" -Width=400 -Height=300 -CameraGlobe="30,${angle},1.2" -LDrawDir=/usr/share/ldraw || true
             done
 
-            # Compile frames into MP4 video
-            ffmpeg -y -i "images/${filename}_tmp_%02d.jpg" -vcodec libx264 -pix_fmt yuv420p -r 10 "images/${filename}.mp4"
-            rm -f images/${filename}_tmp_*.jpg
+            if ls images/${filename}_tmp_*.jpg 1> /dev/null 2>&1; then
+              echo "Compiling video for ${filename}..."
+              ffmpeg -y -i "images/${filename}_tmp_%02d.jpg" -vcodec libx264 -pix_fmt yuv420p -r 10 "images/${filename}.mp4"
+              rm -f images/${filename}_tmp_*.jpg
+            else
+              echo "No frames generated for ${filename}"
+            fi
           done
 
       - name: Generate Gallery
