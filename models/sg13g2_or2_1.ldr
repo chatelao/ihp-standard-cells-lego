@@ -1,0 +1,31 @@
+0 sg13g2_or2_1.ldr
+0 Name: sg13g2_or2_1.ldr
+0 Author: Jules (AI)
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 // Substrate (5x8 studs)
+1 7 20 0 80 1 0 0 0 1 0 0 0 1 3034.dat
+1 7 60 0 80 1 0 0 0 1 0 0 0 1 3034.dat
+1 7 90 0 80 1 0 0 0 1 0 0 0 1 3460.dat
+
+0 // VSS Rail (Black)
+0 // LEF: RECT 0 -0.22 2.4 0.22
+1 0 40 -8 10 1 0 0 0 1 0 0 0 1 3710.dat
+1 0 90 -8 10 1 0 0 0 1 0 0 0 1 3024.dat
+
+0 // VDD Rail (Yellow)
+0 // LEF: RECT 0 3.56 2.4 4
+1 14 40 -8 150 1 0 0 0 1 0 0 0 1 3710.dat
+1 14 90 -8 150 1 0 0 0 1 0 0 0 1 3024.dat
+
+0 // Pin A (Blue, Plate 1x1)
+0 // LEF: RECT 0.84 1.495 1.08 1.895 -> X ≈ 40, Z ≈ 71
+1 1 40 -16 71 1 0 0 0 1 0 0 0 1 3024.dat
+
+0 // Pin B (Blue, Plate 1x1)
+0 // LEF: RECT 0.84 2.13 1.08 2.65 -> X ≈ 40, Z ≈ 100
+1 1 40 -16 100 1 0 0 0 1 0 0 0 1 3024.dat
+
+0 // Pin X (Blue, Plate 1x4)
+0 // LEF: RECT 1.8 2.34 2.15 3.28 -> X ≈ 82, Z ≈ 117
+1 1 82 -16 117 1 0 0 0 1 0 0 0 1 3710.dat
