@@ -15,10 +15,11 @@
 - [x] Fix GitHub Action rendering by updating OpenGL dependencies
 - [x] Fix GH Action Workflow failure and trigger render on every push
 - [x] Enhance CI/CD to fully synchronize `/images` with models on every push
+- [x] Implement LDR model for D-Flip-Flop (`sg13g2_dfrbp_1`)
 
 ## Next 5 Steps
-- [ ] Implement LDR model for D-Flip-Flop (`sg13g2_dfrbp_1`)
 - [ ] Refine modeling guidelines based on initial model feedback
 - [ ] Automate the generation of LDR models from LEF coordinates
 - [ ] Implement LDR model for AND gate (`sg13g2_and2_1`)
 - [ ] Implement LDR model for OR gate (`sg13g2_or2_1`)
+- [ ] Implement LDR model for XOR gate (`sg13g2_xor2_1`)
