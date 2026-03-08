@@ -12,27 +12,22 @@ The models are designed on a grid where LEGO studs represent the physical dimens
   - Cell height of 3.78 µm ≈ 8 LEGO studs (Actual: 7.875 studs). We will use **8 studs** as the standard cell height (Z-axis).
 - **Vertical Scale (Y):** Each physical layer is represented by a LEGO Plate (1/3 of a brick height).
   - Layers are stacked from bottom to top.
-  - In LDraw, the negative Y direction is "up".
-  - Standard stacking offsets (for visual clarity):
-    - **Substrate:** Y=0
-    - **Power/Ground Rails (Metal 1):** Y=-8
-    - **Signal Pins (Metal 1):** Y=-16
-  - Higher layers typically follow a pattern of an additional -8 LDU (one plate height) offset per layer.
+  - In LDraw, the negative Y direction is "up". The substrate is at Y=0, Layer 1 at Y=-8, Layer 2 at Y=-16, etc.
 
 ## 2. Layer to Color Mapping
 We use standard LDraw colors to represent different semiconductor layers.
 
-| Layer | LEGO Color | LDraw Color ID | LDraw Y Offset | Description |
-|-------|------------|----------------|----------------|-------------|
-| Substrate | Light Gray | 7 | 0 | The base of the model. |
-| N-Well | Tan | 19 | Pattern-based | Areas of N-type doping. |
-| Diffusion (Active) | Dark Orange | 38 | Pattern-based | Transistor active areas. |
-| Polysilicon | Red | 4 | Pattern-based | Gate material. |
-| Metal 1 | Blue | 1 | -16 | First metal interconnect layer. |
-| Metal 2 | Green | 2 | Pattern-based | Second metal interconnect layer. |
-| VDD Rail | Yellow | 14 | -8 | Power supply rail (usually on Metal 1). |
-| VSS Rail | Black | 0 | -8 | Ground rail (usually on Metal 1). |
-| Vias / Contacts | White | 15 | Pattern-based | Vertical connections between layers. |
+| Layer | LEGO Color | LDraw Color ID | Description |
+|-------|------------|----------------|-------------|
+| Substrate | Light Gray | 7 | The base of the model (Y=0). |
+| N-Well | Tan | 19 | Areas of N-type doping. |
+| Diffusion (Active) | Dark Orange | 38 | Transistor active areas. |
+| Polysilicon | Red | 4 | Gate material. |
+| Metal 1 | Blue | 1 | First metal interconnect layer. |
+| Metal 2 | Green | 2 | Second metal interconnect layer. |
+| VDD Rail | Yellow | 14 | Power supply rail (usually on Metal 1). |
+| VSS Rail | Black | 0 | Ground rail (usually on Metal 1). |
+| Vias / Contacts | White | 15 | Vertical connections between layers. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
