@@ -1,0 +1,44 @@
+0 sg13g2_xnor2_1.ldr
+0 Name: sg13g2_xnor2_1.ldr
+0 Author: Jules (AI)
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 // Substrate (NMOS Region: Light Gray 7, PMOS Region: Tan 19)
+0 // 8x8 studs total (Size 3.84x3.78um)
+0 // X=0 to 160, Z=0 to 160
+1 7 20 0 40 1 0 0 0 1 0 0 0 1 3020.dat
+1 7 60 0 40 1 0 0 0 1 0 0 0 1 3020.dat
+1 7 100 0 40 1 0 0 0 1 0 0 0 1 3020.dat
+1 7 140 0 40 1 0 0 0 1 0 0 0 1 3020.dat
+1 19 20 0 120 1 0 0 0 1 0 0 0 1 3020.dat
+1 19 60 0 120 1 0 0 0 1 0 0 0 1 3020.dat
+1 19 100 0 120 1 0 0 0 1 0 0 0 1 3020.dat
+1 19 140 0 120 1 0 0 0 1 0 0 0 1 3020.dat
+
+0 // VSS Rail (Black, Color 0)
+1 0 40 -8 10 1 0 0 0 1 0 0 0 1 3710.dat
+1 0 120 -8 10 1 0 0 0 1 0 0 0 1 3710.dat
+0 // VSS Spurs
+1 0 100 -8 10 0 0 1 0 1 0 -1 0 0 3023.dat
+1 0 20 -8 25 0 0 1 0 1 0 -1 0 0 3710.dat
+
+0 // VDD Rail (Yellow, Color 14)
+1 14 40 -8 150 1 0 0 0 1 0 0 0 1 3710.dat
+1 14 120 -8 150 1 0 0 0 1 0 0 0 1 3710.dat
+0 // VDD Spurs
+1 14 135 -8 140 0 0 1 0 1 0 -1 0 0 3623.dat
+1 14 75 -8 140 0 0 1 0 1 0 -1 0 0 3623.dat
+1 14 20 -8 140 0 0 1 0 1 0 -1 0 0 3623.dat
+
+0 // Pin A (Blue, Color 1)
+1 1 80 -16 75 1 0 0 0 1 0 0 0 1 3023.dat
+
+0 // Pin B (Blue, Color 1)
+1 1 105 -16 75 1 0 0 0 1 0 0 0 1 3023.dat
+1 1 80 -16 90 1 0 0 0 1 0 0 0 1 3710.dat
+1 1 60 -16 75 0 0 1 0 1 0 -1 0 0 3023.dat
+
+0 // Pin Y (Blue, Color 1)
+1 1 130 -16 110 1 0 0 0 1 0 0 0 1 3710.dat
+1 1 145 -16 60 0 0 1 0 1 0 -1 0 0 3034.dat
+1 1 120 -16 110 1 0 0 0 1 0 0 0 1 3024.dat

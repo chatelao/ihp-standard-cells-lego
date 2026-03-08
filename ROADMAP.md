@@ -22,10 +22,15 @@
 - [x] Generate detailed markdown for all standard cells and subcomponents
 - [x] Separate GitHub Pages deployment into its own workflow and restore video rendering
 
-## Next 5 Steps
 - [x] Enhance GitHub Pages gallery with detailed model cards and direct links
-- [ ] Refine modeling guidelines based on initial model feedback
-- [ ] Automate the generation of LDR models from LEF coordinates
+- [x] Refine modeling guidelines based on initial model feedback
 - [x] Implement LDR model for buffer (sg13g2_buf_1)
-- [ ] Implement LDR model for MUX2 (`sg13g2_mux2_1`)
-- [ ] Implement LDR model for XNOR gate (`sg13g2_xnor2_1`)
+- [x] Implement LDR model for MUX2 (`sg13g2_mux2_1`)
+- [x] Implement LDR model for XNOR gate (`sg13g2_xnor2_1`)
+
+## Next 5 Steps
+- [ ] Automate the generation of LDR models from LEF coordinates
+- [ ] Implement LDR model for D-Latch (`sg13g2_dlrbp_1`)
+- [ ] Implement LDR model for Adder (`sg13g2_fa_1`)
+- [ ] Implement LDR model for Decoders (`sg13g2_dec24_1`)
+- [ ] Implement LDR model for Clock Buffer (`sg13g2_clkbuf_1`)
