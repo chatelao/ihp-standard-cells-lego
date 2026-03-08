@@ -16,7 +16,15 @@ for file in "$MODELS_DIR"/*.ldr; do
 
     # Static image
     echo "  Rendering static image..."
-    "$LDVIEW_BIN" "$file" -SaveJPG="$OUTPUT_DIR/${filename}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR"
+    if ! "$LDVIEW_BIN" "$file" -SaveJPG="$OUTPUT_DIR/${filename}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" 2>&1; then
+        echo "  Error: Failed to render static image for $filename"
+        continue
+    fi
+
+    if [ ! -f "$OUTPUT_DIR/${filename}.jpg" ]; then
+        echo "  Error: Static image file not found after rendering $filename"
+        continue
+    fi
 
     # Rotation frames for video
     TEMP_DIR="$(pwd)/temp_${filename}"
@@ -25,7 +33,9 @@ for file in "$MODELS_DIR"/*.ldr; do
     for i in $(seq 0 35); do
         lon=$((i * 10))
         printf -v frame "%02d" $i
-        "$LDVIEW_BIN" "$file" -SaveJPG="$TEMP_DIR/frame_${frame}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Longitude=$lon -Latitude=30
+        if ! "$LDVIEW_BIN" "$file" -SaveJPG="$TEMP_DIR/frame_${frame}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Longitude=$lon -Latitude=30 2>&1; then
+             echo "  Error rendering frame ${frame} for $filename"
+        fi
     done
 
     # Verify frames and generate video

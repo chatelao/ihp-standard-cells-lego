@@ -21,6 +21,7 @@
 - [x] Implement LDR model for XOR gate (`sg13g2_xor2_1`)
 - [x] Generate detailed markdown for all standard cells and subcomponents
 - [x] Separate GitHub Pages deployment into its own workflow and restore video rendering
+- [x] Fix rendering errors and improve CI/CD diagnostic logging
 
 - [x] Enhance GitHub Pages gallery with detailed model cards and direct links
 - [x] Refine modeling guidelines based on initial model feedback
