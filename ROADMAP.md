@@ -21,10 +21,11 @@
 - [x] Implement LDR model for XOR gate (`sg13g2_xor2_1`)
 - [x] Generate detailed markdown for all standard cells and subcomponents
 - [x] Separate GitHub Pages deployment into its own workflow and restore video rendering
+- [x] Fix rendering errors and improve CI/CD diagnostic logging
 
 ## Next 5 Steps
 - [ ] Refine modeling guidelines based on initial model feedback
 - [ ] Automate the generation of LDR models from LEF coordinates
-- [x] Implement LDR model for buffer (sg13g2_buf_1)
 - [ ] Implement LDR model for MUX2 (`sg13g2_mux2_1`)
 - [ ] Implement LDR model for XNOR gate (`sg13g2_xnor2_1`)
+- [ ] Implement build-instruction PDF generation for all cells
