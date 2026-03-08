@@ -41,15 +41,22 @@ jobs:
             for file in models/*.ldr; do
               filename=$(basename "$file" .ldr)
               echo "Rendering $filename..."
+
+              # Static image
               ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
+
+              # Rotation frames for video
               mkdir -p "temp_${filename}"
               for i in $(seq 0 35); do
                 lon=$((i * 10))
                 printf -v frame "%02d" $i
                 ldview "$file" -SaveJPG="temp_${filename}/frame_${frame}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw -Longitude=$lon -Latitude=30
               done
-              if ls temp_${filename}/frame_*.jpg >/dev/null 2>&1; then
-                ffmpeg -y -r 10 -i "temp_${filename}/frame_%02d.jpg" -vcodec libx264 -crf 25 -pix_fmt yuv420p "images/${filename}.mp4"
+
+              # Verify frames and generate video
+              if [ -n "$(ls -A temp_${filename}/frame_*.jpg 2>/dev/null)" ]; then
+                echo "Generating video for $filename..."
+                ffmpeg -y -r 10 -pattern_type glob -i "temp_${filename}/frame_*.jpg" -vcodec libx264 -crf 25 -pix_fmt yuv420p "images/${filename}.mp4"
               else
                 echo "Warning: No frames generated for $filename, skipping video."
               fi
