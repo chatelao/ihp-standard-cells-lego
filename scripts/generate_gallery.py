@@ -2,11 +2,14 @@ import os
 
 def generate_gallery():
     image_dir = 'images'
-    if not os.path.exists(image_dir):
-        print(f"Directory {image_dir} does not exist.")
+    models_dir = 'models'
+    spec_file = 'specifications/sg13g2_stdcell_details.md'
+
+    if not os.path.exists(models_dir):
+        print(f"Directory {models_dir} does not exist.")
         return
 
-    files = sorted(os.listdir(image_dir))
+    model_files = sorted([f for f in os.listdir(models_dir) if f.endswith('.ldr')])
 
     html_content = """
 <!DOCTYPE html>
@@ -60,6 +63,19 @@ def generate_gallery():
             font-size: 1.2rem;
             font-weight: 600;
             color: #03dac6;
+            margin-bottom: 10px;
+        }
+        .card-links {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+        .card-links a {
+            color: #bb86fc;
+            text-decoration: none;
+        }
+        .card-links a:hover {
+            text-decoration: underline;
         }
         footer {
             margin-top: 50px;
@@ -73,30 +89,36 @@ def generate_gallery():
     <div class="gallery">
 """
 
-    models = {}
-    for f in files:
-        if f.endswith('.jpg') or f.endswith('.mp4'):
-            name = os.path.splitext(f)[0]
-            if name not in models:
-                models[name] = {}
-            if f.endswith('.jpg'):
-                models[name]['image'] = f
-            if f.endswith('.mp4'):
-                models[name]['video'] = f
+    for ldr_file in model_files:
+        name = os.path.splitext(ldr_file)[0]
+        jpg_file = f"{name}.jpg"
+        mp4_file = f"{name}.mp4"
 
-    for name in sorted(models.keys()):
-        assets = models[name]
+        has_jpg = os.path.exists(os.path.join(image_dir, jpg_file))
+        has_mp4 = os.path.exists(os.path.join(image_dir, mp4_file))
+
         html_content += f'        <div class="card">\n'
-        if 'video' in assets:
-            poster = f' poster="{image_dir}/{assets["image"]}"' if 'image' in assets else ''
+
+        if has_mp4:
+            poster = f' poster="{image_dir}/{jpg_file}"' if has_jpg else ''
             html_content += f'            <video autoplay loop muted playsinline{poster}>\n'
-            html_content += f'                <source src="{image_dir}/{assets["video"]}" type="video/mp4">\n'
+            html_content += f'                <source src="{image_dir}/{mp4_file}" type="video/mp4">\n'
             html_content += f'            </video>\n'
-        elif 'image' in assets:
-            html_content += f'            <img src="{image_dir}/{assets["image"]}" alt="{name}">\n'
+        elif has_jpg:
+            html_content += f'            <img src="{image_dir}/{jpg_file}" alt="{name}">\n'
+        else:
+            html_content += f'            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>\n'
 
         html_content += f'            <div class="card-content">\n'
         html_content += f'                <div class="card-title">{name}</div>\n'
+        html_content += f'                <div class="card-links">\n'
+        html_content += f'                    <a href="models/{ldr_file}" target="_blank">LDR</a>\n'
+        if has_jpg:
+            html_content += f'                    <a href="images/{jpg_file}" target="_blank">JPG</a>\n'
+        if has_mp4:
+            html_content += f'                    <a href="images/{mp4_file}" target="_blank">MP4</a>\n'
+        html_content += f'                    <a href="{spec_file}#{name}" target="_blank">Spec</a>\n'
+        html_content += f'                </div>\n'
         html_content += f'            </div>\n'
         html_content += f'        </div>\n'
 
