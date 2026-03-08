@@ -22,18 +22,18 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 ## 2. Layer to Color Mapping
 We use standard LDraw colors to represent different semiconductor layers.
 
-| Layer | LEGO Color | LDraw Color ID | LDraw Y Offset | Height From-To (LDU) | Description |
+| Layer | LEGO Color | LDraw Color ID | LDraw Y Offset | Height From-To (LDU) from Base | Description |
 |-------|------------|----------------|----------------|----------------------|-------------|
-| Substrate (low) | Dark Gray | 8 | 0 | 8 to 0 | Base plate over the whole cell. |
-| Substrate (high)| Dark Gray | 8 | -8 | 0 to -8 | Second layer where no N-Well is present. |
-| N-Well | Light Gray | 7 | -8 | 0 to -8 | N-Well region (PMOS). |
-| Diffusion (NMOS)| Dark Green | 288 | -16 | -8 to -16 | Active area in P-substrate. |
-| Diffusion (PMOS)| Dark Blue  | 38 | -16 | -8 to -16 | Active area in N-Well. |
-| Polysilicon | Red | 4 | -24 | -16 to -24 | Gate material. |
-| Metal 1 | Yellow | 1 | -16 | -8 to -16 | First metal interconnect layer. |
-| VDD Rail | Orange | 14 | -8 | 0 to -8 | Power supply rail. |
-| VSS Rail | Black | 0 | -8 | 0 to -8 | Ground rail. |
-| Vias / Contacts | Black | 0 | Pattern-based | 24 LDU height | 1x1 round studs or plates. |
+| Substrate (low) | Dark Gray | 8 | 0 | 0 to 8 | Base plate over the whole cell. |
+| Substrate (high)| Dark Gray | 8 | -8 | 9 to 16 | Second layer where no N-Well is present. |
+| N-Well | Light Gray | 7 | -8 | 9 to 16 | N-Well region (PMOS). |
+| Diffusion (NMOS)| Dark Green | 288 | -16 | 17 to 24 | Active area in P-substrate. |
+| Diffusion (PMOS)| Dark Blue  | 38 | -16 | 17 to 24 | Active area in N-Well. |
+| Polysilicon | Red | 4 | -24 | 25 to 32 | Gate material. |
+| Vias / Contacts | Black | 0 | Pattern-based | 33 to 56 | 1x1 ROUND studs or plates. |
+| Metal 1 | Yellow | 1 | -16 | 57 to 64 | First metal interconnect layer. |
+| VDD Rail | White | 14 | -8 | 57 to 64 | Power supply rail. |
+| VSS Rail | Black | 0 | -8 | 57 to 64 | Ground rail. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
