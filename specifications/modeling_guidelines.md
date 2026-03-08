@@ -44,7 +44,9 @@ Based on 1 Stud = 0.48 µm:
 - **0.024 µm = 1 LDU**
 
 ## 4. Modeling Principles
-- Use **Baseplates** or large plates for the substrate.
+- Use **Baseplates** or large plates for the substrate. For cells wider than 8 studs (160 LDU), combine multiple large plates (e.g., 2x8 3034.dat and 1x8 3460.dat) to achieve the total width.
 - Use **Plates** (e.g., 1x1, 1x2, 2x4) to represent rectangular areas defined in the LEF.
 - If a geometry is not a multiple of 0.48 µm, round to the nearest LDraw unit or use the closest LEGO plate size.
-- VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis).
+- **Multi-Rectangle Geometries:** When a pin or obstruction is defined by multiple rectangles in the LEF, model them as a collection of LEGO plates. Ensure they are logically connected or stacked at the same Y-offset.
+- **Vertical Orientation:** To rotate a 1xN plate from the X-axis (horizontal) to the Z-axis (vertical height in the cell), use the rotation matrix `0 0 1 0 1 0 -1 0 0`.
+- VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis). Full rail representation requires both a main horizontal rail and any vertical spurs/branches defined in the LEF.
