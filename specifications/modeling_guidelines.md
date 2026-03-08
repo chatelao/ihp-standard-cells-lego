@@ -22,18 +22,18 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 ## 2. Layer to Color Mapping
 We use standard LDraw colors to represent different semiconductor layers.
 
-| Layer | LEGO Color | LDraw Color ID | LDraw Y Offset | Height From-To (LDU) from Base | Description |
-|-------|------------|----------------|----------------|----------------------|-------------|
-| Substrate (low) | Dark Gray | 8 | 0 | 0 to 8 | Base plate over the whole cell. |
-| Substrate (high)| Dark Gray | 8 | -8 | 9 to 16 | Second layer where no N-Well is present. |
-| N-Well | Light Gray | 7 | -8 | 9 to 16 | N-Well region (PMOS). |
-| Diffusion (NMOS)| Dark Green | 288 | -16 | 17 to 24 | Active area in P-substrate. |
-| Diffusion (PMOS)| Dark Blue  | 38 | -16 | 17 to 24 | Active area in N-Well. |
-| Polysilicon | Red | 4 | -24 | 25 to 32 | Gate material. |
-| Vias / Contacts | Black | 0 | Pattern-based | 33 to 56 | 1x1 ROUND studs or plates. |
-| Metal 1 | Yellow | 1 | -16 | 57 to 64 | First metal interconnect layer. |
-| VDD Rail | White | 14 | -8 | 57 to 64 | Power supply rail. |
-| VSS Rail | Black | 0 | -8 | 57 to 64 | Ground rail. |
+| Layer | LEGO Color | LDU Range | LDraw Color ID | LDraw Y Offset | Description |
+|-------|------------|-----------|----------------|----------------|-------------|
+| Substrate (low) | Dark Gray | 0 to 8 | 8 | 0 | Base plate over the whole cell. |
+| Substrate (high)| Dark Gray | 9 to 16 | 8 | -8 | Second layer where no N-Well is present. |
+| N-Well | Light Gray | 9 to 16 | 7 | -8 | N-Well region (PMOS). |
+| Diffusion (NMOS)| Dark Green | 17 to 24 | 288 | -16 | Active area in P-substrate. |
+| Diffusion (PMOS)| Dark Blue  | 17 to 24 | 38 | -16 | Active area in N-Well. |
+| Polysilicon | Red | 25 to 32 | 4 | -24 | Gate material. |
+| Vias / Contacts | Black | 33 to 56 | 0 | Pattern-based | 1x1 ROUND studs or plates. |
+| Metal 1 | Yellow | 57 to 64 | 1 | -16 | First metal interconnect layer. |
+| VDD Rail | White | 57 to 64 | 14 | -8 | Power supply rail. |
+| VSS Rail | Black | 57 to 64 | 0 | -8 | Ground rail. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
