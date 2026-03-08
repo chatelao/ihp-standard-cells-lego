@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 libosmesa6-dev
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
@@ -27,7 +27,9 @@ jobs:
       - name: Render models
         run: |
           mkdir -p images
+          mkdir -p ~/.config/LDView
           rm -f images/*.jpg
+          shopt -s nullglob
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
             ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
