@@ -25,6 +25,6 @@
 ## Next 5 Steps
 - [ ] Refine modeling guidelines based on initial model feedback
 - [ ] Automate the generation of LDR models from LEF coordinates
-- [ ] Implement LDR model for buffer (`sg13g2_buf_1`)
+- [x] Implement LDR model for buffer (sg13g2_buf_1)
 - [ ] Implement LDR model for MUX2 (`sg13g2_mux2_1`)
 - [ ] Implement LDR model for XNOR gate (`sg13g2_xnor2_1`)
