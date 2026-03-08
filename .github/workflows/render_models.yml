@@ -33,40 +33,8 @@ jobs:
 
       - name: Render models and generate videos
         run: |
-          mkdir -p images
-          rm -f images/*.jpg images/*.mp4
-          xvfb-run -a -s "-screen 0 800x600x24" bash -c '
-            set -e
-            shopt -s nullglob
-            for file in models/*.ldr; do
-              filename=$(basename "$file" .ldr)
-              echo "Rendering $filename..."
-
-              # Static image
-              ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
-
-              # Rotation frames for video
-              mkdir -p "temp_${filename}"
-              for i in $(seq 0 35); do
-                lon=$((i * 10))
-                printf -v frame "%02d" $i
-                ldview "$file" -SaveJPG="temp_${filename}/frame_${frame}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw -Longitude=$lon -Latitude=30
-              done
-
-              # Verify frames and generate video
-              echo "Contents of temp_${filename}:"
-              ls -la "temp_${filename}"
-
-              if [ -n "$(ls -A temp_${filename}/frame_*.jpg 2>/dev/null)" ]; then
-                echo "Generating video for $filename..."
-                # Using the printf format but ensuring it matches the generated files
-                ffmpeg -y -r 10 -i "temp_${filename}/frame_%02d.jpg" -vcodec libx264 -crf 25 -pix_fmt yuv420p "images/${filename}.mp4"
-              else
-                echo "Warning: No frames generated for $filename, skipping video."
-              fi
-              rm -rf "temp_${filename}"
-            done
-          '
+          chmod +x scripts/render_models.sh
+          xvfb-run -a -s "-screen 0 800x600x24" ./scripts/render_models.sh
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
