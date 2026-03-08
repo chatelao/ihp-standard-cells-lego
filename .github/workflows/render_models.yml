@@ -6,6 +6,11 @@ on:
       - '**'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   render:
     runs-on: ubuntu-24.04
@@ -16,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 libosmesa6-dev ffmpeg
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
@@ -24,18 +29,54 @@ jobs:
           curl -L https://download.opensuse.org/repositories/home:/pbartfai/xUbuntu_24.04/amd64/ldview-osmesa_4.7-1_amd64.deb -o ldview.deb
           sudo apt-get install -y ./ldraw.deb ./ldview.deb
 
-      - name: Render models
+      - name: Create LDView config directory
+        run: mkdir -p ~/.config/LDView/
+
+      - name: Render models and generate videos
         run: |
           mkdir -p images
-          rm -f images/*.jpg
+          rm -f images/*.jpg images/*.mp4
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
+            echo "Rendering $filename..."
+
+            # Static image
             ldview "$file" -SaveJPG="images/${filename}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw
+
+            # Rotation frames for video
+            mkdir -p "temp_${filename}"
+            for i in $(seq 0 35); do
+              lon=$((i * 10))
+              printf -v frame "%02d" $i
+              ldview "$file" -SaveJPG="temp_${filename}/frame_${frame}.jpg" -Width=800 -Height=600 -LDrawDir=/usr/share/ldraw -Longitude=$lon -Latitude=30
+            done
+
+            # Combine to MP4
+            ffmpeg -y -r 10 -i "temp_${filename}/frame_%02d.jpg" -vcodec libx264 -crf 25 -pix_fmt yuv420p "images/${filename}.mp4"
+            rm -rf "temp_${filename}"
           done
 
-      - name: Commit and push images
+      - name: Generate Gallery
+        run: python3 generate_gallery.py
+
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Auto-render LEGO models to images"
-          file_pattern: 'images/'
+          commit_message: "Auto-render LEGO models and update gallery"
+          file_pattern: 'images/ index.html'
           push_options: '--force'
+
+      - name: Setup Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        id: deployment
+        uses: actions/deploy-pages@v2
