@@ -54,9 +54,13 @@ jobs:
               done
 
               # Verify frames and generate video
+              echo "Contents of temp_${filename}:"
+              ls -la "temp_${filename}"
+
               if [ -n "$(ls -A temp_${filename}/frame_*.jpg 2>/dev/null)" ]; then
                 echo "Generating video for $filename..."
-                ffmpeg -y -r 10 -pattern_type glob -i "temp_${filename}/frame_*.jpg" -vcodec libx264 -crf 25 -pix_fmt yuv420p "images/${filename}.mp4"
+                # Using the printf format but ensuring it matches the generated files
+                ffmpeg -y -r 10 -i "temp_${filename}/frame_%02d.jpg" -vcodec libx264 -crf 25 -pix_fmt yuv420p "images/${filename}.mp4"
               else
                 echo "Warning: No frames generated for $filename, skipping video."
               fi
