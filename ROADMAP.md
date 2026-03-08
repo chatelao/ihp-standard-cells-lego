@@ -23,6 +23,7 @@
 - [x] Separate GitHub Pages deployment into its own workflow and restore video rendering
 
 ## Next 5 Steps
+- [x] Enhance GitHub Pages gallery with detailed model cards and direct links
 - [ ] Refine modeling guidelines based on initial model feedback
 - [ ] Automate the generation of LDR models from LEF coordinates
 - [x] Implement LDR model for buffer (sg13g2_buf_1)
