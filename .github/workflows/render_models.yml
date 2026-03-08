@@ -37,7 +37,9 @@ jobs:
       - name: Render models and generate videos
         run: |
           mkdir -p images
+          mkdir -p ~/.config/LDView
           rm -f images/*.jpg images/*.mp4
+          shopt -s nullglob
           for file in models/*.ldr; do
             filename=$(basename "$file" .ldr)
             echo "Rendering $filename..."
