@@ -28,6 +28,7 @@
 - [x] Implement LDR model for buffer (sg13g2_buf_1)
 - [x] Implement LDR model for MUX2 (`sg13g2_mux2_1`)
 - [x] Implement LDR model for XNOR gate (`sg13g2_xnor2_1`)
+- [x] Update modeling guidelines and migrate models to V2 (Substrate split, new color mapping, and Y-offsets)
 
 ## Next 5 Steps
 - [ ] Automate the generation of LDR models from LEF coordinates
