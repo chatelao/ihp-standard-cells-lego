@@ -30,6 +30,7 @@
 - [x] Implement LDR model for XNOR gate (`sg13g2_xnor2_1`)
 - [x] Update modeling guidelines and migrate models to V2 (Substrate split, new color mapping, and Y-offsets)
 - [x] Add rectangle area to standard cell details specification
+- [x] Add GitHub Pages link to README
 
 ## Next 5 Steps
 - [ ] Automate the generation of LDR models from LEF coordinates
