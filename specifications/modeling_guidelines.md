@@ -24,12 +24,12 @@ We use standard LDraw colors to represent different semiconductor layers.
 
 | Layer | LEGO Color | LDraw Color ID | LDraw Y Offset | Description |
 |-------|------------|----------------|----------------|-------------|
-| Substrate | Light Gray | 7 | 0 | The base of the model. |
-| N-Well | Tan | 19 | Pattern-based | Areas of N-type doping. |
-| Diffusion (Active) | Dark Orange | 38 | Pattern-based | Transistor active areas. |
-| Polysilicon | Red | 4 | Pattern-based | Gate material. |
+| Substrate | Light Gray | 7 | 0 | The base of the model (NMOS region). |
+| N-Well | Tan | 19 | 0 | The base of the model (PMOS region). |
+| Diffusion (Active) | Dark Orange | 38 | -8 | Transistor active areas. |
+| Polysilicon | Red | 4 | -16 | Gate material. |
 | Metal 1 | Blue | 1 | -16 | First metal interconnect layer. |
-| Metal 2 | Green | 2 | Pattern-based | Second metal interconnect layer. |
+| Metal 2 | Green | 2 | -24 | Second metal interconnect layer. |
 | VDD Rail | Yellow | 14 | -8 | Power supply rail (usually on Metal 1). |
 | VSS Rail | Black | 0 | -8 | Ground rail (usually on Metal 1). |
 | Vias / Contacts | White | 15 | Pattern-based | Vertical connections between layers. |
@@ -48,3 +48,28 @@ Based on 1 Stud = 0.48 µm:
 - Use **Plates** (e.g., 1x1, 1x2, 2x4) to represent rectangular areas defined in the LEF.
 - If a geometry is not a multiple of 0.48 µm, round to the nearest LDraw unit or use the closest LEGO plate size.
 - VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis).
+
+## 5. Transistor Modeling Examples
+Transistors are modeled by stacking active diffusion and polysilicon gate layers on the substrate. The following LDraw snippets show a single N-MOS and P-MOS transistor, extracted from a standard inverter model.
+
+### N-MOS Transistor
+```ldraw
+0 // N-MOS Transistor
+0 // Substrate: Light Gray (color 7) at Y=0
+1 7 20 0 40 1 0 0 0 1 0 0 0 1 3020.dat
+0 // Active Region: Dark Orange (color 38) at Y=-8
+1 38 30 -8 40 1 0 0 0 1 0 0 0 1 3623.dat
+0 // Gate: Polysilicon (color 4) at Y=-16 (1x2 plate)
+1 4 30 -16 40 0 0 1 0 1 0 -1 0 0 3023.dat
+```
+
+### P-MOS Transistor
+```ldraw
+0 // P-MOS Transistor
+0 // N-Well: Tan (color 19) at Y=0
+1 19 20 0 120 1 0 0 0 1 0 0 0 1 3020.dat
+0 // Active Region: Dark Orange (color 38) at Y=-8
+1 38 30 -8 120 1 0 0 0 1 0 0 0 1 3623.dat
+0 // Gate: Polysilicon (color 4) at Y=-16 (1x2 plate)
+1 4 30 -16 120 0 0 1 0 1 0 -1 0 0 3023.dat
+```
