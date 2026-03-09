@@ -33,10 +33,14 @@
 - [x] Implement LDR model for NAND3 (`sg13g2_nand3_1`)
 - [x] Implement LDR model for MUX4 (`sg13g2_mux4_1`)
 - [x] Implement LDR model for Buffer (`sg13g2_buf_4`)
+- [x] Implement LDR model for 3-input AND gate (`sg13g2_and3_1`)
+- [x] Implement LDR model for 3-input OR gate (`sg13g2_or3_1`)
+- [x] Implement LDR model for 4-input AND gate (`sg13g2_and4_1`)
+- [x] Implement LDR model for 4-input OR gate (`sg13g2_or4_1`)
 
 ## Next 5 Steps
-- [ ] Implement LDR model for 3-input AND gate (`sg13g2_and3_1`)
-- [ ] Implement LDR model for 3-input OR gate (`sg13g2_or3_1`)
-- [ ] Implement LDR model for 4-input AND gate (`sg13g2_and4_1`)
-- [ ] Implement LDR model for 4-input OR gate (`sg13g2_or4_1`)
 - [ ] Refine automation script for complex pin geometries
+- [ ] Implement LDR model for 3-input NAND gate (`sg13g2_nand3_1`) (V2 Migration)
+- [ ] Implement LDR model for 3-input NOR gate (`sg13g2_nor3_1`)
+- [ ] Implement LDR model for 4-input NAND gate (`sg13g2_nand4_1`)
+- [ ] Implement LDR model for 4-input NOR gate (`sg13g2_nor4_1`)
