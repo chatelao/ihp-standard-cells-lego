@@ -21,21 +21,22 @@ PLATES = [
     (1, 1, "3024.dat"),
 ]
 
-# LDraw Colors
-COLOR_SUBSTRATE = 7      # Light Gray
-COLOR_NWELL = 19         # Tan
-COLOR_ACTIVE = 38        # Dark Orange
+# LDraw Colors (V2)
+COLOR_SUBSTRATE = 8      # Dark Gray
+COLOR_NWELL = 7         # Light Gray
+COLOR_ACTIVE_NMOS = 288 # Dark Green
+COLOR_ACTIVE_PMOS = 38  # Dark Orange
 COLOR_POLY = 4           # Red
 COLOR_METAL1 = 1         # Blue
 COLOR_VDD = 14           # Yellow
 COLOR_VSS = 0            # Black
 
 # Y-Offsets (Negative is up in LDraw)
-Y_SUBSTRATE = 0
+Y_SUBSTRATE_LOW = 0
+Y_SUBSTRATE_HIGH = -8
 Y_RAILS = -8
-Y_ACTIVE = -8
 Y_PINS = -16
-Y_POLY = -16
+Y_POLY = -24
 
 def get_best_plate(width_ldu, depth_ldu):
     """Pick the best plate and rotation to fit the given area."""
@@ -93,11 +94,24 @@ def parse_lef_macro(lef_content, macro_name):
 
         pins.append({'name': pin_name, 'rects': rects})
 
+    obs = []
+    obs_match = re.search(r"OBS\s+(.*?)END", body, re.DOTALL)
+    if obs_match:
+        obs_body = obs_match.group(1)
+        layer_matches = re.finditer(r"LAYER\s+(\w+)\s*;(.*?)(?=LAYER|END|$)", obs_body, re.DOTALL)
+        for layer_match in layer_matches:
+            layer_name = layer_match.group(1)
+            rect_content = layer_match.group(2)
+            layer_rects = re.findall(r"RECT\s+([\d\.\-]+)\s+([\d\.\-]+)\s+([\d\.\-]+)\s+([\d\.\-]+)\s*;", rect_content)
+            for r in layer_rects:
+                obs.append({'layer': layer_name, 'coords': [float(x) for x in r]})
+
     return {
         'name': macro_name,
         'width_um': width_um,
         'height_um': height_um,
-        'pins': pins
+        'pins': pins,
+        'obs': obs
     }
 
 def um_to_ldu_coord(um):
@@ -115,9 +129,8 @@ def generate_ldr(macro_data):
     width_ldu = um_to_ldu_coord(macro_data['width_um'])
     height_ldu = um_to_ldu_coord(macro_data['height_um'])
 
-    # 1. Substrate
-    ldr_lines.append("0 // Substrate")
-    # Tiling substrate to avoid gaps
+    # 1. Substrate low (V2)
+    ldr_lines.append("0 // Substrate low (V2)")
     current_x = 0
     z_center = height_ldu // 2
     while current_x < width_ldu:
@@ -130,12 +143,28 @@ def generate_ldr(macro_data):
             pw = 20
 
         x_pos = current_x + pw // 2
-        ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_pos} {Y_SUBSTRATE} {z_center} 1 0 0 0 1 0 0 0 1 {plate}")
+        ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_pos} {Y_SUBSTRATE_LOW} {z_center} 1 0 0 0 1 0 0 0 1 {plate}")
+        current_x += pw
+
+    # 2. Substrate high
+    ldr_lines.append("0 // Substrate high")
+    current_x = 0
+    while current_x < width_ldu:
+        remaining_w = width_ldu - current_x
+        if remaining_w >= 40:
+            plate = "3034.dat" # 2x8
+            pw = 40
+        else:
+            plate = "3460.dat" # 1x8
+            pw = 20
+
+        x_pos = current_x + pw // 2
+        ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_pos} {Y_SUBSTRATE_HIGH} {z_center} 1 0 0 0 1 0 0 0 1 {plate}")
         current_x += pw
 
     ldr_lines.append("")
 
-    # 2. Pins and Rails
+    # 3. Pins and Rails
     for pin in macro_data['pins']:
         ldr_lines.append(f"0 // Pin {pin['name']}")
         color = COLOR_METAL1
@@ -161,6 +190,28 @@ def generate_ldr(macro_data):
             else:
                 # Horizontal orientation: 1 0 0 0 1 0 0 0 1
                 ldr_lines.append(f"1 {color} {x_mid} {y_off} {z_mid} 1 0 0 0 1 0 0 0 1 {plate}")
+        ldr_lines.append("")
+
+    # 4. Obstructions
+    if macro_data['obs']:
+        ldr_lines.append("0 // Obstructions")
+        for rect in macro_data['obs']:
+            x1, y1, x2, y2 = rect['coords']
+            x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
+            x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
+
+            w = abs(x2_ldu - x1_ldu)
+            h = abs(y2_ldu - y1_ldu)
+            x_mid = (x1_ldu + x2_ldu) // 2
+            z_mid = (y1_ldu + y2_ldu) // 2
+
+            plate, rotated = get_best_plate(w, h)
+            y_off = Y_PINS # Obstructions on Metal1 generally
+
+            if rotated:
+                ldr_lines.append(f"1 {COLOR_METAL1} {x_mid} {y_off} {z_mid} 0 0 1 0 1 0 -1 0 0 {plate}")
+            else:
+                ldr_lines.append(f"1 {COLOR_METAL1} {x_mid} {y_off} {z_mid} 1 0 0 0 1 0 0 0 1 {plate}")
         ldr_lines.append("")
 
     return "\n".join(ldr_lines)
