@@ -37,10 +37,28 @@
         .card:hover {
             transform: translateY(-5px);
         }
-        .card img, .card video {
+        .view-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            background-color: #1a1a1a;
+        }
+        .view-grid img, .view-grid video {
             width: 100%;
-            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
             display: block;
+        }
+        .placeholder {
+            aspect-ratio: 4 / 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2a2a2a;
+            color: #555;
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 5px;
         }
         .card-content {
             padding: 20px;
@@ -75,127 +93,240 @@
     <h1>GEMINI LEGO Models Gallery</h1>
     <div class="gallery">
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_and2_1.jpg">
+                    <source src="images/sg13g2_and2_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_and2_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_and2_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_and2_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_and2_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_and2_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_and3_1.jpg">
+                    <source src="images/sg13g2_and3_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_and3_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_and3_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_and3_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_and3_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_and3_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_and4_1.jpg">
+                    <source src="images/sg13g2_and4_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_and4_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_and4_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_and4_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_and4_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_and4_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_buf_1.jpg">
+                    <source src="images/sg13g2_buf_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_buf_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_buf_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_buf_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_buf_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_buf_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_buf_4.jpg">
+                    <source src="images/sg13g2_buf_4.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_buf_4</div>
                 <div class="card-links">
                     <a href="models/sg13g2_buf_4.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_buf_4.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_buf_4.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_buf_4" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_dfrbp_1.jpg">
+                    <source src="images/sg13g2_dfrbp_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_dfrbp_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_dfrbp_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_dfrbp_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_dfrbp_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_dfrbp_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_dlhq_1.jpg">
+                    <source src="images/sg13g2_dlhq_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_dlhq_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_dlhq_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_dlhq_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_dlhq_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_dlhq_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_inv_1.jpg">
+                    <source src="images/sg13g2_inv_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_inv_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_inv_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_inv_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_inv_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_inv_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_mux2_1.jpg">
+                    <source src="images/sg13g2_mux2_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_mux2_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_mux2_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_mux2_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_mux2_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_mux2_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_mux4_1.jpg">
+                    <source src="images/sg13g2_mux4_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_mux4_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_mux4_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_mux4_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_mux4_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_mux4_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_nand2_1.jpg">
+                    <source src="images/sg13g2_nand2_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_nand2_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_nand2_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_nand2_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_nand2_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_nand2_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_nand3_1.jpg">
+                    <source src="images/sg13g2_nand3_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_nand3_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_nand3_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_nand3_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_nand3_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_nand3_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <div class="placeholder">Perspective<br>pending</div>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_nand4_1</div>
                 <div class="card-links">
@@ -205,17 +336,31 @@
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_nor2_1.jpg">
+                    <source src="images/sg13g2_nor2_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_nor2_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_nor2_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_nor2_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_nor2_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_nor2_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <div class="placeholder">Perspective<br>pending</div>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_nor3_1</div>
                 <div class="card-links">
@@ -225,7 +370,12 @@
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <div class="placeholder">Perspective<br>pending</div>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_nor4_1</div>
                 <div class="card-links">
@@ -235,51 +385,96 @@
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_or2_1.jpg">
+                    <source src="images/sg13g2_or2_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_or2_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_or2_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_or2_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_or2_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_or2_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_or3_1.jpg">
+                    <source src="images/sg13g2_or3_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_or3_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_or3_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_or3_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_or3_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_or3_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_or4_1.jpg">
+                    <source src="images/sg13g2_or4_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_or4_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_or4_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_or4_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_or4_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_or4_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_xnor2_1.jpg">
+                    <source src="images/sg13g2_xnor2_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_xnor2_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_xnor2_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_xnor2_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_xnor2_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_xnor2_1" target="_blank">Spec</a>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>
+            <div class="view-grid">
+                <video autoplay loop muted playsinline poster="images/sg13g2_xor2_1.jpg">
+                    <source src="images/sg13g2_xor2_1.mp4" type="video/mp4">
+                </video>
+                <div class="placeholder">Top<br>pending</div>
+                <div class="placeholder">Front<br>pending</div>
+                <div class="placeholder">Side<br>pending</div>
+            </div>
             <div class="card-content">
                 <div class="card-title">sg13g2_xor2_1</div>
                 <div class="card-links">
                     <a href="models/sg13g2_xor2_1.ldr" target="_blank">LDR</a>
+                    <a href="images/sg13g2_xor2_1.jpg" target="_blank">JPG</a>
+                    <a href="images/sg13g2_xor2_1.mp4" target="_blank">MP4</a>
                     <a href="specifications/sg13g2_stdcell_details.md#sg13g2_xor2_1" target="_blank">Spec</a>
                 </div>
             </div>
