@@ -5,11 +5,16 @@
 
 0 // Substrate and N-Well (4x8 studs footprint: 80x160 LDU)
 0 // NMOS Region: Light Gray (color 7) at Z=0-80
-1 7 20 0 40 1 0 0 0 1 0 0 0 1 3020.dat
-1 7 60 0 40 1 0 0 0 1 0 0 0 1 3020.dat
+0 // Substrate low (V2)
+1 8 20.0 0 40.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 60.0 0 40.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 20.0 0 120.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 60.0 0 120.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 20.0 -8 40.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 60.0 -8 40.0 1 0 0 0 1 0 0 0 1 3020.dat
 0 // PMOS Region: Tan (color 19) at Z=80-160
-1 19 20 0 120 1 0 0 0 1 0 0 0 1 3020.dat
-1 19 60 0 120 1 0 0 0 1 0 0 0 1 3020.dat
+1 7 20.0 -8 120.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 7 60.0 -8 120.0 1 0 0 0 1 0 0 0 1 3020.dat
 
 0 // Stage 1 (Small Inverter) at X=10
 0 // Active Regions (Dark Orange, color 38)
