@@ -80,20 +80,22 @@ def generate_md(macros):
 
         if m['pins']:
             md += "### Pins\n"
-            md += "| Pin Name | Layer | Rectangles (x1, y1, x2, y2) |\n"
-            md += "|----------|-------|-----------------------------|\n"
+            md += "| Pin Name | Layer | Rectangle (x1, y1, x2, y2) | Area (µm²) |\n"
+            md += "|----------|-------|----------------------------|------------|\n"
             for pin in m['pins']:
                 for layer in pin['layers']:
-                    rect_str = "<br>".join([f"({r[0]}, {r[1]}, {r[2]}, {r[3]})" for r in layer['rects']])
-                    md += f"| {pin['name']} | {layer['name']} | {rect_str} |\n"
+                    for r in layer['rects']:
+                        area = abs((r[2] - r[0]) * (r[3] - r[1]))
+                        md += f"| {pin['name']} | {layer['name']} | ({r[0]}, {r[1]}, {r[2]}, {r[3]}) | {area:.4f} |\n"
 
         if m['obs']:
             md += "### Obstructions\n"
-            md += "| Layer | Rectangles (x1, y1, x2, y2) |\n"
-            md += "|-------|-----------------------------|\n"
+            md += "| Layer | Rectangle (x1, y1, x2, y2) | Area (µm²) |\n"
+            md += "|-------|----------------------------|------------|\n"
             for obs in m['obs']:
-                rect_str = "<br>".join([f"({r[0]}, {r[1]}, {r[2]}, {r[3]})" for r in obs['rects']])
-                md += f"| {obs['name']} | {rect_str} |\n"
+                for r in obs['rects']:
+                    area = abs((r[2] - r[0]) * (r[3] - r[1]))
+                    md += f"| {obs['name']} | ({r[0]}, {r[1]}, {r[2]}, {r[3]}) | {area:.4f} |\n"
 
         md += "\n"
 

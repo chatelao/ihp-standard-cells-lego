@@ -5,37 +5,42 @@
 
 0 // Substrate and N-Well (3x8 studs total)
 0 // NMOS Region: Light Gray (color 7) at Z=0-80
-1 7 20 0 40 1 0 0 0 1 0 0 0 1 3020.dat
-1 7 50 0 40 1 0 0 0 1 0 0 0 1 3710.dat
+0 // Substrate low (V2)
+1 8 20.0 0 40.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 50.0 0 40.0 1 0 0 0 1 0 0 0 1 3710.dat
+1 8 20.0 0 120.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 50.0 0 120.0 1 0 0 0 1 0 0 0 1 3710.dat
+1 8 20.0 -8 40.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 8 50.0 -8 40.0 1 0 0 0 1 0 0 0 1 3710.dat
 0 // PMOS Region: Tan (color 19) at Z=80-160
-1 19 20 0 120 1 0 0 0 1 0 0 0 1 3020.dat
-1 19 50 0 120 1 0 0 0 1 0 0 0 1 3710.dat
+1 7 20.0 -8 120.0 1 0 0 0 1 0 0 0 1 3020.dat
+1 7 50.0 -8 120.0 1 0 0 0 1 0 0 0 1 3710.dat
 
 0 // Transistor Active Regions (Dark Orange, color 38)
 0 // NMOS Active (1x3 Plate) at X=30, Z=40
-1 38 30 -8 40 1 0 0 0 1 0 0 0 1 3623.dat
+1 288 30.0 -16 40.0 1 0 0 0 1 0 0 0 1 3623.dat
 0 // PMOS Active (1x3 Plate) at X=30, Z=120
-1 38 30 -8 120 1 0 0 0 1 0 0 0 1 3623.dat
+1 38 30.0 -16 120.0 1 0 0 0 1 0 0 0 1 3623.dat
 
 0 // Polysilicon Shared Gate (Red, color 4)
 0 // Vertical 1x6 at X=30, Z=80
-1 4 30 -16 80 0 0 1 0 1 0 -1 0 0 3666.dat
+1 4 30.0 -24 80.0 0 0 1 0 1 0 -1 0 0 3666.dat
 0 // Gate Bridge to Pin A (1x2 at X=20, Z=80)
-1 4 20 -16 80 1 0 0 0 1 0 0 0 1 3023.dat
+1 4 20.0 -24 80.0 1 0 0 0 1 0 0 0 1 3023.dat
 
 0 // VSS Rail (Black, color 0)
-1 0 30 -8 10 1 0 0 0 1 0 0 0 1 3623.dat
+1 0 30.0 -8 10.0 1 0 0 0 1 0 0 0 1 3623.dat
 0 // VSS Spur to NMOS Source (1x2 at X=10, Z=25)
-1 0 10 -8 25 0 0 1 0 1 0 -1 0 0 3023.dat
+1 0 10.0 -8 25.0 0 0 1 0 1 0 -1 0 0 3023.dat
 
 0 // VDD Rail (Yellow, color 14)
-1 14 30 -8 150 1 0 0 0 1 0 0 0 1 3623.dat
+1 14 30.0 -8 150.0 1 0 0 0 1 0 0 0 1 3623.dat
 0 // VDD Spur to PMOS Source (1x2 at X=10, Z=135)
-1 14 10 -8 135 0 0 1 0 1 0 -1 0 0 3023.dat
+1 14 10.0 -8 135.0 0 0 1 0 1 0 -1 0 0 3023.dat
 
 0 // Pin A (Blue, color 1)
-1 1 10 -16 80 1 0 0 0 1 0 0 0 1 3024.dat
+1 1 10.0 -16 80.0 1 0 0 0 1 0 0 0 1 3024.dat
 
 0 // Pin Y (Blue, color 1)
 0 // Vertical 1x6 connecting drains at X=50
-1 1 50 -16 80 0 0 1 0 1 0 -1 0 0 3666.dat
+1 1 50.0 -16 80.0 0 0 1 0 1 0 -1 0 0 3666.dat
