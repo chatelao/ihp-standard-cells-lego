@@ -10,6 +10,7 @@ UM_TO_LDU = 20 / 0.48
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
+# Sorted by area (descending) to facilitate greedy tiling
 PLATES = [
     (8, 2, "3034.dat"),
     (8, 1, "3460.dat"),
@@ -17,6 +18,7 @@ PLATES = [
     (4, 2, "3020.dat"),
     (4, 1, "3710.dat"),
     (3, 1, "3623.dat"),
+    (2, 2, "3022.dat"),
     (2, 1, "3023.dat"),
     (1, 1, "3024.dat"),
 ]
@@ -38,29 +40,80 @@ Y_RAILS = -8
 Y_PINS = -16
 Y_POLY = -24
 
-def get_best_plate(width_ldu, depth_ldu):
-    """Pick the best plate and rotation to fit the given area."""
+def get_best_plates(width_ldu, depth_ldu):
+    """
+    Greedily tile the given area with standard LEGO plates.
+    Returns a list of (plate_file, x_offset_ldu, z_offset_ldu, is_rotated).
+    """
     w_studs = round(width_ldu / 20)
     d_studs = round(depth_ldu / 20)
 
     if w_studs == 0: w_studs = 1
     if d_studs == 0: d_studs = 1
 
-    # Try exact match first
-    for pw, pd, pfile in PLATES:
-        if (pw == w_studs and pd == d_studs):
-            return pfile, False # No rotation needed
-        if (pd == w_studs and pw == d_studs):
-            return pfile, True # Rotation needed
+    tiles = []
 
-    # Try to fit width-wise (greedy)
-    for pw, pd, pfile in PLATES:
-        if pw <= w_studs and pd <= d_studs:
-            return pfile, False
-        if pd <= w_studs and pw <= d_studs:
-            return pfile, True
+    # Simple 2D greedy tiling (can be improved, but sufficient for standard cells)
+    remaining_d = d_studs
+    curr_z_studs = 0
 
-    return "3024.dat", False
+    while remaining_d > 0:
+        # Determine height of the current row of plates
+        best_row_h = 0
+        for pw, pd, pfile in PLATES:
+            if pd <= remaining_d:
+                best_row_h = max(best_row_h, pd)
+            if pw <= remaining_d:
+                best_row_h = max(best_row_h, pw)
+
+        if best_row_h == 0: break # Should not happen with 1x1 plates available
+
+        remaining_w = w_studs
+        curr_x_studs = 0
+
+        while remaining_w > 0:
+            best_plate = None
+            is_rotated = False
+
+            # Try to find the largest plate that fits in remaining width AND row height
+            for pw, pd, pfile in PLATES:
+                if pw <= remaining_w and pd <= best_row_h:
+                    best_plate = (pw, pd, pfile)
+                    is_rotated = False
+                    break
+                if pd <= remaining_w and pw <= best_row_h:
+                    best_plate = (pw, pd, pfile)
+                    is_rotated = True
+                    break
+
+            if not best_plate:
+                # If nothing fits the row height perfectly, use the largest possible width-wise
+                for pw, pd, pfile in PLATES:
+                    if pw <= remaining_w:
+                        best_plate = (pw, pd, pfile)
+                        is_rotated = False
+                        break
+                    if pd <= remaining_w:
+                        best_plate = (pw, pd, pfile)
+                        is_rotated = True
+                        break
+
+            pw, pd, pfile = best_plate
+            real_w = pd if is_rotated else pw
+            real_d = pw if is_rotated else pd
+
+            x_off = curr_x_studs * 20 + (real_w * 20) // 2
+            z_off = curr_z_studs * 20 + (real_d * 20) // 2
+
+            tiles.append((pfile, x_off, z_off, is_rotated))
+
+            remaining_w -= real_w
+            curr_x_studs += real_w
+
+        remaining_d -= best_row_h
+        curr_z_studs += best_row_h
+
+    return tiles
 
 def parse_lef_macro(lef_content, macro_name):
     pattern = rf"(?<!PROPERTYDEFINITIONS\n  )MACRO\s+{macro_name}(.*?)END\s+{macro_name}"
@@ -131,36 +184,25 @@ def generate_ldr(macro_data):
 
     # 1. Substrate low (V2)
     ldr_lines.append("0 // Substrate low (V2)")
-    current_x = 0
-    z_center = height_ldu // 2
-    while current_x < width_ldu:
-        remaining_w = width_ldu - current_x
-        if remaining_w >= 40:
-            plate = "3034.dat" # 2x8
-            pw = 40
+    tiles = get_best_plates(width_ldu, height_ldu)
+    for plate, x_off, z_off, rotated in tiles:
+        if rotated:
+            ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_off} {Y_SUBSTRATE_LOW} {z_off} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
-            plate = "3460.dat" # 1x8
-            pw = 20
-
-        x_pos = current_x + pw // 2
-        ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_pos} {Y_SUBSTRATE_LOW} {z_center} 1 0 0 0 1 0 0 0 1 {plate}")
-        current_x += pw
+            ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_off} {Y_SUBSTRATE_LOW} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # 2. Substrate high
     ldr_lines.append("0 // Substrate high")
-    current_x = 0
-    while current_x < width_ldu:
-        remaining_w = width_ldu - current_x
-        if remaining_w >= 40:
-            plate = "3034.dat" # 2x8
-            pw = 40
-        else:
-            plate = "3460.dat" # 1x8
-            pw = 20
+    for plate, x_off, z_off, rotated in tiles:
+        # Determine if N-Well (Simplified: assume top half is PMOS/N-Well)
+        color = COLOR_SUBSTRATE
+        if z_off > (height_ldu // 2):
+            color = COLOR_NWELL
 
-        x_pos = current_x + pw // 2
-        ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_pos} {Y_SUBSTRATE_HIGH} {z_center} 1 0 0 0 1 0 0 0 1 {plate}")
-        current_x += pw
+        if rotated:
+            ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 0 0 1 0 1 0 -1 0 0 {plate}")
+        else:
+            ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
 
     ldr_lines.append("")
 
@@ -178,18 +220,19 @@ def generate_ldr(macro_data):
 
             w = abs(x2_ldu - x1_ldu)
             h = abs(y2_ldu - y1_ldu)
-            x_mid = (x1_ldu + x2_ldu) // 2
-            z_mid = (y1_ldu + y2_ldu) // 2
 
-            plate, rotated = get_best_plate(w, h)
+            rect_tiles = get_best_plates(w, h)
             y_off = Y_PINS if color == COLOR_METAL1 else Y_RAILS
 
-            if rotated:
-                # Vertical orientation: 0 0 1 0 1 0 -1 0 0
-                ldr_lines.append(f"1 {color} {x_mid} {y_off} {z_mid} 0 0 1 0 1 0 -1 0 0 {plate}")
-            else:
-                # Horizontal orientation: 1 0 0 0 1 0 0 0 1
-                ldr_lines.append(f"1 {color} {x_mid} {y_off} {z_mid} 1 0 0 0 1 0 0 0 1 {plate}")
+            for plate, tx_off, tz_off, rotated in rect_tiles:
+                # Add local tile offsets to global rectangle base
+                gx = min(x1_ldu, x2_ldu) + tx_off
+                gz = min(y1_ldu, y2_ldu) + tz_off
+
+                if rotated:
+                    ldr_lines.append(f"1 {color} {gx} {y_off} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+                else:
+                    ldr_lines.append(f"1 {color} {gx} {y_off} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
         ldr_lines.append("")
 
     # 4. Obstructions
@@ -202,16 +245,18 @@ def generate_ldr(macro_data):
 
             w = abs(x2_ldu - x1_ldu)
             h = abs(y2_ldu - y1_ldu)
-            x_mid = (x1_ldu + x2_ldu) // 2
-            z_mid = (y1_ldu + y2_ldu) // 2
 
-            plate, rotated = get_best_plate(w, h)
-            y_off = Y_PINS # Obstructions on Metal1 generally
+            rect_tiles = get_best_plates(w, h)
+            y_off = Y_PINS
 
-            if rotated:
-                ldr_lines.append(f"1 {COLOR_METAL1} {x_mid} {y_off} {z_mid} 0 0 1 0 1 0 -1 0 0 {plate}")
-            else:
-                ldr_lines.append(f"1 {COLOR_METAL1} {x_mid} {y_off} {z_mid} 1 0 0 0 1 0 0 0 1 {plate}")
+            for plate, tx_off, tz_off, rotated in rect_tiles:
+                gx = min(x1_ldu, x2_ldu) + tx_off
+                gz = min(y1_ldu, y2_ldu) + tz_off
+
+                if rotated:
+                    ldr_lines.append(f"1 {COLOR_METAL1} {gx} {y_off} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+                else:
+                    ldr_lines.append(f"1 {COLOR_METAL1} {gx} {y_off} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
         ldr_lines.append("")
 
     return "\n".join(ldr_lines)
