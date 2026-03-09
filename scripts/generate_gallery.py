@@ -50,10 +50,28 @@ def generate_gallery():
         .card:hover {
             transform: translateY(-5px);
         }
-        .card img, .card video {
+        .view-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            background-color: #1a1a1a;
+        }
+        .view-grid img, .view-grid video {
             width: 100%;
-            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
             display: block;
+        }
+        .placeholder {
+            aspect-ratio: 4 / 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2a2a2a;
+            color: #555;
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 5px;
         }
         .card-content {
             padding: 20px;
@@ -91,30 +109,41 @@ def generate_gallery():
 
     for ldr_file in model_files:
         name = os.path.splitext(ldr_file)[0]
-        jpg_file = f"{name}.jpg"
-        mp4_file = f"{name}.mp4"
 
-        has_jpg = os.path.exists(os.path.join(image_dir, jpg_file))
+        views = [
+            {'suffix': '', 'label': 'Perspective'},
+            {'suffix': '_top', 'label': 'Top'},
+            {'suffix': '_front', 'label': 'Front'},
+            {'suffix': '_side', 'label': 'Side'}
+        ]
+
+        mp4_file = f"{name}.mp4"
         has_mp4 = os.path.exists(os.path.join(image_dir, mp4_file))
 
         html_content += f'        <div class="card">\n'
+        html_content += f'            <div class="view-grid">\n'
 
-        if has_mp4:
-            poster = f' poster="{image_dir}/{jpg_file}"' if has_jpg else ''
-            html_content += f'            <video autoplay loop muted playsinline{poster}>\n'
-            html_content += f'                <source src="{image_dir}/{mp4_file}" type="video/mp4">\n'
-            html_content += f'            </video>\n'
-        elif has_jpg:
-            html_content += f'            <img src="{image_dir}/{jpg_file}" alt="{name}">\n'
-        else:
-            html_content += f'            <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #333; color: #777;">Rendering pending...</div>\n'
+        for i, view in enumerate(views):
+            jpg_name = f"{name}{view['suffix']}.jpg"
+            has_jpg = os.path.exists(os.path.join(image_dir, jpg_name))
 
+            if i == 0 and has_mp4:
+                poster = f' poster="{image_dir}/{jpg_name}"' if has_jpg else ''
+                html_content += f'                <video autoplay loop muted playsinline{poster}>\n'
+                html_content += f'                    <source src="{image_dir}/{mp4_file}" type="video/mp4">\n'
+                html_content += f'                </video>\n'
+            elif has_jpg:
+                html_content += f'                <img src="{image_dir}/{jpg_name}" alt="{name} {view["label"]}">\n'
+            else:
+                html_content += f'                <div class="placeholder">{view["label"]}<br>pending</div>\n'
+
+        html_content += f'            </div>\n'
         html_content += f'            <div class="card-content">\n'
         html_content += f'                <div class="card-title">{name}</div>\n'
         html_content += f'                <div class="card-links">\n'
         html_content += f'                    <a href="models/{ldr_file}" target="_blank">LDR</a>\n'
-        if has_jpg:
-            html_content += f'                    <a href="images/{jpg_file}" target="_blank">JPG</a>\n'
+        if os.path.exists(os.path.join(image_dir, f"{name}.jpg")):
+            html_content += f'                    <a href="images/{name}.jpg" target="_blank">JPG</a>\n'
         if has_mp4:
             html_content += f'                    <a href="images/{mp4_file}" target="_blank">MP4</a>\n'
         html_content += f'                    <a href="{spec_file}#{name}" target="_blank">Spec</a>\n'
