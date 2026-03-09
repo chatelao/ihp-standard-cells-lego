@@ -28,13 +28,15 @@
 - [x] Implement LDR model for buffer (sg13g2_buf_1)
 - [x] Implement LDR model for MUX2 (`sg13g2_mux2_1`)
 - [x] Implement LDR model for XNOR gate (`sg13g2_xnor2_1`)
-- [x] Update modeling guidelines and migrate models to V2 (Substrate split, new color mapping, and Y-offsets)
-- [x] Add rectangle area to standard cell details specification
-- [x] Add GitHub Pages link to README
+- [x] Automate the generation of LDR models from LEF coordinates
+- [x] Implement LDR model for D-Latch (`sg13g2_dlhq_1`)
+- [x] Implement LDR model for NAND3 (`sg13g2_nand3_1`)
+- [x] Implement LDR model for MUX4 (`sg13g2_mux4_1`)
+- [x] Implement LDR model for Buffer (`sg13g2_buf_4`)
 
 ## Next 5 Steps
-- [ ] Automate the generation of LDR models from LEF coordinates
-- [ ] Implement LDR model for D-Latch (`sg13g2_dlrbp_1`)
-- [ ] Implement LDR model for Adder (`sg13g2_fa_1`)
-- [ ] Implement LDR model for Decoders (`sg13g2_dec24_1`)
-- [ ] Implement LDR model for Clock Buffer (`sg13g2_clkbuf_1`)
+- [ ] Implement LDR model for 3-input AND gate (`sg13g2_and3_1`)
+- [ ] Implement LDR model for 3-input OR gate (`sg13g2_or3_1`)
+- [ ] Implement LDR model for 4-input AND gate (`sg13g2_and4_1`)
+- [ ] Implement LDR model for 4-input OR gate (`sg13g2_or4_1`)
+- [ ] Refine automation script for complex pin geometries
