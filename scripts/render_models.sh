@@ -9,7 +9,7 @@ MODELS_DIR="$(pwd)/models"
 LOG_FILE="$(pwd)/ldview_render.log"
 
 mkdir -p "$OUTPUT_DIR"
-rm -f "$OUTPUT_DIR"/*.jpg "$OUTPUT_DIR"/*.mp4
+rm -f "$OUTPUT_DIR"/*.jpg
 
 for file in "$MODELS_DIR"/*.ldr; do
     filename=$(basename "$file" .ldr)
@@ -46,28 +46,6 @@ for file in "$MODELS_DIR"/*.ldr; do
         fi
     done
 
-    # Rotation frames for video
-    TEMP_DIR="$(pwd)/temp_${filename}"
-    mkdir -p "$TEMP_DIR"
-    echo "  Rendering 36 rotation frames..."
-    for i in $(seq 0 35); do
-        lon=$((i * 10))
-        printf -v frame "%02d" $i
-        if ! "$LDVIEW_BIN" -SaveSnapshot="$TEMP_DIR/frame_${frame}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Longitude=$lon -Latitude=30 "$file" > "$LOG_FILE" 2>&1; then
-             echo "  Error rendering frame ${frame} for $filename"
-             cat "$LOG_FILE"
-        fi
-    done
-
-    # Verify frames and generate video
-    if [ -f "$TEMP_DIR/frame_00.jpg" ]; then
-        echo "  Generating video..."
-        ffmpeg -y -r 10 -i "$TEMP_DIR/frame_%02d.jpg" -vcodec libx264 -crf 25 -pix_fmt yuv420p "$OUTPUT_DIR/${filename}.mp4" > /dev/null 2>&1
-    else
-        echo "  Warning: No frames generated for $filename, skipping video."
-    fi
-
-    rm -rf "$TEMP_DIR"
 done
 
 rm -f "$LOG_FILE"

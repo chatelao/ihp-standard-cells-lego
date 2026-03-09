@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 libosmesa6-dev ffmpeg xvfb
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 libosmesa6-dev xvfb
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
@@ -34,7 +34,7 @@ jobs:
           mkdir -p ~/.config/LDView/
           touch ~/.config/LDView/ldviewrc
 
-      - name: Render models and generate videos
+      - name: Render models
         run: |
           chmod +x scripts/render_models.sh
           xvfb-run -a -s "-screen 0 800x600x24" ./scripts/render_models.sh

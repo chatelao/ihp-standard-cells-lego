@@ -56,7 +56,7 @@ def generate_gallery():
             gap: 2px;
             background-color: #1a1a1a;
         }
-        .view-grid img, .view-grid video {
+        .view-grid img {
             width: 100%;
             aspect-ratio: 4 / 3;
             object-fit: cover;
@@ -117,9 +117,6 @@ def generate_gallery():
             {'suffix': '_side', 'label': 'Side'}
         ]
 
-        mp4_file = f"{name}.mp4"
-        has_mp4 = os.path.exists(os.path.join(image_dir, mp4_file))
-
         html_content += f'        <div class="card">\n'
         html_content += f'            <div class="view-grid">\n'
 
@@ -127,12 +124,7 @@ def generate_gallery():
             jpg_name = f"{name}{view['suffix']}.jpg"
             has_jpg = os.path.exists(os.path.join(image_dir, jpg_name))
 
-            if i == 0 and has_mp4:
-                poster = f' poster="{image_dir}/{jpg_name}"' if has_jpg else ''
-                html_content += f'                <video autoplay loop muted playsinline{poster}>\n'
-                html_content += f'                    <source src="{image_dir}/{mp4_file}" type="video/mp4">\n'
-                html_content += f'                </video>\n'
-            elif has_jpg:
+            if has_jpg:
                 html_content += f'                <img src="{image_dir}/{jpg_name}" alt="{name} {view["label"]}">\n'
             else:
                 html_content += f'                <div class="placeholder">{view["label"]}<br>pending</div>\n'
@@ -144,8 +136,6 @@ def generate_gallery():
         html_content += f'                    <a href="models/{ldr_file}" target="_blank">LDR</a>\n'
         if os.path.exists(os.path.join(image_dir, f"{name}.jpg")):
             html_content += f'                    <a href="images/{name}.jpg" target="_blank">JPG</a>\n'
-        if has_mp4:
-            html_content += f'                    <a href="images/{mp4_file}" target="_blank">MP4</a>\n'
         html_content += f'                    <a href="{spec_file}#{name}" target="_blank">Spec</a>\n'
         html_content += f'                </div>\n'
         html_content += f'            </div>\n'
