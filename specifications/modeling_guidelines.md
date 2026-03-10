@@ -18,8 +18,8 @@ The models are designed on a grid where LEGO studs represent the physical dimens
     - **Layer 2 (Y=-8):** Substrate high, N-Well.
     - **Layer 3 (Y=-16):** Active Regions (Diffusion).
     - **Layer 4 (Y=-24):** Polysilicon (Gates).
-    - **Layer 5 (Y=-32):** Metal 1, Rails, and Contacts.
-    - **Layer 6 (Y=-56):** Metal 2 and Vias.
+    - **Layer 5 (Y=-56):** Metal 1, Rails, and Contacts.
+    - **Layer 6 (Y=-88):** Metal 2 and Vias.
 
 ## 2. Layer to Color Mapping (V3)
 We use standard LDraw colors to represent different semiconductor layers.
