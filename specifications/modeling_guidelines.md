@@ -22,18 +22,18 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 ## 2. Layer to Color Mapping
 We use standard LDraw colors to represent different semiconductor layers.
 
-| Layer | LEGO Color | LDU Range | LDraw Color ID | LDraw Y Offset | Description |
+| Layer | LEGO Color | LDU height | LDraw Color ID | LDraw Y Offset | Description |
 |-------|------------|-----------|----------------|----------------|-------------|
-| Substrate (low) | Dark Gray | 0 to 8 | 8 | 0 | Base plate over the whole cell. |
-| Substrate (high)| Dark Gray | 9 to 16 | 8 | -8 | Second layer where no N-Well is present. |
-| N-Well | Light Gray | 9 to 16 | 7 | -8 | N-Well region (PMOS). |
-| Diffusion (PMOS)| Dark Green | 17 to 24 | 288 | -16 | Active area in P-substrate. |
-| Diffusion (NMOS)| Dark Blue  | 17 to 24 | 38 | -16 | Active area in N-Well. |
-| Polysilicon | Red | 25 to 32 | 4 | -24 | Gate material. |
-| Vias / Contacts | Black | 33 to 56 | 0 | Pattern-based | 1x1 ROUND studs or plates. |
-| Metal 1 | Yellow | 57 to 64 | 1 | -16 | First metal interconnect layer. |
-| VDD Rail | White | 57 to 64 | 14 | -8 | Power supply rail. |
-| VSS Rail | Black | 57 to 64 | 0 | -8 | Ground rail. |
+| Substrate (low) | Dark Gray |  8 | 8 | 0 | Base plate over the whole cell. |
+| Substrate (high)| Dark Gray | 8 | 8 | -8 | Second layer where no N-Well is present. |
+| N-Well | Light Gray | 8 | 7 | -8 | N-Well region (PMOS). |
+| Diffusion (PMOS)| Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
+| Diffusion (NMOS)| Dark Blue  | 8 | 38 | -16 | Active area in N-Well. |
+| Polysilicon | Red | 8 | 4 | -24 | Gate material. |
+| Vias / Contacts | Black | 24 | 0 | -24 | 1x1 ROUND studs or plates. |
+| Metal 1 | Yellow | 8 | 1 | -56 | First metal interconnect layer. |
+| VDD Rail | White | 8 | 14 | -56 | Power supply rail. |
+| VSS Rail | Black | 8 | 0 | -56 | Ground rail. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
