@@ -14,26 +14,29 @@ The models are designed on a grid where LEGO studs represent the physical dimens
   - Layers are stacked from bottom to top.
   - In LDraw, the negative Y direction is "up".
   - Standard stacking offsets (for visual clarity):
-    - **Substrate:** Y=0
-    - **Power/Ground Rails (Metal 1):** Y=-8
-    - **Signal Pins (Metal 1):** Y=-16
+    - **Layer 1 (Substrate low):** Y=0
+    - **Layer 2 (Substrate high/Rails/N-Well):** Y=-8
+    - **Layer 3 (Diffusion/Metal 1/Contacts):** Y=-16
+    - **Layer 4 (Polysilicon/Metal 2):** Y=-24
   - Higher layers typically follow a pattern of an additional -8 LDU (one plate height) offset per layer.
 
 ## 2. Layer to Color Mapping
 We use standard LDraw colors to represent different semiconductor layers.
 
-| Layer | LEGO Color | LDU Range | LDraw Color ID | LDraw Y Offset | Description |
-|-------|------------|-----------|----------------|----------------|-------------|
-| Substrate (low) | Dark Gray | 0 to 8 | 8 | 0 | Base plate over the whole cell. |
-| Substrate (high)| Dark Gray | 9 to 16 | 8 | -8 | Second layer where no N-Well is present. |
-| N-Well | Light Gray | 9 to 16 | 7 | -8 | N-Well region (PMOS). |
-| Diffusion (NMOS)| Dark Green | 17 to 24 | 288 | -16 | Active area in P-substrate. |
-| Diffusion (PMOS)| Dark Blue  | 17 to 24 | 38 | -16 | Active area in N-Well. |
-| Polysilicon | Red | 25 to 32 | 4 | -24 | Gate material. |
-| Vias / Contacts | Black | 33 to 56 | 0 | Pattern-based | 1x1 ROUND studs or plates. |
-| Metal 1 | Yellow | 57 to 64 | 1 | -16 | First metal interconnect layer. |
-| VDD Rail | White | 57 to 64 | 14 | -8 | Power supply rail. |
-| VSS Rail | Black | 57 to 64 | 0 | -8 | Ground rail. |
+| Layer # | Component | LEGO Color | LDU Range | LDraw Color ID | LDraw Y Offset | Description |
+|---------|-----------|------------|-----------|----------------|----------------|-------------|
+| 1 | Substrate (low) | Dark Gray | 0 to 8 | 8 | 0 | Base plate over the whole cell. |
+| 2 | Substrate (high)| Dark Gray | 8 to 16 | 8 | -8 | Second layer where no N-Well is present. |
+| 2 | N-Well | Light Gray | 8 to 16 | 7 | -8 | N-Well region (PMOS). |
+| 2 | VDD Rail | Yellow | 8 to 16 | 14 | -8 | Power supply rail (Metal 1). |
+| 2 | VSS Rail | Black | 8 to 16 | 0 | -8 | Ground rail (Metal 1). |
+| 3 | Diffusion (NMOS)| Dark Green | 16 to 24 | 288 | -16 | Active area in P-substrate. |
+| 3 | Diffusion (PMOS)| Dark Orange| 16 to 24 | 38 | -16 | Active area in N-Well. |
+| 3 | Metal 1 | Blue | 16 to 24 | 1 | -16 | First metal interconnect layer. |
+| 3 | Contacts | White | 16 to 24 | 15 | -16 | Physical interface between active regions and Metal 1. |
+| 4 | Polysilicon | Red | 24 to 32 | 4 | -24 | Gate material. |
+| 4 | Metal 2 | Green | 24 to 32 | 2 | -24 | Second metal interconnect layer. |
+| 2-4 | Vias / Contacts | Black | 8 to 32 | 0 | Bridge | 1x1 ROUND bricks (part 3062b) to bridge layers. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
