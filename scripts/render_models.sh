@@ -23,19 +23,19 @@ for file in "$MODELS_DIR"/*.ldr; do
 
     # Top image
     echo "  Rendering top image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_top.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Latitude=90 -Longitude=0 "$file" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_top.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=90 -Longitude=0 "$file" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render top image for $filename"
     fi
 
     # Front image
     echo "  Rendering front image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_front.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Latitude=0 -Longitude=0 "$file" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_front.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=0 "$file" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render front image for $filename"
     fi
 
     # Side image
     echo "  Rendering side image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_side.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Latitude=0 -Longitude=90 "$file" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_side.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=90 "$file" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render side image for $filename"
     fi
 
