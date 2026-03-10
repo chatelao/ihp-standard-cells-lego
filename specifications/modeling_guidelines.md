@@ -24,7 +24,7 @@ We use standard LDraw colors to represent different semiconductor layers.
 
 | Layer | LEGO Color | LDU height | LDraw Color ID | LDraw Y Offset | Description |
 |-------|------------|-----------|----------------|----------------|-------------|
-| Substrate (low) | Dark Gray |  8 | 8 | 0 | Base plate over the whole cell. |
+| Substrate (low) | Dark Gray |  8 | 8 | 0 | One single plate around the whole cell. |
 | Substrate (high)| Dark Gray | 8 | 8 | -8 | Second layer where no N-Well is present. |
 | N-Well | Light Gray | 8 | 7 | -8 | N-Well region (PMOS). |
 | Diffusion (PMOS)| Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
