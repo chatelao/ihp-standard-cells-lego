@@ -168,6 +168,7 @@ def generate_ldr(macro_data):
             ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_off} {Y_SUBSTRATE_LOW} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # 2. Substrate high
+    ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Substrate high")
     # Align N-Well split to 20 LDU grid
     split_z = ((height_ldu // 2) // 20) * 20
@@ -186,6 +187,7 @@ def generate_ldr(macro_data):
 
     # 3. Pins and Rails
     for pin in macro_data['pins']:
+        ldr_lines.append("0 STEP")
         ldr_lines.append(f"0 // Pin {pin['name']}")
         color = COLOR_METAL1
         if pin['name'] == 'VDD': color = COLOR_VDD
@@ -215,6 +217,7 @@ def generate_ldr(macro_data):
 
     # 4. Obstructions
     if macro_data['obs']:
+        ldr_lines.append("0 STEP")
         ldr_lines.append("0 // Obstructions")
         for rect in macro_data['obs']:
             x1, y1, x2, y2 = rect['coords']

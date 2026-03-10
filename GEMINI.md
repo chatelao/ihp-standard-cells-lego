@@ -11,6 +11,6 @@
 - /specifications - Convert "non .md" files for caching and readability purpose to Markdown here
 - /models - The LEGO LDR models of the cells
 - /images - The rendered LEGO models
-- /instructions - The instruction how to build the LEGO model as PDF
+- /instructions - The automated instructions how to build the LEGO model as PDF
 - /.github/workflows - For every push on every branch, re-render all models to images and instructions
 - README.md - Update overview of the product
