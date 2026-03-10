@@ -42,7 +42,7 @@ Y_POLY = -24
 
 def get_best_plates(width_ldu, depth_ldu):
     """
-    Greedily tile the given area with standard LEGO plates.
+    Greedily tile the given area with standard LEGO plates using a coverage map.
     Returns a list of (plate_file, x_offset_ldu, z_offset_ldu, is_rotated).
     """
     w_studs = round(width_ldu / 20)
@@ -51,67 +51,43 @@ def get_best_plates(width_ldu, depth_ldu):
     if w_studs == 0: w_studs = 1
     if d_studs == 0: d_studs = 1
 
+    covered = [[False for _ in range(d_studs)] for _ in range(w_studs)]
     tiles = []
 
-    # Simple 2D greedy tiling (can be improved, but sufficient for standard cells)
-    remaining_d = d_studs
-    curr_z_studs = 0
+    # Sort plates by area descending (already done in PLATES constant, but just in case)
+    sorted_plates = sorted(PLATES, key=lambda x: x[0]*x[1], reverse=True)
 
-    while remaining_d > 0:
-        # Determine height of the current row of plates
-        best_row_h = 0
-        for pw, pd, pfile in PLATES:
-            if pd <= remaining_d:
-                best_row_h = max(best_row_h, pd)
-            if pw <= remaining_d:
-                best_row_h = max(best_row_h, pw)
+    for z in range(d_studs):
+        for x in range(w_studs):
+            if not covered[x][z]:
+                best_p = None
+                # Try plates in order of size
+                for pw, pd, pfile in sorted_plates:
+                    # Normal orientation
+                    if x + pw <= w_studs and z + pd <= d_studs:
+                        if all(not covered[ix][iz] for ix in range(x, x+pw) for iz in range(z, z+pd)):
+                            best_p = (pw, pd, pfile, False)
+                            break
+                    # Rotated orientation
+                    if x + pd <= w_studs and z + pw <= d_studs:
+                        if all(not covered[ix][iz] for ix in range(x, x+pd) for iz in range(z, z+pw)):
+                            best_p = (pw, pd, pfile, True)
+                            break
 
-        if best_row_h == 0: break # Should not happen with 1x1 plates available
+                if best_p:
+                    pw, pd, pfile, rotated = best_p
+                    rw = pd if rotated else pw
+                    rd = pw if rotated else pd
+                    for ix in range(x, x+rw):
+                        for iz in range(z, z+rd):
+                            covered[ix][iz] = True
 
-        remaining_w = w_studs
-        curr_x_studs = 0
-
-        while remaining_w > 0:
-            best_plate = None
-            is_rotated = False
-
-            # Try to find the largest plate that fits in remaining width AND row height
-            for pw, pd, pfile in PLATES:
-                if pw <= remaining_w and pd <= best_row_h:
-                    best_plate = (pw, pd, pfile)
-                    is_rotated = False
-                    break
-                if pd <= remaining_w and pw <= best_row_h:
-                    best_plate = (pw, pd, pfile)
-                    is_rotated = True
-                    break
-
-            if not best_plate:
-                # If nothing fits the row height perfectly, use the largest possible width-wise
-                for pw, pd, pfile in PLATES:
-                    if pw <= remaining_w:
-                        best_plate = (pw, pd, pfile)
-                        is_rotated = False
-                        break
-                    if pd <= remaining_w:
-                        best_plate = (pw, pd, pfile)
-                        is_rotated = True
-                        break
-
-            pw, pd, pfile = best_plate
-            real_w = pd if is_rotated else pw
-            real_d = pw if is_rotated else pd
-
-            x_off = curr_x_studs * 20 + (real_w * 20) // 2
-            z_off = curr_z_studs * 20 + (real_d * 20) // 2
-
-            tiles.append((pfile, x_off, z_off, is_rotated))
-
-            remaining_w -= real_w
-            curr_x_studs += real_w
-
-        remaining_d -= best_row_h
-        curr_z_studs += best_row_h
+                    x_off = x * 20 + (rw * 20) // 2
+                    z_off = z * 20 + (rd * 20) // 2
+                    tiles.append((pfile, x_off, z_off, rotated))
+                else:
+                    # Should not happen as 1x1 is in PLATES
+                    covered[x][z] = True
 
     return tiles
 
@@ -193,10 +169,12 @@ def generate_ldr(macro_data):
 
     # 2. Substrate high
     ldr_lines.append("0 // Substrate high")
+    # Align N-Well split to 20 LDU grid
+    split_z = ((height_ldu // 2) // 20) * 20
     for plate, x_off, z_off, rotated in tiles:
-        # Determine if N-Well (Simplified: assume top half is PMOS/N-Well)
+        # Determine if N-Well (assume top half is PMOS/N-Well)
         color = COLOR_SUBSTRATE
-        if z_off > (height_ldu // 2):
+        if z_off > split_z:
             color = COLOR_NWELL
 
         if rotated:

@@ -13,27 +13,29 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 - **Vertical Scale (Y):** Each physical layer is represented by a LEGO Plate (1/3 of a brick height).
   - Layers are stacked from bottom to top.
   - In LDraw, the negative Y direction is "up".
-  - Standard stacking offsets (for visual clarity):
-    - **Substrate:** Y=0
-    - **Power/Ground Rails (Metal 1):** Y=-8
-    - **Signal Pins (Metal 1):** Y=-16
-  - Higher layers typically follow a pattern of an additional -8 LDU (one plate height) offset per layer.
+  - Standard stacking offsets (V2):
+    - **Layer 1 (Y=0):** Substrate base.
+    - **Layer 2 (Y=-8):** Substrate high, N-Well, and Power Rails (VDD/VSS).
+    - **Layer 3 (Y=-16):** Active Regions (Diffusion), Metal 1 (Pins), and Contacts.
+    - **Layer 4 (Y=-24):** Polysilicon (Gates) and Metal 2.
 
-## 2. Layer to Color Mapping
+## 2. Layer to Color Mapping (V2)
 We use standard LDraw colors to represent different semiconductor layers.
 
-| Layer | LEGO Color | LDU height | LDraw Color ID | LDraw Y Offset | Description |
+| Layer | LEGO Color | LDU Range | LDraw Color ID | LDraw Y Offset | Description |
 |-------|------------|-----------|----------------|----------------|-------------|
-| Substrate (low) | Dark Gray |  8 | 8 | 0 | One single plate around the whole cell. |
-| Substrate (high)| Dark Gray | 8 | 8 | -8 | Second layer where no N-Well is present. |
-| N-Well | Light Gray | 8 | 7 | -8 | N-Well region (PMOS). |
-| Diffusion (PMOS)| Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
-| Diffusion (NMOS)| Dark Blue  | 8 | 38 | -16 | Active area in N-Well. |
+| Substrate (low) | Dark Gray | 8 | 8 | 0 | Bottom substrate layer. |
+| Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate layer (NMOS region). |
+| N-Well | Light Gray | 8 | 7 | -8 | N-Well region (PMOS region). |
+| VDD Rail | Yellow | 8 | 14 | -8 | Power supply rail. |
+| VSS Rail | Black | 8 | 0 | -8 | Ground rail. |
+| Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
+| Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well. |
+| Metal 1 (Pins) | Blue | 8 | 1 | -16 | Signal pins and first metal layer. |
+| Contacts | White | 8 | 15 | -16 | Visual interface between Active and Metal 1. |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material. |
-| Vias / Contacts | Black | 24 | 0 | -24 | 1x1 ROUND studs or plates. |
-| Metal 1 | Yellow | 8 | 1 | -56 | First metal interconnect layer. |
-| VDD Rail | White | 8 | 14 | -56 | Power supply rail. |
-| VSS Rail | Black | 8 | 0 | -56 | Ground rail. |
+| Metal 2 | Green | 8 | 2 | -24 | Second metal interconnect layer. |
+| Vias | Black | 24 | 0 | -24 | Vertical connections (1x1 round brick). |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
@@ -50,4 +52,5 @@ Based on 1 Stud = 0.48 µm:
 - If a geometry is not a multiple of 0.48 µm, round to the nearest LDraw unit or use the closest LEGO plate size.
 - **Multi-Rectangle Geometries:** When a pin or obstruction is defined by multiple rectangles in the LEF, model them as a collection of LEGO plates. Ensure they are logically connected or stacked at the same Y-offset.
 - **Vertical Orientation:** To rotate a 1xN plate from the X-axis (horizontal) to the Z-axis (vertical height in the cell), use the rotation matrix `0 0 1 0 1 0 -1 0 0`.
-- VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis). Full rail representation requires both a main horizontal rail and any vertical spurs/branches defined in the LEF.
+- VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis) at Y=-8.
+- **Header Comment:** Every LDR file must start with the comment `0 // Substrate low (V2)` for verification.
