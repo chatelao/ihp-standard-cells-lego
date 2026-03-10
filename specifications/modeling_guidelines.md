@@ -25,17 +25,17 @@ We use standard LDraw colors to represent different semiconductor layers.
 | Layer | LEGO Color | LDU Range | LDraw Color ID | LDraw Y Offset | Description |
 |-------|------------|-----------|----------------|----------------|-------------|
 | Substrate (low) | Dark Gray | 8 | 8 | 0 | Bottom substrate layer. |
-| Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate layer (NMOS region). |
-| N-Well | Light Gray | 8 | 7 | -8 | N-Well region (PMOS region). |
-| VDD Rail | Yellow | 8 | 14 | -8 | Power supply rail. |
-| VSS Rail | Black | 8 | 0 | -8 | Ground rail. |
+| Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate layer (PMOS region). |
+| N-Well | Light Gray | 8 | 7 | -8 | N-Well region (NMOS region). |
 | Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
 | Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well. |
-| Metal 1 (Pins) | Blue | 8 | 1 | -16 | Signal pins and first metal layer. |
-| Contacts | White | 8 | 15 | -16 | Visual interface between Active and Metal 1. |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material. |
-| Metal 2 | Green | 8 | 2 | -24 | Second metal interconnect layer. |
-| Vias | Black | 24 | 0 | -24 | Vertical connections (1x1 round brick). |
+| Contacts | White | 8 | 15 | -48 | Visual interface between Active and Metal 1. |
+| Metal 1 (Pins) | Blue | 8 | 1 | -56 | Signal pins and first metal layer. |
+| VDD Rail | Yellow | 8 | 14 | -56 | Power supply rail. |
+| VSS Rail | Black | 8 | 0 | -56 | Ground rail. |
+| Vias | Light Blue | 24 | 0 | -24 | Vertical connections (1x1 round brick). |
+| Metal 2 | Green | 8 | 2 | -80 | Second metal interconnect layer. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
