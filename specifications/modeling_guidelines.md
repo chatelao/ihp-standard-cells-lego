@@ -32,12 +32,12 @@ We use standard LDraw colors to represent different semiconductor layers.
 | Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
 | Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well. |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material. |
-| Contacts | White | 24 | 15 | -32 | 1x1 round brick bridging Active to Metal 1. |
-| Metal 1 (Pins) | Blue | 8 | 1 | -32 | Signal pins and first metal layer. |
-| VDD Rail | Yellow | 8 | 14 | -32 | Power supply rail. |
-| VSS Rail | Black | 8 | 0 | -32 | Ground rail. |
-| Vias | Black | 24 | 0 | -56 | 1x1 round brick bridging Metal 1 to Metal 2. |
-| Metal 2 | Green | 8 | 2 | -56 | Second metal interconnect layer. |
+| Contacts | White | 24 | 15 | -48 | 1x1 round brick bridging Active to Metal 1. |
+| Metal 1 (Pins) | Blue | 8 | 1 | -56| Signal pins and first metal layer. |
+| VDD Rail | Yellow | 8 | 14 | -56 | Power supply rail. |
+| VSS Rail | Black | 8 | 0 | -56 | Ground rail. |
+| Vias | Black | 24 | 0 | -80 | 1x1 round brick bridging Metal 1 to Metal 2. |
+| Metal 2 | Green | 8 | 2 | -88 | Second metal interconnect layer. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
