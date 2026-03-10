@@ -27,8 +27,8 @@ We use standard LDraw colors to represent different semiconductor layers.
 | Substrate (low) | Dark Gray | 0 to 8 | 8 | 0 | Base plate over the whole cell. |
 | Substrate (high)| Dark Gray | 9 to 16 | 8 | -8 | Second layer where no N-Well is present. |
 | N-Well | Light Gray | 9 to 16 | 7 | -8 | N-Well region (PMOS). |
-| Diffusion (NMOS)| Dark Green | 17 to 24 | 288 | -16 | Active area in P-substrate. |
-| Diffusion (PMOS)| Dark Blue  | 17 to 24 | 38 | -16 | Active area in N-Well. |
+| Diffusion (PMOS)| Dark Green | 17 to 24 | 288 | -16 | Active area in P-substrate. |
+| Diffusion (NMOS)| Dark Blue  | 17 to 24 | 38 | -16 | Active area in N-Well. |
 | Polysilicon | Red | 25 to 32 | 4 | -24 | Gate material. |
 | Vias / Contacts | Black | 33 to 56 | 0 | Pattern-based | 1x1 ROUND studs or plates. |
 | Metal 1 | Yellow | 57 to 64 | 1 | -16 | First metal interconnect layer. |
