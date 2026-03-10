@@ -13,7 +13,7 @@ def verify_ldr(filepath):
     found_y_levels = set()
 
     for line in lines:
-        if line.startswith('0 // Substrate low (V2)'):
+        if line.startswith('0 // Substrate low (V3)'):
             has_substrate_low = True
 
         match = re.match(r'^1\s+(\d+)\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)\s+', line)
@@ -24,28 +24,34 @@ def verify_ldr(filepath):
             found_colors.add(color)
             found_y_levels.add(y)
 
-            # Check specific layer mappings
+            # Check specific layer mappings (V3)
             if y == 0:
                 if color != 8:
                     errors.append(f"Invalid color {color} at Y=0 (expected 8)")
             elif y == -8:
-                if color not in [8, 7, 14, 0]:
-                    errors.append(f"Invalid color {color} at Y=-8 (expected 8, 7, 14, or 0)")
+                if color not in [8, 7]:
+                    errors.append(f"Invalid color {color} at Y=-8 (expected 8 or 7)")
             elif y == -16:
-                if color not in [288, 38, 1, 15]:
-                    errors.append(f"Invalid color {color} at Y=-16 (expected 288, 38, 1, or 15)")
-            elif y == -24:
-                if color not in [4, 2]:
-                    errors.append(f"Invalid color {color} at Y=-24 (expected 4 or 2)")
+                if color not in [288, 38, 15]:
+                    errors.append(f"Invalid color {color} at Y=-16 (expected 288, 38, or 15)")
+            elif y == -32:
+                if color not in [1, 14, 0, 15]:
+                    errors.append(f"Invalid color {color} at Y=-32 (expected 1, 14, 0, or 15)")
+            elif y == -56:
+                if color != 2:
+                    errors.append(f"Invalid color {color} at Y=-56 (expected 2)")
 
     if not has_substrate_low:
-        errors.append("Missing 'Substrate low (V2)' marker")
+        errors.append("Missing 'Substrate low (V3)' marker")
 
-    # Check if we have at least some expected colors
     if 8 not in found_colors:
         errors.append("Missing color 8 (Substrate)")
     if -8 not in found_y_levels:
         errors.append("Missing Y=-8 layer")
+    if -16 not in found_y_levels:
+        errors.append("Missing Y=-16 layer (Diffusion)")
+    if -32 not in found_y_levels:
+        errors.append("Missing Y=-32 layer (Metal 1)")
 
     return errors
 

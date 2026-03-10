@@ -14,6 +14,10 @@
   - Configured GitHub Actions for automated headless rendering and documentation deployment.
 - [x] **Phase 5: Building Instructions**
   - Implemented automated generation of multi-page PDF building instructions for the entire library.
+- [x] **Phase 6: V3 Modeling Standard**
+  - Updated stacking to avoid "lego in lego" overlaps and improved vertical separation.
+  - Implemented automatic diffusion strip generation and contact bricks.
+  - Migrated the entire 84-cell library to the V3 standard.
 
 ## Future Work
 - [ ] Implement advanced modeling for custom macros and analog blocks.
