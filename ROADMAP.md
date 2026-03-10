@@ -9,7 +9,8 @@
   - Automated the generation of all 84 standard cell LDR models.
 - [x] **Phase 3: Verification & Quality Assurance**
   - Implemented a V2 verification suite (`scripts/verify_models_v2.py`) and validated the entire library.
-  - Integrated visual regression testing for the project gallery.
+  - Fixed spatial mapping verification to correctly isolate pin components from obstructions.
+  - Integrated visual regression testing for the project gallery and updated `index.html`.
 - [x] **Phase 4: CI/CD & Deployment**
   - Configured GitHub Actions for automated headless rendering and documentation deployment.
 

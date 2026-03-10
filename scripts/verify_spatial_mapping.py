@@ -44,6 +44,9 @@ def get_ldr_pins_spatial(ldr_filepath):
             if current_pin not in pins_found:
                 pins_found[current_pin] = []
             continue
+        elif line.startswith('0 //'):
+            current_pin = None
+            continue
 
         # Match LDraw part line: 1 <color> <x> <y> <z> ...
         part_match = re.match(r'^1\s+\d+\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)', line)
