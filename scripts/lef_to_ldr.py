@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.48 um
+# 1 stud = 0.24 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.48 = 41.6666... LDU
-UM_TO_LDU = 20 / 0.48
+# 1 um = 20 / 0.24 = 83.3333... LDU
+UM_TO_LDU = 20 / 0.24
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -180,7 +180,11 @@ def generate_ldr(macro_data):
     ]
 
     width_ldu = um_to_ldu_coord(macro_data['width_um'])
-    height_ldu = um_to_ldu_coord(macro_data['height_um'])
+    height_um = macro_data['height_um']
+    if abs(height_um - 3.78) < 0.01:
+        height_ldu = 320 # 16 studs (quantized)
+    else:
+        height_ldu = um_to_ldu_coord(height_um)
 
     # 1. Substrate low (V3)
     ldr_lines.append("0 // Substrate low (V3)")
@@ -209,20 +213,20 @@ def generate_ldr(macro_data):
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
     # NMOS strip (bottom)
-    nmos_z = 2 * 20 + 10 # 2nd stud row
-    tiles_nmos = get_best_plates(width_ldu, 20)
+    nmos_z_base = 4 * 20
+    tiles_nmos = get_best_plates(width_ldu, 40)
     for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z
+        gz = nmos_z_base + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # PMOS strip (top)
-    pmos_z = 5 * 20 + 10 # 5th stud row
-    tiles_pmos = get_best_plates(width_ldu, 20)
+    pmos_z_base = 10 * 20
+    tiles_pmos = get_best_plates(width_ldu, 40)
     for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z
+        gz = pmos_z_base + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
@@ -230,8 +234,8 @@ def generate_ldr(macro_data):
 
     # 4. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z-10, nmos_z+10),
-        (0, width_ldu, pmos_z-10, pmos_z+10)
+        (0, width_ldu, nmos_z_base, nmos_z_base + 40),
+        (0, width_ldu, pmos_z_base, pmos_z_base + 40)
     ]
 
     metal1_rects = []

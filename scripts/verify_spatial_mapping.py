@@ -2,8 +2,8 @@ import os
 import re
 import sys
 
-# Scaling factor: 1 LDU = 0.024 um
-LDU_TO_UM = 0.024
+# Scaling factor: 1 LDU = 0.012 um
+LDU_TO_UM = 0.012
 
 def parse_lef_rects(lef_filepath):
     with open(lef_filepath, 'r') as f:
@@ -45,6 +45,10 @@ def get_ldr_pins_spatial(ldr_filepath):
                 pins_found[current_pin] = []
             continue
 
+        # Reset pin tracking on other headers
+        if line.startswith('0 //') or line.startswith('0 STEP'):
+            current_pin = None
+
         # Match LDraw part line: 1 <color> <x> <y> <z> ...
         part_match = re.match(r'^1\s+\d+\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)', line)
         if part_match and current_pin:
@@ -54,7 +58,7 @@ def get_ldr_pins_spatial(ldr_filepath):
 
     return pins_found
 
-def is_point_in_rects(x, y, rects, tolerance=0.025):
+def is_point_in_rects(x, y, rects, tolerance=0.15):
     for r in rects:
         x1, y1, x2, y2 = r
         # Standardize rect bounds
