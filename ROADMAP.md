@@ -19,6 +19,11 @@
 - [x] Refine modeling guidelines based on initial model feedback
 - [x] Automate the generation of LDR models from LEF coordinates
 - [x] Refine automation script for complex pin geometries
+- [x] Implement LDR model for 3-input NAND gate (`sg13g2_nand3_1`) (V2 Migration)
+- [x] Implement LDR model for 3-input NOR gate (`sg13g2_nor3_1`)
+- [x] Implement LDR model for 4-input NAND gate (`sg13g2_nand4_1`)
+- [x] Implement LDR model for 4-input NOR gate (`sg13g2_nor4_1`)
+- [x] Remove animations from workflows and GitHub Pages
 
 ## Next 5 Steps
 - [ ] Implement all standard cell LDR models

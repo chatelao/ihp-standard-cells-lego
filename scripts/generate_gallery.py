@@ -45,10 +45,6 @@ def generate_gallery():
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
         }
         .view-grid {
             display: grid;
