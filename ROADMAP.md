@@ -43,6 +43,7 @@
 - [x] Implement LDR model for 3-input NOR gate (`sg13g2_nor3_1`)
 - [x] Implement LDR model for 4-input NAND gate (`sg13g2_nand4_1`)
 - [x] Implement LDR model for 4-input NOR gate (`sg13g2_nor4_1`)
+- [x] Remove animations from workflows and GitHub Pages
 
 ## Next 5 Steps
 - [ ] Implement LDR model for 4-input AND gate (`sg13g2_and4_1`) (V2 Migration)
