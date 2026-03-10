@@ -48,7 +48,7 @@ def generate_gallery():
         }
         .view-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 2px;
             background-color: #1a1a1a;
         }
@@ -109,7 +109,6 @@ def generate_gallery():
         views = [
             {'suffix': '', 'label': 'Perspective'},
             {'suffix': '_top', 'label': 'Top'},
-            {'suffix': '_front', 'label': 'Front'},
             {'suffix': '_side', 'label': 'Side'}
         ]
 
