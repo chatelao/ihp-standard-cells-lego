@@ -3,6 +3,7 @@
 
 # Planning & Progress tracking
 - Keep an up to date file "ROADMAP.md" with the next 5 steps and all past steps having checkboxes.
+- If necessary split steps into 2-5 additional substeps if the complexity of the task is high.
 
 # Project structure
 - / - Keep only GEMINI.md, README.md and ROADMAP.md in the root directory
