@@ -12,6 +12,8 @@
   - Integrated visual regression testing for the project gallery.
 - [x] **Phase 4: CI/CD & Deployment**
   - Configured GitHub Actions for automated headless rendering and documentation deployment.
+- [x] **Phase 5: Building Instructions**
+  - Implemented automated generation of multi-page PDF building instructions for the entire library.
 
 ## Future Work
 - [ ] Implement advanced modeling for custom macros and analog blocks.
