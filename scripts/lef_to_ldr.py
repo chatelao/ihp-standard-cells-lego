@@ -2,7 +2,7 @@ import re
 import sys
 import os
 
-# Constants based on modeling_guidelines.md
+# Constants based on modeling_guidelines.md (V3)
 # 1 stud = 0.48 um
 # 1 stud = 20 LDU
 # 1 um = 20 / 0.48 = 41.6666... LDU
@@ -23,22 +23,50 @@ PLATES = [
     (1, 1, "3024.dat"),
 ]
 
-# LDraw Colors (V2)
+ROUND_BRICK = "3062b.dat" # 1x1 round brick
+
+# LDraw Colors (V3)
 COLOR_SUBSTRATE = 8      # Dark Gray
 COLOR_NWELL = 7         # Light Gray
 COLOR_ACTIVE_NMOS = 288 # Dark Green
 COLOR_ACTIVE_PMOS = 38  # Dark Orange
 COLOR_POLY = 4           # Red
 COLOR_METAL1 = 1         # Blue
+COLOR_METAL2 = 2         # Green
 COLOR_VDD = 14           # Yellow
 COLOR_VSS = 0            # Black
+COLOR_CONTACT = 15       # White
+COLOR_VIA = 0            # Black (per guidelines)
 
 # Y-Offsets (Negative is up in LDraw)
 Y_SUBSTRATE_LOW = 0
 Y_SUBSTRATE_HIGH = -8
-Y_RAILS = -8
-Y_PINS = -16
+Y_ACTIVE = -16
 Y_POLY = -24
+Y_METAL1 = -32
+Y_CONTACT = -32 # Base of round brick at Y=-32, goes down to -16?
+                # Actually, 1x1 round brick is 24 LDU high.
+                # If placed at Y=-32, it covers Y -32 to -8.
+                # To bridge -16 to -32, we should place it at -32 and it goes "down" to -16 if inverted?
+                # Normal: 1 <color> x y z 1 0 0 0 1 0 0 0 1 <part> -> y is top.
+                # Brick is 24 high. If top is at -32, bottom is at -8. (Wrong way)
+                # If we want to bridge -16 (Active) to -32 (Metal 1):
+                # The brick should be between -16 and -32.
+                # In LDraw, if we place it at Y=-32 with standard orientation, it goes from -32 down to -8.
+                # If we invert it: 1 <color> x -32 z 1 0 0 0 -1 0 0 0 -1 <part>
+                # Then it goes from -32 up to -56? No.
+                # Let's use standard: if top is at -32, it occupies -32 to -8.
+                # If we want it to occupy -16 to -32, we place top at -32 and it's 24 LDU high... wait.
+                # 1 LEGO brick = 24 LDU. 1 LEGO plate = 8 LDU.
+                # Y=0 (Substrate low)
+                # Y=-8 (Substrate high)
+                # Y=-16 (Active)
+                # Y=-24 (Poly)
+                # Y=-32 (Metal 1)
+                # Active is at -16. Metal 1 is at -32. Gap is 16 LDU.
+                # A 1x1 round brick is 24 LDU high. It will overlap.
+                # Actually, if we place it at Y=-32, it goes from -32 to -8. It covers -16. Perfect.
+Y_METAL2 = -56
 
 def get_best_plates(width_ldu, depth_ldu):
     """
@@ -54,21 +82,18 @@ def get_best_plates(width_ldu, depth_ldu):
     covered = [[False for _ in range(d_studs)] for _ in range(w_studs)]
     tiles = []
 
-    # Sort plates by area descending (already done in PLATES constant, but just in case)
+    # Sort plates by area descending
     sorted_plates = sorted(PLATES, key=lambda x: x[0]*x[1], reverse=True)
 
     for z in range(d_studs):
         for x in range(w_studs):
             if not covered[x][z]:
                 best_p = None
-                # Try plates in order of size
                 for pw, pd, pfile in sorted_plates:
-                    # Normal orientation
                     if x + pw <= w_studs and z + pd <= d_studs:
                         if all(not covered[ix][iz] for ix in range(x, x+pw) for iz in range(z, z+pd)):
                             best_p = (pw, pd, pfile, False)
                             break
-                    # Rotated orientation
                     if x + pd <= w_studs and z + pw <= d_studs:
                         if all(not covered[ix][iz] for ix in range(x, x+pd) for iz in range(z, z+pw)):
                             best_p = (pw, pd, pfile, True)
@@ -86,7 +111,6 @@ def get_best_plates(width_ldu, depth_ldu):
                     z_off = z * 20 + (rd * 20) // 2
                     tiles.append((pfile, x_off, z_off, rotated))
                 else:
-                    # Should not happen as 1x1 is in PLATES
                     covered[x][z] = True
 
     return tiles
@@ -158,8 +182,8 @@ def generate_ldr(macro_data):
     width_ldu = um_to_ldu_coord(macro_data['width_um'])
     height_ldu = um_to_ldu_coord(macro_data['height_um'])
 
-    # 1. Substrate low (V2)
-    ldr_lines.append("0 // Substrate low (V2)")
+    # 1. Substrate low (V3)
+    ldr_lines.append("0 // Substrate low (V3)")
     tiles = get_best_plates(width_ldu, height_ldu)
     for plate, x_off, z_off, rotated in tiles:
         if rotated:
@@ -167,13 +191,11 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_off} {Y_SUBSTRATE_LOW} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # 2. Substrate high
+    # 2. Substrate high / N-Well
     ldr_lines.append("0 STEP")
-    ldr_lines.append("0 // Substrate high")
-    # Align N-Well split to 20 LDU grid
+    ldr_lines.append("0 // Substrate high / N-Well")
     split_z = ((height_ldu // 2) // 20) * 20
     for plate, x_off, z_off, rotated in tiles:
-        # Determine if N-Well (assume top half is PMOS/N-Well)
         color = COLOR_SUBSTRATE
         if z_off > split_z:
             color = COLOR_NWELL
@@ -183,62 +205,142 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    ldr_lines.append("")
+    # 3. Active Regions (Simplified: horizontal strips)
+    ldr_lines.append("0 STEP")
+    ldr_lines.append("0 // Active Regions")
+    # NMOS strip (bottom)
+    nmos_z = 2 * 20 + 10 # 2nd stud row
+    tiles_nmos = get_best_plates(width_ldu, 20)
+    for plate, x_off, z_off, rotated in tiles_nmos:
+        gz = nmos_z
+        if rotated:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+        else:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # 3. Pins and Rails
+    # PMOS strip (top)
+    pmos_z = 5 * 20 + 10 # 5th stud row
+    tiles_pmos = get_best_plates(width_ldu, 20)
+    for plate, x_off, z_off, rotated in tiles_pmos:
+        gz = pmos_z
+        if rotated:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+        else:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+
+    # 4. Pins, Rails, and Contacts
+    active_regions = [
+        (0, width_ldu, nmos_z-10, nmos_z+10),
+        (0, width_ldu, pmos_z-10, pmos_z+10)
+    ]
+
+    metal1_rects = []
+
     for pin in macro_data['pins']:
         ldr_lines.append("0 STEP")
         ldr_lines.append(f"0 // Pin {pin['name']}")
         color = COLOR_METAL1
-        if pin['name'] == 'VDD': color = COLOR_VDD
-        elif pin['name'] == 'VSS': color = COLOR_VSS
+        is_rail = False
+        if pin['name'] == 'VDD':
+            color = COLOR_VDD
+            is_rail = True
+        elif pin['name'] == 'VSS':
+            color = COLOR_VSS
+            is_rail = True
 
         for rect in pin['rects']:
-            x1, y1, x2, y2 = rect['coords']
-            x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
-            x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
+            if rect['layer'] == 'Metal1':
+                x1, y1, x2, y2 = rect['coords']
+                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
+                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
 
-            w = abs(x2_ldu - x1_ldu)
-            h = abs(y2_ldu - y1_ldu)
+                xmin, xmax = min(x1_ldu, x2_ldu), max(x1_ldu, x2_ldu)
+                zmin, zmax = min(y1_ldu, y2_ldu), max(y1_ldu, y2_ldu)
 
-            rect_tiles = get_best_plates(w, h)
-            y_off = Y_PINS if color == COLOR_METAL1 else Y_RAILS
+                metal1_rects.append((xmin, xmax, zmin, zmax))
 
-            for plate, tx_off, tz_off, rotated in rect_tiles:
-                # Add local tile offsets to global rectangle base
-                gx = min(x1_ldu, x2_ldu) + tx_off
-                gz = min(y1_ldu, y2_ldu) + tz_off
+                w = xmax - xmin
+                h = zmax - zmin
+                rect_tiles = get_best_plates(w, h)
 
-                if rotated:
-                    ldr_lines.append(f"1 {color} {gx} {y_off} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
-                else:
-                    ldr_lines.append(f"1 {color} {gx} {y_off} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
-        ldr_lines.append("")
+                for plate, tx_off, tz_off, rotated in rect_tiles:
+                    gx = xmin + tx_off
+                    gz = zmin + tz_off
+                    if rotated:
+                        ldr_lines.append(f"1 {color} {gx} {Y_METAL1} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+                    else:
+                        ldr_lines.append(f"1 {color} {gx} {Y_METAL1} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # 4. Obstructions
+                # Add Contacts (Round Bricks)
+                if not is_rail:
+                    # Check overlap with active regions
+                    for axmin, axmax, azmin, azmax in active_regions:
+                        oxmin, oxmax = max(xmin, axmin), min(xmax, axmax)
+                        ozmin, ozmax = max(zmin, azmin), min(zmax, azmax)
+
+                        if oxmin < oxmax and ozmin < ozmax:
+                            # Place a round brick in the center of the overlap if it's large enough,
+                            # or just every stud? Let's do every stud in the overlap for "lego feel"
+                            s_xmin = (oxmin // 20) * 20 + 10
+                            s_xmax = (oxmax // 20) * 20
+                            s_zmin = (ozmin // 20) * 20 + 10
+                            s_zmax = (ozmax // 20) * 20
+
+                            for sx in range(s_xmin, s_xmax + 20, 20):
+                                for sz in range(s_zmin, s_zmax + 20, 20):
+                                    if sx <= oxmax and sz <= ozmax:
+                                        ldr_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+
+            elif rect['layer'] == 'Metal2':
+                # Metal 2 and Vias
+                x1, y1, x2, y2 = rect['coords']
+                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
+                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
+
+                xmin, xmax = min(x1_ldu, x2_ldu), max(x1_ldu, x2_ldu)
+                zmin, zmax = min(y1_ldu, y2_ldu), max(y1_ldu, y2_ldu)
+
+                w = xmax - xmin
+                h = zmax - zmin
+                rect_tiles = get_best_plates(w, h)
+                for plate, tx_off, tz_off, rotated in rect_tiles:
+                    gx = xmin + tx_off
+                    gz = zmin + tz_off
+                    if rotated:
+                        ldr_lines.append(f"1 {COLOR_METAL2} {gx} {Y_METAL2} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+                    else:
+                        ldr_lines.append(f"1 {COLOR_METAL2} {gx} {Y_METAL2} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+
+                # Add Vias (Black Round Bricks)
+                # Check overlap with Metal 1
+                for mxmin, mxmax, mzmin, mzmax in metal1_rects:
+                    oxmin, oxmax = max(xmin, mxmin), min(xmax, mxmax)
+                    ozmin, ozmax = max(zmin, mzmin), min(zmax, mzmax)
+                    if oxmin < oxmax and ozmin < ozmax:
+                        sx = (oxmin // 20) * 20 + 10
+                        sz = (ozmin // 20) * 20 + 10
+                        if sx <= oxmax and sz <= ozmax:
+                             ldr_lines.append(f"1 {COLOR_VIA} {sx} {Y_METAL2} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+
+    # 5. Obstructions
     if macro_data['obs']:
         ldr_lines.append("0 STEP")
         ldr_lines.append("0 // Obstructions")
         for rect in macro_data['obs']:
-            x1, y1, x2, y2 = rect['coords']
-            x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
-            x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
-
-            w = abs(x2_ldu - x1_ldu)
-            h = abs(y2_ldu - y1_ldu)
-
-            rect_tiles = get_best_plates(w, h)
-            y_off = Y_PINS
-
-            for plate, tx_off, tz_off, rotated in rect_tiles:
-                gx = min(x1_ldu, x2_ldu) + tx_off
-                gz = min(y1_ldu, y2_ldu) + tz_off
-
-                if rotated:
-                    ldr_lines.append(f"1 {COLOR_METAL1} {gx} {y_off} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
-                else:
-                    ldr_lines.append(f"1 {COLOR_METAL1} {gx} {y_off} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
-        ldr_lines.append("")
+            if rect['layer'] == 'Metal1':
+                x1, y1, x2, y2 = rect['coords']
+                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
+                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
+                w = abs(x2_ldu - x1_ldu)
+                h = abs(y2_ldu - y1_ldu)
+                rect_tiles = get_best_plates(w, h)
+                for plate, tx_off, tz_off, rotated in rect_tiles:
+                    gx = min(x1_ldu, x2_ldu) + tx_off
+                    gz = min(y1_ldu, y2_ldu) + tz_off
+                    if rotated:
+                        ldr_lines.append(f"1 {COLOR_METAL1} {gx} {Y_METAL1} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+                    else:
+                        ldr_lines.append(f"1 {COLOR_METAL1} {gx} {Y_METAL1} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     return "\n".join(ldr_lines)
 
