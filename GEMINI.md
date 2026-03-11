@@ -12,7 +12,7 @@
 - / - Keep only GEMINI.md, README.md and ROADMAP.md in the root directory
 - /specifications - Download and store the original standard cell definitions from the IHP PDK here
 - /specifications - Convert "non .md" files for caching and readability purpose to Markdown here
-- /specifications/MODELING_GUIDELINES.md - Update overview of the product
+- /specifications/MODELING_GUIDELINES.md - Instructions about how to draw the LEGO models from specifications
 - /models - The LEGO LDR models of the cells
 - /images - The rendered LEGO models
 - /instructions - The automated instructions how to build the LEGO model as PDF
