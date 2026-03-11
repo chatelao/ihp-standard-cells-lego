@@ -1,0 +1,20 @@
+0 sg13g2_fill_1.ldr
+0 Name: sg13g2_fill_1.ldr
+0 Author: lef_to_ldr.py
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 // Substrate low (V3)
+1 8 10 0 80 0 0 1 0 1 0 -1 0 0 3460.dat
+0 STEP
+0 // Substrate high / N-Well
+1 7 10 -8 80 0 0 1 0 1 0 -1 0 0 3460.dat
+0 STEP
+0 // Active Regions
+1 288 10 -16 50 1 0 0 0 1 0 0 0 1 3024.dat
+1 38 10 -16 110 1 0 0 0 1 0 0 0 1 3024.dat
+0 STEP
+0 // Pin VDD
+1 14 10 -32 158 1 0 0 0 1 0 0 0 1 3024.dat
+0 STEP
+0 // Pin VSS
+1 0 10 -32 1 1 0 0 0 1 0 0 0 1 3024.dat
