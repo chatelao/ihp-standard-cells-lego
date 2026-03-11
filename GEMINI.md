@@ -1,9 +1,11 @@
 # Project Goal
-- Create for all IHP Standard Cells a LEGO model with LDR (https://www.ldraw.org/article/218.html)
+- Create for all IHP Standard Cells a LEGO model with LDR (https://www.ldraw.org/article/218. inhtml)
 
 # Planning & Progress tracking
 - Keep an up to date file "ROADMAP.md" with the next 5 steps and all past steps having checkboxes.
 - If necessary split steps into 2-5 additional substeps if the complexity of the task is high.
+- For each problem draft first three different solutions and then choose the best one, track the
+  reason to discard in "DISCARDED.md" in the most relevant directory.
 
 # Project structure
 - / - Keep only GEMINI.md, README.md and ROADMAP.md in the root directory
