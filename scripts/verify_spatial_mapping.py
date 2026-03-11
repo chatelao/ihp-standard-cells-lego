@@ -45,6 +45,11 @@ def get_ldr_pins_spatial(ldr_filepath):
                 pins_found[current_pin] = []
             continue
 
+        # Reset pin tracking if we encounter other comment headers
+        if line.startswith('0 //'):
+            current_pin = None
+            continue
+
         # Match LDraw part line: 1 <color> <x> <y> <z> ...
         part_match = re.match(r'^1\s+\d+\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)', line)
         if part_match and current_pin:

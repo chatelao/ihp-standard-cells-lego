@@ -185,33 +185,62 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # 3. Active Regions (Simplified: horizontal strips)
+    # 3. Active Regions (Simplified: horizontal strips, 2 studs wide)
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
-    # NMOS strip (bottom)
-    nmos_z = 2 * 20 + 10 # 2nd stud row
-    tiles_nmos = get_best_plates(width_ldu, 20)
+    # NMOS strip (bottom) - Studs 4 and 5 (80-120 LDU)
+    nmos_z = 5 * 20
+    tiles_nmos = get_best_plates(width_ldu, 40) # 2 studs wide
     for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z
+        gz = nmos_z + (z_off - 20)
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS strip (top)
-    pmos_z = 5 * 20 + 10 # 5th stud row
-    tiles_pmos = get_best_plates(width_ldu, 20)
+    # PMOS strip (top) - Studs 10 and 11 (200-240 LDU)
+    pmos_z = 11 * 20
+    tiles_pmos = get_best_plates(width_ldu, 40) # 2 studs wide
     for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z
+        gz = pmos_z + (z_off - 20)
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # 4. Pins, Rails, and Contacts
+    # 4. Polysilicon Gates
+    ldr_lines.append("0 STEP")
+    ldr_lines.append("0 // Polysilicon Gates")
+    gate_x_coords = []
+    for pin in macro_data['pins']:
+        if pin['name'] in ['A', 'B', 'C', 'D', 'A_N', 'B_N', 'S', 'S0', 'S1', 'CLK', 'GATE', 'GATE_N', 'RESET_B', 'SET_B']:
+            # Find the center X of this pin to place a vertical gate
+            pin_x_min = 999999
+            pin_x_max = -999999
+            for rect in pin['rects']:
+                if rect['layer'] == 'Metal1':
+                    x1, y1, x2, y2 = rect['coords']
+                    pin_x_min = min(pin_x_min, um_to_ldu_coord(x1))
+                    pin_x_max = max(pin_x_max, um_to_ldu_coord(x2))
+
+            if pin_x_min != 999999:
+                gate_x = (pin_x_min + pin_x_max) // 2
+                # Round to nearest stud center
+                gate_x = (gate_x // 20) * 20 + 10
+                gate_x_coords.append((pin['name'], gate_x))
+
+                # Draw vertical poly strip (1 stud wide, crossing both diffusions)
+                # From z=4 studs to z=12 studs (covering both diffusion strips)
+                gate_z_center = 8 * 20
+                ldr_lines.append(f"1 {COLOR_POLY} {gate_x} {Y_POLY} {gate_z_center} 0 0 1 0 1 0 -1 0 0 3460.dat")
+
+                # Add Contact from Pin to Gate
+                # This will be handled in the pin loop if we track gate_x_coords
+
+    # 5. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z-10, nmos_z+10),
-        (0, width_ldu, pmos_z-10, pmos_z+10)
+        (0, width_ldu, nmos_z-20, nmos_z+20),
+        (0, width_ldu, pmos_z-20, pmos_z+20)
     ]
 
     metal1_rects = []
@@ -253,14 +282,12 @@ def generate_ldr(macro_data):
 
                 # Add Contacts (Round Bricks)
                 if not is_rail:
-                    # Check overlap with active regions
+                    # Check overlap with active regions (source/drain contacts)
                     for axmin, axmax, azmin, azmax in active_regions:
                         oxmin, oxmax = max(xmin, axmin), min(xmax, axmax)
                         ozmin, ozmax = max(zmin, azmin), min(zmax, azmax)
 
                         if oxmin < oxmax and ozmin < ozmax:
-                            # Place a round brick in the center of the overlap if it's large enough,
-                            # or just every stud? Let's do every stud in the overlap for "lego feel"
                             s_xmin = (oxmin // 20) * 20 + 10
                             s_xmax = (oxmax // 20) * 20
                             s_zmin = (ozmin // 20) * 20 + 10
@@ -270,6 +297,18 @@ def generate_ldr(macro_data):
                                 for sz in range(s_zmin, s_zmax + 20, 20):
                                     if sx <= oxmax and sz <= ozmax:
                                         ldr_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+
+                    # Check if this pin is connected to a gate
+                    for g_pin_name, gx in gate_x_coords:
+                        if pin['name'] == g_pin_name:
+                            # If pin overlaps the X coordinate of its gate, add a contact
+                            if xmin <= gx <= xmax:
+                                # Place contact at Y_CONTACT, but Z should be between diffusions to avoid shorting
+                                # Or just at the pin's center Z if it's safe.
+                                # Let's place it at the pin's center Z.
+                                sz = (zmin + zmax) // 2
+                                sz = (sz // 20) * 20 + 10
+                                ldr_lines.append(f"1 {COLOR_CONTACT} {gx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
             elif rect['layer'] == 'Metal2':
                 # Metal 2 and Vias
@@ -302,7 +341,7 @@ def generate_ldr(macro_data):
                         if sx <= oxmax and sz <= ozmax:
                              ldr_lines.append(f"1 {COLOR_VIA} {sx} {Y_VIA} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
-    # 5. Obstructions
+    # 6. Obstructions
     if macro_data['obs']:
         ldr_lines.append("0 STEP")
         ldr_lines.append("0 // Obstructions")
