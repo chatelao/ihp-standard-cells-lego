@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 libosmesa6-dev xvfb img2pdf
+          sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 libosmesa6-dev xvfb
 
       - name: Install LDraw parts library and LDView (OSMesa)
         run: |
@@ -43,5 +43,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-render LEGO models"
-          file_pattern: 'images/ instructions/'
+          file_pattern: 'images/'
           push_options: '--force'

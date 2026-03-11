@@ -132,10 +132,6 @@ def generate_gallery():
         html_content += f'                    <a href="models/{ldr_file}" target="_blank">LDR</a>\n'
         if os.path.exists(os.path.join(image_dir, f"{name}.jpg")):
             html_content += f'                    <a href="images/{name}.jpg" target="_blank">JPG</a>\n'
-        if os.path.exists(os.path.join(instructions_dir, f"{name}.pdf")):
-            html_content += f'                    <a href="instructions/{name}.pdf" target="_blank">PDF</a>\n'
-        else:
-            html_content += f'                    <span title="Instructions rendering pending" style="color: #555; cursor: help;">PDF</span>\n'
         html_content += f'                    <a href="{spec_file}#{name}" target="_blank">Spec</a>\n'
         html_content += f'                </div>\n'
         html_content += f'            </div>\n'
