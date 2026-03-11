@@ -41,14 +41,20 @@ def verify_ldr(filepath):
             elif y == -24:
                 if color != 4:
                     errors.append(f"Invalid color {color} at Y=-24 (expected 4)")
-            elif y == -32:
-                # Metal 1 (1), VDD (14), VSS (0), Contacts (15)
-                if color not in [1, 14, 0, 15]:
-                    errors.append(f"Invalid color {color} at Y=-32 (expected 1, 14, 0, or 15)")
+            elif y == -48:
+                if color != 15:
+                    errors.append(f"Invalid color {color} at Y=-48 (expected 15)")
             elif y == -56:
-                # Metal 2 (2), Vias (0)
-                if color not in [2, 0]:
-                    errors.append(f"Invalid color {color} at Y=-56 (expected 2 or 0)")
+                # Metal 1 (1), VDD (14), VSS (0)
+                if color not in [1, 14, 0]:
+                    errors.append(f"Invalid color {color} at Y=-56 (expected 1, 14, or 0)")
+            elif y == -80:
+                if color != 0:
+                    errors.append(f"Invalid color {color} at Y=-80 (expected 0)")
+            elif y == -88:
+                # Metal 2 (2)
+                if color != 2:
+                    errors.append(f"Invalid color {color} at Y=-88 (expected 2)")
 
     if not has_substrate_low_v3:
         errors.append("Missing 'Substrate low (V3)' marker")
@@ -60,8 +66,8 @@ def verify_ldr(filepath):
         errors.append("Missing Y=-8 layer (Substrate high/N-Well)")
     if -16 not in found_y_levels:
         errors.append("Missing Y=-16 layer (Active)")
-    if -32 not in found_y_levels:
-        errors.append("Missing Y=-32 layer (Metal 1/Rails)")
+    if -56 not in found_y_levels:
+        errors.append("Missing Y=-56 layer (Metal 1/Rails)")
 
     # Note: Not all cells have Metal 2 or Contacts if they are simple (like fill cells)
     # But most standard cells should have contacts.
