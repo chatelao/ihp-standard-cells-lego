@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.48 um
+# 1 stud = 0.24 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.48 = 41.6666... LDU
-UM_TO_LDU = 20 / 0.48
+# 1 um = 20 / 0.24 = 83.3333... LDU
+UM_TO_LDU = 20 / 0.24
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -43,30 +43,10 @@ Y_SUBSTRATE_LOW = 0
 Y_SUBSTRATE_HIGH = -8
 Y_ACTIVE = -16
 Y_POLY = -24
-Y_METAL1 = -32
-Y_CONTACT = -32 # Base of round brick at Y=-32, goes down to -16?
-                # Actually, 1x1 round brick is 24 LDU high.
-                # If placed at Y=-32, it covers Y -32 to -8.
-                # To bridge -16 to -32, we should place it at -32 and it goes "down" to -16 if inverted?
-                # Normal: 1 <color> x y z 1 0 0 0 1 0 0 0 1 <part> -> y is top.
-                # Brick is 24 high. If top is at -32, bottom is at -8. (Wrong way)
-                # If we want to bridge -16 (Active) to -32 (Metal 1):
-                # The brick should be between -16 and -32.
-                # In LDraw, if we place it at Y=-32 with standard orientation, it goes from -32 down to -8.
-                # If we invert it: 1 <color> x -32 z 1 0 0 0 -1 0 0 0 -1 <part>
-                # Then it goes from -32 up to -56? No.
-                # Let's use standard: if top is at -32, it occupies -32 to -8.
-                # If we want it to occupy -16 to -32, we place top at -32 and it's 24 LDU high... wait.
-                # 1 LEGO brick = 24 LDU. 1 LEGO plate = 8 LDU.
-                # Y=0 (Substrate low)
-                # Y=-8 (Substrate high)
-                # Y=-16 (Active)
-                # Y=-24 (Poly)
-                # Y=-32 (Metal 1)
-                # Active is at -16. Metal 1 is at -32. Gap is 16 LDU.
-                # A 1x1 round brick is 24 LDU high. It will overlap.
-                # Actually, if we place it at Y=-32, it goes from -32 to -8. It covers -16. Perfect.
-Y_METAL2 = -56
+Y_METAL1 = -56
+Y_CONTACT = -48
+Y_METAL2 = -88
+Y_VIA = -80
 
 def get_best_plates(width_ldu, depth_ldu):
     """
@@ -320,7 +300,7 @@ def generate_ldr(macro_data):
                         sx = (oxmin // 20) * 20 + 10
                         sz = (ozmin // 20) * 20 + 10
                         if sx <= oxmax and sz <= ozmax:
-                             ldr_lines.append(f"1 {COLOR_VIA} {sx} {Y_METAL2} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                             ldr_lines.append(f"1 {COLOR_VIA} {sx} {Y_VIA} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
     # 5. Obstructions
     if macro_data['obs']:
