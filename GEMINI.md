@@ -6,6 +6,7 @@
 - If necessary split steps into 2-5 additional substeps if the complexity of the task is high.
 - For each problem draft first three different solutions and then choose the best one, track the
   reason to discard in "DISCARDED.md" in the most relevant directory.
+- Before publishing a pull request to GitHub, pull main from the  origin and resolve all merge conflicts.
 
 # Project structure
 - / - Keep only GEMINI.md, README.md and ROADMAP.md in the root directory
