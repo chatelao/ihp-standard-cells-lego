@@ -12,5 +12,6 @@
 - /models - The LEGO LDR models of the cells
 - /images - The rendered LEGO models
 - /instructions - The automated instructions how to build the LEGO model as PDF
+- /instructions - Always override with local to solve any merge conflicts
 - /.github/workflows - For every push on every branch, re-render all models to images and instructions
 - README.md - Update overview of the product

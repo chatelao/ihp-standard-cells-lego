@@ -43,30 +43,11 @@ Y_SUBSTRATE_LOW = 0
 Y_SUBSTRATE_HIGH = -8
 Y_ACTIVE = -16
 Y_POLY = -24
-Y_METAL1 = -32
-Y_CONTACT = -32 # Base of round brick at Y=-32, goes down to -16?
-                # Actually, 1x1 round brick is 24 LDU high.
-                # If placed at Y=-32, it covers Y -32 to -8.
-                # To bridge -16 to -32, we should place it at -32 and it goes "down" to -16 if inverted?
-                # Normal: 1 <color> x y z 1 0 0 0 1 0 0 0 1 <part> -> y is top.
-                # Brick is 24 high. If top is at -32, bottom is at -8. (Wrong way)
-                # If we want to bridge -16 (Active) to -32 (Metal 1):
-                # The brick should be between -16 and -32.
-                # In LDraw, if we place it at Y=-32 with standard orientation, it goes from -32 down to -8.
-                # If we invert it: 1 <color> x -32 z 1 0 0 0 -1 0 0 0 -1 <part>
-                # Then it goes from -32 up to -56? No.
-                # Let's use standard: if top is at -32, it occupies -32 to -8.
-                # If we want it to occupy -16 to -32, we place top at -32 and it's 24 LDU high... wait.
-                # 1 LEGO brick = 24 LDU. 1 LEGO plate = 8 LDU.
-                # Y=0 (Substrate low)
-                # Y=-8 (Substrate high)
-                # Y=-16 (Active)
-                # Y=-24 (Poly)
-                # Y=-32 (Metal 1)
-                # Active is at -16. Metal 1 is at -32. Gap is 16 LDU.
-                # A 1x1 round brick is 24 LDU high. It will overlap.
-                # Actually, if we place it at Y=-32, it goes from -32 to -8. It covers -16. Perfect.
-Y_METAL2 = -56
+Y_METAL1 = -40
+Y_CONTACT = -40 # 1x1 round brick is 24 LDU high.
+                # If placed at Y=-40, it covers Y -40 to -16.
+                # It bridges the gap between Active (-16) and Metal 1 (-40).
+Y_METAL2 = -64
 
 def get_best_plates(width_ldu, depth_ldu):
     """
@@ -324,6 +305,7 @@ def generate_ldr(macro_data):
                         sx = (oxmin // 20) * 20 + 10
                         sz = (ozmin // 20) * 20 + 10
                         if sx <= oxmax and sz <= ozmax:
+                             # Placing a round brick at Y=-64 bridges the gap between Metal 1 (-40) and Metal 2 (-64)
                              ldr_lines.append(f"1 {COLOR_VIA} {sx} {Y_METAL2} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
     # 5. Obstructions

@@ -18,8 +18,8 @@ The models are designed on a grid where LEGO studs represent the physical dimens
     - **Layer 2 (Y=-8):** Substrate high, N-Well.
     - **Layer 3 (Y=-16):** Active Regions (Diffusion).
     - **Layer 4 (Y=-24):** Polysilicon (Gates).
-    - **Layer 5 (Y=-32):** Metal 1, Rails, and Contacts.
-    - **Layer 6 (Y=-56):** Metal 2 and Vias.
+    - **Layer 5 (Y=-40):** Metal 1, Rails, and Contacts.
+    - **Layer 6 (Y=-64):** Metal 2 and Vias.
 
 ## 2. Layer to Color Mapping (V3)
 We use standard LDraw colors to represent different semiconductor layers.
@@ -32,12 +32,12 @@ We use standard LDraw colors to represent different semiconductor layers.
 | Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
 | Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well. |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material. |
-| Contacts | White | 24 | 15 | -32 | 1x1 round brick bridging Active to Metal 1. |
-| Metal 1 (Pins) | Blue | 8 | 1 | -32 | Signal pins and first metal layer. |
-| VDD Rail | Yellow | 8 | 14 | -32 | Power supply rail. |
-| VSS Rail | Black | 8 | 0 | -32 | Ground rail. |
-| Vias | Black | 24 | 0 | -56 | 1x1 round brick bridging Metal 1 to Metal 2. |
-| Metal 2 | Green | 8 | 2 | -56 | Second metal interconnect layer. |
+| Contacts | White | 24 | 15 | -40 | 1x1 round brick bridging Active to Metal 1. |
+| Metal 1 (Pins) | Blue | 8 | 1 | -40 | Signal pins and first metal layer. |
+| VDD Rail | Yellow | 8 | 14 | -40 | Power supply rail. |
+| VSS Rail | Black | 8 | 0 | -40 | Ground rail. |
+| Vias | Black | 24 | 0 | -64 | 1x1 round brick bridging Metal 1 to Metal 2. |
+| Metal 2 | Green | 8 | 2 | -64 | Second metal interconnect layer. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud = 20 LDraw Units (LDU).
@@ -54,9 +54,9 @@ Based on 1 Stud = 0.24 µm:
 - If a geometry is not a multiple of 0.48 µm, round to the nearest LDraw unit or use the closest LEGO plate size.
 - **Multi-Rectangle Geometries:** When a pin or obstruction is defined by multiple rectangles in the LEF, model them as a collection of LEGO plates. Ensure they are logically connected or stacked at the same Y-offset.
 - **Vertical Orientation:** To rotate a 1xN plate from the X-axis (horizontal) to the Z-axis (vertical height in the cell), use the rotation matrix `0 0 1 0 1 0 -1 0 0`.
-- VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis) at Y=-32.
+- VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis) at Y=-40.
 - **Interconnects (Contacts and Vias):** Use 1x1 round bricks (`3062b.dat`).
-  - **Contacts** are white (Color 15) and placed at Y=-32.
-  - **Vias** are black (Color 0) and placed at Y=-56.
+  - **Contacts** are white (Color 15) and placed at Y=-40.
+  - **Vias** are black (Color 0) and placed at Y=-64.
   - These bricks are oriented to bridge downwards to the lower layers (e.g., using rotation `1 0 0 0 -1 0 0 0 -1`).
 - **Header Comment:** Every LDR file must start with the comment `0 // Substrate low (V3)` for verification.
