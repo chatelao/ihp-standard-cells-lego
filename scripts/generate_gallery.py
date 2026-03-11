@@ -36,10 +36,10 @@ def generate_gallery():
         }
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 25px;
             width: 100%;
-            max-width: 1400px;
+            max-width: 1600px;
         }
         .card {
             background-color: #1e1e1e;
@@ -49,7 +49,7 @@ def generate_gallery():
         }
         .view-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 2px;
             background-color: #1a1a1a;
         }
@@ -66,9 +66,9 @@ def generate_gallery():
             justify-content: center;
             background: #2a2a2a;
             color: #555;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             text-align: center;
-            padding: 5px;
+            padding: 2px;
         }
         .card-content {
             padding: 20px;
@@ -110,7 +110,12 @@ def generate_gallery():
         views = [
             {'suffix': '', 'label': 'Perspective'},
             {'suffix': '_top', 'label': 'Top'},
-            {'suffix': '_side', 'label': 'Side'}
+            {'suffix': '_front', 'label': 'Front'},
+            {'suffix': '_side', 'label': 'Side'},
+            {'suffix': '_top_angled', 'label': 'Top-Angled'},
+            {'suffix': '_side_angled', 'label': 'Side-Angled'},
+            {'suffix': '_bottom', 'label': 'Bottom'},
+            {'suffix': '_back', 'label': 'Back'}
         ]
 
         html_content += f'        <div class="card">\n'
