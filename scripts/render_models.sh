@@ -42,8 +42,32 @@ for file in "$MODELS_DIR"/*.ldr; do
         echo "  Error: Failed to render side image for $filename"
     fi
 
+    # Top-down angled image
+    echo "  Rendering top-down angled image..."
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_top_down.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=45 -Longitude=45 "$file" > "$LOG_FILE" 2>&1; then
+        echo "  Error: Failed to render top-down angled image for $filename"
+    fi
+
+    # Side angled image
+    echo "  Rendering side angled image..."
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_side_angled.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=20 -Longitude=135 "$file" > "$LOG_FILE" 2>&1; then
+        echo "  Error: Failed to render side angled image for $filename"
+    fi
+
+    # Bottom image
+    echo "  Rendering bottom image..."
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_bottom.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=-90 -Longitude=0 "$file" > "$LOG_FILE" 2>&1; then
+        echo "  Error: Failed to render bottom image for $filename"
+    fi
+
+    # Back image
+    echo "  Rendering back image..."
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_back.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=180 "$file" > "$LOG_FILE" 2>&1; then
+        echo "  Error: Failed to render back image for $filename"
+    fi
+
     # Verify static images
-    for suffix in "" "_top" "_front" "_side"; do
+    for suffix in "" "_top" "_front" "_side" "_top_down" "_side_angled" "_bottom" "_back"; do
         if [ ! -f "$OUTPUT_DIR/${filename}${suffix}.jpg" ]; then
             echo "  Error: Image file ${filename}${suffix}.jpg not found after rendering"
         fi

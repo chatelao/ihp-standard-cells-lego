@@ -110,11 +110,16 @@ def generate_gallery():
         views = [
             {'suffix': '', 'label': 'Perspective'},
             {'suffix': '_top', 'label': 'Top'},
-            {'suffix': '_side', 'label': 'Side'}
+            {'suffix': '_front', 'label': 'Front'},
+            {'suffix': '_side', 'label': 'Side'},
+            {'suffix': '_top_down', 'label': 'Top-Down Angled'},
+            {'suffix': '_side_angled', 'label': 'Side Angled'},
+            {'suffix': '_bottom', 'label': 'Bottom'},
+            {'suffix': '_back', 'label': 'Back'}
         ]
 
         html_content += f'        <div class="card">\n'
-        html_content += f'            <div class="view-grid">\n'
+        html_content += f'            <div class="view-grid" style="grid-template-columns: repeat(4, 1fr);">\n'
 
         for i, view in enumerate(views):
             jpg_name = f"{name}{view['suffix']}.jpg"
