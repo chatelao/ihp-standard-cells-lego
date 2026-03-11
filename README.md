@@ -12,7 +12,7 @@ To provide a physical, LEGO-based representation of semiconductor standard cells
 - `.github/workflows`: Automated rendering of models on every push.
 
 ## Gallery
-The generated LEGO models can be viewed in the [GEMINI LEGO Models Gallery](https://chatelao.github.io/ihp-standard-cells-lego/).
+The generated LEGO models can be viewed in the [IHP LEGO Models Gallery](https://chatelao.github.io/ihp-standard-cells-lego/).
 
 ## Reference
 - [IHP Open PDK](https://github.com/IHP-GmbH/IHP-Open-PDK)
