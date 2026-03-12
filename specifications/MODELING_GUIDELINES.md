@@ -43,7 +43,7 @@ We use standard LDraw colors to represent different semiconductor layers.
 - 1 LEGO Plate =  8 LDU (Height).
 - 1 LEGO Brick = 24 LDU (Height).
 
-Based on 1 Stud = 0.24 µm:
+Based on 1 Stud = 0.48 µm:
 - **0.48 µm = 20 LDU**
 - **0.024 µm = 1 LDU**
 
