@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.24 um
+# 1 stud = 0.48 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.24 = 83.333... LDU
-UM_TO_LDU = 20 / 0.24
+# 1 um = 20 / 0.48 = 41.666... LDU
+UM_TO_LDU = 20 / 0.48
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -192,8 +192,8 @@ def generate_ldr(macro_data):
     # 3. Active Regions (Simplified: horizontal strips)
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
-    # NMOS strip centered at 50 LDU (2.5 studs)
-    nmos_z_center = 50
+    # NMOS strip centered at 30 LDU (1.5 studs)
+    nmos_z_center = 30
     tiles_nmos = get_best_plates(width_ldu, 20)
     for plate, x_off, z_off, rotated in tiles_nmos:
         gz = nmos_z_center - 10 + z_off
@@ -202,8 +202,8 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS strip centered at height_ldu - 60 LDU
-    pmos_z_center = height_ldu - 60
+    # PMOS strip centered at height_ldu - 30 LDU
+    pmos_z_center = height_ldu - 30
     tiles_pmos = get_best_plates(width_ldu, 20)
     for plate, x_off, z_off, rotated in tiles_pmos:
         gz = pmos_z_center - 10 + z_off
