@@ -193,28 +193,38 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # 3. Active Regions (Simplified: horizontal strips)
+    # 3. Active Regions
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
-    # NMOS strip centered at 50 LDU (2.5 studs)
-    nmos_z_center = 50
-    tiles_nmos = get_best_plates(width_ldu, 20)
-    for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z_center - 10 + z_off
-        if rotated:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
-        else:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS strip centered at height_ldu - 60 LDU
-    pmos_z_center = height_ldu - 60
-    tiles_pmos = get_best_plates(width_ldu, 20)
-    for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z_center - 10 + z_off
+    active_width_ldu = max(1, (width_ldu // 20) - 3) * 20
+    x_offset_active = (width_ldu - active_width_ldu) // 2
+
+    # NMOS (3 studs high, Z=20 to 80)
+    nmos_z_start = 20
+    nmos_z_end = 80
+    nmos_z_height = nmos_z_end - nmos_z_start
+    tiles_nmos = get_best_plates(active_width_ldu, nmos_z_height)
+    for plate, x_off, z_off, rotated in tiles_nmos:
+        gx = x_offset_active + x_off
+        gz = nmos_z_start + z_off
         if rotated:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+
+    # PMOS (5 studs high, Z=height-120 to height-20)
+    pmos_z_start = height_ldu - 120
+    pmos_z_end = height_ldu - 20
+    pmos_z_height = pmos_z_end - pmos_z_start
+    tiles_pmos = get_best_plates(active_width_ldu, pmos_z_height)
+    for plate, x_off, z_off, rotated in tiles_pmos:
+        gx = x_offset_active + x_off
+        gz = pmos_z_start + z_off
+        if rotated:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {gx} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+        else:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # 4. Polysilicon Gates
     ldr_lines.append("0 STEP")
@@ -240,9 +250,9 @@ def generate_ldr(macro_data):
                 xmax = snap_to_grid(max(x1_ldu, x2_ldu))
                 input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
 
-                z_start = nmos_z_center - 10
-                z_end = pmos_z_center + 10
-                cz = (nmos_z_center + pmos_z_center) // 2
+                z_start = 20
+                z_end = height_ldu - 20
+                cz = (nmos_z_end + pmos_z_start) // 2
                 cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
 
                 if is_drive_2:
@@ -266,8 +276,8 @@ def generate_ldr(macro_data):
 
     # 6. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z_center-10, nmos_z_center+10),
-        (0, width_ldu, pmos_z_center-10, pmos_z_center+10)
+        (x_offset_active, x_offset_active + active_width_ldu, 20, 80),
+        (x_offset_active, x_offset_active + active_width_ldu, height_ldu - 120, height_ldu - 20)
     ]
 
     metal1_rects = []
@@ -318,7 +328,7 @@ def generate_ldr(macro_data):
                     # Place a contact at the center of the first Metal1 rectangle
                     cx = snap_to_grid((xmin + xmax) / 2 - 10) + 10
                     # Place it at a standard Z between the active regions
-                    cz = (nmos_z_center + pmos_z_center) // 2
+                    cz = (nmos_z_end + pmos_z_start) // 2
                     # Ensure cz is at a stud center
                     cz = (cz // 20) * 20 + 10
                     ldr_lines.append(f"1 {COLOR_CONTACT} {cx} {Y_CONTACT} {cz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
