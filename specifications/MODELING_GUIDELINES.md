@@ -60,5 +60,5 @@ Based on 1 Stud = 0.24 µm:
 - **Interconnects (Contacts and Vias):** Use 1x1 round bricks (`3062b.dat`).
   - **Contacts** are white (Color 15) and placed at Y=-48.
   - **Vias** are black (Color 0) and placed at Y=-80.
-  - These bricks are oriented to bridge downwards to the lower layers (e.g., using rotation `1 0 0 0 -1 0 0 0 -1`).
+  - These bricks are oriented with identity rotation (`1 0 0 0 1 0 0 0 1`) so their studs point upwards (towards negative Y), allowing the next metal layer to be built on top of them.
 - **Header Comment:** Every LDR file must start with the comment `0 // Substrate low (V3)` for verification.
