@@ -150,6 +150,10 @@ def parse_lef_macro(lef_content, macro_name):
         'obs': obs
     }
 
+def snap_to_grid(value, grid=20):
+    """Snaps a value to the nearest grid multiple, ensuring at least one grid unit."""
+    return int(round(value / grid) * grid)
+
 def um_to_ldu_coord(um):
     return round(um * UM_TO_LDU)
 
@@ -162,8 +166,8 @@ def generate_ldr(macro_data):
         ""
     ]
 
-    width_ldu = um_to_ldu_coord(macro_data['width_um'])
-    height_ldu = um_to_ldu_coord(macro_data['height_um'])
+    width_ldu = snap_to_grid(um_to_ldu_coord(macro_data['width_um']))
+    height_ldu = snap_to_grid(um_to_ldu_coord(macro_data['height_um']))
 
     # 1. Substrate low (V3)
     ldr_lines.append("0 // Substrate low (V3)")
@@ -229,11 +233,11 @@ def generate_ldr(macro_data):
 
             if input_x is not None:
                 # Quantize input_x to nearest stud center
-                input_x = (input_x // 20) * 20 + 10
+                input_x = snap_to_grid(input_x - 10) + 10
                 gate_locations.append(input_x)
                 # Gate is a Red plate spanning both diffusion regions
-                z_start = (nmos_z_center // 20) * 20 - 10
-                z_end = (pmos_z_center // 20) * 20 + 10
+                z_start = nmos_z_center - 10
+                z_end = pmos_z_center + 10
                 gate_h = z_end - z_start
                 gate_tiles = get_best_plates(20, gate_h)
                 for pfile, tx_off, tz_off, rotated in gate_tiles:
@@ -270,8 +274,13 @@ def generate_ldr(macro_data):
                 x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
                 x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
 
-                xmin, xmax = min(x1_ldu, x2_ldu), max(x1_ldu, x2_ldu)
-                zmin, zmax = min(y1_ldu, y2_ldu), max(y1_ldu, y2_ldu)
+                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
+                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
+                zmin = snap_to_grid(min(y1_ldu, y2_ldu))
+                zmax = snap_to_grid(max(y1_ldu, y2_ldu))
+
+                if xmax <= xmin: xmax = xmin + 20
+                if zmax <= zmin: zmax = zmin + 20
 
                 metal1_rects.append((xmin, xmax, zmin, zmax))
 
@@ -291,7 +300,7 @@ def generate_ldr(macro_data):
                 # If it's an input pin, connect to its gate
                 if pin['direction'] == 'INPUT':
                     # Place a contact at the center of the first Metal1 rectangle
-                    cx = (xmin // 20) * 20 + 10
+                    cx = snap_to_grid((xmin + xmax) / 2 - 10) + 10
                     # Place it at a standard Z between the active regions
                     cz = (nmos_z_center + pmos_z_center) // 2
                     # Ensure cz is at a stud center
@@ -321,8 +330,13 @@ def generate_ldr(macro_data):
                 x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
                 x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
 
-                xmin, xmax = min(x1_ldu, x2_ldu), max(x1_ldu, x2_ldu)
-                zmin, zmax = min(y1_ldu, y2_ldu), max(y1_ldu, y2_ldu)
+                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
+                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
+                zmin = snap_to_grid(min(y1_ldu, y2_ldu))
+                zmax = snap_to_grid(max(y1_ldu, y2_ldu))
+
+                if xmax <= xmin: xmax = xmin + 20
+                if zmax <= zmin: zmax = zmin + 20
 
                 w = xmax - xmin
                 h = zmax - zmin
@@ -355,12 +369,21 @@ def generate_ldr(macro_data):
                 x1, y1, x2, y2 = rect['coords']
                 x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
                 x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
-                w = abs(x2_ldu - x1_ldu)
-                h = abs(y2_ldu - y1_ldu)
+
+                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
+                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
+                zmin = snap_to_grid(min(y1_ldu, y2_ldu))
+                zmax = snap_to_grid(max(y1_ldu, y2_ldu))
+
+                if xmax <= xmin: xmax = xmin + 20
+                if zmax <= zmin: zmax = zmin + 20
+
+                w = xmax - xmin
+                h = zmax - zmin
                 rect_tiles = get_best_plates(w, h)
                 for plate, tx_off, tz_off, rotated in rect_tiles:
-                    gx = min(x1_ldu, x2_ldu) + tx_off
-                    gz = min(y1_ldu, y2_ldu) + tz_off
+                    gx = xmin + tx_off
+                    gz = zmin + tz_off
                     if rotated:
                         ldr_lines.append(f"1 {COLOR_METAL1} {gx} {Y_METAL1} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
                     else:
