@@ -219,6 +219,7 @@ def generate_ldr(macro_data):
     # 4. Polysilicon Gates
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Polysilicon Gates")
+    is_drive_2 = macro_data['name'].endswith('_2')
     gate_locations = []
     for pin in macro_data['pins']:
         if pin['direction'] == 'INPUT':
@@ -232,21 +233,36 @@ def generate_ldr(macro_data):
                     break
 
             if input_x is not None:
-                # Quantize input_x to nearest stud center
-                input_x = snap_to_grid(input_x - 10) + 10
-                gate_locations.append(input_x)
-                # Gate is a Red plate spanning both diffusion regions
+                # Use the same snapping logic as contacts for consistency
+                rect = pin['rects'][0] # Use first Metal1 rect
+                x1_ldu, x2_ldu = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][2])
+                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
+                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
+                input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
+
                 z_start = nmos_z_center - 10
                 z_end = pmos_z_center + 10
-                gate_h = z_end - z_start
-                gate_tiles = get_best_plates(20, gate_h)
-                for pfile, tx_off, tz_off, rotated in gate_tiles:
-                    gx = input_x
-                    gz = z_start + tz_off
-                    if rotated:
-                         ldr_lines.append(f"1 {COLOR_POLY} {gx} {Y_POLY} {gz} 0 0 1 0 1 0 -1 0 0 {pfile}")
-                    else:
-                         ldr_lines.append(f"1 {COLOR_POLY} {gx} {Y_POLY} {gz} 1 0 0 0 1 0 0 0 1 {pfile}")
+                cz = (nmos_z_center + pmos_z_center) // 2
+                cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
+
+                if is_drive_2:
+                    xs = [input_x - 20, input_x + 20]
+                    # Widened area for contact (2 studs wide)
+                    ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {cz} 1 0 0 0 1 0 0 0 1 3023.dat")
+                else:
+                    xs = [input_x]
+
+                for gx in xs:
+                    gate_locations.append(gx)
+                    # Gate is a Red plate spanning both diffusion regions
+                    gate_h = z_end - z_start
+                    gate_tiles = get_best_plates(20, gate_h)
+                    for pfile, tx_off, tz_off, rotated in gate_tiles:
+                        gz = z_start + tz_off
+                        if rotated:
+                             ldr_lines.append(f"1 {COLOR_POLY} {gx} {Y_POLY} {gz} 0 0 1 0 1 0 -1 0 0 {pfile}")
+                        else:
+                             ldr_lines.append(f"1 {COLOR_POLY} {gx} {Y_POLY} {gz} 1 0 0 0 1 0 0 0 1 {pfile}")
 
     # 6. Pins, Rails, and Contacts
     active_regions = [
