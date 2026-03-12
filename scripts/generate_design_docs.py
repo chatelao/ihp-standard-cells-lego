@@ -1,0 +1,197 @@
+import os
+import re
+
+def get_dimensions(parts):
+    if not parts:
+        return 0, 0
+    # In LDR, studs are at centers. Stud grid is 20 LDU.
+    # Parts can be multiple studs.
+    # Let's find min/max x and z.
+    xs = []
+    zs = []
+    for p in parts:
+        # Roughly estimate extent based on part name if needed, but for NAND cells
+        # we can just use the centers and round to grid.
+        xs.append(p['x'])
+        zs.append(p['z'])
+
+    min_x = min(xs)
+    max_x = max(xs)
+    min_z = min(zs)
+    max_z = max(zs)
+
+    # Grid is 20 LDU.
+    # Let's align to 20 LDU grid.
+    # The cells start at x=0, z=0 usually? No, centers are offset.
+    # From lef_to_ldr.py: x_off = x * 20 + (rw * 20) // 2
+    # So for a 1x1 at index 0, x_off = 10.
+
+    # Let's find the grid boundaries.
+    grid_min_x = int(min_x // 20) * 20
+    grid_max_x = int((max_x + 19) // 20) * 20
+    grid_min_z = int(min_z // 20) * 20
+    grid_max_z = int((max_z + 19) // 20) * 20
+
+    width_studs = (grid_max_x - grid_min_x) // 20
+    height_studs = (grid_max_z - grid_min_z) // 20
+
+    return width_studs, height_studs, grid_min_x, grid_min_z
+
+def parse_ldr_full(filepath):
+    with open(filepath, 'r') as f:
+        lines = f.readlines()
+
+    parts = []
+    for line in lines:
+        line = line.strip()
+        if line.startswith('1 '):
+            tokens = line.split()
+            if len(tokens) >= 15:
+                color = int(tokens[1])
+                x = float(tokens[2])
+                y = float(tokens[3])
+                z = float(tokens[4])
+                # Rot matrix
+                rot = [float(t) for t in tokens[5:14]]
+                part = tokens[14]
+                parts.append({'color': color, 'x': x, 'y': y, 'z': z, 'rot': rot, 'part': part})
+    return parts
+
+def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
+    # Base layer character
+    char = ' '
+
+    # Check plates
+    for p in parts:
+        if p['y'] in layer_y_list and p['part'] != '3062b.dat':
+            # Get dimensions from part name
+            pw, pd = 1, 1
+            if p['part'] == '3034.dat': pw, pd = 8, 2
+            elif p['part'] == '3460.dat': pw, pd = 8, 1
+            elif p['part'] == '3666.dat': pw, pd = 6, 1
+            elif p['part'] == '3020.dat': pw, pd = 4, 2
+            elif p['part'] == '3710.dat': pw, pd = 4, 1
+            elif p['part'] == '3623.dat': pw, pd = 3, 1
+            elif p['part'] == '3022.dat': pw, pd = 2, 2
+            elif p['part'] == '3023.dat': pw, pd = 2, 1
+            elif p['part'] == '3024.dat': pw, pd = 1, 1
+
+            # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
+            is_rotated = p['rot'][0] == 0
+            if is_rotated:
+                pw, pd = pd, pw
+
+            # Boundary
+            half_w = (pw * 20) / 2
+            half_d = (pd * 20) / 2
+            if (p['x'] - half_w <= x <= p['x'] + half_w) and (p['z'] - half_d <= z <= p['z'] + half_d):
+                char = color_map.get(p['color'], char)
+
+    # Connections
+    # "X for connections between layer on the lower side and x on the upper side"
+    # Mapping provided by user:
+    # Substrate: Y=0, -8
+    # Active: Y=-16
+    # Poly: Y=-24
+    # Contacts: Y=-48 (Between Active/Poly and Metal 1)
+    # Metal 1: Y=-56
+    # Vias: Y=-80 (Between Metal 1 and Metal 2)
+    # Metal 2: Y=-88
+
+    # If we are in Active/Poly, check for Contact at Y=-48
+    if -24 <= layer_y_list[0] <= -16:
+        for p in parts:
+            if p['part'] == '3062b.dat' and p['y'] == -48:
+                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
+                    return 'X'
+
+    # If we are in Metal 1, check for Contact at Y=-48 (below) or Via at Y=-80 (above)
+    if layer_y_list[0] == -56:
+        # Check for via (above)
+        for p in parts:
+            if p['part'] == '3062b.dat' and p['y'] == -80:
+                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
+                    return 'X'
+        # Check for contact (below)
+        for p in parts:
+            if p['part'] == '3062b.dat' and p['y'] == -48:
+                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
+                    return 'x'
+
+    # If we are in Metal 2, check for Via at Y=-80 (below)
+    if layer_y_list[0] == -88:
+        for p in parts:
+            if p['part'] == '3062b.dat' and p['y'] == -80:
+                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
+                    return 'x'
+
+    return char
+
+COLOR_MAP = {
+    8: 'S',   # Substrate Dark Gray
+    7: 'N',   # N-Well Light Gray
+    288: 'n', # NMOS Dark Green
+    38: 'p',  # PMOS Dark Orange
+    4: 'G',   # Polysilicon Red
+    9: 'I',   # Metal 1 Input Light Blue
+    1: 'C',   # Metal 1 Connection Blue
+    272: 'O', # Metal 1 Output Dark Blue
+    14: '+',  # VDD Yellow
+    0: '-',   # VSS Black (if at Metal 1)
+    2: 'M',   # Metal 2 Green
+}
+
+def generate_design_doc(cell_name, parts):
+    width_studs, height_studs, min_x, min_z = get_dimensions(parts)
+
+    doc = f"# Design Documentation for {cell_name}\n\n"
+
+    layers = [
+        ("Substrate", [0, -8]),
+        ("Active", [-16]),
+        ("Polysilicon", [-24]),
+        ("Metal 1", [-56]),
+        ("Metal 2", [-88])
+    ]
+
+    for layer_name, y_list in layers:
+        doc += f"## {layer_name}\n"
+        doc += "```\n"
+        # In ASCII art, top row is smallest Z?
+        # LEF Y is LEGO Z.
+        # VDD is at high Z, VSS at low Z.
+        # Let's print from high Z to low Z so VDD is on top.
+        for z_idx in range(height_studs - 1, -1, -1):
+            line = ""
+            for x_idx in range(width_studs):
+                sx = min_x + x_idx * 20 + 10
+                sz = min_z + z_idx * 20 + 10
+                char = get_char_for_stud(parts, sx, sz, y_list, COLOR_MAP, {})
+                # Special case for VSS Rail at Metal 1 which is color 0
+                if layer_name == "Metal 1" and char == '-':
+                    # Verify it's not a via or something else black
+                    pass
+                line += char
+            doc += line + "\n"
+        doc += "```\n\n"
+
+    return doc
+
+def main():
+    if not os.path.exists('design'):
+        os.makedirs('design')
+
+    for filename in os.listdir('models'):
+        if filename.startswith('sg13g2_nand') and filename.endswith('.ldr'):
+            cell_name = filename[:-4]
+            filepath = os.path.join('models', filename)
+            parts = parse_ldr_full(filepath)
+            doc = generate_design_doc(cell_name, parts)
+
+            output_path = os.path.join('design', f"{cell_name}.md")
+            with open(output_path, 'w') as f:
+                f.write(doc)
+            print(f"Generated {output_path}")
+
+if __name__ == "__main__":
+    main()
