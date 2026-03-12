@@ -1,10 +1,27 @@
 import os
+import re
+
+def parse_pdk_links(md_file):
+    pdk_links = {}
+    if not os.path.exists(md_file):
+        return pdk_links
+
+    with open(md_file, 'r') as f:
+        content = f.read()
+        # Regex to match [cell_name](url)
+        matches = re.findall(r'\[(sg13g2_[a-z0-9_]+)\]\((https?://[^\)]+)\)', content)
+        for name, url in matches:
+            pdk_links[name] = url
+    return pdk_links
 
 def generate_gallery():
     image_dir = 'images'
     instructions_dir = 'instructions'
     models_dir = 'models'
     spec_file = 'specifications/sg13g2_stdcell_details.md'
+    pdk_spec_file = 'specifications/sg13g2_stdcell.md'
+
+    pdk_links = parse_pdk_links(pdk_spec_file)
 
     if not os.path.exists(models_dir):
         print(f"Directory {models_dir} does not exist.")
@@ -18,7 +35,7 @@ def generate_gallery():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEMINI LEGO Models Gallery</title>
+    <title>Standard Cell LEGO Gallery</title>
     <style>
         body {
             background-color: #121212;
@@ -100,7 +117,7 @@ def generate_gallery():
     </style>
 </head>
 <body>
-    <h1>GEMINI LEGO Models Gallery</h1>
+    <h1>Standard Cell LEGO Gallery</h1>
     <div class="gallery">
 """
 
@@ -137,6 +154,8 @@ def generate_gallery():
         else:
             html_content += f'                    <span title="Instructions rendering pending" style="color: #555; cursor: help;">PDF</span>\n'
         html_content += f'                    <a href="{spec_file}#{name}" target="_blank">Spec</a>\n'
+        if name in pdk_links:
+            html_content += f'                    <a href="{pdk_links[name]}" target="_blank">PDK</a>\n'
         html_content += f'                </div>\n'
         html_content += f'            </div>\n'
         html_content += f'        </div>\n'
