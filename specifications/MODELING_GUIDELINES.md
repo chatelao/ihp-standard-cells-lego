@@ -39,13 +39,13 @@ We use standard LDraw colors to represent different semiconductor layers.
 | Metal 2 | Green | 8 | 2 | -88 | Second metal interconnect layer. |
 
 ## 3. LDraw Unit Mapping
-- 1 LEGO Stud = 20 LDraw Units (LDU).
-- 1 LEGO Plate = 8 LDU (Height).
+- 1 LEGO Stud  = 24 LDU (Height).
+- 1 LEGO Plate =  8 LDU (Height).
 - 1 LEGO Brick = 24 LDU (Height).
 
 Based on 1 Stud = 0.24 µm:
-- **0.24 µm = 20 LDU**
-- **0.012 µm = 1 LDU**
+- **0.48 µm = 20 LDU**
+- **0.024 µm = 1 LDU**
 
 ## 4. Modeling Principles
 - Use **Baseplates** or large plates for the substrate. For cells wider than 8 studs (160 LDU), combine multiple large plates (e.g., 2x8 3034.dat and 1x8 3460.dat) to achieve the total width.
