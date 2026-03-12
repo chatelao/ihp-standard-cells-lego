@@ -21,18 +21,19 @@ The models are designed on a grid where LEGO studs represent the physical dimens
     - **Layer 6 (Y=-88):** Metal 2 and Vias.
 
 ## 2. Layer to Color Mapping (V3)
-We use standard LDraw colors to represent different semiconductor layers.
 
 | Layer | LEGO Color | LDU Range | LDraw Color ID | LDraw Y Offset | Description |
 |-------|------------|-----------|----------------|----------------|-------------|
-| Substrate (low) | Dark Gray | 8 | 8 | 0 | Bottom substrate layer. |
-| Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate layer. |
+| Substrate (low) | Dark Gray | 8 | 8 | 0 | Bottom substrate layer, cover all area out to the VDD/VSS |
+| Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer. |
 | N-Well | Light Gray | 8 | 7 | -8 | N-Well region. |
-| Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-substrate. |
-| Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well. |
-| Polysilicon | Red | 8 | 4 | -24 | Gate material. |
+| Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-Substrate ~5 Stud wide. |
+| Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well ~3 Stud wide. |
+| Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width, there may be an additional studs where contacts hit the poly |
 | Contacts | White | 24 | 15 | -48 | 1x1 round brick bridging Active to Metal 1. |
-| Metal 1 (Pins) | Blue | 8 | 1 | -56| Signal pins and first metal layer. |
+| Metal 1 | Light Blue | 8 | ? | -56| Inputs on the first metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
+| Metal 1 | Blue  | 8 | ? | -56| Cell internal connections on the metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
+| Metal 1 | Dark Blue  | 8 | ? | -56| Outputs First metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
 | VDD Rail | Yellow | 8 | 14 | -56 | Power supply rail. |
 | VSS Rail | Black | 8 | 0 | -56 | Ground rail. |
 | Vias | Black | 24 | 0 | -80 | 1x1 round brick bridging Metal 1 to Metal 2. |
@@ -48,6 +49,8 @@ Based on 1 Stud = 0.48 µm:
 - **0.024 µm = 1 LDU**
 
 ## 4. Modeling Principles
+- We use standard LDraw colors to represent different semiconductor layers.
+- The bricks have to fit and interlock as real-world versions.
 - Use **Baseplates** or large plates for the substrate. For cells wider than 8 studs (160 LDU), combine multiple large plates (e.g., 2x8 3034.dat and 1x8 3460.dat) to achieve the total width.
 - Use **Plates** (e.g., 1x1, 1x2, 2x4) to represent rectangular areas defined in the LEF.
 - If a geometry is not a multiple of 0.48 µm, round to the nearest LDraw unit or use the closest LEGO plate size.
