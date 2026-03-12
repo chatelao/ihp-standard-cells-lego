@@ -39,12 +39,11 @@ jobs:
           chmod +x scripts/render_models.sh
           xvfb-run -a -s "-screen 0 800x600x24" ./scripts/render_models.sh
 
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Upload images artifact
+        uses: actions/upload-artifact@v4
         with:
-          commit_message: "Auto-render LEGO models"
-          file_pattern: 'images/'
-          push_options: '--force'
+          name: images
+          path: images/
 
       - name: Upload instructions artifact
         uses: actions/upload-artifact@v4
