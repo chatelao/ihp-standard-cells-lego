@@ -15,7 +15,6 @@
 - /specifications/MODELING_GUIDELINES.md - Instructions about how to draw the LEGO models from specifications
 - /models - The LEGO LDR models of the cells
 - /images - The rendered LEGO models
-- /instructions - The automated instructions how to build the LEGO model as PDF
-- /instructions - Always override with local to solve any merge conflicts
+- /instructions - The automated instructions how to build the LEGO model as PDF (not committed to repo, only deployed to GitHub Pages)
 - /.github/workflows - For every push on every branch, re-render all models to images and instructions
 - README.md - Update overview of the product

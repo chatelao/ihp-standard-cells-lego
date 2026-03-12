@@ -43,5 +43,11 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-render LEGO models"
-          file_pattern: 'images/ instructions/'
+          file_pattern: 'images/'
           push_options: '--force'
+
+      - name: Upload instructions artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: instructions
+          path: instructions/
