@@ -108,10 +108,13 @@ def parse_lef_macro(lef_content, macro_name):
     height_um = float(size_match.group(2)) if size_match else 0
 
     pins = []
-    pin_matches = re.finditer(r"PIN\s+(\w+)(.*?)END\s+\1", body, re.DOTALL)
+    pin_matches = re.finditer(r"PIN\s+([\w\[\]<>]+)(.*?)END\s+\1", body, re.DOTALL)
     for pin_match in pin_matches:
         pin_name = pin_match.group(1)
         pin_body = pin_match.group(2)
+
+        direction_match = re.search(r"DIRECTION\s+(\w+)\s*;", pin_body)
+        direction = direction_match.group(1) if direction_match else "UNKNOWN"
 
         rects = []
         port_matches = re.finditer(r"PORT\s+(.*?)END", pin_body, re.DOTALL)
@@ -125,7 +128,7 @@ def parse_lef_macro(lef_content, macro_name):
                 for r in layer_rects:
                     rects.append({'layer': layer_name, 'coords': [float(x) for x in r]})
 
-        pins.append({'name': pin_name, 'rects': rects})
+        pins.append({'name': pin_name, 'direction': direction, 'rects': rects})
 
     obs = []
     obs_match = re.search(r"OBS\s+(.*?)END", body, re.DOTALL)
@@ -174,6 +177,7 @@ def generate_ldr(macro_data):
     # 2. Substrate high / N-Well
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Substrate high / N-Well")
+    # N-Well typically occupies the upper half of the cell
     split_z = ((height_ldu // 2) // 20) * 20
     for plate, x_off, z_off, rotated in tiles:
         color = COLOR_SUBSTRATE
@@ -188,30 +192,58 @@ def generate_ldr(macro_data):
     # 3. Active Regions (Simplified: horizontal strips)
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
-    # NMOS strip (bottom)
-    nmos_z = 5 * 20 # 5th stud row
+    # NMOS strip centered at 100 LDU (Rows 5-6)
+    nmos_z_center = 100
     tiles_nmos = get_best_plates(width_ldu, 40)
     for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z - 20 + z_off
+        gz = nmos_z_center - 20 + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS strip (top)
-    pmos_z = 11 * 20 # 11th stud row
+    # PMOS strip centered at height_ldu - 120 LDU (Rows 26-27 for 32-stud cells)
+    pmos_z_center = height_ldu - 120
     tiles_pmos = get_best_plates(width_ldu, 40)
     for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z - 20 + z_off
+        gz = pmos_z_center - 20 + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # 4. Pins, Rails, and Contacts
+    # 4. Polysilicon Gates
+    ldr_lines.append("0 STEP")
+    ldr_lines.append("0 // Polysilicon Gates")
+    gate_locations = []
+    for pin in macro_data['pins']:
+        if pin['direction'] == 'INPUT':
+            # For each input pin, we place a vertical gate crossing both active regions
+            # Use the center X of the first Metal1 rectangle as the gate position
+            input_x = None
+            for rect in pin['rects']:
+                if rect['layer'] == 'Metal1':
+                    x1, y1, x2, y2 = rect['coords']
+                    input_x = um_to_ldu_coord((x1 + x2) / 2)
+                    break
+
+            if input_x is not None:
+                # Quantize input_x to nearest stud center
+                input_x = (input_x // 20) * 20 + 10
+                gate_locations.append(input_x)
+                # Gate is a 1x8 Red plate (3460.dat) spanning both diffusion regions
+                # NMOS at 100, PMOS at height_ldu - 120 (e.g., 520)
+                # Spanning from ~80 to ~540 for 32-stud cells.
+                z_start = (nmos_z_center // 20) * 20 - 20
+                z_end = (pmos_z_center // 20) * 20 + 20
+                for gz in range(z_start + 80, z_end + 80, 160):
+                    if gz <= z_end:
+                        ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {gz} 0 0 1 0 1 0 -1 0 0 3460.dat")
+
+    # 6. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z-20, nmos_z+20),
-        (0, width_ldu, pmos_z-20, pmos_z+20)
+        (0, width_ldu, nmos_z_center-20, nmos_z_center+20),
+        (0, width_ldu, pmos_z_center-20, pmos_z_center+20)
     ]
 
     metal1_rects = []
@@ -252,15 +284,23 @@ def generate_ldr(macro_data):
                         ldr_lines.append(f"1 {color} {gx} {Y_METAL1} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
                 # Add Contacts (Round Bricks)
-                if not is_rail:
-                    # Check overlap with active regions
+                # If it's an input pin, connect to its gate
+                if pin['direction'] == 'INPUT':
+                    # Place a contact at the center of the first Metal1 rectangle
+                    cx = (xmin // 20) * 20 + 10
+                    # Place it at a standard Z between the active regions
+                    cz = (nmos_z_center + pmos_z_center) // 2
+                    # Ensure cz is at a stud center
+                    cz = (cz // 20) * 20 + 10
+                    ldr_lines.append(f"1 {COLOR_CONTACT} {cx} {Y_CONTACT} {cz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+
+                # Otherwise, check overlap with active regions for general pins and rails
+                else:
                     for axmin, axmax, azmin, azmax in active_regions:
                         oxmin, oxmax = max(xmin, axmin), min(xmax, axmax)
                         ozmin, ozmax = max(zmin, azmin), min(zmax, azmax)
 
                         if oxmin < oxmax and ozmin < ozmax:
-                            # Place a round brick in the center of the overlap if it's large enough,
-                            # or just every stud? Let's do every stud in the overlap for "lego feel"
                             s_xmin = (oxmin // 20) * 20 + 10
                             s_xmax = (oxmax // 20) * 20
                             s_zmin = (ozmin // 20) * 20 + 10
