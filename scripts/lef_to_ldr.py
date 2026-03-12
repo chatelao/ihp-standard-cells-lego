@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.12 um
+# 1 stud = 0.24 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.12 = 166.6666... LDU
-UM_TO_LDU = 20 / 0.12
+# 1 um = 20 / 0.24 = 83.333... LDU
+UM_TO_LDU = 20 / 0.24
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -192,21 +192,21 @@ def generate_ldr(macro_data):
     # 3. Active Regions (Simplified: horizontal strips)
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
-    # NMOS strip centered at 100 LDU (Rows 5-6)
-    nmos_z_center = 100
-    tiles_nmos = get_best_plates(width_ldu, 40)
+    # NMOS strip centered at 50 LDU (2.5 studs)
+    nmos_z_center = 50
+    tiles_nmos = get_best_plates(width_ldu, 20)
     for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z_center - 20 + z_off
+        gz = nmos_z_center - 10 + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS strip centered at height_ldu - 120 LDU (Rows 26-27 for 32-stud cells)
-    pmos_z_center = height_ldu - 120
-    tiles_pmos = get_best_plates(width_ldu, 40)
+    # PMOS strip centered at height_ldu - 60 LDU
+    pmos_z_center = height_ldu - 60
+    tiles_pmos = get_best_plates(width_ldu, 20)
     for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z_center - 20 + z_off
+        gz = pmos_z_center - 10 + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
@@ -231,19 +231,23 @@ def generate_ldr(macro_data):
                 # Quantize input_x to nearest stud center
                 input_x = (input_x // 20) * 20 + 10
                 gate_locations.append(input_x)
-                # Gate is a 1x8 Red plate (3460.dat) spanning both diffusion regions
-                # NMOS at 100, PMOS at height_ldu - 120 (e.g., 520)
-                # Spanning from ~80 to ~540 for 32-stud cells.
-                z_start = (nmos_z_center // 20) * 20 - 20
-                z_end = (pmos_z_center // 20) * 20 + 20
-                for gz in range(z_start + 80, z_end + 80, 160):
-                    if gz <= z_end:
-                        ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {gz} 0 0 1 0 1 0 -1 0 0 3460.dat")
+                # Gate is a Red plate spanning both diffusion regions
+                z_start = (nmos_z_center // 20) * 20 - 10
+                z_end = (pmos_z_center // 20) * 20 + 10
+                gate_h = z_end - z_start
+                gate_tiles = get_best_plates(20, gate_h)
+                for pfile, tx_off, tz_off, rotated in gate_tiles:
+                    gx = input_x
+                    gz = z_start + tz_off
+                    if rotated:
+                         ldr_lines.append(f"1 {COLOR_POLY} {gx} {Y_POLY} {gz} 0 0 1 0 1 0 -1 0 0 {pfile}")
+                    else:
+                         ldr_lines.append(f"1 {COLOR_POLY} {gx} {Y_POLY} {gz} 1 0 0 0 1 0 0 0 1 {pfile}")
 
     # 6. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z_center-20, nmos_z_center+20),
-        (0, width_ldu, pmos_z_center-20, pmos_z_center+20)
+        (0, width_ldu, nmos_z_center-10, nmos_z_center+10),
+        (0, width_ldu, pmos_z_center-10, pmos_z_center+10)
     ]
 
     metal1_rects = []

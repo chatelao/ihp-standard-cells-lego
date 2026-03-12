@@ -4,7 +4,7 @@ import sys
 
 # Constants for LDU to um conversion
 LDU_PER_STUD = 20
-UM_PER_STUD = 0.12
+UM_PER_STUD = 0.24
 LDU_TO_UM = UM_PER_STUD / LDU_PER_STUD
 
 def parse_lef_sizes(lef_filepath):
