@@ -2,8 +2,8 @@ import os
 import re
 import sys
 
-# Scaling factor: 1 LDU = 0.006 um
-LDU_TO_UM = 0.006
+# Scaling factor: 1 LDU = 0.012 um
+LDU_TO_UM = 0.012
 
 def parse_lef_rects(lef_filepath):
     with open(lef_filepath, 'r') as f:
@@ -59,7 +59,7 @@ def get_ldr_pins_spatial(ldr_filepath):
 
     return pins_found
 
-def is_point_in_rects(x, y, rects, tolerance=0.2):
+def is_point_in_rects(x, y, rects, tolerance=0.25):
     for r in rects:
         x1, y1, x2, y2 = r
         # Standardize rect bounds
