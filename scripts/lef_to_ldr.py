@@ -5,8 +5,8 @@ import os
 # Constants based on modeling_guidelines.md (V3)
 # 1 stud = 0.12 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.12 = 166.6666... LDU
-UM_TO_LDU = 20 / 0.12
+# 1 um = 20 / 0.24 = 83.3333... LDU
+UM_TO_LDU = 20 / 0.24
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -189,20 +189,20 @@ def generate_ldr(macro_data):
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
     # NMOS strip (bottom)
-    nmos_z = 5 * 20 # 5th stud row
-    tiles_nmos = get_best_plates(width_ldu, 40)
+    nmos_z = 50 # 2.5 studs row
+    tiles_nmos = get_best_plates(width_ldu, 20)
     for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z - 20 + z_off
+        gz = nmos_z - 10 + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # PMOS strip (top)
-    pmos_z = 11 * 20 # 11th stud row
-    tiles_pmos = get_best_plates(width_ldu, 40)
+    pmos_z = height_ldu - 60
+    tiles_pmos = get_best_plates(width_ldu, 20)
     for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z - 20 + z_off
+        gz = pmos_z - 10 + z_off
         if rotated:
             ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
@@ -210,8 +210,8 @@ def generate_ldr(macro_data):
 
     # 4. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z-20, nmos_z+20),
-        (0, width_ldu, pmos_z-20, pmos_z+20)
+        (0, width_ldu, nmos_z-10, nmos_z+10),
+        (0, width_ldu, pmos_z-10, pmos_z+10)
     ]
 
     metal1_rects = []

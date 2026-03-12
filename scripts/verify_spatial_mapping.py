@@ -2,8 +2,8 @@ import os
 import re
 import sys
 
-# Scaling factor: 1 LDU = 0.006 um
-LDU_TO_UM = 0.006
+# Scaling factor: 1 LDU = 0.012 um
+LDU_TO_UM = 0.012
 
 def parse_lef_rects(lef_filepath):
     with open(lef_filepath, 'r') as f:
