@@ -11,6 +11,12 @@ def parse_pdk_links(md_file):
         # Regex to match [cell_name](url)
         matches = re.findall(r'\[(sg13g2_[a-z0-9_]+)\]\((https?://[^\)]+)\)', content)
         for name, url in matches:
+            # Extract cell type from URL: .../cells/{cell_type}/README.html
+            match = re.search(r'/cells/([^/]+)/README\.html', url)
+            if match:
+                cell_type = match.group(1)
+                # Append anchor for GDSII layouts
+                url = f"{url}#sky130-fd-sc-hd-{cell_type}-gdsii-layouts"
             pdk_links[name] = url
     return pdk_links
 
