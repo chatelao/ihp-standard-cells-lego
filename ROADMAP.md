@@ -14,6 +14,7 @@
   - Configured GitHub Actions for automated headless rendering and documentation deployment.
 - [x] **Phase 5: Building Instructions**
   - Implemented automated generation of multi-page PDF building instructions for the entire library.
+  - Optimized repository storage by moving instruction PDFs to GitHub Pages artifacts.
 
 ## Future Work
 - [ ] Implement advanced modeling for custom macros and analog blocks.
