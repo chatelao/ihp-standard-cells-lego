@@ -4,7 +4,7 @@ import sys
 
 # Constants for LDU to um conversion
 LDU_PER_STUD = 20
-UM_PER_STUD = 0.24
+UM_PER_STUD = 0.12
 LDU_TO_UM = UM_PER_STUD / LDU_PER_STUD
 
 def parse_lef_sizes(lef_filepath):
@@ -110,7 +110,7 @@ def main():
             exp_w, exp_h = macro_sizes[macro_name]
             ldr_w, ldr_h = ldr_size
 
-            # Guidance: 3.78 um LEF height maps to 16 studs = 3.84 um LDR height
+            # Guidance: 3.78 um LEF height maps to 32 studs = 3.84 um LDR height
             target_h = exp_h
             if abs(exp_h - 3.78) < 0.01:
                 target_h = 3.84
