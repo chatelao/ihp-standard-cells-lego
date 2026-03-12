@@ -11,8 +11,25 @@ LOG_FILE="$(pwd)/ldview_render.log"
 
 mkdir -p "$OUTPUT_DIR"
 mkdir -p "$INSTRUCTIONS_DIR"
-rm -f "$OUTPUT_DIR"/*.jpg
-rm -f "$INSTRUCTIONS_DIR"/*.pdf
+
+# Helper function to render with retries
+render_snapshot() {
+    local output="$1"
+    shift
+    local args=("$@")
+    local max_attempts=3
+    local attempt=1
+
+    while [ $attempt -le $max_attempts ]; do
+        if "$LDVIEW_BIN" -SaveSnapshot="$output" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" "${args[@]}" > "$LOG_FILE" 2>&1; then
+            return 0
+        fi
+        echo "    Attempt $attempt failed. Retrying..."
+        attempt=$((attempt + 1))
+        sleep 1
+    done
+    return 1
+}
 
 for file in "$MODELS_DIR"/*.ldr; do
     filename=$(basename "$file" .ldr)
@@ -20,37 +37,37 @@ for file in "$MODELS_DIR"/*.ldr; do
 
     # Perspective image
     echo "  Rendering perspective image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -DefaultCamera "$file" > "$LOG_FILE" 2>&1; then
+    if ! render_snapshot "$OUTPUT_DIR/${filename}.jpg" -DefaultCamera "$file"; then
         echo "  Error: Failed to render perspective image for $filename"
     fi
 
     # Top image
     echo "  Rendering top image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_top.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=90 -Longitude=0 "$file" > "$LOG_FILE" 2>&1; then
+    if ! render_snapshot "$OUTPUT_DIR/${filename}_top.jpg" -UseCamera=0 -Latitude=90 -Longitude=0 "$file"; then
         echo "  Error: Failed to render top image for $filename"
     fi
 
     # Front image
     echo "  Rendering front image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_front.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=0 "$file" > "$LOG_FILE" 2>&1; then
+    if ! render_snapshot "$OUTPUT_DIR/${filename}_front.jpg" -UseCamera=0 -Latitude=0 -Longitude=0 "$file"; then
         echo "  Error: Failed to render front image for $filename"
     fi
 
     # Side image
     echo "  Rendering side image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_side.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=90 "$file" > "$LOG_FILE" 2>&1; then
+    if ! render_snapshot "$OUTPUT_DIR/${filename}_side.jpg" -UseCamera=0 -Latitude=0 -Longitude=90 "$file"; then
         echo "  Error: Failed to render side image for $filename"
     fi
 
     # Top-Down Angled image
     echo "  Rendering top-down angled image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_top_angled.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=45 -Longitude=45 "$file" > "$LOG_FILE" 2>&1; then
+    if ! render_snapshot "$OUTPUT_DIR/${filename}_top_angled.jpg" -UseCamera=0 -Latitude=45 -Longitude=45 "$file"; then
         echo "  Error: Failed to render top-down angled image for $filename"
     fi
 
     # Side Angled image
     echo "  Rendering side angled image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_side_angled.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=20 -Longitude=135 "$file" > "$LOG_FILE" 2>&1; then
+    if ! render_snapshot "$OUTPUT_DIR/${filename}_side_angled.jpg" -UseCamera=0 -Latitude=20 -Longitude=135 "$file"; then
         echo "  Error: Failed to render side angled image for $filename"
     fi
 
@@ -74,7 +91,7 @@ for file in "$MODELS_DIR"/*.ldr; do
     step_images=()
     for (( s=1; s<=total_steps; s++ )); do
         step_img="$TEMP_STEP_DIR/step_${s}.jpg"
-        if "$LDVIEW_BIN" -SaveSnapshot="$step_img" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Step="$s" "$file" > "$LOG_FILE" 2>&1; then
+        if render_snapshot "$step_img" -Step="$s" "$file"; then
             step_images+=("$step_img")
         else
             echo "  Error: Failed to render step $s for $filename"
