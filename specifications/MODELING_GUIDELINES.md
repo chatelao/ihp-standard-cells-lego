@@ -31,9 +31,9 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 | Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well ~3 Stud wide. |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width, there may be an additional studs where contacts hit the poly |
 | Contacts | White | 24 | 15 | -48 | 1x1 round brick bridging Active to Metal 1. |
-| Metal 1 | Light Blue | 8 | ? | -56| Inputs on the first metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
-| Metal 1 | Blue  | 8 | ? | -56| Cell internal connections on the metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
-| Metal 1 | Dark Blue  | 8 | ? | -56| Outputs First metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
+| Metal 1 | Light Blue | 8 | 9 | -56| Inputs on the first metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
+| Metal 1 | Blue  | 8 | 1 | -56| Cell internal connections on the metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
+| Metal 1 | Dark Blue  | 8 | 272 | -56| Outputs First metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
 | VDD Rail | Yellow | 8 | 14 | -56 | Power supply rail. |
 | VSS Rail | Black | 8 | 0 | -56 | Ground rail. |
 | Vias | Black | 24 | 0 | -80 | 1x1 round brick bridging Metal 1 to Metal 2. |
@@ -44,9 +44,9 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 - 1 LEGO Plate =  8 LDU (Height).
 - 1 LEGO Brick = 24 LDU (Height).
 
-Based on 1 Stud = 0.48 µm:
-- **0.48 µm = 20 LDU**
-- **0.024 µm = 1 LDU**
+Based on 1 Stud = 0.24 µm:
+- **0.24 µm = 20 LDU**
+- **0.012 µm = 1 LDU**
 
 ## 4. Modeling Principles
 - We use standard LDraw colors to represent different semiconductor layers.
