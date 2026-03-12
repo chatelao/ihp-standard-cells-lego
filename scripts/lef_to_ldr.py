@@ -31,7 +31,9 @@ COLOR_NWELL = 7         # Light Gray
 COLOR_ACTIVE_NMOS = 288 # Dark Green
 COLOR_ACTIVE_PMOS = 38  # Dark Orange
 COLOR_POLY = 4           # Red
-COLOR_METAL1 = 1         # Blue
+COLOR_METAL1_INTERNAL = 1 # Blue
+COLOR_METAL1_INPUT = 9    # Light Blue
+COLOR_METAL1_OUTPUT = 272 # Dark Blue
 COLOR_METAL2 = 2         # Green
 COLOR_VDD = 14           # Yellow
 COLOR_VSS = 0            # Black
@@ -200,9 +202,9 @@ def generate_ldr(macro_data):
     active_width_ldu = max(1, (width_ldu // 20) - 3) * 20
     x_offset_active = (width_ldu - active_width_ldu) // 2
 
-    # NMOS (3 studs high, Z=20 to 80)
+    # NMOS (5 studs high, Z=20 to 120)
     nmos_z_start = 20
-    nmos_z_end = 80
+    nmos_z_end = 120
     nmos_z_height = nmos_z_end - nmos_z_start
     tiles_nmos = get_best_plates(active_width_ldu, nmos_z_height)
     for plate, x_off, z_off, rotated in tiles_nmos:
@@ -213,8 +215,8 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS (5 studs high, Z=height-120 to height-20)
-    pmos_z_start = height_ldu - 120
+    # PMOS (3 studs high, Z=height-80 to height-20)
+    pmos_z_start = height_ldu - 80
     pmos_z_end = height_ldu - 20
     pmos_z_height = pmos_z_end - pmos_z_start
     tiles_pmos = get_best_plates(active_width_ldu, pmos_z_height)
@@ -246,13 +248,15 @@ def generate_ldr(macro_data):
                 # Use the same snapping logic as contacts for consistency
                 rect = pin['rects'][0] # Use first Metal1 rect
                 x1_ldu, x2_ldu = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][2])
+                z1_ldu, z2_ldu = um_to_ldu_coord(rect['coords'][1]), um_to_ldu_coord(rect['coords'][3])
                 xmin = snap_to_grid(min(x1_ldu, x2_ldu))
                 xmax = snap_to_grid(max(x1_ldu, x2_ldu))
                 input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
 
                 z_start = 20
                 z_end = height_ldu - 20
-                cz = (nmos_z_end + pmos_z_start) // 2
+                # Use the center Z of the pin's Metal1 rectangle
+                cz = (z1_ldu + z2_ldu) // 2
                 cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
 
                 if is_drive_2:
@@ -285,7 +289,7 @@ def generate_ldr(macro_data):
     for pin in macro_data['pins']:
         ldr_lines.append("0 STEP")
         ldr_lines.append(f"0 // Pin {pin['name']}")
-        color = COLOR_METAL1
+
         is_rail = False
         if pin['name'] == 'VDD':
             color = COLOR_VDD
@@ -293,6 +297,13 @@ def generate_ldr(macro_data):
         elif pin['name'] == 'VSS':
             color = COLOR_VSS
             is_rail = True
+        else:
+            if pin['direction'] == 'INPUT':
+                color = COLOR_METAL1_INPUT
+            elif pin['direction'] == 'OUTPUT':
+                color = COLOR_METAL1_OUTPUT
+            else:
+                color = COLOR_METAL1_INTERNAL
 
         for rect in pin['rects']:
             if rect['layer'] == 'Metal1':
@@ -327,11 +338,11 @@ def generate_ldr(macro_data):
                 if pin['direction'] == 'INPUT':
                     # Place a contact at the center of the first Metal1 rectangle
                     cx = snap_to_grid((xmin + xmax) / 2 - 10) + 10
-                    # Place it at a standard Z between the active regions
-                    cz = (nmos_z_end + pmos_z_start) // 2
+                    # Use the center Z of the Metal1 rectangle
+                    cz = (zmin + zmax) // 2
                     # Ensure cz is at a stud center
                     cz = (cz // 20) * 20 + 10
-                    ldr_lines.append(f"1 {COLOR_CONTACT} {cx} {Y_CONTACT} {cz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                    ldr_lines.append(f"1 {COLOR_CONTACT} {cx} {Y_CONTACT} {cz} 1 0 0 0 -1 0 0 0 -1 {ROUND_BRICK}")
 
                 # Otherwise, check overlap with active regions for general pins and rails
                 else:
@@ -348,7 +359,7 @@ def generate_ldr(macro_data):
                             for sx in range(s_xmin, s_xmax + 20, 20):
                                 for sz in range(s_zmin, s_zmax + 20, 20):
                                     if sx <= oxmax and sz <= ozmax:
-                                        ldr_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                        ldr_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 -1 0 0 0 -1 {ROUND_BRICK}")
 
             elif rect['layer'] == 'Metal2':
                 # Metal 2 and Vias
@@ -384,7 +395,7 @@ def generate_ldr(macro_data):
                         sx = (oxmin // 20) * 20 + 10
                         sz = (ozmin // 20) * 20 + 10
                         if sx <= oxmax and sz <= ozmax:
-                             ldr_lines.append(f"1 {COLOR_VIA} {sx} {Y_VIA} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                             ldr_lines.append(f"1 {COLOR_VIA} {sx} {Y_VIA} {sz} 1 0 0 0 -1 0 0 0 -1 {ROUND_BRICK}")
 
     # 5. Obstructions
     if macro_data['obs']:
@@ -411,9 +422,9 @@ def generate_ldr(macro_data):
                     gx = xmin + tx_off
                     gz = zmin + tz_off
                     if rotated:
-                        ldr_lines.append(f"1 {COLOR_METAL1} {gx} {Y_METAL1} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+                        ldr_lines.append(f"1 {COLOR_METAL1_INTERNAL} {gx} {Y_METAL1} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
                     else:
-                        ldr_lines.append(f"1 {COLOR_METAL1} {gx} {Y_METAL1} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+                        ldr_lines.append(f"1 {COLOR_METAL1_INTERNAL} {gx} {Y_METAL1} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     return "\n".join(ldr_lines)
 
