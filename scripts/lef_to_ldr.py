@@ -162,8 +162,9 @@ def generate_ldr(macro_data):
         ""
     ]
 
-    width_ldu = um_to_ldu_coord(macro_data['width_um'])
-    height_ldu = um_to_ldu_coord(macro_data['height_um'])
+    # Standardize cell dimensions to LEGO grid (0.24um per stud = 20 LDU)
+    width_ldu = round(macro_data['width_um'] / 0.24) * 20
+    height_ldu = round(macro_data['height_um'] / 0.24) * 20
 
     # 1. Substrate low (V3)
     ldr_lines.append("0 // Substrate low (V3)")
@@ -192,25 +193,38 @@ def generate_ldr(macro_data):
     # 3. Active Regions (Simplified: horizontal strips)
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
-    # NMOS strip centered at 50 LDU (2.5 studs)
-    nmos_z_center = 50
-    tiles_nmos = get_best_plates(width_ldu, 20)
-    for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z_center - 10 + z_off
-        if rotated:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
-        else:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS strip centered at height_ldu - 60 LDU
-    pmos_z_center = height_ldu - 60
-    tiles_pmos = get_best_plates(width_ldu, 20)
-    for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z_center - 10 + z_off
+    active_width_studs = max(1, (width_ldu // 20) - 3)
+    active_width_ldu = active_width_studs * 20
+    active_x_start = (width_ldu - active_width_ldu) // 2
+    active_x_start = (active_x_start // 20) * 20 # Align to grid
+
+    # NMOS strip (Green): 3 studs high, starting 1 stud from bottom
+    nmos_height_ldu = 3 * 20
+    nmos_z_start = 20
+    nmos_z_center = nmos_z_start + nmos_height_ldu // 2
+    tiles_nmos = get_best_plates(active_width_ldu, nmos_height_ldu)
+    for plate, tx_off, tz_off, rotated in tiles_nmos:
+        gx = active_x_start + tx_off
+        gz = nmos_z_start + tz_off
         if rotated:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+
+    # PMOS strip (Orange): 5 studs high, ending 1 stud from top
+    pmos_height_ldu = 5 * 20
+    pmos_z_end = height_ldu - 20
+    pmos_z_start = pmos_z_end - pmos_height_ldu
+    pmos_z_center = pmos_z_start + pmos_height_ldu // 2
+    tiles_pmos = get_best_plates(active_width_ldu, pmos_height_ldu)
+    for plate, tx_off, tz_off, rotated in tiles_pmos:
+        gx = active_x_start + tx_off
+        gz = pmos_z_start + tz_off
+        if rotated:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {gx} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+        else:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # 4. Polysilicon Gates
     ldr_lines.append("0 STEP")
@@ -231,9 +245,9 @@ def generate_ldr(macro_data):
                 # Quantize input_x to nearest stud center
                 input_x = (input_x // 20) * 20 + 10
                 gate_locations.append(input_x)
-                # Gate is a Red plate spanning both diffusion regions
-                z_start = (nmos_z_center // 20) * 20 - 10
-                z_end = (pmos_z_center // 20) * 20 + 10
+                # Gate is a Red plate spanning from NMOS bottom to PMOS top
+                z_start = nmos_z_start
+                z_end = pmos_z_end
                 gate_h = z_end - z_start
                 gate_tiles = get_best_plates(20, gate_h)
                 for pfile, tx_off, tz_off, rotated in gate_tiles:
@@ -246,8 +260,8 @@ def generate_ldr(macro_data):
 
     # 6. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z_center-10, nmos_z_center+10),
-        (0, width_ldu, pmos_z_center-10, pmos_z_center+10)
+        (active_x_start, active_x_start + active_width_ldu, nmos_z_start, nmos_z_start + nmos_height_ldu),
+        (active_x_start, active_x_start + active_width_ldu, pmos_z_start, pmos_z_start + pmos_height_ldu)
     ]
 
     metal1_rects = []
