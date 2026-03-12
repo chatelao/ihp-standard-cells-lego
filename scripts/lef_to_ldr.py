@@ -196,25 +196,31 @@ def generate_ldr(macro_data):
     # 3. Active Regions (Simplified: horizontal strips)
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
-    # NMOS strip centered at 50 LDU (2.5 studs)
-    nmos_z_center = 50
-    tiles_nmos = get_best_plates(width_ldu, 20)
-    for plate, x_off, z_off, rotated in tiles_nmos:
-        gz = nmos_z_center - 10 + z_off
-        if rotated:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
-        else:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS strip centered at height_ldu - 60 LDU
-    pmos_z_center = height_ldu - 60
-    tiles_pmos = get_best_plates(width_ldu, 20)
-    for plate, x_off, z_off, rotated in tiles_pmos:
-        gz = pmos_z_center - 10 + z_off
+    active_width_ldu = max(1, (width_ldu // 20) - 3) * 20
+    x_offset_active = (width_ldu - active_width_ldu) // 2
+
+    # NMOS strip: 3 studs (60 LDU) high, starting at 1 stud (20 LDU) from bottom
+    nmos_z_center = 50
+    tiles_nmos = get_best_plates(active_width_ldu, 60)
+    for plate, x_off, z_off, rotated in tiles_nmos:
+        gx = x_offset_active + x_off
+        gz = 20 + z_off
         if rotated:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
-            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {x_off} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+            ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+
+    # PMOS strip: 5 studs (100 LDU) high, ending at 1 stud (20 LDU) from top
+    pmos_z_center = height_ldu - 70
+    tiles_pmos = get_best_plates(active_width_ldu, 100)
+    for plate, x_off, z_off, rotated in tiles_pmos:
+        gx = x_offset_active + x_off
+        gz = (height_ldu - 120) + z_off
+        if rotated:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {gx} {Y_ACTIVE} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+        else:
+            ldr_lines.append(f"1 {COLOR_ACTIVE_PMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # 4. Polysilicon Gates
     ldr_lines.append("0 STEP")
@@ -240,8 +246,8 @@ def generate_ldr(macro_data):
                 xmax = snap_to_grid(max(x1_ldu, x2_ldu))
                 input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
 
-                z_start = nmos_z_center - 10
-                z_end = pmos_z_center + 10
+                z_start = 20
+                z_end = height_ldu - 20
                 cz = (nmos_z_center + pmos_z_center) // 2
                 cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
 
@@ -266,8 +272,8 @@ def generate_ldr(macro_data):
 
     # 6. Pins, Rails, and Contacts
     active_regions = [
-        (0, width_ldu, nmos_z_center-10, nmos_z_center+10),
-        (0, width_ldu, pmos_z_center-10, pmos_z_center+10)
+        (x_offset_active, x_offset_active + active_width_ldu, 20, 80),
+        (x_offset_active, x_offset_active + active_width_ldu, height_ldu - 120, height_ldu - 20)
     ]
 
     metal1_rects = []
