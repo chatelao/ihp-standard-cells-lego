@@ -345,7 +345,7 @@ def generate_ldr(macro_data):
                     cx = snap_to_grid((xmin + xmax) / 2 - 10) + 10
                     cz = (zmin + zmax) // 2
                     cz = (cz // 20) * 20 + 10
-                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {cx} {Y_CONTACT} {cz} 1 0 0 0 -1 0 0 0 -1 {ROUND_BRICK}")
+                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {cx} {Y_CONTACT} {cz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                 else:
                     for axmin, axmax, azmin, azmax in active_regions:
                         oxmin, oxmax = max(xmin, axmin), min(xmax, axmax)
@@ -358,7 +358,7 @@ def generate_ldr(macro_data):
                             for sx in range(s_xmin, s_xmax + 20, 20):
                                 for sz in range(s_zmin, s_zmax + 20, 20):
                                     if sx <= oxmax and sz <= ozmax:
-                                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 -1 0 0 0 -1 {ROUND_BRICK}")
+                                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
             elif rect['layer'] == 'Metal2':
                 x1, y1, x2, y2 = rect['coords']
@@ -392,7 +392,7 @@ def generate_ldr(macro_data):
                         sx = (oxmin // 20) * 20 + 10
                         sz = (ozmin // 20) * 20 + 10
                         if sx <= oxmax and sz <= ozmax:
-                             current_pin_vias.append(f"1 {COLOR_VIA} {sx} {Y_VIA} {sz} 1 0 0 0 -1 0 0 0 -1 {ROUND_BRICK}")
+                             current_pin_vias.append(f"1 {COLOR_VIA} {sx} {Y_VIA} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
         if len(current_pin_contacts) > 1:
             contact_lines.extend(current_pin_contacts)
