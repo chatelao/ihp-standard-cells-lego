@@ -44,6 +44,9 @@ def get_ldr_pins_spatial(ldr_filepath):
             if current_pin not in pins_found:
                 pins_found[current_pin] = []
             continue
+        elif line.startswith('0 //'):
+            # Reset pin tracking for other comment headers (e.g. Obstructions, Active Regions)
+            current_pin = None
 
         # Match LDraw part line: 1 <color> <x> <y> <z> ...
         part_match = re.match(r'^1\s+\d+\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)', line)
@@ -54,7 +57,7 @@ def get_ldr_pins_spatial(ldr_filepath):
 
     return pins_found
 
-def is_point_in_rects(x, y, rects, tolerance=0.15):
+def is_point_in_rects(x, y, rects, tolerance=0.25):
     for r in rects:
         x1, y1, x2, y2 = r
         # Standardize rect bounds
