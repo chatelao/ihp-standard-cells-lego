@@ -110,7 +110,10 @@ def generate_gallery():
         views = [
             {'suffix': '', 'label': 'Perspective'},
             {'suffix': '_top', 'label': 'Top'},
-            {'suffix': '_side', 'label': 'Side'}
+            {'suffix': '_front', 'label': 'Front'},
+            {'suffix': '_side', 'label': 'Side'},
+            {'suffix': '_top_angled', 'label': 'Top Angled'},
+            {'suffix': '_side_angled', 'label': 'Side Angled'}
         ]
 
         html_content += f'        <div class="card">\n'
