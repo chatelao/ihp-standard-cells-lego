@@ -62,3 +62,23 @@ Based on 1 Stud = 0.24 µm:
   - **Vias** are black (Color 0) and placed at Y=-80.
   - These bricks are oriented with identity rotation (`1 0 0 0 1 0 0 0 1`) so their studs point upwards (towards negative Y), allowing the next metal layer to be built on top of them.
 - **Header Comment:** Every LDR file must start with the comment `0 // Substrate low (V3)` for verification.
+
+## 5. Design Documentation
+For each standard cell (specifically NAND cells), a Markdown design documentation file must be maintained in the `/design` directory. This file should contain a layer-by-layer ASCII art representation of the cell layout.
+
+### ASCII Art Character Mapping
+- **Substrate:** `S` (Dark Gray), `N` (Light Gray/N-Well)
+- **Active:** `n` (NMOS), `p` (PMOS)
+- **Polysilicon:** `G` (Red)
+- **Metal 1:**
+  - `I`: Input (Light Blue)
+  - `C`: Connection (Blue)
+  - `O`: Output (Dark Blue)
+  - `+`: VDD Rail (Yellow)
+  - `-`: VSS Rail (Black)
+- **Metal 2:** `M` (Green)
+- **Connections (Contacts/Vias):**
+  - `X`: On the lower layer (e.g., in Active/Poly/Metal 1 connecting to the layer above).
+  - `x`: On the upper layer (e.g., in Metal 1/Metal 2 connecting from the layer below).
+
+One character in the ASCII art represents one LEGO stud.
