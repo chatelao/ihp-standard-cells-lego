@@ -27,6 +27,19 @@ def collect_parts(models_dir, ldraw_dir, output_dir):
 
     print(f"Initial parts found: {len(to_process)}")
 
+    # 1.5 Find and copy LDConfig.ldr
+    ldconfig_paths = [
+        os.path.join(ldraw_dir, 'LDConfig.ldr'),
+        os.path.join(ldraw_dir, 'Config/LDConfig.ldr'),
+    ]
+    for p in ldconfig_paths:
+        if os.path.exists(p):
+            print(f"Copying {p} to {output_dir}")
+            shutil.copy2(p, os.path.join(output_dir, 'LDConfig.ldr'))
+            break
+    else:
+        print("Warning: LDConfig.ldr not found in LDraw directory.")
+
     # 2. Process dependencies recursively
     processed = set()
     while to_process:
