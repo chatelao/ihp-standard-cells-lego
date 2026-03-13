@@ -154,9 +154,12 @@ def generate_design_doc(cell_name, parts):
         ("Metal 2", [-88])
     ]
 
+    scale = "".join([str(i % 10) for i in range(width_studs)])
+
     for layer_name, y_list in layers:
         doc += f"## {layer_name}\n"
         doc += "```\n"
+        doc += scale + "\n"
         # In ASCII art, top row is smallest Z?
         # LEF Y is LEGO Z.
         # VDD is at high Z, VSS at low Z.

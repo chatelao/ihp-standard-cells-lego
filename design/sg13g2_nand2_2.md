@@ -2,6 +2,7 @@
 
 ## Substrate
 ```
+0123456789
 
 NNNNNNNNNN
 NNNNNNNNNN
@@ -23,6 +24,7 @@ SSSSSSSSSS
 
 ## Active
 ```
+0123456789
 
 
 XppppXpppX
@@ -44,6 +46,7 @@ nnnXnnnnnn
 
 ## Polysilicon
 ```
+0123456789
 
 
 X G GXG GX
@@ -65,6 +68,7 @@ X GXXXXXGX
 
 ## Metal 1
 ```
+0123456789
 ++++++++++
 ++++++++++
 x    x   x
@@ -86,6 +90,7 @@ C  x CCCCC
 
 ## Metal 2
 ```
+0123456789
 
 
 
