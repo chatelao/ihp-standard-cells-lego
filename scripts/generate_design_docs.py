@@ -15,13 +15,17 @@ def get_dimensions(parts):
         xs.append(p['x'])
         zs.append(p['z'])
 
-    min_x = min(xs)
-    max_x = max(xs)
-    min_z = min(zs)
-    max_z = max(zs)
+    min_x = min(xs) - 10
+    max_x = max(xs) + 10
+    min_z = min(zs) - 10
+    max_z = max(zs) + 10
 
     # Grid is 20 LDU.
     # Let's align to 20 LDU grid.
+    # For very narrow cells (like fill_1), ensure we have at least one stud width.
+    if grid_max_x == grid_min_x:
+        grid_max_x = grid_min_x + 20
+
     # The cells start at x=0, z=0 usually? No, centers are offset.
     # From lef_to_ldr.py: x_off = x * 20 + (rw * 20) // 2
     # So for a 1x1 at index 0, x_off = 10.
@@ -185,7 +189,7 @@ def main():
         os.makedirs('design')
 
     for filename in os.listdir('models'):
-        if filename.startswith('sg13g2_nand') and filename.endswith('.ldr'):
+        if filename.startswith('sg13g2_') and filename.endswith('.ldr'):
             cell_name = filename[:-4]
             filepath = os.path.join('models', filename)
             parts = parse_ldr_full(filepath)

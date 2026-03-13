@@ -16,10 +16,10 @@
 - /models - The LEGO LDR models of the cells
 - /images - The rendered LEGO models
 - /instructions - The automated instructions how to build the LEGO model as PDF (not committed to repo, only deployed to GitHub Pages)
-- /design - Layer-by-layer ASCII art design documentation for cells (specifically NAND cells)
+- /design - Layer-by-layer ASCII art design documentation for cells
 - /.github/workflows - For every push on every branch, re-render all models to images and instructions
 - README.md - Update overview of the product
 
 # Design Documentation Rules
-- For each standard cell (specifically NAND cells), maintain a Markdown file in `/design` with layer-by-layer ASCII art.
+- For each standard cell, maintain a Markdown file in `/design` with layer-by-layer ASCII art.
 - The ASCII art should follow the character mapping defined in `specifications/MODELING_GUIDELINES.md`.

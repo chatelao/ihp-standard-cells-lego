@@ -64,7 +64,7 @@ Based on 1 Stud = 0.24 µm:
 - **Header Comment:** Every LDR file must start with the comment `0 // Substrate low (V3)` for verification.
 
 ## 5. Design Documentation
-For each standard cell (specifically NAND cells), a Markdown design documentation file must be maintained in the `/design` directory. This file should contain a layer-by-layer ASCII art representation of the cell layout.
+For each standard cell, a Markdown design documentation file must be maintained in the `/design` directory. This file should contain a layer-by-layer ASCII art representation of the cell layout.
 
 ### ASCII Art Character Mapping
 - **Substrate:** `S` (Dark Gray), `N` (Light Gray/N-Well)
