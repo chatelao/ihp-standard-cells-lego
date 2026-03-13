@@ -2,107 +2,87 @@
 
 ## Substrate
 ```
-01234567890123456
-
-NNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNN
-SSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSS
-
+0123456789012345
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-01234567890123456
+0123456789012345
 
+ XpppXppppppppp
+ XpppXppppppppp
+ XpppXppppppppp
+ X          X
+ X        XXX
 
-XpppXppppppppppp
-XpppXppppppppppp
-XpppXppppppppppp
-X   X        X
-X            X
-
-
-  X    X     X
-
-nnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnn
-XnXnXXXnnXnXnXnX
-XnnnXXXnnnnXnnnX
-XnnnXXXnnnnXnnnX
-
+  XX  XX    X
+ nnnnnnnnnnnnnn
+ nnnnnnnnnnnnnn
+ XnXnXXXXnXnXnX
+ XnnnXXXnnXnnnX
+ XnnnXXXnnXnnnX
 
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-01234567890123456
+0123456789012345
 
-
-XG GX G G   G G
-XG GX G G   G G
-XG GX G G   G G
-XG GX G G   GXG
-XG G  G G   GXG
- G G  G G   G G
- G G  G G   G G
- GXG  GXG   GXG
- G G  G G   G G
- G G  G G   G G
- G G  G G   G G
-XGXGXXX GX XGXGX
-XG GXXX G  XG GX
-XG GXXX G  XG GX
-
+ X G X G   G G
+ X G X G   G G
+ X G X G   G G
+ X G G G   GXG
+ X G G G  XXXG
+ G G G G   G G
+ GXX GXX   GXG
+ G G G G   G G
+ G G G G   G G
+ X X XXXX XGXGX
+ X G XXX  XG GX
+ X G XXX  XG GX
 
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-01234567890123456
-+++++++++++++++++
-+++++++++++++++++
-x   x
-x   x
-x C x CCCCCCCCCC
-x C x C  C C x C
-x C      C   x C
-+ CCCCCCCC OOO C
-           O
- IxI  Ix OOOIxI
- III  II OOOIII
-- OOOOOOOO OOO -
-- O      O   O -
-x x xxx  x x x x
-x   xxx    x   x
-x   xxx    x   x
------------------
------------------
+0123456789012345
+++++++++++++++++
+ x   x
+ x C x CCCCCCCC
+ x C x C  C   C
+ x C    C   x C
+ x CCCCCC xxx C
+          O
+  xx  xxOOO xI
+        O O
+ - OOOOOO OOO -
+ x x xxxx x x x
+ x   xxx  x   x
+ x   xxx  x   x
+----------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-01234567890123456
-
-
-
-
+0123456789012345
 
 
 

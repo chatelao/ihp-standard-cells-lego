@@ -3,9 +3,6 @@
 ## Substrate
 ```
 01234567890123
-
-NNNNNNNNNNNNNN
-NNNNNNNNNNNNNN
 NNNNNNNNNNNNNN
 NNNNNNNNNNNNNN
 NNNNNNNNNNNNNN
@@ -20,7 +17,6 @@ SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
-
 ```
 Legend: N=N-Well, S=Substrate
 
@@ -28,22 +24,18 @@ Legend: N=N-Well, S=Substrate
 ```
 01234567890123
 
+ XpppXppXpppX
+ XpXpXpXXpppX
+ XpXpXpXXpppX
+ X X X XX
+ X X   XX
 
-XpppXppppXpppX
-XpppXppppXpppX
-XpXpXpXppXpppX
-X X X X  X   X
-X X X X  X
-
-
-           X
-
-nnnnnnnnnnnnnn
-nnnnnnnnnnnnnn
-XnXnXnXnnXXnnn
-XnXnXnnnnnXnnn
-XnnnXnnnnnXnnn
-
+          X
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
+ XnXnnnXnnnnn
+ XnXnXnXnXXnn
+ XnnnXnnnXnnn
 
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
@@ -52,22 +44,18 @@ Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 ```
 01234567890123
 
-
-X   X    X G X
-X   X    X G X
-X X X X  X G X
-X X X X  X G X
-X X X X  X G
-           G
-           G
-           X
-           G
-           G
-           G
-X X X X  XXG
-X X X     XG
-X   X     XG
-
+ X   X  X G X
+ X X X XX G X
+ X X X XX G X
+ X X X XX G
+ X X   XX G
+          G
+          X
+          G
+          G
+ X X   X  G
+ X X X X XX
+ X   X   XG
 
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
@@ -76,22 +64,18 @@ Legend: G=Polysilicon, X=Connection (lower side)
 ```
 01234567890123
 ++++++++++++++
-++++++++++++++
-x   x    x   x
-x   x    x   x
-x x x x  x   x
-x x x x  x C x
-x x x x  x C
-+ O   O  + CCC
-  OOOOO      C
-OOO   CCC Ix C
-OOO   CCC II C
-  O     C    C
-- OOOOO CCCCCC
-x x x x  xx  C
-x x x     x
-x   x     x
---------------
+ x   x  x   x
+ x x x xx   x
+ x x x xx   x
+ x x x xx C
+ x x   xx CCCC
+   OOOOO     C
+ OOO  CCC xI C
+   O    C II C
+   OOOOOCCCCCC
+ x x   x    CC
+ x x x x xx CC
+ x   x   x
 --------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
@@ -99,10 +83,6 @@ Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x
 ## Metal 2
 ```
 01234567890123
-
-
-
-
 
 
 

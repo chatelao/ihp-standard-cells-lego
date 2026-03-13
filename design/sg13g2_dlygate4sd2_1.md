@@ -2,107 +2,87 @@
 
 ## Substrate
 ```
-012345678901234
-
-NNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNN
-SSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSS
-
+01234567890123
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-012345678901234
+01234567890123
+
+ ppXpppppppXp
+ ppXpppppppXp
+ ppXpppppppXp
+           X
 
 
-ppXppppppppXpp
-ppXppppppppXpp
-ppXppppppppXpX
-  X        X X
-           X X
-
-
- X
-
-nnnnnnnnnnnnnn
-nnnnnnnnnnnnnn
-nnnXnnnnnnnXnX
-nnnXnnnnnnnXnn
-nnnXnnnnnnnXnn
-
+  X
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
+ nnXnnnnnnnXn
+ nnXnnnnnnnXn
 
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-012345678901234
+01234567890123
 
-
- GX        X
- GX        X
- GX        X X
- GX        X X
- G         X X
- G
- G
- X
- G
- G
- G
- G X       X X
- G X       X
- G X       X
-
+  GX       X
+  GX       X
+  GX       X
+  G        X
+  G
+  G
+  X
+  G
+  G
+  G
+  GX       X
+  GX       X
 
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-012345678901234
-+++++++++++++++
-+++++++++++++++
-  x        x
-  x        x
-  x     C  x xO
-C x  CC C  x xO
-C     C C  x xO
-CCCCC C C    OO
-    C C CCCCC O
-IxI C CCC CCC O
-III C CCC CCC O
-    C C CCC OOO
-CCCCC C C    OO
-C  x CC    x xO
+01234567890123
+++++++++++++++
    x       x
+   x       x O
+ C x  C C  x O
+ C    C C  x O
+ CCCC C CCCC O
+    C C    C O
+ Ix C CCC CC O
+ II C C   C  O
+ CCCC C CCCOOO
+ C    C      O
+ C x  C    x O
    x       x
----------------
----------------
+--------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-012345678901234
-
-
-
-
+01234567890123
 
 
 

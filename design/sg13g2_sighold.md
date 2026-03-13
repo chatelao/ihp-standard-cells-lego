@@ -3,9 +3,6 @@
 ## Substrate
 ```
 012345678
-
-NNNNNNNNN
-NNNNNNNNN
 NNNNNNNNN
 NNNNNNNNN
 NNNNNNNNN
@@ -20,7 +17,6 @@ SSSSSSSSS
 SSSSSSSSS
 SSSSSSSSS
 SSSSSSSSS
-
 ```
 Legend: N=N-Well, S=Substrate
 
@@ -28,22 +24,18 @@ Legend: N=N-Well, S=Substrate
 ```
 012345678
 
+ pXXXXXp
+ ppppppp
+ ppppppp
 
-pXXXXXXp
-pXXXXXXp
-pppppppp
-
-
-
+       X
 
 
-
-nnnnnnnn
-nnnnnnnn
-nnnnnnnn
-nnnnnnnn
-nXXXXXXn
-
+ nnnnnnn
+ nnnnnnn
+ nnnnnnn
+ nnnnnnn
+ nXXXXXn
 
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
@@ -52,22 +44,18 @@ Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 ```
 012345678
 
-
- XXXXXX
- XXXXXX
+  XXXXX
 
 
 
-
+       X
 
 
 
 
 
 
-
- XXXXXX
-
+  XXXXX
 
 ```
 Legend: X=Connection (lower side)
@@ -76,22 +64,18 @@ Legend: X=Connection (lower side)
 ```
 012345678
 +++++++++
-+++++++++
- xxxxxx
- xxxxxx
+  xxxxx
 
 
 
-C      C
-C      C
-CCCCCCCC
-CCCC   C
-C      C
-C      C
+ C     x
+ CCCCCCC
+ C     C
+ CCCC  C
+ C     C
 
 
- xxxxxx
----------
+  xxxxx
 ---------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, x=Connection (upper side)
@@ -99,10 +83,6 @@ Legend: +=VDD, -=VSS, C=Metal 1 Connection, x=Connection (upper side)
 ## Metal 2
 ```
 012345678
-
-
-
-
 
 
 

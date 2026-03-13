@@ -2,59 +2,47 @@
 
 ## Substrate
 ```
-012345678901
-
-NNNNNNNNNNNN
-NNNNNNNNNNNN
-NNNNNNNNNNNN
-NNNNNNNNNNNN
-NNNNNNNNNNNN
-NNNNNNNNNNNN
-NNNNNNNNNNNN
-NNNNNNNNNNNN
-SSSSSSSSSSSS
-SSSSSSSSSSSS
-SSSSSSSSSSSS
-SSSSSSSSSSSS
-SSSSSSSSSSSS
-SSSSSSSSSSSS
-SSSSSSSSSSSS
-SSSSSSSSSSSS
-
+01234567890123
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-012345678901
+01234567890123
 
-
-pppppppppppp
-pppppppppppp
-pppppppppppp
-
-
+ pppppppppppp
+ pppppppppppp
+ pppppppppppp
 
 
 
 
-nnnnnnnnnnnn
-nnnnnnnnnnnn
-nnnnnnnnnnnn
-nnnnnnnnnnnn
-nnnnnnnnnnnn
-
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
 
 ```
 Legend: n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-012345678901
-
-
-
-
+01234567890123
 
 
 
@@ -73,9 +61,8 @@ Legend: n=NMOS Active, p=PMOS Active
 
 ## Metal 1
 ```
-012345678901
-++++++++++++
-++++++++++++
+01234567890123
+++++++++++++++
 
 
 
@@ -88,20 +75,13 @@ Legend: n=NMOS Active, p=PMOS Active
 
 
 
-
-
-------------
-------------
+--------------
 ```
 Legend: +=VDD, -=VSS
 
 ## Metal 2
 ```
-012345678901
-
-
-
-
+01234567890123
 
 
 
