@@ -3,7 +3,7 @@
 ## Substrate
 ```
 01234567890123456789012
-NNNNNNNNNNNNNNNNNNNNNNN
+
 NNNNNNNNNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNNNNNNNNN
@@ -18,27 +18,27 @@ SSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
 ```
 01234567890123456789012
 
-XpppppXXpppXppppppppppp
-XpppppXXpppXppppppppppp
-XpppppXXpppXppppppppppp
-X     XX   X   X   X
-X     XX   X   X   X
 
+ XppppppXppXpppppppppp
+ XppppppXppXpppppppppp
+ XppppppXppXpppppppppp
+ X      X  X   X   X
+ X      X  X   XXXXX
 
-X                 X
+  X               X
+ nnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnnnnnnnnnnnnnn
+ XnnnnnnXnnnXnnnnnnnXn
+ XnnnnnnXnnnXnnnnnnnnn
+ XnnnnnnXnnnXnnnnnnnnn
 
-nnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnnnnnnnnn
-XnnnnnnXnnnnXnnnnnnnnnn
-XnnnnnnXnnnnXnnnnnnnnnn
-XnnnnnnXnnnnXnnnnnnnnnn
 
 ```
 
@@ -46,20 +46,20 @@ XnnnnnnXnnnnXnnnnnnnnnn
 ```
 01234567890123456789012
 
-X     XX   X      G
-X     XX   X      G
-X     XX   X      G
-X     XX   X   X  GX
-X     XX   X   X  GX
-G                 G
-G                 G
-X                 X
-G                 G
-G                 G
-G                 G
-X      X    X     G
-X      X    X     G
-X      X    X     G
+
+ XG     X  X      G
+ XG     X  X      G
+ XG     X  X      G
+ XG     X  X   X  GX
+ XG     X  X   XXXXX
+  G               G
+  X               X
+  G               G
+  G               G
+ XG     X   X     G X
+ XG     X   X     G
+ XG     X   X     G
+
 
 ```
 
@@ -67,20 +67,20 @@ X      X    X     G
 ```
 01234567890123456789012
 +++++++++++++++++++++++
-x     xx   x
-x     xx   x CCCCCCCCC
-x C C xx C x C   C   C
-x C C xx C x C x C x C
-x C C xx C x C x   x C
-+ C C ++ C + C OOOOO C
-  C CCCCCCCCCC OO
-x C             OIxII
-I C  CCCCCCCCCC OIIII
-  C  C   CC   C OOOOO
-- CCCC - CC - C O   O C
-x CCCC x CC x CCCCC   C
-x      x    x CCCCCCCCC
-x      x    x
++++++++++++++++++++++++
+ x      x  x CCCCCCCCC
+ x C  C xC x C   C   C
+ x C  C xC x C   C   C
+ x C  C xC x C x C x C
+ x C  C xC x C xxxxx C
+   C  CCCCCCCC OO
+ IxC            OIxII
+ IIC   CCCCCCCC O
+   C   C  C   C OOOOO
+ x CCC Cx C x C     x C
+ x CCC Cx C x CCCCCCCCC
+ x      x   x
+-----------------------
 -----------------------
 ```
 

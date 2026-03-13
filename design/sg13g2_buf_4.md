@@ -11,7 +11,6 @@ NNNNNNNNNNNNNN
 NNNNNNNNNNNNNN
 NNNNNNNNNNNNNN
 NNNNNNNNNNNNNN
-NNNNNNNNNNNNNN
 SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
@@ -19,7 +18,7 @@ SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
 SSSSSSSSSSSSSS
-SSSSSSSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +26,19 @@ SSSSSSSSSSSSSS
 01234567890123
 
 
-XpppXppppXpppX
-XpppXppppXpppX
-XpXpXpXppXpppX
-X X X X  X   X
-X X X X  X
+ XpppXppXpppX
+ XpXpXpXXpppX
+ XpXpXpXXpppX
+ X X X XX
+ X X   XX
 
+          X
+ nnnnnnnnnnnn
+ nnnnnnnnnnnn
+ XnXnnnXnnnnn
+ XnXnXnXnXXnn
+ XnnnXnnnXnnn
 
-           X
-
-nnnnnnnnnnnnnn
-nnnnnnnnnnnnnn
-XnXnXnXnnXXnnn
-XnXnXnnnnnXnnn
-XnnnXnnnnnXnnn
 
 ```
 
@@ -49,20 +47,19 @@ XnnnXnnnnnXnnn
 01234567890123
 
 
-X   X    X G X
-X   X    X G X
-X X X X  X G X
-X X X X  X G X
-X X X X  X G
-           G
-           G
-           X
-           G
-           G
-           G
-X X X X  XXG
-X X X     XG
-X   X     XG
+ X   X  X G X
+ X X X XX G X
+ X X X XX G X
+ X X X XX G
+ X X   XX G
+          G
+          X
+          G
+          G
+ X X   X  G
+ X X X X XX
+ X   X   XG
+
 
 ```
 
@@ -71,27 +68,25 @@ X   X     XG
 01234567890123
 ++++++++++++++
 ++++++++++++++
-x   x    x   x
-x   x    x   x
-x x x x  x   x
-x x x x  x C x
-x x x x  x C
-+ O   O  + CCC
-  OOOOO      C
-OOO   CCC Ix C
-OOO   CCC II C
-  O     C    C
-- OOOOO CCCCCC
-x x x x  xx  C
-x x x     x
-x   x     x
+ x   x  x   x
+ x x x xx   x
+ x x x xx   x
+ x x x xx C
+ x x   xx CCCC
+   OOOOO     C
+ OOO  CCC xI C
+   O    C II C
+   OOOOOCCCCCC
+ x x   x    CC
+ x x x x xx CC
+ x   x   x
+--------------
 --------------
 ```
 
 ## Metal 2
 ```
 01234567890123
-
 
 
 

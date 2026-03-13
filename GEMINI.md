@@ -13,7 +13,7 @@
 - /specifications - Download and store the original standard cell definitions from the IHP PDK here
 - /specifications - Convert "non .md" files for caching and readability purpose to Markdown here
 - /specifications/MODELING_GUIDELINES.md - Instructions about how to draw the LEGO models from specifications
-- /models - The LEGO LDR models of the cells, the lego have to be arranged in a way "snapping" into each others
+- /models - The LEGO LDR models of the cells, the lego have to be arranged in a way "snapping" into each others (all components must align to the 20 LDU grid)
 - /images - The rendered LEGO models
 - /instructions - The automated instructions how to build the LEGO model as PDF (not committed to repo, only deployed to GitHub Pages)
 - /design - Layer-by-layer ASCII art design documentation for cells

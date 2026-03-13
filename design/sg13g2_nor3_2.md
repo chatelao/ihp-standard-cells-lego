@@ -3,7 +3,7 @@
 ## Substrate
 ```
 0123456789012345
-NNNNNNNNNNNNNNNN
+
 NNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNN
@@ -18,27 +18,27 @@ SSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
 ```
 0123456789012345
 
-XpppXppppppppppp
-XpppXppppppppppp
-XpppXppppppppppp
-X   X        X
-X            X
 
+ XpppXppppppppp
+ XpppXppppppppp
+ XpppXppppppppp
+ X          X
+ X        XXX
 
-  X    X     X
+  XX  XX    X
+ nnnnnnnnnnnnnn
+ nnnnnnnnnnnnnn
+ XnXnXXXXnXnXnX
+ XnnnXXXnnXnnnX
+ XnnnXXXnnXnnnX
 
-nnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnn
-XnXnXXXnnXnXnXnX
-XnnnXXXnnnnXnnnX
-XnnnXXXnnnnXnnnX
 
 ```
 
@@ -46,20 +46,20 @@ XnnnXXXnnnnXnnnX
 ```
 0123456789012345
 
-XG GX G G   G G
-XG GX G G   G G
-XG GX G G   G G
-XG GX G G   GXG
-XG G  G G   GXG
- G G  G G   G G
- G G  G G   G G
- GXG  GXG   GXG
- G G  G G   G G
- G G  G G   G G
- G G  G G   G G
-XGXGXXX GX XGXGX
-XG GXXX G  XG GX
-XG GXXX G  XG GX
+
+ X G X G   G G
+ X G X G   G G
+ X G X G   G G
+ X G G G   GXG
+ X G G G  XXXG
+ G G G G   G G
+ GXX GXX   GXG
+ G G G G   G G
+ G G G G   G G
+ X X XXXX XGXGX
+ X G XXX  XG GX
+ X G XXX  XG GX
+
 
 ```
 
@@ -67,20 +67,20 @@ XG GXXX G  XG GX
 ```
 0123456789012345
 ++++++++++++++++
-x   x
-x   x
-x C x CCCCCCCCCC
-x C x C  C C x C
-x C      C   x C
-+ CCCCCCCC OOO C
-           O
- IxI  Ix OOOIxI
- III  II OOOIII
-- OOOOOOOO OOO -
-- O      O   O -
-x x xxx  x x x x
-x   xxx    x   x
-x   xxx    x   x
+++++++++++++++++
+ x   x
+ x C x CCCCCCCC
+ x C x C  C   C
+ x C    C   x C
+ x CCCCCC xxx C
+          O
+  xx  xxOOO xI
+        O O
+ - OOOOOO OOO -
+ x x xxxx x x x
+ x   xxx  x   x
+ x   xxx  x   x
+----------------
 ----------------
 ```
 

@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.24 um
+# 1 stud = 0.27 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.24 = 83.333... LDU
-UM_TO_LDU = 20 / 0.24
+# 1 um = 20 / 0.27 = 74.074... LDU
+UM_TO_LDU = 20 / 0.27
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -185,15 +185,23 @@ def generate_ldr(macro_data):
     ldr_lines.append("0 // Substrate high / N-Well")
     # N-Well typically occupies the upper half of the cell
     split_z = ((height_ldu // 2) // 20) * 20
-    for plate, x_off, z_off, rotated in tiles:
-        color = COLOR_SUBSTRATE
-        if z_off > split_z:
-            color = COLOR_NWELL
 
+    # Substrate P (Lower half)
+    tiles_p = get_best_plates(width_ldu, split_z)
+    for plate, x_off, z_off, rotated in tiles_p:
         if rotated:
-            ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 0 0 1 0 1 0 -1 0 0 {plate}")
+            ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 0 0 1 0 1 0 -1 0 0 {plate}")
         else:
-            ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
+            ldr_lines.append(f"1 {COLOR_SUBSTRATE} {x_off} {Y_SUBSTRATE_HIGH} {z_off} 1 0 0 0 1 0 0 0 1 {plate}")
+
+    # N-Well (Upper half)
+    tiles_n = get_best_plates(width_ldu, height_ldu - split_z)
+    for plate, x_off, z_off, rotated in tiles_n:
+        gz = split_z + z_off
+        if rotated:
+            ldr_lines.append(f"1 {COLOR_NWELL} {x_off} {Y_SUBSTRATE_HIGH} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
+        else:
+            ldr_lines.append(f"1 {COLOR_NWELL} {x_off} {Y_SUBSTRATE_HIGH} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
     # 3. Active Regions
     ldr_lines.append("0 STEP")

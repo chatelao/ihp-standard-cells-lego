@@ -3,7 +3,7 @@
 ## Substrate
 ```
 012345678
-NNNNNNNNN
+
 NNNNNNNNN
 NNNNNNNNN
 NNNNNNNNN
@@ -18,27 +18,27 @@ SSSSSSSSS
 SSSSSSSSS
 SSSSSSSSS
 SSSSSSSSS
-SSSSSSSSS
+
 ```
 
 ## Active
 ```
 012345678
 
-XpppXppp
-XpppXppp
-XpppXpXX
-X   X XX
-      XX
 
+ XpppXpp
+ XpppXpX
+ XpppXpX
+       X
+       X
 
    X
+ nnnnnnn
+ nnnnnnn
+ XnnnXnX
+ nnnnXnn
+ nnnnXnn
 
-nnnnnnnn
-nnnnnnnn
-XnnnXnXX
-nnnnXnnn
-nnnnXnnn
 
 ```
 
@@ -46,20 +46,20 @@ nnnnXnnn
 ```
 012345678
 
-X  GX
-X  GX
-X  GX XX
-X  GX XX
-G  G  XX
-G  G
-G  G
-G  X
-G  G
-G  G
-G  G
-X  GX XX
-G  GX
-G  GX
+
+ X G X
+ X G X X
+ X G X X
+ G G   X
+ G G   X
+ G G
+ G X
+ G G
+ G G
+ X G X X
+ G G X
+ G G X
+
 
 ```
 
@@ -67,20 +67,20 @@ G  GX
 ```
 012345678
 +++++++++
-x   x
-x   x
-x C x xxO
-x C x xxO
-  C   xxO
-CCCCC OOO
-C    C OO
-C Ix C OO
-C II   OO
-C     OOO
-    - OOO
-xI  x xxO
-II  x
-    x
++++++++++
+ x   x
+ x C x xO
+ x C x xO
+   C   xO
+ CCCCC xO
+ C   C  O
+ C x C  O
+ C I    O
+ C     OO
+IxI  x xO
+III  x
+     x
+---------
 ---------
 ```
 

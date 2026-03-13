@@ -11,7 +11,6 @@ NNNNNNNNN
 NNNNNNNNN
 NNNNNNNNN
 NNNNNNNNN
-NNNNNNNNN
 SSSSSSSSS
 SSSSSSSSS
 SSSSSSSSS
@@ -19,7 +18,7 @@ SSSSSSSSS
 SSSSSSSSS
 SSSSSSSSS
 SSSSSSSSS
-SSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +26,19 @@ SSSSSSSSS
 012345678
 
 
-XppppXpp
-XppppXpp
-XppppXpp
-X
+ XppppXp
+ XppppXp
+ Xpppppp
 
+    X
 
+      X
+ nnnnnnn
+ nnnnnnn
+ nXnXnXn
+ nXnXnXn
+ nXnnnXn
 
-       X
-
-nnnnnnnn
-nnnnnnnn
-nXnXnXnn
-nXnnnXnn
-nXnnnXnn
 
 ```
 
@@ -49,20 +47,19 @@ nXnnnXnn
 012345678
 
 
-X    XG G
-X    XG G
-X    XG G
-X     G G
-      G G
-      G G
-      G G
-      GXG
-      G G
-      G G
-      G G
- X X XG G
- X   XG G
- X   XG G
+ X   GXG
+ X   GXG
+ X   G G
+     G G
+    XG G
+     G G
+     GXG
+     G G
+     G G
+  X XGXG
+  X XGXG
+  X  GXG
+
 
 ```
 
@@ -71,27 +68,25 @@ X     G G
 012345678
 +++++++++
 +++++++++
-x    x
-x    x
-x    x C
-xCCCCCCC
- C   C C
-CC O C C
-C  O C
-C OO CIx
-C OO CII
-   O CCC
- - O   C
- x x x C
- x   x
- x   x
+ x    x
+ x    xC
+ x     C
+  CCCCCC
+ CC xC C
+ C  OC
+ COOOCxI
+    OC
+  - OCCC
+  x x xC
+  x x x
+  x   x
+---------
 ---------
 ```
 
 ## Metal 2
 ```
 012345678
-
 
 
 

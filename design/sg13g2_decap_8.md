@@ -11,7 +11,6 @@ NNNNNNNNNNNN
 NNNNNNNNNNNN
 NNNNNNNNNNNN
 NNNNNNNNNNNN
-NNNNNNNNNNNN
 SSSSSSSSSSSS
 SSSSSSSSSSSS
 SSSSSSSSSSSS
@@ -19,7 +18,7 @@ SSSSSSSSSSSS
 SSSSSSSSSSSS
 SSSSSSSSSSSS
 SSSSSSSSSSSS
-SSSSSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +26,19 @@ SSSSSSSSSSSS
 012345678901
 
 
-XpppXXXXpppX
-XpppXXXXpppX
-XpppXXXXpppX
-X   XXXX   X
-X   XXXX   X
+ XppXXXXppp
+ XppXXXXppp
+ XppXXXXppp
+ X  XXXX
+ X  XXXX
 
 
+ nnnnnnnnnn
+ nnnnnnnnnn
+ XXnnnXnnnX
+ XXnnnXnnnX
+ XXnnnXnnnX
 
-
-nnnnnnnnnnnn
-nnnnnnnnnnnn
-XXnnnXXnnnXX
-XXnnnXXnnnXX
-XXnnnXXnnnXX
 
 ```
 
@@ -49,20 +47,19 @@ XXnnnXXnnnXX
 012345678901
 
 
-X   XXXX   X
-X   XXXX   X
-X   XXXX   X
-X   XXXX   X
-X   XXXX   X
+ X  XXXX
+ X  XXXX
+ X  XXXX
+ X  XXXX
+ X  XXXX
 
 
 
 
+ XX   X   X
+ XX   X   X
+ XX   X   X
 
-
-XX   XX   XX
-XX   XX   XX
-XX   XX   XX
 
 ```
 
@@ -71,27 +68,25 @@ XX   XX   XX
 012345678901
 ++++++++++++
 ++++++++++++
-x   xxxx   x
-x   xxxx   x
-x   xxxx   x
-x   xxxx   x
-x   xxxx   x
-+   ++++   +
+ x  xxxx   +
+ x  xxxx   +
+ x  xxxx   +
+ x  xxxx   +
+ x  xxxx   +
     ++++
- -  ++++  -
- -  ++++  -
- -        -
- -        -
-xx   xx   xx
-xx   xx   xx
-xx   xx   xx
+  - ++++  -
+  - ++++  -
+  -       -
+ xx   x   x-
+ xx   x   x-
+ xx   x   x-
+------------
 ------------
 ```
 
 ## Metal 2
 ```
 012345678901
-
 
 
 

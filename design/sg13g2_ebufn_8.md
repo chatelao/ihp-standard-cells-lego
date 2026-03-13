@@ -2,96 +2,91 @@
 
 ## Substrate
 ```
-012345678901234567890123456789012345678901234567
+01234567890123456789012345678901234567890123
 
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
 ```
-012345678901234567890123456789012345678901234567
+01234567890123456789012345678901234567890123
 
 
-pppppppppppppppppppXpppXpppXppppXppppppppppXpppX
-pppppppppppppppppppXpppXpppXppppXppppppppppXpppX
-pppppppppppppppppppXpppXpppXpppppppppppppppXpppX
-  X   X   X    X                               X
-  X   X   X    X
+ pppppppppppppppppXppXpppXpppXpppppppppXppp
+ pppppppppppppppppXppXpppXpppppppppppppXppp
+ pXpppXpppXpppXpppppppppppppppppppppppppppp
+  X   X   X   X
+  XXXXXXXXXXXXX
 
+                                     X  X
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nXnnnXnnnXnnnXnnnXnnnXnnXnnnXnnnnnnnnnXnnn
+ nnnnnnnnnnnnnnnnnXnnnXnnXnnnXnnnnnnnnnXnnn
+ nnnnnnnnnnnnnnnnnXnnnXnnXnnnXnnnnnnnnnXnnn
 
-                                         X   X
-
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnnnnnXnnnXnnnnXnnnXnnnnnnnnnnXnnnX
-nnnnnnnnnnnnnnnnnnnXnnnXnnnnXnnnXnnnnnnnnnnXnnnX
-nnnnnnnnnnnnnnnnnnnXnnnXnnnnXnnnXnnnnnnnnnnXnnnX
 
 ```
 
 ## Polysilicon
 ```
-012345678901234567890123456789012345678901234567
+01234567890123456789012345678901234567890123
 
 
-                   X   X   X    X        G X G X
-                   X   X   X    X        G X G X
-                   X   X   X             G X G X
-  X   X   X    X                         G   G X
-  X   X   X    X                         G   G
-                                         G   G
-                                         G   G
-                                         X   X
-                                         G   G
-                                         G   G
-                                         G   G
-                   X   X    X   X        G X G X
-                   X   X    X   X        G X G X
-                   X   X    X   X        G X G X
+                  X  X   X   X       G XG
+                  X  X   X           G XG
+  X   X   X   X                      G  G
+  X   X   X   X                      G  G
+  XXXXXXXXXXXXX                      G  G
+                                     G  G
+                                     X  X
+                                     G  G
+                                     G  G
+  X   X   X   X   X   X  X   X       G XG
+                  X   X  X   X       G XG
+                  X   X  X   X       G XG
+
 
 ```
 
 ## Metal 1
 ```
-012345678901234567890123456789012345678901234567
-++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++
-                   x   x   x    x          x   x
-CCCCCCCCCCCCCCCCCC x   x   x    x          x   x
-C   C   C   C    C x C x C x CCCCCC        x C x
-C x C x C x C  x CCCCCCCCCCCCCC     CCCCCCCCCC x
-C x   x   x    x                    C        C
-C OOOOOOOOOOOOOO CCCCCCCCCCCCCCCCCCCCCCCCC   CCC
-  OO             C                   C         C
-  OO  CCCCCCCCCCCC                   C IIxI Ix C
-  OO             CCCCCCCCCCCCCCCCCC  C IIII II C
-C OOOOOOOOOOOOOO C   C   CC   C   C  C         C
-C O   O   O    O C - C - CC - C - C  C   C - CCC
-C   C   C   C    C x C x CC x C x C CCCCCC x C x
-CCCCCCCCCCCCCCCCCC x   x    x   x          x   x
-                   x   x    x   x          x   x
-------------------------------------------------
+01234567890123456789012345678901234567890123
+++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++
+ CCCCCCCCCCCCCCCC x  x   x   x         x   +
+ C  C   C   C   C x Cx C x C   C       x C +
+ Cx C x C x C x CCCCCCCCCCCCCCCC CCCCCCCCC +
+ Cx   x   x   x                  C       C
+ Cxxxxxxxxxxxxx CCCCCCCCCCCCCCCCCCCCCC   CCC
+   O            C                 C        C
+   O  CCCCCCCCCCC CCCCCCCCCCCCCC  C IxI xI C
+   O            CCCCC   C  C   C  C        C
+ COOOOOOOOOOOOO C   C - C- C - C  C  C - CCC
+ Cx C x C x C x C x C x Cx C x C  C  C x C
+ CCCCCCCCCCCCCCCC x   x  x   x   CCCCC x C -
+                  x   x  x   x         x   -
+--------------------------------------------
+--------------------------------------------
 ```
 
 ## Metal 2
 ```
-012345678901234567890123456789012345678901234567
-
+01234567890123456789012345678901234567890123
 
 
 

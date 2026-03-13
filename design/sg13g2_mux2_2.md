@@ -11,7 +11,6 @@ NNNNNNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNN
 SSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSS
@@ -19,7 +18,7 @@ SSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +26,19 @@ SSSSSSSSSSSSSSSSSSSS
 01234567890123456789
 
 
-pppXppppppppppXppppX
-pppXppppppppppXppppX
-pppXppppppppppXpXXXX
-              X XXXX
-              X XXXX
+ pppXppppppppXppppX
+ pppXppppppppXpXXXX
+ pppXppppppppXpXXXX
+             X XXXX
+             X XXXX
 
+  X     X
+ nnnnnXnnnXnnnnnnnn
+ nnnnnnnXnnnnnnnnnn
+ nnXnnnnnnnnnnnnXXX
+ nnXnnnnnnnnnXnnXXX
+ nnXnnnnnnnnnXnnnnX
 
-   X     X
-      X
-nnnnnnXnnnnXnnnnnnnn
-nnnnnnnnnXnnnnnnnnnn
-nnnXnnnnnnnnnnXnnXXX
-nnnXnnnnnnnnnnXnnnnX
-nnnXnnnnnnnnnnXnnnnX
 
 ```
 
@@ -49,20 +47,19 @@ nnnXnnnnnnnnnnXnnnnX
 01234567890123456789
 
 
-  GXG   G G G X    X
-  GXG   G G G X    X
-  GXG   G G G X XXXX
-  G G   G G G X XXXX
-  G G   G G G X XXXX
-  G G   G G G
-  G G   G G G
-  GXG   GXG G
-  G G X GGG G
-  G G X G GXG
-  G G   GXG G
-  GXG   G G G X  XXX
-  GXG   G G G X    X
-  GXG   G G G X    X
+ G GX  G G G X    X
+ G GX  G G G X XXXX
+ G GX  G G G X XXXX
+ G G   G G G X XXXX
+ G G   G G G X XXXX
+ G G   G G G
+ GXG   GXG G
+ G G  XG GXG
+ G G   GXG G
+ G X   G G G    XXX
+ G X   G G G X  XXX
+ G X   G G G X    X
+
 
 ```
 
@@ -71,27 +68,25 @@ nnnXnnnnnnnnnnXnnnnX
 01234567890123456789
 ++++++++++++++++++++
 ++++++++++++++++++++
-   x          x    x
-   x CCCCCCCCCx    x
-   x C       Cx xxxx
-C    C   C   Cx xxxx
-CCCCCC CCC   Cx xxxx
-C   CCCC     C+ OOO+
-C   C        C  OOO
-C IxC   Ix   CCCC O
-C IIC x IIII CCCC O
-C   C x   IxCCCC  O
-C  -C IIIxIIC    OO-
-   xCCCCCCCCC x  xxx
-   x          x    x
-   x          x    x
+    x CCCCCCCx    x
+    x C     Cx xxxx
+ C  x C CC  Cx xxxx
+ CCCCCCCCC  Cx xxxx
+ C   CCC    Cx xxxx
+ C   C      C    O
+ CxI C  x I CC C O
+ C   Cx I x    C O
+ C   CIIxII CCCC O
+ C x C      C   xxx
+   x CCCCCCCCx  xxx
+   x         x    x
+--------------------
 --------------------
 ```
 
 ## Metal 2
 ```
 01234567890123456789
-
 
 
 
