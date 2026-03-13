@@ -155,6 +155,7 @@ def generate_gallery():
         html_content += f'            <div class="card-content">\n'
         html_content += f'                <div class="card-title">{name}</div>\n'
         html_content += f'                <div class="card-links">\n'
+        html_content += f'                    <a href="viewer.html?model={name}" target="_blank" style="color: #03dac6; font-weight: bold;">3D</a>\n'
         html_content += f'                    <a href="models/{ldr_file}" target="_blank">LDR</a>\n'
         if os.path.exists(os.path.join(image_dir, f"{name}.jpg")):
             html_content += f'                    <a href="images/{name}.jpg" target="_blank">JPG</a>\n'

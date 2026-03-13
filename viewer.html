@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Standard Cell 3D Viewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+        a { color: #bb86fc; pointer-events: auto; }
+    </style>
+</head>
+<body>
+    <div id="info">
+        <div id="model-name">Loading...</div>
+        <a href="index.html">Back to Gallery</a>
+    </div>
+
+    <div id="controls">
+        Left-click: Rotate | Right-click: Pan | Scroll: Zoom
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { LDrawLoader } from 'three/addons/loaders/LDrawLoader.js';
+
+        let camera, scene, renderer, controls;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const modelName = urlParams.get('model');
+
+        if (!modelName) {
+            document.getElementById('model-name').innerText = 'No model specified';
+        } else {
+            document.getElementById('model-name').innerText = modelName;
+            init();
+        }
+
+        async function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x121212);
+
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.set(200, 200, 400);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+
+            const loader = new LDrawLoader();
+            loader.setPartsLibraryPath('ldraw_lib/');
+
+            // Attempt to load LDConfig.ldr for colors
+            try {
+                await loader.preloadMaterials('ldraw_lib/LDConfig.ldr');
+            } catch (e) {
+                console.warn('Could not load LDConfig.ldr, using default colors');
+            }
+
+            loader.load('models/' + modelName + '.ldr', function (group) {
+                // Convert from LDraw coordinates: rotate 180 degrees around OX
+                group.rotation.x = Math.PI;
+                scene.add(group);
+
+                // Center camera on model
+                const bbox = new THREE.Box3().setFromObject(group);
+                const center = bbox.getCenter(new THREE.Vector3());
+                const size = bbox.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+
+                controls.target.copy(center);
+                camera.position.copy(center).add(new THREE.Vector3(maxDim, maxDim, maxDim).multiplyScalar(1.5));
+                controls.update();
+
+            }, undefined, function (error) {
+                console.error(error);
+                document.getElementById('model-name').innerText = 'Error loading model';
+            });
+
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

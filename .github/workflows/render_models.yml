@@ -50,3 +50,13 @@ jobs:
         with:
           name: instructions
           path: instructions/
+
+      - name: Collect LDraw parts
+        run: |
+          python3 scripts/collect_parts.py /usr/share/ldraw ldraw_lib
+
+      - name: Upload LDraw parts artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ldraw_lib
+          path: ldraw_lib/
