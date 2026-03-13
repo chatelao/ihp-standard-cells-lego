@@ -2,51 +2,55 @@
 
 ## Substrate
 ```
-0123456789012
+01234567890123
 
-NNNNNNNNNNNNN
-NNNNNNNNNNNNN
-NNNNNNNNNNNNN
-NNNNNNNNNNNNN
-NNNNNNNNNNNNN
-NNNNNNNNNNNNN
-NNNNNNNNNNNNN
-NNNNNNNNNNNNN
-SSSSSSSSSSSSS
-SSSSSSSSSSSSS
-SSSSSSSSSSSSS
-SSSSSSSSSSSSS
-SSSSSSSSSSSSS
-SSSSSSSSSSSSS
-SSSSSSSSSSSSS
-SSSSSSSSSSSSS
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+NNNNNNNNNNNNNN
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+SSSSSSSSSSSSSS
+
 ```
+Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-0123456789012
+01234567890123
 
 
-XpppXpppXpppX
-XpppXpppXpppX
-XpppXpXpXpXXX
+XpppXpppXpppXp
+XpppXpppXpppXp
+XpppXpXpXpXXXp
 X   X X X XXX
 X   X X   XXX
 
 
  X       X
 
-nnnnnnnnnnnnn
-nnnnnnnnnnnnn
-XnnnnnXnnnnnn
-XnnnnnXnnnnnn
-XnnnnnXnnnnnn
+nnnnnnnnnnnnnn
+nnnnnnnnnnnnnn
+XnnnnnXnnnnnnn
+XnnnnnXnnnnnnn
+XnnnnnXnnnnnnn
+
 
 ```
+Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-0123456789012
+01234567890123
 
 
 X G X   X G X
@@ -64,13 +68,15 @@ X G   X G G
 X G   X G G
 X G   X G G
 
+
 ```
+Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-0123456789012
-+++++++++++++
-+++++++++++++
+01234567890123
+++++++++++++++
+++++++++++++++
 x   x   x   x
 x   x   x   x
 x   x x x xxx
@@ -85,12 +91,15 @@ IIC     II O
 x   C x C   C
 x   C x CCCCC
 x     x
--------------
+--------------
+--------------
 ```
+Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-0123456789012
+01234567890123
+
 
 
 

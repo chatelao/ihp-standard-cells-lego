@@ -3,15 +3,13 @@ import re
 
 def get_dimensions(parts):
     if not parts:
-        return 0, 0
+        return 0, 0, 0, 0
     # In LDR, studs are at centers. Stud grid is 20 LDU.
     # Parts can be multiple studs.
     # Let's find min/max x and z.
     xs = []
     zs = []
     for p in parts:
-        # Roughly estimate extent based on part name if needed, but for NAND cells
-        # we can just use the centers and round to grid.
         xs.append(p['x'])
         zs.append(p['z'])
 
@@ -21,20 +19,15 @@ def get_dimensions(parts):
     max_z = max(zs) + 10
 
     # Grid is 20 LDU.
-    # Let's align to 20 LDU grid.
-    # For very narrow cells (like fill_1), ensure we have at least one stud width.
-    if grid_max_x == grid_min_x:
-        grid_max_x = grid_min_x + 20
-
-    # The cells start at x=0, z=0 usually? No, centers are offset.
-    # From lef_to_ldr.py: x_off = x * 20 + (rw * 20) // 2
-    # So for a 1x1 at index 0, x_off = 10.
-
     # Let's find the grid boundaries.
     grid_min_x = int(min_x // 20) * 20
     grid_max_x = int((max_x + 19) // 20) * 20
     grid_min_z = int(min_z // 20) * 20
     grid_max_z = int((max_z + 19) // 20) * 20
+
+    # For very narrow cells (like fill_1), ensure we have at least one stud width.
+    if grid_max_x == grid_min_x:
+        grid_max_x = grid_min_x + 20
 
     width_studs = (grid_max_x - grid_min_x) // 20
     height_studs = (grid_max_z - grid_min_z) // 20
@@ -145,6 +138,22 @@ COLOR_MAP = {
     2: 'M',   # Metal 2 Green
 }
 
+LEGEND_DESC = {
+    'S': 'Substrate',
+    'N': 'N-Well',
+    'n': 'NMOS Active',
+    'p': 'PMOS Active',
+    'G': 'Polysilicon',
+    'I': 'Metal 1 Input',
+    'C': 'Metal 1 Connection',
+    'O': 'Metal 1 Output',
+    '+': 'VDD',
+    '-': 'VSS',
+    'M': 'Metal 2',
+    'X': 'Connection (lower side)',
+    'x': 'Connection (upper side)',
+}
+
 def generate_design_doc(cell_name, parts):
     width_studs, height_studs, min_x, min_z = get_dimensions(parts)
 
@@ -164,6 +173,9 @@ def generate_design_doc(cell_name, parts):
         doc += f"## {layer_name}\n"
         doc += "```\n"
         doc += scale + "\n"
+
+        used_chars = set()
+        layer_lines = []
         # In ASCII art, top row is smallest Z?
         # LEF Y is LEGO Z.
         # VDD is at high Z, VSS at low Z.
@@ -174,13 +186,22 @@ def generate_design_doc(cell_name, parts):
                 sx = min_x + x_idx * 20 + 10
                 sz = min_z + z_idx * 20 + 10
                 char = get_char_for_stud(parts, sx, sz, y_list, COLOR_MAP, {})
-                # Special case for VSS Rail at Metal 1 which is color 0
-                if layer_name == "Metal 1" and char == '-':
-                    # Verify it's not a via or something else black
-                    pass
                 line += char
-            doc += line + "\n"
-        doc += "```\n\n"
+                if char != ' ':
+                    used_chars.add(char)
+            layer_lines.append(line)
+
+        doc += "\n".join(layer_lines) + "\n"
+        doc += "```\n"
+
+        if used_chars:
+            legend_parts = []
+            for char in sorted(list(used_chars)):
+                desc = LEGEND_DESC.get(char, "Unknown")
+                legend_parts.append(f"{char}={desc}")
+            doc += "Legend: " + ", ".join(legend_parts) + "\n"
+
+        doc += "\n"
 
     return doc
 
