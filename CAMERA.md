@@ -25,17 +25,17 @@ The following viewpoints are standardized for the GEMINI gallery:
 
 | View Name | Latitude | Longitude | Description |
 | :--- | :--- | :--- | :--- |
-| **Perspective** | N/A | N/A | Uses `-DefaultCamera` for a standard isometric-like view. |
+| **Perspective** | 30 | 45 | Primary isometric-like view from the front-right. |
 | **Top** | 90 | 0 | Looking straight down at the cell layout. |
 | **Front** | 0 | 0 | Looking at the front edge (length along Z-axis). |
 | **Side** | 0 | 90 | Looking at the side edge (width along X-axis). |
-| **Top-Down Angled** | 45 | 45 | An angled view from above, looking from the front-right corner. |
-| **Side Angled** | 20 | 135 | A low-angle view looking from the back-right corner. |
+| **Top-Down Angled** | 45 | 315 | An angled view from above, looking from the front-left corner. |
+| **Side Angled** | 25 | 135 | A low-angle view looking from the back-right corner. |
 
 ## Implementation in Scripts
 
 When rendering with `ldview`, ensure `-UseCamera=0` is included to override default camera behavior:
 
 ```bash
-ldview -SaveSnapshot=output.jpg -UseCamera=0 -Latitude=45 -Longitude=45 model.ldr
+ldview -SaveSnapshot=output.jpg -UseCamera=0 -Latitude=30 -Longitude=45 model.ldr
 ```

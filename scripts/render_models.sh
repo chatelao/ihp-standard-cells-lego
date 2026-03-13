@@ -20,7 +20,7 @@ for file in "$MODELS_DIR"/*.ldr; do
 
     # Perspective image
     echo "  Rendering perspective image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -DefaultCamera "$file" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=30 -Longitude=45 "$file" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render perspective image for $filename"
     fi
 
@@ -44,13 +44,13 @@ for file in "$MODELS_DIR"/*.ldr; do
 
     # Top-Down Angled image
     echo "  Rendering top-down angled image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_top_angled.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=45 -Longitude=45 "$file" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_top_angled.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=45 -Longitude=315 "$file" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render top-down angled image for $filename"
     fi
 
     # Side Angled image
     echo "  Rendering side angled image..."
-    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_side_angled.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=20 -Longitude=135 "$file" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" -SaveSnapshot="$OUTPUT_DIR/${filename}_side_angled.jpg" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=25 -Longitude=135 "$file" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render side angled image for $filename"
     fi
 
@@ -74,7 +74,7 @@ for file in "$MODELS_DIR"/*.ldr; do
     step_images=()
     for (( s=1; s<=total_steps; s++ )); do
         step_img="$TEMP_STEP_DIR/step_${s}.jpg"
-        if "$LDVIEW_BIN" -SaveSnapshot="$step_img" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -Step="$s" "$file" > "$LOG_FILE" 2>&1; then
+        if "$LDVIEW_BIN" -SaveSnapshot="$step_img" -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=30 -Longitude=45 -Step="$s" "$file" > "$LOG_FILE" 2>&1; then
             step_images+=("$step_img")
         else
             echo "  Error: Failed to render step $s for $filename"
