@@ -35,6 +35,7 @@ def collect_parts(models_dir, ldraw_dir, output_dir):
     for p in ldconfig_paths:
         if os.path.exists(p):
             print(f"Copying {p} to {output_dir}")
+            os.makedirs(output_dir, exist_ok=True)
             shutil.copy2(p, os.path.join(output_dir, 'LDConfig.ldr'))
             break
     else:
