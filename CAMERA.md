@@ -34,8 +34,8 @@ The following viewpoints are standardized for the GEMINI gallery:
 
 ## Implementation in Scripts
 
-When rendering with `ldview`, ensure `-UseCamera 0` is included to override default camera behavior. For best results across different environments, place the input file first and `-SaveSnapshot` last, use spaces instead of equals signs for arguments, and include stability flags like `-AllowConfig 0` to prevent interference from saved user settings:
+When rendering with `ldview`, ensure `-UseCamera=0` is included to override default camera behavior. For best results across different environments, place the input file first and `-SaveSnapshot` last, use `-Flag=Value` format for arguments, and include stability flags like `-AllowConfig=0` to prevent interference from saved user settings:
 
 ```bash
-ldview model.ldr -AllowConfig 0 -AutoRotate 0 -FixedAngle 1 -UseCamera 0 -Lat 30 -Lon 45 -SaveSnapshot output.jpg
+ldview model.ldr -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -UseCamera=0 -Latitude=30 -Longitude=45 -SaveSnapshot=output.jpg
 ```
