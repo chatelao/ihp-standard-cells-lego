@@ -23,6 +23,7 @@ def parse_pdk_links(md_file):
 def generate_gallery():
     image_dir = 'images'
     instructions_dir = 'instructions'
+    design_dir = 'design'
     models_dir = 'models'
     spec_file = 'specifications/sg13g2_stdcell_details.md'
     pdk_spec_file = 'specifications/sg13g2_stdcell.md'
@@ -165,6 +166,8 @@ def generate_gallery():
         else:
             html_content += f'                    <span title="Instructions rendering pending" style="color: #555; cursor: help;">PDF</span>\n'
         html_content += f'                    <a href="{spec_file}#{name}" target="_blank">Spec</a>\n'
+        if os.path.exists(os.path.join(design_dir, f"{name}.md")):
+            html_content += f'                    <a href="{design_dir}/{name}.md" target="_blank">Design</a>\n'
         if name in pdk_links:
             html_content += f'                    <a href="{pdk_links[name]}" target="_blank">PDK</a>\n'
         html_content += f'                </div>\n'
