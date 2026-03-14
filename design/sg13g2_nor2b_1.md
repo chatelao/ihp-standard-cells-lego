@@ -28,21 +28,21 @@ Legend: N=N-Well, S=Substrate
 5
 4  pppppppp
 3  pppppppp
-2  ppppppXp
+2  pppppppp
 1
 0
 9
 8
 7
-6  X     X
-5  nnnnXnnn
-4  nnnnXnnn
-3  nnnnXnnn
-2  nnnnXnnn
+6
+5  nnnnnnnn
+4  nnnnnnnn
+3  nnnnnnnn
+2  nnnnnnnn
 1  nnnnnnnn
 0
 ```
-Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
+Legend: n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
@@ -50,21 +50,21 @@ Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 5
 4  G     G
 3  G     G
-2  G     X
+2  G     G
 1  G     G
 0  G     G
 9  G     G
 8  G     G
 7  G     G
-6  X     X
-5  G   X G
-4  G   X G
-3  G   X G
-2  G   X G
+6  G     G
+5  G     G
+4  G     G
+3  G     G
+2  G     G
 1  G     G
 0
 ```
-Legend: G=Polysilicon, X=Connection (lower side)
+Legend: G=Polysilicon
 
 ## Metal 1
 ```
