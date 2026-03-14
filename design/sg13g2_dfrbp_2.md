@@ -2,107 +2,87 @@
 
 ## Substrate
 ```
-01234567890123456789012345678901234567890123456789012345678
-
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-
+01234567890123456789012345678901234567890123456789012
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-01234567890123456789012345678901234567890123456789012345678
+01234567890123456789012345678901234567890123456789012
 
+ XpppppppppXpppppppppppppppppppppppppppXppXpppXpppXp
+ XpppppppppXpppppppppppppppppppppppppppXppXpppXpXXXp
+ XpppppppppppppppppppppppppppppppppppppXpXXpppXpXXXp
+ X                                     X XX   X XXX
+ X                                       XX   X XXX
 
-XppppppppppXpppppppppppppppppppppppppppppppXpppXpppXppppXp
-XppppppppppXpppppppppppppppppppppppppppppppXpppXpppXppppXp
-XppppppppppXpppppppppppppppppppppppppppppppXpXpXpppXpXXpXp
-X                                          X X X   X XX X
-X                                          X X X   X XX X
-
-
- X       X                X
-
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnXnnnXnXnX
-nnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnXnnnXnXnX
-nnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnnXnnnXnnnX
-
+ X      X               X
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnXn
+ nnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnXnXnnnXnXn
+ nnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnXnnnXnnn
 
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-01234567890123456789012345678901234567890123456789012345678
+01234567890123456789012345678901234567890123456789012
 
-
-X G     G GX             G G               X   X   X    X
-X G     G GX             G G               X   X   X    X
-X G     G GX             G G               X X X   X XX X
-X G     G G              G G               X X X   X XX X
-X G     G G              G G               X X X   X XX X
-G G     G G              G G
-G G     G G              G G
-GXG     GXG              GXG
-GGG     G G              GGG
-G G     G G              G G
-G G     G G              G G
-G G X   X G              G G           X    X  X X   X X X
-G G X   X G              G G           X    X  X X   X X X
-G G X   X G              G G           X    X    X   X   X
-
+GXG    G G X           G G             X  X   X   X
+GXG    G G X           G G             X  X   X XXX
+GXG    G G             G G             X XX   X XXX
+GXG    G G             G G             X XX   X XXX
+GXG    G G             G G               XX   X XXX
+G G    G G             G G
+GXG    GXG             GXG
+GGG    G G             G G
+G G    G G             G G
+G G    G G             G G                X     X X
+G G X  GXG             G G         X    X X X   X X
+G G X  GXG             G G         X    X   X   X
 
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-01234567890123456789012345678901234567890123456789012345678
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-x          x                               x   x   x    x
-x CCCCCCCCCx       CCCCCCCCCCCCCCCCCCCCCC  x   x   x    x
-x C       Cx CCCCC                         x x x   x xx x
-x C CCC C C  C C C    CCCCCCCCCCCC         x x x CCx xx x
-x C C   C CCCC C C    C          C         x x x CCx xx x
-+ C C CCCCCCCCCC C  CCC CCCCCC C CCCCCCCCCCC O + CC+ OO +
-  C C C        C C   C  C      C C  CC     C O + CC   O
-IxC C C Ix C   C C   C CCIxI   C C  CC     C O    CCC O
-IIC C   II C C C CCC C CCIII CCC CC C    C C OOO  CCC OO
-  C CCCCCCCC CCCCC C C  C    C  CCCCCCCCCC C  OO   C   OOO
-  C   C   C        C    CCCC CC            C  OO   C - OOO
-CCC x C x C CCCCCCCC       C CCCCCCCCC x  CCx  x x C x x x
-    x   x CCCCCCCCCCCCCCCCCCCCCCCCCC   x    x  x x C x x x
-    x   x                              x    x    x   x   x
------------------------------------------------------------
------------------------------------------------------------
+01234567890123456789012345678901234567890123456789012
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ x         x                           x  x   x   x
+ x CCCCCCCCx CCCC CCCCCCCCCCCCCCCCCCCC x  x   x xxx
+ x CCCC C C  C  C   CCCCCCCCCCC        x xx CCx xxx
+ x CC   C CCCCC C   C         C        x xx CCx xxx
+ x CC CCCCCCCCC C  CC CCCCCC CCCC CCCCCC xx CCx xxx
+   CC C       C C  C  C      CC  CC    C O+ CC   O
+ x CC C xI C  C C  C CC xI CCCCC CC    C OO  CCC OO
+ I CC      C C  CC C  C II C     CCCCCCC  O   C   OOO
+   CCCCCCCCC CCCCC C  C    CC CCCC     C  O   C   OOO
+   C  C   C CCCCCC    CCCC CCCCCCCC    C  x   C x x
+ CCCx   x CCCCCCCCCCCCCCCCCCCCCCC Cx  CCx x x C x x -
+    x   x                          x    x   x   x   -
+-----------------------------------------------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-01234567890123456789012345678901234567890123456789012345678
-
-
-
-
+01234567890123456789012345678901234567890123456789012
 
 
 

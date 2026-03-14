@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.24 um
+# 1 stud = 0.27 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.24 = 83.333... LDU
-UM_TO_LDU = 20 / 0.24
+# 1 um = 20 / 0.27 = 74.074... LDU
+UM_TO_LDU = 20 / 0.27
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -199,8 +199,10 @@ def generate_ldr(macro_data):
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
 
-    active_width_ldu = max(1, (width_ldu // 20) - 3) * 20
-    x_offset_active = (width_ldu - active_width_ldu) // 2
+    active_studs = (width_ldu // 20) - 2
+    if active_studs < 1: active_studs = 1
+    active_width_ldu = active_studs * 20
+    x_offset_active = ((width_ldu // 20 - active_studs) // 2) * 20
 
     # NMOS (5 studs high, Z=20 to 120)
     nmos_z_start = 20
@@ -318,13 +320,19 @@ def generate_ldr(macro_data):
                 x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
                 x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
 
-                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
-                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
-                zmin = snap_to_grid(min(y1_ldu, y2_ldu))
-                zmax = snap_to_grid(max(y1_ldu, y2_ldu))
+                xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
+                xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
+                zmin = max(0, min(height_ldu, snap_to_grid(min(y1_ldu, y2_ldu))))
+                zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
 
-                if xmax <= xmin: xmax = xmin + 20
-                if zmax <= zmin: zmax = zmin + 20
+                if xmax <= xmin:
+                    if xmax + 20 <= width_ldu: xmax += 20
+                    elif xmin - 20 >= 0: xmin -= 20
+                    else: xmax = xmin + 20
+                if zmax <= zmin:
+                    if zmax + 20 <= height_ldu: zmax += 20
+                    elif zmin - 20 >= 0: zmin -= 20
+                    else: zmax = zmin + 20
 
                 metal1_rects.append((xmin, xmax, zmin, zmax))
 
@@ -365,13 +373,19 @@ def generate_ldr(macro_data):
                 x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
                 x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
 
-                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
-                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
-                zmin = snap_to_grid(min(y1_ldu, y2_ldu))
-                zmax = snap_to_grid(max(y1_ldu, y2_ldu))
+                xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
+                xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
+                zmin = max(0, min(height_ldu, snap_to_grid(min(y1_ldu, y2_ldu))))
+                zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
 
-                if xmax <= xmin: xmax = xmin + 20
-                if zmax <= zmin: zmax = zmin + 20
+                if xmax <= xmin:
+                    if xmax + 20 <= width_ldu: xmax += 20
+                    elif xmin - 20 >= 0: xmin -= 20
+                    else: xmax = xmin + 20
+                if zmax <= zmin:
+                    if zmax + 20 <= height_ldu: zmax += 20
+                    elif zmin - 20 >= 0: zmin -= 20
+                    else: zmax = zmin + 20
 
                 w = xmax - xmin
                 h = zmax - zmin
@@ -412,13 +426,19 @@ def generate_ldr(macro_data):
                 x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
                 x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
 
-                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
-                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
-                zmin = snap_to_grid(min(y1_ldu, y2_ldu))
-                zmax = snap_to_grid(max(y1_ldu, y2_ldu))
+                xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
+                xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
+                zmin = max(0, min(height_ldu, snap_to_grid(min(y1_ldu, y2_ldu))))
+                zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
 
-                if xmax <= xmin: xmax = xmin + 20
-                if zmax <= zmin: zmax = zmin + 20
+                if xmax <= xmin:
+                    if xmax + 20 <= width_ldu: xmax += 20
+                    elif xmin - 20 >= 0: xmin -= 20
+                    else: xmax = xmin + 20
+                if zmax <= zmin:
+                    if zmax + 20 <= height_ldu: zmax += 20
+                    elif zmin - 20 >= 0: zmin -= 20
+                    else: zmax = zmin + 20
 
                 w = xmax - xmin
                 h = zmax - zmin

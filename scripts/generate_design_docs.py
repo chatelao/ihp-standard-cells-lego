@@ -4,29 +4,45 @@ import re
 def get_dimensions(parts):
     if not parts:
         return 0, 0, 0, 0
-    # In LDR, studs are at centers. Stud grid is 20 LDU.
-    # Parts can be multiple studs.
-    # Let's find min/max x and z.
-    xs = []
-    zs = []
-    for p in parts:
-        xs.append(p['x'])
-        zs.append(p['z'])
 
-    min_x = min(xs) - 10
-    max_x = max(xs) + 10
-    min_z = min(zs) - 10
-    max_z = max(zs) + 10
+    min_x, max_x = float('inf'), float('-inf')
+    min_z, max_z = float('inf'), float('-inf')
+
+    for p in parts:
+        # Determine part size in studs (Standard Width x Depth)
+        pw, pd = 1, 1
+        if p['part'] == '3034.dat': pw, pd = 8, 2
+        elif p['part'] == '3460.dat': pw, pd = 8, 1
+        elif p['part'] == '3666.dat': pw, pd = 6, 1
+        elif p['part'] == '3020.dat': pw, pd = 4, 2
+        elif p['part'] == '3710.dat': pw, pd = 4, 1
+        elif p['part'] == '3623.dat': pw, pd = 3, 1
+        elif p['part'] == '3022.dat': pw, pd = 2, 2
+        elif p['part'] == '3023.dat': pw, pd = 2, 1
+        elif p['part'] == '3024.dat': pw, pd = 1, 1
+        elif p['part'] == '3062b.dat': pw, pd = 1, 1
+
+        # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
+        is_rotated = p['rot'][0] == 0
+        if is_rotated:
+            pw, pd = pd, pw
+
+        half_w_ldu = (pw * 20) / 2
+        half_d_ldu = (pd * 20) / 2
+
+        min_x = min(min_x, p['x'] - half_w_ldu)
+        max_x = max(max_x, p['x'] + half_w_ldu)
+        min_z = min(min_z, p['z'] - half_d_ldu)
+        max_z = max(max_z, p['z'] + half_d_ldu)
 
     # Grid is 20 LDU.
-    # Let's find the grid boundaries.
-    grid_min_x = int(min_x // 20) * 20
-    grid_max_x = int((max_x + 19) // 20) * 20
-    grid_min_z = int(min_z // 20) * 20
-    grid_max_z = int((max_z + 19) // 20) * 20
+    grid_min_x = int(round(min_x / 20)) * 20
+    grid_max_x = int(round(max_x / 20)) * 20
+    grid_min_z = int(round(min_z / 20)) * 20
+    grid_max_z = int(round(max_z / 20)) * 20
 
     # For very narrow cells (like fill_1), ensure we have at least one stud width.
-    if grid_max_x == grid_min_x:
+    if grid_max_x <= grid_min_x:
         grid_max_x = grid_min_x + 20
 
     width_studs = (grid_max_x - grid_min_x) // 20

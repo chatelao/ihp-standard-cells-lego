@@ -4,7 +4,7 @@ import sys
 
 # Constants for LDU to um conversion
 LDU_PER_STUD = 20
-UM_PER_STUD = 0.24
+UM_PER_STUD = 0.27
 LDU_TO_UM = UM_PER_STUD / LDU_PER_STUD
 
 def parse_lef_sizes(lef_filepath):
@@ -110,13 +110,12 @@ def main():
             exp_w, exp_h = macro_sizes[macro_name]
             ldr_w, ldr_h = ldr_size
 
-            # Guidance: 3.78 um LEF height maps to 32 studs = 3.84 um LDR height
+            # Guidance: 3.78 um LEF height maps to 14 studs = 3.78 um LDR height
             target_h = exp_h
-            if abs(exp_h - 3.78) < 0.01:
-                target_h = 3.84
 
-            # Allow some tolerance for rounding/quantization (0.05 um)
-            if abs(exp_w - ldr_w) > 0.05 or abs(target_h - ldr_h) > 0.05:
+            # Allow some tolerance for rounding/quantization (0.15 um)
+            # 0.27 um / 2 = 0.135 um max error per side
+            if abs(exp_w - ldr_w) > 0.15 or abs(target_h - ldr_h) > 0.15:
                 print(f"FAIL: {filename} - Size mismatch. LEF: {exp_w:.3f}x{exp_h:.3f} (target {exp_w:.3f}x{target_h:.3f}), LDR: {ldr_w:.3f}x{ldr_h:.3f}")
                 all_passed = False
             else:
