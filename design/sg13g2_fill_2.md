@@ -3,7 +3,6 @@
 ## Substrate
 ```
   0123
-5 NNNN
 4 NNNN
 3 NNNN
 2 NNNN
@@ -25,11 +24,10 @@ Legend: N=N-Well, S=Substrate
 ## Active
 ```
   0123
-5
-4  pp
+4
 3  pp
 2  pp
-1
+1  pp
 0
 9
 8
@@ -47,7 +45,6 @@ Legend: n=NMOS Active, p=PMOS Active
 ## Polysilicon
 ```
   0123
-5
 4
 3
 2
@@ -68,8 +65,7 @@ Legend: n=NMOS Active, p=PMOS Active
 ## Metal 1
 ```
   0123
-5 ++++
-4
+4 ++++
 3
 2
 1
@@ -90,7 +86,6 @@ Legend: +=VDD, -=VSS
 ## Metal 2
 ```
   0123
-5
 4
 3
 2

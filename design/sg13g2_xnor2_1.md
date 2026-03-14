@@ -2,96 +2,91 @@
 
 ## Substrate
 ```
-  012345678901234
-5 NNNNNNNNNNNNNNN
-4 NNNNNNNNNNNNNNN
-3 NNNNNNNNNNNNNNN
-2 NNNNNNNNNNNNNNN
-1 NNNNNNNNNNNNNNN
-0 NNNNNNNNNNNNNNN
-9 NNNNNNNNNNNNNNN
-8 NNNNNNNNNNNNNNN
-7 SSSSSSSSSSSSSSS
-6 SSSSSSSSSSSSSSS
-5 SSSSSSSSSSSSSSS
-4 SSSSSSSSSSSSSSS
-3 SSSSSSSSSSSSSSS
-2 SSSSSSSSSSSSSSS
-1 SSSSSSSSSSSSSSS
-0 SSSSSSSSSSSSSSS
+  01234567890123
+4 NNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNN
+2 NNNNNNNNNNNNNN
+1 NNNNNNNNNNNNNN
+0 NNNNNNNNNNNNNN
+9 NNNNNNNNNNNNNN
+8 NNNNNNNNNNNNNN
+7 SSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSS
+4 SSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-  012345678901234
-5
-4  ppppppppppppp
-3  ppppppppppppp
-2  ppppppppppXpp
-1
+  01234567890123
+4
+3  pppppppppppp
+2  pppppppppppp
+1  pppppppppXpp
 0
 9
-8         X
-7      XXX X
-6          X
-5  nnnnnnnnnnnnn
-4  nnnnnnnnnnnnX
-3  nnnnnnnnnnnnX
-2  nnnnnnnnnnnnX
-1  nnnnnnnnnnnnn
+8       X
+7      X   X
+6      XX  X
+5  nnnnnnnnnnnn
+4  nnnnnnnnnnnn
+3  nnnnnnnnnnnX
+2  nnnnnnnnnnnX
+1  nnnnnnnnnnnn
 0
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-  012345678901234
-5
-4        G G
-3        G G
-2        G G X
-1        G G
-0        G G
-9        G G
-8        GXG
-7      XXX X
-6        G X
-5        G G
-4        G G   X
-3        G G   X
-2        G G   X
-1        G G
+  01234567890123
+4
+3       G  G
+2       G  G
+1       G  GX
+0       G  G
+9       G  G
+8       X  G
+7      XG  X
+6      XX  X
+5       G  G
+4       G  G
+3       G  G  X
+2       G  G  X
+1       G  G
 0
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-  012345678901234
-5 +++++++++++++++
-4
+  01234567890123
+4 ++++++++++++++
 3
-2            x
-1     C      O
-0     C      O
-9    CC      O
-8    C  IIxI OOOO
-7    C xxx x    O
-6    C III x  C O
-5    C CCCCCCCC O
-4    C C       xO
-3    CCC CCCCC xO
-2              xO
+2
+1           x
+0     C     O
+9    CC     O
+8    C IxII OOO
+7    C x   x   O
+6    C xxI x C O
+5    C       C O
+4    CCCCCCCCC O
+3    CC CCCCC xO
+2             xO
 1
-0 ---------------
+0 --------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-  012345678901234
-5
+  01234567890123
 4
 3
 2

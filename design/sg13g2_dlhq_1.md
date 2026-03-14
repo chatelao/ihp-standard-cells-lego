@@ -2,96 +2,91 @@
 
 ## Substrate
 ```
-  01234567890123456789012345678901
-5 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-4 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-2 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-1 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-0 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-9 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-8 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-4 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-3 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-0 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+  012345678901234567890123456789
+4 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+2 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+1 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+0 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+9 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+8 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+4 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-  01234567890123456789012345678901
-5
-4  pppppppppppppppppppppppppppppp
-3  pppppppppppppppppppppppppppppp
-2  pppppppppppppppppppppppppppppp
-1
+  012345678901234567890123456789
+4
+3  pppppppppppppppppppppppppppp
+2  pppppppppppppppppppppppppppp
+1  pppppppppppppppppppppppppppX
 0
 9
 8
-7   X                       X
-6
-5  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnX
-4  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnX
-3  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnX
-2  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnX
-1  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+7
+6   X                     X
+5  nnnnnnnnnnnnnnnnnnnnnnnnnnnX
+4  nnnnnnnnnnnnnnnnnnnnnnnnnnnX
+3  nnnnnnnnnnnnnnnnnnnnnnnnnnnX
+2  nnnnnnnnnnnnnnnnnnnnnnnnnnnX
+1  nnnnnnnnnnnnnnnnnnnnnnnnnnnn
 0
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-  01234567890123456789012345678901
-5
-4   G                       G
-3   G                       G
-2   G                       G
-1   G                       G
-0   G                       G
-9   G                       G
-8   G                       G
-7   X                       X
-6   G                       G
-5   G                       G   X
-4   G                       G   X
-3   G                       G   X
-2   G                       G   X
-1   G                       G
+  012345678901234567890123456789
+4
+3   G                     G
+2   G                     G
+1   G                     G   X
+0   G                     G
+9   G                     G
+8   G                     G
+7   G                     G
+6   X                     X
+5   G                     G   X
+4   G                     G   X
+3   G                     G   X
+2   G                     G   X
+1   G                     G
 0
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-  01234567890123456789012345678901
-5 ++++++++++++++++++++++++++++++++
-4
+  012345678901234567890123456789
+4 ++++++++++++++++++++++++++++++
 3
-2      C   CCC CCCC
-1    CCCCCCC   C CCCCCCCCCCCC   O
-0    CCC   CCCCC C        CCC   O
-9     CC   C CCC CCCCCCCC CCC   O
-8     C      C CCCC CC  C CC    O
-7  Ix C      CCC  C  C  C CCx   O
-6  II C CCCC C   CC  C  C CCI CCO
-5     C C  C CCCCCCC C  C  C  C x
-4     C C  CCC     C C  CC C  C x
-3    CC C    CCCCC   C     CCCC x
-2           CCCCCCCCCCCCCCCC    x
+2
+1    CCC   CC CCC             x
+0    CCCCCCCCCC CCCCCCCCCCC   O
+9    CCC  CCC   CCCCCCCCCCC   O
+8     CC  C CCC CC     CCCC   O
+7  II C     C  CCC CC  CCC    O
+6  Ix C CCC CCC CC  C  CCCxICCO
+5  II C C  CCCC     C  C C  C x
+4     C C  CC CCCCC C  C C  C x
+3    CCCC    CCCC   C    CCCC x
+2          CCCCCCCCCCCCCCC    x
 1
-0 --------------------------------
+0 ------------------------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-  01234567890123456789012345678901
-5
+  012345678901234567890123456789
 4
 3
 2

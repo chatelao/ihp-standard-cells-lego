@@ -2,96 +2,91 @@
 
 ## Substrate
 ```
-  0123456789012
-5 NNNNNNNNNNNNN
-4 NNNNNNNNNNNNN
-3 NNNNNNNNNNNNN
-2 NNNNNNNNNNNNN
-1 NNNNNNNNNNNNN
-0 NNNNNNNNNNNNN
-9 NNNNNNNNNNNNN
-8 NNNNNNNNNNNNN
-7 SSSSSSSSSSSSS
-6 SSSSSSSSSSSSS
-5 SSSSSSSSSSSSS
-4 SSSSSSSSSSSSS
-3 SSSSSSSSSSSSS
-2 SSSSSSSSSSSSS
-1 SSSSSSSSSSSSS
-0 SSSSSSSSSSSSS
+  012345678901
+4 NNNNNNNNNNNN
+3 NNNNNNNNNNNN
+2 NNNNNNNNNNNN
+1 NNNNNNNNNNNN
+0 NNNNNNNNNNNN
+9 NNNNNNNNNNNN
+8 NNNNNNNNNNNN
+7 SSSSSSSSSSSS
+6 SSSSSSSSSSSS
+5 SSSSSSSSSSSS
+4 SSSSSSSSSSSS
+3 SSSSSSSSSSSS
+2 SSSSSSSSSSSS
+1 SSSSSSSSSSSS
+0 SSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-  0123456789012
-5
-4  ppppppppppp
-3  ppppppppppp
-2  pppppppppXp
-1
+  012345678901
+4
+3  pppppppppp
+2  pppppppppp
+1  ppppppppXp
 0
 9
 8
-7     X  X
-6
-5  nnnnnnnnnXX
-4  nnnnnnnnnXn
-3  nnnnXnnnnXn
-2  nnXnnnnnnnn
-1  nnnnnnnnnnn
+7
+6     X X
+5  nnnnnnnnXX
+4  nnnnnnnnXn
+3  nnnnXnnnXn
+2  nnXnnnnnnn
+1  nnnnnnnnnn
 0
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-  0123456789012
-5
-4    GGGG G
-3    GGGG G
-2    GGGG G X
-1    GGGG G
-0    GGGG G
-9    GGGG G
-8    GGGG G
-7    GXGGXG
-6    GGGGGG
-5    GGGG G XX
-4    GGGG G X
-3    GGXG G X
-2    XGGG G
-1    GGGG G
+  012345678901
+4
+3    GGGGG
+2    GGGGG
+1    GGGGG X
+0    GGGGG
+9    GGGGG
+8    GGGGG
+7    GGGGG
+6    GXGXG
+5    GGGGG XX
+4    GGGGG X
+3    GGXGG X
+2    XGGGG
+1    GGGGG
 0
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-  0123456789012
-5 +++++++++++++
-4
+  012345678901
+4 ++++++++++++
 3
-2   C   C   x
-1   C   C   O
-0   C   C   OO
-9   CCCCCCCC O
-8   C      C O
-7   C xI x C O
-6   C II I   O
-5   C       xx
-4   C       x
-3      x    x
+2
+1   C  C   x
+0   C  C   O
+9   C  C   OO
+8   CCCCCCC O
+7   C     C O
+6   C xIxI  O
+5   C IIII xx
+4   C      x
+3      x   x
 2  IIxII
 1
-0 -------------
+0 ------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-  0123456789012
-5
+  012345678901
 4
 3
 2
