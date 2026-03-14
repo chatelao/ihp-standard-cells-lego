@@ -24,41 +24,41 @@ Legend: N=N-Well, S=Substrate
 ## Active
 ```
   0123456789012345678901234567890123
-4
-3
-2  pppppppppppppppppppppppppppppppp
-1  pppppppppppppppppppppppppppppppp
-0  pppppppppppppppppppppppppppppppp
-9  pppppppppppppppppppppppppppppppp
-8  pppppppppppppppppppppppppppppppp
-7
-6
-5
-4  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-3  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-2  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-1
-0
+4 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+2 NppppppppppppppppppppppppppppppppN
+1 NppppppppppppppppppppppppppppppppN
+0 NppppppppppppppppppppppppppppppppN
+9 NppppppppppppppppppppppppppppppppN
+8 NppppppppppppppppppppppppppppppppN
+7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ```
-Legend: n=NMOS Active, p=PMOS Active
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate, N=N-Well
 
 ## Polysilicon
 ```
   0123456789012345678901234567890123
 4
-3   G
-2   G
-1   G
-0   G
-9   G
-8   G
-7   G
-6  GG
-5   G
-4   G
-3   G
-2   G
-1   G
+3                                G
+2                                G
+1                                G
+0                                G
+9                                G
+8                                G
+7                                G
+6                               GG
+5                                G
+4                                G
+3                                G
+2                                G
+1                                G
 0
 ```
 Legend: G=Polysilicon
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   0123456789012345678901234567890123
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +   +   +   +  +   +   +   +   +
-2  +   +   +   +  +   +   +   +   +
-1  + o + o + o +o + o + o + o + o +
-0  + o + o + o +o + o + o + o + o +
-9  + o   o   o  o   o   o   o   o +
-8    oooooooooooooooooooooooooooo
+2  &   &   &   &  +   +   +   +   +
+1  + O + O + O +O + O + O + O + O +
+0  & o & o & o &O + O + O + O + O +
+9  + O   O   O  O   O   O   O   O +
+8    oOoOoOoOoOoOoOoOoOoOoOoOoOoO
 7    O   O   O  O   O   O   O
-6  i O   O   O  O   O   O   O
+6    O   O   O  O   O   O   O   iII
 5    O   O   O  O   O   O   O
-4  - o - o - o -o - o - o - ooooo-
-3  - o - o - o -o - o - o - o - o-
-2  -   -   -   -  -   -   -   -  -
+4  - O - O - O -o _ o _ o _ oOoOo-
+3  - O - O - O -O - O - O - O - O-
+2  -   -   -   -  _   _   _   _  -
 1  -   -   -   -  -   -   -   -  -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```

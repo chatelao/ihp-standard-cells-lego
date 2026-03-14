@@ -24,41 +24,41 @@ Legend: N=N-Well, S=Substrate
 ## Active
 ```
   0123456789012345678901234567
-4
-3
-2  pppppppppppppppppppppppppp
-1  pppppppppppppppppppppppppp
-0  pppppppppppppppppppppppppp
-9  pppppppppppppppppppppppppp
-8  pppppppppppppppppppppppppp
-7
-6
-5
-4  nnnnnnnnnnnnnnnnnnnnnnnnnn
-3  nnnnnnnnnnnnnnnnnnnnnnnnnn
-2  nnnnnnnnnnnnnnnnnnnnnnnnnn
-1
-0
+4 NNNNNNNNNNNNNNNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNNNNNNNNNNNNNNN
+2 NppppppppppppppppppppppppppN
+1 NppppppppppppppppppppppppppN
+0 NppppppppppppppppppppppppppN
+9 NppppppppppppppppppppppppppN
+8 NppppppppppppppppppppppppppN
+7 SSSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ```
-Legend: n=NMOS Active, p=PMOS Active
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate, N=N-Well
 
 ## Polysilicon
 ```
   0123456789012345678901234567
 4
-3   G G G
-2   G G G
-1   G G G
-0   G G G
-9   G G G
-8   G G G
-7   G G G
-6  GG GGG
-5   G G G
-4   G G G
-3   G G G
-2   G G G
-1   G G G
+3     G                   G
+2     G                   G
+1     G                   G
+0     G                   G
+9     G                   G
+8     G                   G
+7     G                   G
+6    GGG                 GG
+5     G                   G
+4     G                   G
+3     G                   G
+2     G                   G
+1     G                   G
 0
 ```
 Legend: G=Polysilicon
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   0123456789012345678901234567
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3     +     +       +++   +
-2     +     +       +++   +
-1     +             +++ C + oO
-0  CC + CCCCCCCCCCC +++ C + oO
-9  CC + CC     CC C CCCCCCCCoO
-8  CC + CCCCCCCCC C CCCC   CoO
-7  C     C C  CCCCCCCC C   C O
-6  i   i C CCCCC     CCC   C O
-5  CC    C CCCCCCCC  C C     O
-4  CC   CCCCCC   CCCCC C  - oO
-3  CCCCCCCCCCC   C     C  - oO
-2                    - C  - oO
+2     +     +       +&+   +
+1     +             +++ C + OO
+0  xC + CxCxCxCxCxC +&+ C + OO
+9  CC + CC     CC C CCCCCCCCOO
+8  xC + CxCxCxCxC C CxCx   xOO
+7  C I I C C  CCCCCCCC C I C O
+6  C i i C CCCCC     CCC i C O
+5  CC    C CCCCCCCC  C C I   O
+4  Cx   xCxCxC   CxCxC C  _ oO
+3  CCCCCCCCCCC   C     C  - OO
+2                    - C  _ oO
 1     -     ---      -    -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
