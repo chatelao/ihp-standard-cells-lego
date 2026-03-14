@@ -38,7 +38,7 @@ def migrate_ldr(filepath):
                 if z < 80:
                     new_color = 288 # Diffusion NMOS (Dark Green)
                 else:
-                    new_color = 38 # Diffusion PMOS (Dark Orange)
+                    new_color = 25 # Diffusion PMOS (Orange)
 
             # 3. Polysilicon
             elif y == -16 and color == 4:

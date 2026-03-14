@@ -36,8 +36,8 @@ def verify_ldr(filepath):
                 if color not in [8, 7]:
                     errors.append(f"Invalid color {color} at Y=-8 (expected 8 or 7)")
             elif y == -16:
-                if color not in [288, 38]:
-                    errors.append(f"Invalid color {color} at Y=-16 (expected 288 or 38)")
+                if color not in [288, 25]:
+                    errors.append(f"Invalid color {color} at Y=-16 (expected 288 or 25)")
             elif y == -24:
                 if color != 4:
                     errors.append(f"Invalid color {color} at Y=-24 (expected 4)")

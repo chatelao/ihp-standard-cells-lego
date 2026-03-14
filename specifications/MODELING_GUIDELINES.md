@@ -29,7 +29,7 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 | Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer. |
 | N-Well | Light Gray | 8 | 7 | -8 | N-Well region. |
 | Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-Substrate, Studs 2-4. |
-| Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well, Studs 8-12. |
+| Diffusion (PMOS) | Orange | 8 | 25 | -16 | Active area in N-Well, Studs 8-12. |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width, there may be an additional studs where contacts hit the poly |
 | Contacts | White | 24 | 15 | -48 | 1x1 round brick bridging Active to Metal 1. |
 | Metal 1 | Light Blue | 8 | 9 | -56| Inputs on the first metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |

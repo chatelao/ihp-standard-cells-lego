@@ -146,7 +146,7 @@ COLOR_MAP = {
     8: 'S',   # Substrate Dark Gray
     7: 'N',   # N-Well Light Gray
     288: 'n', # NMOS Dark Green
-    38: 'p',  # PMOS Dark Orange
+    25: 'p',  # PMOS Orange
     4: 'G',   # Polysilicon Red
     9: 'I',   # Metal 1 Input Light Blue
     1: 'C',   # Metal 1 Connection Blue
