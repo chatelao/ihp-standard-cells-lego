@@ -250,7 +250,8 @@ def generate_ldr(macro_data):
                 # Use the same snapping logic as contacts for consistency
                 x1, y1, x2, y2 = input_rect['coords']
                 x1_ldu, x2_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(x2)
-                z1_ldu, z2_ldu = um_to_ldu_coord(y1), um_to_ldu_coord(y2)
+                # Shift Z by 10 LDU (0.135 um) to align LEF 0 to Stud 0 center
+                z1_ldu, z2_ldu = um_to_ldu_coord(y1) + 10, um_to_ldu_coord(y2) + 10
                 xmin = snap_to_grid(min(x1_ldu, x2_ldu))
                 xmax = snap_to_grid(max(x1_ldu, x2_ldu))
                 zmin = snap_to_grid(min(z1_ldu, z2_ldu))
@@ -319,8 +320,8 @@ def generate_ldr(macro_data):
         for rect in pin['rects']:
             if rect['layer'] == 'Metal1':
                 x1, y1, x2, y2 = rect['coords']
-                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
-                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
+                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1) + 10
+                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2) + 10
 
                 xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
                 xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
@@ -328,12 +329,8 @@ def generate_ldr(macro_data):
                 zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
 
                 if pin['name'] == 'VDD':
-                    # Force VDD rail to Stud 14 (Z=280 to 300)
-                    zmin, zmax = 280, 300
                     color = COLOR_VDD
                 elif pin['name'] == 'VSS':
-                    # Force VSS rail to Stud 0 (Z=0 to 20)
-                    zmin, zmax = 0, 20
                     color = COLOR_VSS
 
                 if xmax <= xmin:
@@ -381,8 +378,8 @@ def generate_ldr(macro_data):
 
             elif rect['layer'] == 'Metal2':
                 x1, y1, x2, y2 = rect['coords']
-                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
-                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
+                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1) + 10
+                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2) + 10
 
                 xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
                 xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
@@ -434,8 +431,8 @@ def generate_ldr(macro_data):
         for rect in macro_data['obs']:
             if rect['layer'] == 'Metal1':
                 x1, y1, x2, y2 = rect['coords']
-                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1)
-                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2)
+                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1) + 10
+                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2) + 10
 
                 xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
                 xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))

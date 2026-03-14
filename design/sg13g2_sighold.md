@@ -66,8 +66,8 @@ Legend: n=NMOS Active, p=PMOS Active
 ```
   012345678
 4 +++++++++
-3
-2
+3   xxxxx
+2   xxxxx
 1
 0
 9
@@ -78,7 +78,7 @@ Legend: n=NMOS Active, p=PMOS Active
 4  C     x
 3
 2
-1
+1   xxxxx
 0 ---------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, x=Connection (upper side)

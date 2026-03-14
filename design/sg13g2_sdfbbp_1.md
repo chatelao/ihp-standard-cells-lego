@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890123456789012345678901234567890123456789012345678901
-4 +++x+++++++x++++x+++++++++x+++x++x+++++++x+++++x++++x+++++x+++
-3
-2      CCCCC                  IIxI  IIxIII
-1  C   C   C   C C  C         I  I  I    I    C         xx    x
-0  C   C C     C C  C  C      IC x  x CCCxCCCCC         OOC   O
-9  CCCCC C   CCC C  C  CCCC   xC IxII CCCxCC  CCCCCCCCCCOOC   O
-8   I    CC CC CCCC CC CC C   IC        CICC ICCC  CC  COOC   O
-7   x x xIC  C C   C C  C CCC ICCCCCC C CIIxIx  C  CC  COOC   O
-6   I I IIC  C CxI CCCCCC C C x C C C C CCCC x  C CC x C OCC  O
-5   I  CCCCCCC CxI   CCCC CCCCCCC C C C C  CCCCCC CC I C xC   x
-4      C    CC CII  CCC   CCCCCCCCCCC C CC      C  C     xC   x
-3      C    CC CCCCCCCC CCC      C    C CC    C C CCC   xxC   x
-2           CCCCC              CCCCC  CCCC    CCCCC     xx    x
-1
-0 -x------x-------x---------x---x----x------x---------x-----x---
+4 ++++++++++++++++++++++++++++++x+++++++++++++++++++++++++++++++
+3    x       x    ++        +      +      +x+    x    x     +
+2    + CCCCC +    x+        x IIxI xIIxIII+++    +    +     x
+1  C + C   C + C C++C       + I  x +x    x    C  +    + xxC + x
+0  CCCCC C   CCC C++C  CCC  + xC I +I CCCxCCCCCCCCCCCCC OOC + O
+9        CC  C   C  CC C  C + IC IxII CCCICC  CCC      COOC   O
+8   I x   C CC CCCCC C CC CCC ICCCCCC   CIIxIx  C  CC  COOC   O
+7   x I xIC  C C   C C  C C C x     C C C    x  C  C   C OCC  O
+6   I   IIC  C CxI CCCCCC CCC   C C C C CCCCCCCCC CC x C OCC  O
+5      CCCCCCC CII  CCCCC CCCCCCC   C C CC      C  C     xC   x
+4      C  - CC CCCCCCCC CCCCCCCCCCCCC-C CC  - C C CCC - xxC - x
+3  -      - C   C     C C            -C  C  - C   C   - xxC - x
+2  x      x CCCCC -         -  CCCCC xCCCC  x CCCCC   x     x
+1  -      -       x         x        -      -         -     -
+0 ------------------------------x-------------------------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 

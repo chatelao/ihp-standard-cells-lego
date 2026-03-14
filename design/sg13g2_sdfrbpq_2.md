@@ -52,9 +52,9 @@ Legend: n=NMOS Active, p=PMOS Active
 0  G G   G G G             G G             G G
 9  G G   G G G             G G             G G
 8  G G   G G G             G G             G G
-7  G G   G G G             G G             G G
-6  GGG   GGG G             GGG             GGG
-5  G G   G GGG             G G             G G
+7  G G   GGG G             GGG             G G
+6  GGG   G GGG             G G             GGG
+5  G G   G G G             G G             G G
 4  G G   G G G             G G             G G
 3  G G   G G G             G G             G G
 2  G G   G G G             G G             G G
@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   0123456789012345678901234567890123456789012345678901234567890123
 4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-3
-2       CCCCCCC
-1       C     C  CC    CCCCCCC   CCCC CCCCCCCCCCCCCCCCCCCC
-0  C    C CC  C  CC    CCCC CC   C  C   CCCCCCCCCC          OO
-9  CCCCCCCCC  C  CC    CC   CCCCCCC C   C         C         OO
-8  C   CCC    C  CC   CCC CCCCCCCCC C CCC CCCCCCC CCC CCCCCCOO
-7  C   C      C   C    CC C       C C  C  C     C C C C    C O
-6  CxI C  x I CC CCCCC CC C xI C  C C  C CCIxICCC CCC C    C OO
-5  C   Cx I x    CC    CC      CC   CC C  CIIIC     CCCCCC C  x
-4  C   CIIxII CCCCC    CCCCCCCCC CCCCC C  C   C CCCCC      C  x
-3  C   C      C   C    C  C   C CCCCCC    CCCCC CCCCCC     C  x
-2      CCCCCCCC   C  CCC      CCCCCCCCCCCCCCCCCCCCCC C    CC  x
-1
+3     x        x     x         x                          x   x
+2     x CCCCCCCx     x CCCCCCC x CCCC CCCCCCCCCCCCCCCCCCCCx   x
+1     x C     Cx CC  x C     C x C  C                     x xxx
+0  CCCCCC CC  C+ CC  + CCCC CCCCCCC C   CCCCCCCCCCC       + OO+
+9  C     CCC  C+ CC  +CCC   C     C C   C       C CC    C   OO+
+8  C   CCC    C+ CC    CC CCCCCCCCC C CCC CCCCCCC CCC CCCCCCOO+
+7  C   C  x I C   C    CC C xI C  C C  C  CIII  C C C C    C O
+6  CxI Cx I x CC CCCCC CC   II CC C CC C CCIxICCC CCC    C C OO
+5  C   Cx   I    CC    CCCCCCCCCCCCCCC C  CIIIC  CCCCCCCCC C  x
+4  C x CIIxII CCCCC    C  C   C      C    CCCCC CCCCCC     Cx x x
+3  C x CCCCCCCCx  C  CCCx   x C CCCCCC        C      C x  CCx x x
+2    x         x        x   x CCCCCCCCCCCCCCCCCCCCCC   x    x   x
+1    x         x        x   x                          x    x   x
 0 ----------------------------------------------------------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
