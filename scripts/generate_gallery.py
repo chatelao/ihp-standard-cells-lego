@@ -25,7 +25,6 @@ def generate_gallery():
     instructions_dir = 'instructions'
     design_dir = 'design'
     models_dir = 'models'
-    spec_file = 'specifications/sg13g2_stdcell_details.md'
     pdk_spec_file = 'specifications/sg13g2_stdcell.md'
 
     pdk_links = parse_pdk_links(pdk_spec_file)
@@ -165,7 +164,6 @@ def generate_gallery():
             html_content += f'                    <a href="instructions/{name}.pdf" target="_blank">PDF</a>\n'
         else:
             html_content += f'                    <span title="Instructions rendering pending" style="color: #555; cursor: help;">PDF</span>\n'
-        html_content += f'                    <a href="{spec_file}#{name}" target="_blank">Spec</a>\n'
         if os.path.exists(os.path.join(design_dir, f"{name}.md")):
             html_content += f'                    <a href="{design_dir}/{name}.md" target="_blank">Design</a>\n'
         if name in pdk_links:
