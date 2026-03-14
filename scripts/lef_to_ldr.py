@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.27 um
+# 1 stud = 0.252 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.27 = 74.074... LDU
-UM_TO_LDU = 20 / 0.27
+# 1 um = 20 / 0.252 = 79.365... LDU
+UM_TO_LDU = 20 / 0.252
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -169,7 +169,8 @@ def generate_ldr(macro_data):
     ]
 
     width_ldu = snap_to_grid(um_to_ldu_coord(macro_data['width_um']))
-    height_ldu = snap_to_grid(um_to_ldu_coord(macro_data['height_um']))
+    # Force standard cell height to 16 studs (320 LDU)
+    height_ldu = 320
 
     # 1. Substrate low (V3)
     ldr_lines.append("0 // Substrate low (V3)")
@@ -204,7 +205,7 @@ def generate_ldr(macro_data):
     active_width_ldu = active_studs * 20
     x_offset_active = ((width_ldu // 20 - active_studs) // 2) * 20
 
-    # NMOS (5 studs high, Z=20 to 120)
+    # NMOS (5 studs high, Z=20 to 120, i.e., Studs 1-5)
     nmos_z_start = 20
     nmos_z_end = 120
     nmos_z_height = nmos_z_end - nmos_z_start
@@ -217,9 +218,9 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS (3 studs high, Z=height-80 to height-20)
-    pmos_z_start = height_ldu - 80
-    pmos_z_end = height_ldu - 20
+    # PMOS (3 studs high, Z=240 to 300, i.e., Studs 12-14)
+    pmos_z_start = 240
+    pmos_z_end = 300
     pmos_z_height = pmos_z_end - pmos_z_start
     tiles_pmos = get_best_plates(active_width_ldu, pmos_z_height)
     for plate, x_off, z_off, rotated in tiles_pmos:
@@ -256,7 +257,7 @@ def generate_ldr(macro_data):
                 input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
 
                 z_start = 20
-                z_end = height_ldu - 20
+                z_end = 300
                 # Use the center Z of the pin's Metal1 rectangle
                 cz = (z1_ldu + z2_ldu) // 2
                 cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
@@ -282,8 +283,8 @@ def generate_ldr(macro_data):
 
     # 5. Pins, Rails, Contacts, Vias and Metal 2
     active_regions = [
-        (x_offset_active, x_offset_active + active_width_ldu, 20, 80),
-        (x_offset_active, x_offset_active + active_width_ldu, height_ldu - 120, height_ldu - 20)
+        (x_offset_active, x_offset_active + active_width_ldu, 20, 120),
+        (x_offset_active, x_offset_active + active_width_ldu, 240, 300)
     ]
 
     metal1_rects = []
@@ -298,9 +299,9 @@ def generate_ldr(macro_data):
             pin_comment = f"0 // {pin['name']} Rail"
 
         if pin['name'] == 'VDD':
-            color = COLOR_VDD
+            color = COLOR_METAL1_INTERNAL # We will force color later for rails
         elif pin['name'] == 'VSS':
-            color = COLOR_VSS
+            color = COLOR_METAL1_INTERNAL # We will force color later for rails
         else:
             if pin['direction'] == 'INPUT':
                 color = COLOR_METAL1_INPUT
@@ -324,6 +325,15 @@ def generate_ldr(macro_data):
                 xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
                 zmin = max(0, min(height_ldu, snap_to_grid(min(y1_ldu, y2_ldu))))
                 zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
+
+                if pin['name'] == 'VDD':
+                    # Force VDD rail to Stud 15 (Z=300 to 320)
+                    zmin, zmax = 300, 320
+                    color = COLOR_VDD
+                elif pin['name'] == 'VSS':
+                    # Force VSS rail to Stud 0 (Z=0 to 20)
+                    zmin, zmax = 0, 20
+                    color = COLOR_VSS
 
                 if xmax <= xmin:
                     if xmax + 20 <= width_ldu: xmax += 20

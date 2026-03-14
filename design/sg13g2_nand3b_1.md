@@ -2,87 +2,97 @@
 
 ## Substrate
 ```
-  012345678901
-3 NNNNNNNNNNNN
-2 NNNNNNNNNNNN
-1 NNNNNNNNNNNN
-0 NNNNNNNNNNNN
-9 NNNNNNNNNNNN
-8 NNNNNNNNNNNN
-7 SSSSSSSSSSSS
-6 SSSSSSSSSSSS
-5 SSSSSSSSSSSS
-4 SSSSSSSSSSSS
-3 SSSSSSSSSSSS
-2 SSSSSSSSSSSS
-1 SSSSSSSSSSSS
-0 SSSSSSSSSSSS
+  0123456789012
+5 NNNNNNNNNNNNN
+4 NNNNNNNNNNNNN
+3 NNNNNNNNNNNNN
+2 NNNNNNNNNNNNN
+1 NNNNNNNNNNNNN
+0 NNNNNNNNNNNNN
+9 NNNNNNNNNNNNN
+8 NNNNNNNNNNNNN
+7 SSSSSSSSSSSSS
+6 SSSSSSSSSSSSS
+5 SSSSSSSSSSSSS
+4 SSSSSSSSSSSSS
+3 SSSSSSSSSSSSS
+2 SSSSSSSSSSSSS
+1 SSSSSSSSSSSSS
+0 SSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-  012345678901
-3
-2  pppXpppXpp
-1  pppXpXpXpX
-0  pppXpXpXpX
-9     X X   X
-8     X XXXXX
-7
-6    X X X
-5  nnnnnnnnnn
-4  nnnnnnnnnn
-3  nnnnnnnnnX
-2  nnnXnnnnnX
-1  nnnXnnnnnn
+  0123456789012
+5
+4  ppppppppppp
+3  ppppppppppp
+2  ppppppXpppX
+1
+0
+9
+8
+7    X X X
+6
+5  nnnnnnnnnnn
+4  nnnnnnnnnnX
+3  nnnnnnnnnnX
+2  nnnnnnnnnnX
+1  nnnnnnnnnnn
 0
 ```
 Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-  012345678901
-3
-2    GXG GX
-1    GXGXGX X
-0    GXGXGX X
-9    GXGXG  X
-8    GXGXXXXX
-7    G G G
-6    X X X
-5    G G G
+  0123456789012
+5
 4    G G G
-3    G G G  X
-2    GXG G  X
-1    GXG G
+3    G G G
+2    G G X   X
+1    G G G
+0    G G G
+9    G G G
+8    G G G
+7    X X X
+6    G G G
+5    G G G
+4    G G G   X
+3    G G G   X
+2    G G G   X
+1    G G G
 0
 ```
 Legend: G=Polysilicon, X=Connection (lower side)
 
 ## Metal 1
 ```
-  012345678901
-3 ++++++++++++
-2     x   x
-1     x x x xO
-0   C x x x xO
-9   C x x   xO
-8   C x xxxxxO
-7   C        O
-6   Cx x x C O
-5   CI I I C O
-4   CCCCCCCCOO
-3           xO
-2     x     xO
-1     x
-0 ------------
+  0123456789012
+5 +++++++++++++
+4
+3
+2        x   xO
+1        O   OO
+0   C    O   OO
+9   C    OOOOOO
+8   C         O
+7   Cx x x    O
+6   CI I I  C O
+5   C       C O
+4   CCCCCCCCCxO
+3            xO
+2            xO
+1
+0 -------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-  012345678901
+  0123456789012
+5
+4
 3
 2
 1
