@@ -3,6 +3,7 @@
 ## Substrate
 ```
 012345
+
 NNNNNN
 NNNNNN
 NNNNNN
@@ -19,26 +20,29 @@ SSSSSS
 SSSSSS
 SSSSSS
 SSSSSS
+
 ```
 
 ## Active
 ```
 012345
 
-Xppppp
-Xppppp
-pppppp
+
+ ppppp
+ ppppp
+ ppppp
     XX
     XX
 
 
 
 
-nnnnnn
-nnnnnn
-nnnnnn
-nnXnnn
-nnXnnn
+ nnnnn
+ nnnnn
+ nnnnn
+ nXnnn
+ nXnnn
+
 
 ```
 
@@ -46,8 +50,9 @@ nnXnnn
 ```
 012345
 
-X
-X
+
+
+
 
     XX
     XX
@@ -60,6 +65,7 @@ X
 
   X
   X
+
 
 ```
 
@@ -67,8 +73,9 @@ X
 ```
 012345
 ++++++
-x
-x
+++++++
++
++
 
     xx
     xx
@@ -82,11 +89,14 @@ C   CC
   x
   x
 ------
+------
 ```
 
 ## Metal 2
 ```
 012345
+
+
 
 
 

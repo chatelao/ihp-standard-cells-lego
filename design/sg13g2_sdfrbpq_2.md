@@ -20,6 +20,7 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +28,21 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 0123456789012345678901234567890123456789012345678901234567890123456789
 
 
-pppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpp
-pppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpp
-pppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpXpXpp
+ ppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpp
+ ppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpp
+ ppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpXpXpp
               X     X                                          X X X
               X     X                                          X X X
 
 
    X     X                   X                X
       X    X
-nnnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnX
-nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnX
-nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnnX
+ nnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnX
+ nnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnX
+ nnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnnX
+
 
 ```
 
@@ -64,6 +66,7 @@ nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnnX
   GXG   G G G X         X   X G              G G           X    X  X X
   GXG   G G G X         X   X G              G G           X    X    X
 
+
 ```
 
 ## Metal 1
@@ -86,11 +89,13 @@ C  xCCCCCCCCC x  C  CCC x C x C CCCCCCCC       C CCCCCCCCC x  CCx  x x
    x          x  C      x   x CCCCCCCCCCCCCCCCCCCCCCCCCC   x    x  x x
    x          x         x   x                              x    x    x
 ----------------------------------------------------------------------
+----------------------------------------------------------------------
 ```
 
 ## Metal 2
 ```
 0123456789012345678901234567890123456789012345678901234567890123456789
+
 
 
 

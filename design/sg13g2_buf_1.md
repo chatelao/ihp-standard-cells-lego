@@ -20,6 +20,7 @@ SSSSSS
 SSSSSS
 SSSSSS
 SSSSSS
+
 ```
 
 ## Active
@@ -27,20 +28,21 @@ SSSSSS
 012345
 
 
-ppXppp
-ppXppp
-ppXpXX
+ pXppp
+ pXppp
+ pXpXX
     XX
     XX
 
  X
 
 
-nnnnnn
-nnnnnn
-nnXnXX
-nnXnXX
-nnXnnn
+ nnnnn
+ nnnnn
+ nXnXX
+ nXnXX
+ nXnnn
+
 
 ```
 
@@ -64,6 +66,7 @@ nnXnnn
  GX XX
  GX
 
+
 ```
 
 ## Metal 1
@@ -86,11 +89,13 @@ C   OO
   x xx
   x
 ------
+------
 ```
 
 ## Metal 2
 ```
 012345
+
 
 
 

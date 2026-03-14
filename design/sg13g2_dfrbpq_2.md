@@ -20,6 +20,7 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +28,21 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 012345678901234567890123456789012345678901234567890123
 
 
-XppppppppppXpppppppppppppppppppppppppppppppXpppppXpppX
-XppppppppppXpppppppppppppppppppppppppppppppXpppppXpppX
-XppppppppppXpppppppppppppppppppppppppppppppXpppppXpXpX
-X                                          X     X X X
-X                                          X     X X X
+ ppppppppppXpppppppppppppppppppppppppppppppXpppppXpppX
+ ppppppppppXpppppppppppppppppppppppppppppppXpppppXpppX
+ ppppppppppXpppppppppppppppppppppppppppppppXpppppXpXpX
+                                           X     X X X
+                                           X     X X X
 
 
  X       X                X
 
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnnnXnXnX
-nnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnnnXnXnX
-nnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnnnXnnnX
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnnnXnXnX
+ nnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnnnXnXnX
+ nnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnnnXnnnX
+
 
 ```
 
@@ -49,11 +51,11 @@ nnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnnXnnnXnnnX
 012345678901234567890123456789012345678901234567890123
 
 
-X G     G GX             G G               X     X   X
-X G     G GX             G G               X     X   X
-X G     G GX             G G               X     X X X
-X G     G G              G G               X     X X X
-X G     G G              G G               X     X X X
+G G     G GX             G G               X     X   X
+G G     G GX             G G               X     X   X
+G G     G GX             G G               X     X X X
+G G     G G              G G               X     X X X
+G G     G G              G G               X     X X X
 G G     G G              G G
 G G     G G              G G
 GXG     GXG              GXG
@@ -64,6 +66,7 @@ G G X   X G              G G           X     X   X X X
 G G X   X G              G G           X     X   X X X
 G G X   X G              G G           X     X   X   X
 
+
 ```
 
 ## Metal 1
@@ -71,11 +74,11 @@ G G X   X G              G G           X     X   X   X
 012345678901234567890123456789012345678901234567890123
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-x          x                               x     x   x
-x CCCCCCCCCx       CCCCCCCCCCCCCCCCCCCCCC  x     x   x
-x C       Cx CCCCC                         x C   x x x
-x C CCC C C  C C C    CCCCCCCCCCCC         x C   x x x
-x C C   C CCCC C C    C          C         x C   x x x
++          x                               x     x   x
++ CCCCCCCCCx       CCCCCCCCCCCCCCCCCCCCCC  x     x   x
++ C       Cx CCCCC                         x C   x x x
++ C CCC C C  C C C    CCCCCCCCCCCC         x C   x x x
++ C C   C CCCC C C    C          C         x C   x x x
 + C C CCCCCCCCCC C  CCC CCCCCC C CCCCCCCCCCC C   + O +
   C C C        C C   C  C      C C  CC     C C     O
 IxC C C Ix C   C C   C CCIxI   C C  CC     C CCCC  OOO
@@ -86,11 +89,13 @@ CCC x C x C CCCCCCCC       C CCCCCCCCC x  CC x C x x x
     x   x CCCCCCCCCCCCCCCCCCCCCCCCCC   x     x C x x x
     x   x                              x     x   x   x
 ------------------------------------------------------
+------------------------------------------------------
 ```
 
 ## Metal 2
 ```
 012345678901234567890123456789012345678901234567890123
+
 
 
 

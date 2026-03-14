@@ -2,95 +2,100 @@
 
 ## Substrate
 ```
-01234567890123456789012345678901
+012345678901234567890123456789012
 
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
 ```
-01234567890123456789012345678901
+012345678901234567890123456789012
 
 
-XppppppXppppppppppppXpppppppXppp
-XppppppXppppppppppppXpppppppXppp
-XpppppppppppppppppppppppppppXpXX
-X                           X XX
-X                           X XX
+ ppppppXppppppppppppXpppppppXppp
+ ppppppXppppppppppppXpppppppXppp
+ pppppppppppppppppppppppppppXpXX
+                            X XX
+                            X XX
 
 
  X                         X
 
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-XnnnnnnXnnnnnnnnnnnnnnnnnnnnnnXX
-XnnnnnnXnnnnnnnnnnnnnnnnnnnnnnnn
-XnnnnnnXnnnnnnnnnnnnnXnnnnnnXnnn
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnXnnnnnnnnnnnnnnnnnnnnnnXX
+ nnnnnnXnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnXnnnnnnnnnnnnnXnnnnnnXnnn
+
 
 ```
 
 ## Polysilicon
 ```
-01234567890123456789012345678901
+012345678901234567890123456789012
 
 
-XG     X            X      GX
-XG     X            X      GX
-XG                         GX XX
-XG                         GX XX
-XG                         GX XX
+ G     X            X      GX
+ G     X            X      GX
+ G                         GX XX
+ G                         GX XX
+ G                         GX XX
  G                         G
  G                         G
  X                         X
  G                         G
  G                         G
  G                         G
-XG     X                   G  XX
-XG     X                   G
-XG     X             X     GX
+ G     X                   G  XX
+ G     X                   G
+ G     X             X     GX
+
 
 ```
 
 ## Metal 1
 ```
-01234567890123456789012345678901
-++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++
-x      x            x       x
-x      x CCC CCC    x       x
-x CC CCCCC   C              x xx
-x CC C    CCCC CCCCCCCCCCCC x xx
-x CC C  CCC CC CCCCCCCC CCC x xx
+012345678901234567890123456789012
++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++
++      x            x       x
++      x CCC CCC    x       x
++ CC CCCCC   C              x xx
++ CC C    CCCC CCCCCCCCCCCC x xx
++ CC C  CCC CC CCCCCCCC CCC x xx
    C C  C CC   CC     C CCC + OO
 II C      C  CCCC CC  C CC     O
 Ix CCCCCC C CC  C  C  C CCIx C O
 II CCC   CCCCC CC  C  C  C   C O
    C C   C  CCCCCC C  C  CC  COO
   CC C - CCC     C C  CC     COO
-x CC C x   CCCCC   CCCCCCCCCCCxx
-x      x CCCCCCCCCCC
-x      x             x      x
---------------------------------
+- CC C x   CCCCC   CCCCCCCCCCCxx
+-      x CCCCCCCCCCC
+-      x             x      x
+---------------------------------
+---------------------------------
 ```
 
 ## Metal 2
 ```
-01234567890123456789012345678901
+012345678901234567890123456789012
+
 
 
 

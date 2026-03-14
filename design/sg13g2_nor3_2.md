@@ -2,91 +2,101 @@
 
 ## Substrate
 ```
-0123456789012345
-NNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNN
-SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSS
+01234567890123456
+
+NNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNN
+SSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
 ```
-0123456789012345
+01234567890123456
 
-XpppXppppppppppp
-XpppXppppppppppp
-XpppXppppppppppp
-X   X        X
-X            X
+
+ pppXppppppppppp
+ pppXppppppppppp
+ pppXppppppppppp
+    X        X
+             X
 
 
   X    X     X
 
-nnnnnnnnnnnnnnnn
-nnnnnnnnnnnnnnnn
-XnXnXXXnnXnXnXnX
-XnnnXXXnnnnXnnnX
-XnnnXXXnnnnXnnnX
+ nnnnnnnnnnnnnnn
+ nnnnnnnnnnnnnnn
+ nXnXXXnnXnXnXnX
+ nnnXXXnnnnXnnnX
+ nnnXXXnnnnXnnnX
+
 
 ```
 
 ## Polysilicon
 ```
-0123456789012345
+01234567890123456
 
-XG GX G G   G G
-XG GX G G   G G
-XG GX G G   G G
-XG GX G G   GXG
-XG G  G G   GXG
+
+ G GX G G   G G
+ G GX G G   G G
+ G GX G G   G G
+ G GX G G   GXG
+ G G  G G   GXG
  G G  G G   G G
  G G  G G   G G
  GXG  GXG   GXG
  G G  G G   G G
  G G  G G   G G
  G G  G G   G G
-XGXGXXX GX XGXGX
-XG GXXX G  XG GX
-XG GXXX G  XG GX
+ GXGXXX GX XGXGX
+ G GXXX G  XG GX
+ G GXXX G  XG GX
+
 
 ```
 
 ## Metal 1
 ```
-0123456789012345
-++++++++++++++++
-x   x
-x   x
-x C x CCCCCCCCCC
-x C x C  C C x C
-x C      C   x C
+01234567890123456
++++++++++++++++++
++++++++++++++++++
++   x
++   x
++ C x CCCCCCCCCC
++ C x C  C C x C
++ C      C   x C
 + CCCCCCCC OOO C
            O
  IxI  Ix OOOIxI
  III  II OOOIII
 - OOOOOOOO OOO -
 - O      O   O -
-x x xxx  x x x x
-x   xxx    x   x
-x   xxx    x   x
-----------------
+- x xxx  x x x x
+-   xxx    x   x
+-   xxx    x   x
+-----------------
+-----------------
 ```
 
 ## Metal 2
 ```
-0123456789012345
+01234567890123456
+
+
 
 
 

@@ -20,6 +20,7 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +28,21 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 012345678901234567890123456789012345678901234567890123456789012345678901234567
 
 
-pppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpppXppppXp
-pppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpppXppppXp
-pppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpXpXpppXpXXpXp
+ ppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpppXppppXp
+ ppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpppXpppXppppXp
+ ppXppppppppppXpppppXppppppppppXpppppppppppppppppppppppppppppppXpXpXpppXpXXpXp
               X     X                                          X X X   X XX X
               X     X                                          X X X   X XX X
 
 
    X     X                   X                X
       X    X
-nnnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnnnnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnXnnnXnXnX
-nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnXnnnXnXnX
-nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnnXnnnXnnnX
+ nnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnnnnnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ nnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnXnnnXnXnX
+ nnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnXnXnnnXnXnX
+ nnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnnXnnnXnnnX
+
 
 ```
 
@@ -64,6 +66,7 @@ nnnXnnnnnnnnnnXnnnnnnnnnXnnnXnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnXnnnnXnnnnXnnnXnnnX
   GXG   G G G X         X   X G              G G           X    X  X X   X X X
   GXG   G G G X         X   X G              G G           X    X    X   X   X
 
+
 ```
 
 ## Metal 1
@@ -86,11 +89,13 @@ C  xCCCCCCCCC x  C  CCC x C x C CCCCCCCC       C CCCCCCCCC x  CCx  x x C x x x
    x          x  C      x   x CCCCCCCCCCCCCCCCCCCCCCCCCC   x    x  x x C x x x
    x          x         x   x                              x    x    x   x   x
 ------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 ```
 
 ## Metal 2
 ```
 012345678901234567890123456789012345678901234567890123456789012345678901234567
+
 
 
 

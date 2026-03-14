@@ -21,20 +21,17 @@ def get_dimensions(parts):
     max_z = max(zs) + 10
 
     # Grid is 20 LDU.
-    # Let's align to 20 LDU grid.
-    # For very narrow cells (like fill_1), ensure we have at least one stud width.
-    if grid_max_x == grid_min_x:
-        grid_max_x = grid_min_x + 20
-
-    # The cells start at x=0, z=0 usually? No, centers are offset.
-    # From lef_to_ldr.py: x_off = x * 20 + (rw * 20) // 2
-    # So for a 1x1 at index 0, x_off = 10.
-
     # Let's find the grid boundaries.
     grid_min_x = int(min_x // 20) * 20
     grid_max_x = int((max_x + 19) // 20) * 20
     grid_min_z = int(min_z // 20) * 20
     grid_max_z = int((max_z + 19) // 20) * 20
+
+    # For very narrow cells (like fill_1), ensure we have at least one stud width.
+    if grid_max_x <= grid_min_x:
+        grid_max_x = grid_min_x + 20
+    if grid_max_z <= grid_min_z:
+        grid_max_z = grid_min_z + 20
 
     width_studs = (grid_max_x - grid_min_x) // 20
     height_studs = (grid_max_z - grid_min_z) // 20

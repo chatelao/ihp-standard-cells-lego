@@ -200,7 +200,7 @@ def generate_ldr(macro_data):
     ldr_lines.append("0 // Active Regions")
 
     active_width_ldu = max(1, (width_ldu // 20) - 3) * 20
-    x_offset_active = (width_ldu - active_width_ldu) // 2
+    x_offset_active = snap_to_grid((width_ldu - active_width_ldu) // 2, 20)
 
     # NMOS (5 studs high, Z=20 to 120)
     nmos_z_start = 20
@@ -261,8 +261,8 @@ def generate_ldr(macro_data):
 
                 if is_drive_2:
                     xs = [input_x - 20, input_x + 20]
-                    # Widened area for contact (2 studs wide)
-                    ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {cz} 1 0 0 0 1 0 0 0 1 3023.dat")
+                    # Widened area for contact (3 studs wide to cover both gates and stay on grid)
+                    ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {cz} 1 0 0 0 1 0 0 0 1 3623.dat")
                 else:
                     xs = [input_x]
 

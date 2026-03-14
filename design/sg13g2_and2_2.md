@@ -2,54 +2,59 @@
 
 ## Substrate
 ```
-01234567890
-NNNNNNNNNNN
-NNNNNNNNNNN
-NNNNNNNNNNN
-NNNNNNNNNNN
-NNNNNNNNNNN
-NNNNNNNNNNN
-NNNNNNNNNNN
-NNNNNNNNNNN
-SSSSSSSSSSS
-SSSSSSSSSSS
-SSSSSSSSSSS
-SSSSSSSSSSS
-SSSSSSSSSSS
-SSSSSSSSSSS
-SSSSSSSSSSS
-SSSSSSSSSSS
+012345678901
+
+NNNNNNNNNNNN
+NNNNNNNNNNNN
+NNNNNNNNNNNN
+NNNNNNNNNNNN
+NNNNNNNNNNNN
+NNNNNNNNNNNN
+NNNNNNNNNNNN
+NNNNNNNNNNNN
+SSSSSSSSSSSS
+SSSSSSSSSSSS
+SSSSSSSSSSSS
+SSSSSSSSSSSS
+SSSSSSSSSSSS
+SSSSSSSSSSSS
+SSSSSSSSSSSS
+SSSSSSSSSSSS
+
 ```
 
 ## Active
 ```
-01234567890
+012345678901
 
- XpppXppppX
- XpppXppppX
- XpppXpXXpX
- X   X XX X
+
+  pppXppppX
+  pppXppppX
+  pppXpXXpX
+     X XX X
        XX X
 
 
     X
 
- nnnnnnnnnn
- nnnnnnnnnn
+  nnnnnnnnn
+  nnnnnnnnn
  XnnnXnXXnX
- nnnnXnnnnX
- nnnnXnnnnX
+  nnnXnnnnX
+  nnnXnnnnX
+
 
 ```
 
 ## Polysilicon
 ```
-01234567890
+012345678901
 
-GXGG X    X
-GXGG X    X
-GXGG X XX X
-GXGG X XX X
+
+G GG X    X
+G GG X    X
+G GG X XX X
+G GG X XX X
 G GG G XX X
 G GG G
 G GG G
@@ -61,16 +66,18 @@ GXGG X XX X
 GGGG X    X
 G GG X    X
 
+
 ```
 
 ## Metal 1
 ```
-01234567890
-+++++++++++
- x   x    x
- x   x    x
- x C x xx x
- x C x xx x
+012345678901
+++++++++++++
+++++++++++++
+ +   x    x
+ +   x    x
+ + C x xx x
+ + C x xx x
    C   xx x
  CCCCC OO +
  C    C O
@@ -81,12 +88,15 @@ G GG X    X
 IxI  x xx x
 III  x    x
      x    x
------------
+------------
+------------
 ```
 
 ## Metal 2
 ```
-01234567890
+012345678901
+
+
 
 
 

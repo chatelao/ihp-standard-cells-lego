@@ -20,6 +20,7 @@ SSSSSS
 SSSSSS
 SSSSSS
 SSSSSS
+
 ```
 
 ## Active
@@ -27,20 +28,21 @@ SSSSSS
 012345
 
 
-XppXXX
-XppXXX
-XppXXX
-X  XXX
-X  XXX
+ ppXXX
+ ppXXX
+ ppXXX
+   XXX
+   XXX
 
 
 
 
-nnnnnn
-nnnnnn
-XXXnnX
-XXXnnX
-XXXnnX
+ nnnnn
+ nnnnn
+ XXnnX
+ XXnnX
+ XXnnX
+
 
 ```
 
@@ -49,20 +51,21 @@ XXXnnX
 012345
 
 
-X  XXX
-X  XXX
-X  XXX
-X  XXX
-X  XXX
+   XXX
+   XXX
+   XXX
+   XXX
+   XXX
 
 
 
 
 
 
-XXX  X
-XXX  X
-XXX  X
+ XX  X
+ XX  X
+ XX  X
+
 
 ```
 
@@ -71,26 +74,28 @@ XXX  X
 012345
 ++++++
 ++++++
-x  xxx
-x  xxx
-x  xxx
-x  xxx
-x  xxx
++  xxx
++  xxx
++  xxx
++  xxx
++  xxx
 +  +++
    ++
  --++
  --++
  --
  --
-xxx  x
-xxx  x
-xxx  x
+-xx  x
+-xx  x
+-xx  x
+------
 ------
 ```
 
 ## Metal 2
 ```
 012345
+
 
 
 

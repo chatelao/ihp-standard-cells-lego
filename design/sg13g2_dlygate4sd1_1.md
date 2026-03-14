@@ -20,6 +20,7 @@ SSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSS
+
 ```
 
 ## Active
@@ -27,20 +28,21 @@ SSSSSSSSSSSSSSS
 012345678901234
 
 
-pppXpppppppXpp
-pppXpppppppXpp
-pppXpppppppXpX
+ ppXpppppppXpp
+ ppXpppppppXpp
+ ppXpppppppXpX
    X       X X
            X X
 
 
  X
 
-nnnnnnnnnnnnnn
-nnnnnnnnnnnnnn
-nnnXnnnnnnnXnX
-nnnXnnnnnnnXnn
-nnnXnnnnnnnXnn
+ nnnnnnnnnnnnn
+ nnnnnnnnnnnnn
+ nnXnnnnnnnXnX
+ nnXnnnnnnnXnn
+ nnXnnnnnnnXnn
+
 
 ```
 
@@ -64,6 +66,7 @@ nnnXnnnnnnnXnn
  G X       X
  G X       X
 
+
 ```
 
 ## Metal 1
@@ -86,11 +89,13 @@ C  x CC    x xO
    x       x
    x       x
 ---------------
+---------------
 ```
 
 ## Metal 2
 ```
 012345678901234
+
 
 
 

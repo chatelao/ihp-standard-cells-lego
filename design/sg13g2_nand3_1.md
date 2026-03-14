@@ -2,95 +2,100 @@
 
 ## Substrate
 ```
-01234567
+012345678
 
-NNNNNNNN
-NNNNNNNN
-NNNNNNNN
-NNNNNNNN
-NNNNNNNN
-NNNNNNNN
-NNNNNNNN
-NNNNNNNN
-SSSSSSSS
-SSSSSSSS
-SSSSSSSS
-SSSSSSSS
-SSSSSSSS
-SSSSSSSS
-SSSSSSSS
-SSSSSSSS
+NNNNNNNNN
+NNNNNNNNN
+NNNNNNNNN
+NNNNNNNNN
+NNNNNNNNN
+NNNNNNNNN
+NNNNNNNNN
+NNNNNNNNN
+SSSSSSSSS
+SSSSSSSSS
+SSSSSSSSS
+SSSSSSSSS
+SSSSSSSSS
+SSSSSSSSS
+SSSSSSSSS
+SSSSSSSSS
+
 ```
 
 ## Active
 ```
-01234567
+012345678
 
 
-XpppXppp
-XpppXppp
-XpXpXpXX
-X X X XX
-X XXXXXX
+ pppXppp
+ pppXppp
+ pXpXpXX
+  X X XX
+  XXXXXX
 
 
  X X   X
 
-nnnnnnnn
-nnnnnnnn
-XnnnnnnX
-Xnnnnnnn
-Xnnnnnnn
+ nnnnnnn
+ nnnnnnn
+ nnnnnnX
+ nnnnnnn
+ nnnnnnn
+
 
 ```
 
 ## Polysilicon
 ```
-01234567
+012345678
 
 
-XG GX  G
-XG GX  G
-XGXGX XX
-XGXGX XX
-XGXXXXXX
+ G GX  G
+ G GX  G
+ GXGX XX
+ GXGX XX
+ GXXXXXX
  G G   G
  G G   G
  X X   X
  G G   G
  G G   G
  G G   G
-XG G   X
-XG G   G
-XG G   G
+ G G   X
+ G G   G
+ G G   G
+
 
 ```
 
 ## Metal 1
 ```
-01234567
-++++++++
-++++++++
-x   x
-x   x
-x x x xx
-x x x xx
-x xxxxxx
+012345678
++++++++++
++++++++++
++   x
++   x
++ x x xx
++ x x xx
++ xxxxxx
      O
      O
 Ix x OIx
 II I OII
      O
 -    OOO
-x      x
-x
-x
---------
+-      x
+-
+-
+---------
+---------
 ```
 
 ## Metal 2
 ```
-01234567
+012345678
+
 
 
 
