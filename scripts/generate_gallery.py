@@ -111,6 +111,7 @@ def generate_gallery():
         .card-links a {
             color: #bb86fc;
             text-decoration: none;
+            font-weight: normal;
         }
         .card-links a:hover {
             text-decoration: underline;
