@@ -56,8 +56,8 @@ Legend: X=Connection (lower side), n=NMOS Active, p=PMOS Active
 9  G G   G GG G              G G              G G
 8  G G   G GG G              G G              G G
 7  G G   GXGG G              GXG              G G
-6  GXG  XGGGGXG              GGG              GXG
-5  G G   X GGGG              G G              G G                 XX
+6  GXG  XG GGXG              G G              GXG
+5  G G   X GG G              G G              G G                 XX
 4  G G   G XG G              G G              G G                 XX
 3  G G   G GG G              G G              G G                 X
 2  G G   G GG G              G G              G G                 X

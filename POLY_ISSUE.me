@@ -1,0 +1,23 @@
+# Analysis of Polysilicon Misalignment in sg13g2_nand2_2
+
+The red polysilicon bridge in `sg13g2_nand2_2` is misaligned with its corresponding input contact because of inconsistent quantization logic in `scripts/lef_to_ldr.py`.
+
+## Root Cause
+The script uses two different methods to calculate the Z-coordinate (vertical center) for components belonging to the same pin:
+
+1.  **Polysilicon Bridge**: It calculates the center based on raw (un-snapped) LDU coordinates.
+    *   LEF Pin B Z-range: `1.435` to `1.9`
+    *   LDU coordinates: `114` and `151`
+    *   Raw center: `(114 + 151) // 2 = 132`
+    *   Snapped center: `(132 // 20) * 20 + 10 = 130` (Row 6 in ASCII art)
+
+2.  **Input Contact**: It calculates the center based on snapped LDU coordinates.
+    *   Snapped LDU range: `snap_to_grid(114) = 120` and `snap_to_grid(151) = 160`
+    *   Snapped center: `(120 + 160) // 2 = 140`
+    *   Final center: `(140 // 20) * 20 + 10 = 150` (Row 7 in ASCII art)
+
+## Result
+Because the bridge is placed at `Z=130` and the contact at `Z=150`, they are physically separated by 20 LDU (one LEGO stud). In the design documentation, this causes the Polysilicon bridge to appear in Row 6 while the contact (and the Metal 1 strip it connects to) appears in Row 7.
+
+## Solution
+The `scripts/lef_to_ldr.py` script must be updated to ensure that the Polysilicon bridge uses the same snapped Metal 1 boundaries as the Contacts and Metal 1 plates when calculating its Z-coordinate center.
