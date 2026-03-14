@@ -79,7 +79,6 @@ For each standard cell, a Markdown design documentation file must be maintained 
   - `-`: VSS Rail (Black)
 - **Metal 2:** `M` (Green)
 - **Connections (Contacts/Vias):**
-  - `X`: On the lower layer (e.g., in Active/Poly/Metal 1 connecting to the layer above).
   - `x`: On the upper layer (e.g., in Metal 1/Metal 2 connecting from the layer below).
 
 One character in the ASCII art represents one LEGO stud.
