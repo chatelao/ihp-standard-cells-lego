@@ -238,35 +238,40 @@ def generate_ldr(macro_data):
     gate_locations = []
     for pin in macro_data['pins']:
         if pin['direction'] == 'INPUT':
-            # For each input pin, we place a vertical gate crossing both active regions
-            # Use the center X of the first Metal1 rectangle as the gate position
-            input_rect = None
+            # For each input pin, we place vertical gate(s) crossing both active regions.
+            # We iterate over all Metal1 rectangles to place corresponding landing pads (bridges).
+            pin_input_xs = set()
             for rect in pin['rects']:
                 if rect['layer'] == 'Metal1':
-                    input_rect = rect
-                    break
+                    x1, y1, x2, y2 = rect['coords']
+                    x1_ldu, x2_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(x2)
+                    z1_ldu, z2_ldu = um_to_ldu_coord(y1), um_to_ldu_coord(y2)
 
-            if input_rect is not None:
-                # Use the same snapping logic as contacts for consistency
-                x1, y1, x2, y2 = input_rect['coords']
-                x1_ldu, x2_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(x2)
-                z1_ldu, z2_ldu = um_to_ldu_coord(y1), um_to_ldu_coord(y2)
-                xmin = snap_to_grid(min(x1_ldu, x2_ldu))
-                xmax = snap_to_grid(max(x1_ldu, x2_ldu))
-                zmin = snap_to_grid(min(z1_ldu, z2_ldu))
-                zmax = snap_to_grid(max(z1_ldu, z2_ldu))
-                input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
+                    # Consistent snapping: snap boundaries first
+                    xmin = snap_to_grid(min(x1_ldu, x2_ldu))
+                    xmax = snap_to_grid(max(x1_ldu, x2_ldu))
+                    zmin = snap_to_grid(min(z1_ldu, z2_ldu))
+                    zmax = snap_to_grid(max(z1_ldu, z2_ldu))
 
-                z_start = 20
-                z_end = 280
-                # Use the center Z of the pin's Metal1 rectangle (snapped)
-                cz = (zmin + zmax) // 2
-                cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
+                    input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
+                    pin_input_xs.add(input_x)
 
+                    # Use the center Z of the pin's Metal1 rectangle (snapped)
+                    cz = (zmin + zmax) // 2
+                    cz = (cz // 20) * 20 + 10 # Center for widened poly and contact landing pad
+
+                    if is_drive_2:
+                        # Widened area for contact (2 studs wide) connecting the two fingers
+                        ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {cz} 1 0 0 0 1 0 0 0 1 3023.dat")
+                    else:
+                        # Single stud area for contact (explicitly added for consistency, though gate finger also covers it)
+                        ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {cz} 1 0 0 0 1 0 0 0 1 3024.dat")
+
+            z_start = 20
+            z_end = 280
+            for input_x in sorted(list(pin_input_xs)):
                 if is_drive_2:
                     xs = [input_x - 20, input_x + 20]
-                    # Widened area for contact (2 studs wide)
-                    ldr_lines.append(f"1 {COLOR_POLY} {input_x} {Y_POLY} {cz} 1 0 0 0 1 0 0 0 1 3023.dat")
                 else:
                     xs = [input_x]
 

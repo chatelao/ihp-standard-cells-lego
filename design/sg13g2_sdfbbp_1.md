@@ -45,21 +45,21 @@ Legend: n=NMOS Active, p=PMOS Active
 ## Polysilicon
 ```
   01234567890123456789012345678901234567890123456789012345678901
-4
-3   G G G       G               G            G       G
-2   G G G       G               G            G       G
-1   G G G       G               G            G       G
-0   G G G       G               G            G       G
-9   G G G       G               G            G       G
-8   G G G       G               G            G       G
-7   G G G       G               G            G       G
-6   G G G       G               G            G       G
-5   G G G       G               G            G       G
-4   G G G       G               G            G       G
-3   G G G       G               G            G       G
-2   G G G       G               G            G       G
-1   G G G       G               G            G       G
-0
+4                               G
+3  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+2  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+1  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+0  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+9  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+8  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+7  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+6  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+5  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+4  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+3  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+2  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+1  GGGG G G  G  G G         G G GGGGGGG  G GGG   G   GG     G
+0                 G             G
 ```
 Legend: G=Polysilicon
 

@@ -15,6 +15,9 @@
 - [x] **Phase 5: Building Instructions**
   - Implemented automated generation of multi-page PDF building instructions for the entire library.
   - Optimized repository storage by moving instruction PDFs to GitHub Pages artifacts.
+- [x] **Phase 6: Maintenance & Refinement**
+  - Fixed Polysilicon-to-Contact misalignment issue in `lef_to_ldr.py`.
+  - Improved input gate generation to support multiple landing pads per pin.
 
 ## Future Work
 - [ ] Implement advanced modeling for custom macros and analog blocks.
