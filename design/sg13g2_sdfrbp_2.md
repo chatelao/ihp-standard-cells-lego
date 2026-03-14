@@ -46,19 +46,19 @@ Legend: n=NMOS Active, p=PMOS Active
 ```
   01234567890123456789012345678901234567890123456789012345678901234567890
 4
-3  G G   G G G             G G             G G
-2  G G   G G G             G G             G G
-1  G G   G G G             G G             G G
-0  G G   G G G             G G             G G
-9  G G   G G G             G G             G G
-8  G G   G G G             G G             G G
-7  G G   GGG G             GGG             G G
-6  GGG   G GGG             G G             GGG
-5  G G   G G G             G G             G G
-4  G G   G G G             G G             G G
-3  G G   G G G             G G             G G
-2  G G   G G G             G G             G G
-1  G G   G G G             G G             G G
+3   G G G G G G G G G G
+2   G G G G G G G G G G
+1   G G G G G G G G G G
+0   G G G G G G G G G G
+9   G G G G G G G G G G
+8   G G G G G G G G G G
+7   G G G G G G G G G G
+6   GGG GGG G G GGG GGG
+5   G G G G GGG G G G G
+4   G G G G G G G G G G
+3   G G G G G G G G G G
+2   G G G G G G G G G G
+1   G G G G G G G G G G
 0
 ```
 Legend: G=Polysilicon
@@ -73,10 +73,10 @@ Legend: G=Polysilicon
 0  CCCCCC CC  C+ CC  + CCCC CCCCCCC C   CCCCCCCCCCC       + O + CC+ OO+
 9  C     CCC  C+ CC  +CCC   C     C C   C       C CC    C   O + CC+ OO+
 8  C   CCC    C+ CC    CC CCCCCCCCC C CCC CCCCCCC CCC CCCCCCO + CC+ OO+
-7  C   C  x I C   C    CC C xI C  C C  C  CIII  C C C C    CO    C   O
-6  CxI Cx I x CC CCCCC CC   II CC C CC C CCIxICCC CCC    C COOO  CCC OO
-5  C   Cx   I    CC    CCCCCCCCCCCCCCC C  CIIIC  CCCCCCCCC C  x   C   xx
-4  C x CIIxII CCCCC    C  C   C      C    CCCCC CCCCCC     C  x   C x xx
+7  C   C x   IC  xC  I CC C    C  C C  C  C     C C C C    CO    C   O
+6  C x C I   xCC ICCCx CC      CC C CC C CC   CCC CCC    C COOO  CCC OO
+5  C   C     x   CC  I CCCCCCCCCCCCCCC C  C   C  CCCCCCCCC C  x   C   xx
+4  C x C     xCCCCC    C  C   C      C    CCCCC CCCCCC     C  x   C x xx
 3  C x CCCCCCCCx  C  CCCx   x C CCCCCC        C      C x  CCx x x C x xx
 2    x         x        x   x CCCCCCCCCCCCCCCCCCCCCC   x    x   x   x  x
 1    x         x        x   x                          x    x   x   x  x

@@ -71,13 +71,13 @@ Legend: G=Polysilicon
 2
 1
 0
-9  IxI
-8  III
-7  x
-6  I
-5  I
-4   xI
-3   II
+9   x
+8   I
+7   x
+6   I
+5   I
+4   x
+3   I
 2
 1
 0 -----
