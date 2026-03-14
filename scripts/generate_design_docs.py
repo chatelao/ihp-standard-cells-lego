@@ -183,7 +183,7 @@ def generate_design_doc(cell_name, parts):
         ("Metal 2", [-88])
     ]
 
-    scale = "".join([str(i % 10) for i in range(width_studs)])
+    scale = "  " + "".join([str(i % 10) for i in range(width_studs)])
 
     for layer_name, y_list in layers:
         doc += f"## {layer_name}\n"
@@ -197,7 +197,7 @@ def generate_design_doc(cell_name, parts):
         # VDD is at high Z, VSS at low Z.
         # Let's print from high Z to low Z so VDD is on top.
         for z_idx in range(height_studs - 1, -1, -1):
-            line = ""
+            line = f"{z_idx % 10} "
             for x_idx in range(width_studs):
                 sx = min_x + x_idx * 20 + 10
                 sz = min_z + z_idx * 20 + 10
