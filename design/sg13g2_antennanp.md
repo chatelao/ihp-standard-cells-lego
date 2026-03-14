@@ -45,7 +45,7 @@ Legend: n=NMOS Active, p=PMOS Active
 ## Polysilicon
 ```
   01234
-4
+4   G
 3   G
 2   G
 1   G
@@ -59,7 +59,7 @@ Legend: n=NMOS Active, p=PMOS Active
 3   G
 2   G
 1   G
-0
+0   G
 ```
 Legend: G=Polysilicon
 

@@ -258,8 +258,8 @@ def generate_ldr(macro_data):
                 zmax = snap_to_grid(max(z1_ldu, z2_ldu))
                 input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
 
-                z_start = 20
-                z_end = 280
+                z_start = 0
+                z_end = 300
                 # Use the center Z of the pin's Metal1 rectangle (snapped)
                 cz = (zmin + zmax) // 2
                 cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
