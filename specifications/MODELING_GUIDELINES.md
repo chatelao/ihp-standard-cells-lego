@@ -5,11 +5,11 @@ To ensure consistency across all LEGO models of IHP standard cells, the followin
 ## 1. Scale and Dimensions
 The models are designed on a grid where LEGO studs represent the physical dimensions of the semiconductor cell.
 
-- **Horizontal Scale (X and Z):** 1 LEGO Stud = 0.252 µm.
+- **Horizontal Scale (X and Z):** 1 LEGO Stud = 0.27 µm.
   - LEF X-coordinate maps to LEGO X-coordinate.
   - LEF Y-coordinate maps to LEGO Z-coordinate.
-  - Standard cell height is **16 studs** (320 LDU).
-  - Power rails (VSS and VDD) are placed with a **15 stud** center-to-center distance.
+  - Standard cell height is **15 studs** (300 LDU).
+  - Power rails (VSS and VDD) are placed with a **14 stud** center-to-center distance.
 - **Vertical Scale (Y):** Each physical layer is represented by a LEGO Plate (1/3 of a brick height).
   - Layers are stacked from bottom to top.
   - In LDraw, the negative Y direction is "up".
@@ -45,9 +45,9 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 - 1 LEGO Plate =  8 LDU (Height).
 - 1 LEGO Brick = 24 LDU (Height).
 
-Based on 1 Stud = 0.252 µm:
-- **0.252 µm = 20 LDU**
-- **0.0126 µm = 1 LDU**
+Based on 1 Stud = 0.27 µm:
+- **0.27 µm = 20 LDU**
+- **0.0135 µm = 1 LDU**
 
 ## 4. Modeling Principles
 - We use standard LDraw colors to represent different semiconductor layers.

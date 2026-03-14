@@ -3,10 +3,10 @@ import sys
 import os
 
 # Constants based on modeling_guidelines.md (V3)
-# 1 stud = 0.252 um
+# 1 stud = 0.27 um
 # 1 stud = 20 LDU
-# 1 um = 20 / 0.252 = 79.365... LDU
-UM_TO_LDU = 20 / 0.252
+# 1 um = 20 / 0.27 = 74.074... LDU
+UM_TO_LDU = 20 / 0.27
 
 # LEGO Part IDs (Standard orientations are usually X-aligned)
 # Name: (width_studs, depth_studs, file)
@@ -169,8 +169,8 @@ def generate_ldr(macro_data):
     ]
 
     width_ldu = snap_to_grid(um_to_ldu_coord(macro_data['width_um']))
-    # Force standard cell height to 16 studs (320 LDU)
-    height_ldu = 320
+    # Force standard cell height to 15 studs (300 LDU)
+    height_ldu = 300
 
     # 1. Substrate low (V3)
     ldr_lines.append("0 // Substrate low (V3)")
@@ -218,9 +218,9 @@ def generate_ldr(macro_data):
         else:
             ldr_lines.append(f"1 {COLOR_ACTIVE_NMOS} {gx} {Y_ACTIVE} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
 
-    # PMOS (3 studs high, Z=240 to 300, i.e., Studs 12-14)
-    pmos_z_start = 240
-    pmos_z_end = 300
+    # PMOS (3 studs high, Z=220 to 280, i.e., Studs 11-13)
+    pmos_z_start = 220
+    pmos_z_end = 280
     pmos_z_height = pmos_z_end - pmos_z_start
     tiles_pmos = get_best_plates(active_width_ldu, pmos_z_height)
     for plate, x_off, z_off, rotated in tiles_pmos:
@@ -258,7 +258,7 @@ def generate_ldr(macro_data):
                 input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
 
                 z_start = 20
-                z_end = 300
+                z_end = 280
                 # Use the center Z of the pin's Metal1 rectangle (snapped)
                 cz = (zmin + zmax) // 2
                 cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
@@ -285,7 +285,7 @@ def generate_ldr(macro_data):
     # 5. Pins, Rails, Contacts, Vias and Metal 2
     active_regions = [
         (x_offset_active, x_offset_active + active_width_ldu, 20, 120),
-        (x_offset_active, x_offset_active + active_width_ldu, 240, 300)
+        (x_offset_active, x_offset_active + active_width_ldu, 220, 280)
     ]
 
     metal1_rects = []
@@ -328,8 +328,8 @@ def generate_ldr(macro_data):
                 zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
 
                 if pin['name'] == 'VDD':
-                    # Force VDD rail to Stud 15 (Z=300 to 320)
-                    zmin, zmax = 300, 320
+                    # Force VDD rail to Stud 14 (Z=280 to 300)
+                    zmin, zmax = 280, 300
                     color = COLOR_VDD
                 elif pin['name'] == 'VSS':
                     # Force VSS rail to Stud 0 (Z=0 to 20)

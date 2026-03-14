@@ -4,7 +4,7 @@ import sys
 
 # Constants for LDU to um conversion
 LDU_PER_STUD = 20
-UM_PER_STUD = 0.252
+UM_PER_STUD = 0.27
 LDU_TO_UM = UM_PER_STUD / LDU_PER_STUD
 
 def parse_lef_sizes(lef_filepath):
@@ -110,9 +110,9 @@ def main():
             exp_w, exp_h = macro_sizes[macro_name]
             ldr_w, ldr_h = ldr_size
 
-            # Guidance: 3.78 um LEF height maps to 15 studs between rails.
-            # Total cell height is 16 studs = 4.032 um.
-            target_h = 4.032 if abs(exp_h - 3.78) < 0.001 else exp_h
+            # Guidance: 3.78 um LEF height maps to 14 studs between rails.
+            # Total cell height is 15 studs = 4.05 um.
+            target_h = 4.05 if abs(exp_h - 3.78) < 0.001 else exp_h
 
             # Allow some tolerance for rounding/quantization (0.15 um)
             # 0.252 um / 2 = 0.126 um max error per side
