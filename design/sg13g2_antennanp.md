@@ -71,18 +71,18 @@ Legend: G=Polysilicon
 2
 1
 0
-9  IxI
+9  IiI
 8  III
-7  x
+7  i
 6  I
 5  I
 4  I
-3   xI
+3   iI
 2   II
 1
 0 -----
 ```
-Legend: +=VDD, -=VSS, I=Metal 1 Input, x=Connection (upper side)
+Legend: +=VDD, -=VSS, I=Metal 1 Input, i=Metal 1 Input Connection
 
 ## Metal 2
 ```

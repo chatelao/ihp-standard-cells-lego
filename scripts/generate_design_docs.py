@@ -115,20 +115,23 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     # Vias: Y=-80 (Between Metal 1 and Metal 2)
     # Metal 2: Y=-88
 
+    # Connections
+    conn_map = {'I': 'i', 'O': 'o', 'C': 'c', '+': 'v', '-': 's', 'M': 'm'}
+
     # If we are in Metal 1, check for Contact at Y=-48 (below)
     if layer_y_list[0] == -56:
         # Check for contact (below)
         for p in parts:
             if p['part'] == '3062b.dat' and p['y'] == -48:
                 if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    return 'x'
+                    return conn_map.get(char, 'x')
 
     # If we are in Metal 2, check for Via at Y=-80 (below)
     if layer_y_list[0] == -88:
         for p in parts:
             if p['part'] == '3062b.dat' and p['y'] == -80:
                 if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    return 'x'
+                    return conn_map.get(char, 'x')
 
     return char
 
@@ -158,6 +161,12 @@ LEGEND_DESC = {
     '+': 'VDD',
     '-': 'VSS',
     'M': 'Metal 2',
+    'i': 'Metal 1 Input Connection',
+    'o': 'Metal 1 Output Connection',
+    'c': 'Metal 1 Connection',
+    'v': 'VDD Connection',
+    's': 'VSS Connection',
+    'm': 'Metal 2 Connection',
     'x': 'Connection (upper side)',
 }
 

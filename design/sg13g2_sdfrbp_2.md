@@ -69,20 +69,20 @@ Legend: G=Polysilicon
 4 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 3
 2       CCCCCCC
-1       C     C  CC    CCCCCCC   CCCC CCCCCCCCCCCCCCCCCCCC          xx
+1       C     C  CC    CCCCCCC   CCCC CCCCCCCCCCCCCCCCCCCC          oo
 0  C    C CC  C  CC    CCCC CC   C  C   CCCCCCCCCC          O   CC  OO
 9  CCCCCCCCC  C  CC    CC   CCCCCCC C   C         C         O   CC  OO
 8  C   CCC    C  CC   CCC CCCCCCCCC C CCC CCCCCCC CCC CCCCCCO   CC  OO
 7  C   C      C   C    CC C       C C  C  C     C C C C    CO   CC   O
-6  CxI C  x I CC CCCCC CC C xI C  C C  C CCIxICCC CCC C    COOO  CCC OO
-5  C   Cx I x    CC    CC      CC   CC C  CIIIC     CCCCCC C  x   C   xx
-4  C   CIIxII CCCCC    CCCCCCCCC CCCCC C  C   C CCCCC      C  x   C   xx
-3  C   C      C   C    C  C   C CCCCCC    CCCCC CCCCCC     C  x   C   x
-2      CCCCCCCC   C  CCC      CCCCCCCCCCCCCCCCCCCCCC C    CC  x   C   x
+6  CiI C  i I CC CCCCC CC C iI C  C C  C CCIiICCC CCC C    COOO  CCC OO
+5  C   Ci I i    CC    CC      CC   CC C  CIIIC     CCCCCC C  o   C   oo
+4  C   CIIiII CCCCC    CCCCCCCCC CCCCC C  C   C CCCCC      C  o   C   oo
+3  C   C      C   C    C  C   C CCCCCC    CCCCC CCCCCC     C  o   C   o
+2      CCCCCCCC   C  CCC      CCCCCCCCCCCCCCCCCCCCCC C    CC  o   C   o
 1
 0 -----------------------------------------------------------------------
 ```
-Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
+Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, i=Metal 1 Input Connection, o=Metal 1 Output Connection
 
 ## Metal 2
 ```

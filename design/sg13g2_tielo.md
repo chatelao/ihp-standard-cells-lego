@@ -75,13 +75,13 @@ Legend: n=NMOS Active, p=PMOS Active
 7    C C
 6    C C
 5    C C
-4  CCC x
-3      x
-2     xx
+4  CCC o
+3      o
+2     oo
 1
 0 -------
 ```
-Legend: +=VDD, -=VSS, C=Metal 1 Connection, x=Connection (upper side)
+Legend: +=VDD, -=VSS, C=Metal 1 Connection, o=Metal 1 Output Connection
 
 ## Metal 2
 ```

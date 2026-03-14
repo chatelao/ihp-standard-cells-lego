@@ -66,23 +66,23 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890123456789012345678901234567890123456789012345678901
-4 +++x+++++++x++++x+++++++++x+++x++x+++++++x+++++x++++x+++++x+++
+4 +++v+++++++v++++v+++++++++v+++v++v+++++++v+++++v++++v+++++v+++
 3
-2      CCCCC                  IIxI  IIxIII
-1  C   C   C   C C  C         I  I  I    I    C         xx    x
-0  C   C C     C C  C  C      IC x  x CCCxCCCCC         OOC   O
-9  CCCCC C   CCC C  C  CCCC   xC IxII CCCxCC  CCCCCCCCCCOOC   O
+2      CCCCC                  IIiI  IIiIII
+1  C   C   C   C C  C         I  I  I    I    C         oo    o
+0  C   C C     C C  C  C      IC i  i CCCiCCCCC         OOC   O
+9  CCCCC C   CCC C  C  CCCC   iC IiII CCCiCC  CCCCCCCCCCOOC   O
 8   I    CC CC CCCC CC CC C   IC        CICC ICCC  CC  COOC   O
-7   x x xIC  C C   C C  C CCC ICCCCCC C CIIxIx  C  CC  COOC   O
-6   I I IIC  C CxI CCCCCC C C x C C C C CCCC x  C CC x C OCC  O
-5   I  CCCCCCC CxI   CCCC CCCCCCC C C C C  CCCCCC CC I C xC   x
-4      C    CC CII  CCC   CCCCCCCCCCC C CC      C  C     xC   x
-3      C    CC CCCCCCCC CCC      C    C CC    C C CCC   xxC   x
-2           CCCCC              CCCCC  CCCC    CCCCC     xx    x
+7   i i iIC  C C   C C  C CCC ICCCCCC C CIIiIi  C  CC  COOC   O
+6   I I IIC  C CiI CCCCCC C C i C C C C CCCC i  C CC i C OCC  O
+5   I  CCCCCCC CiI   CCCC CCCCCCC C C C C  CCCCCC CC I C oC   o
+4      C    CC CII  CCC   CCCCCCCCCCC C CC      C  C     oC   o
+3      C    CC CCCCCCCC CCC      C    C CC    C C CCC   ooC   o
+2           CCCCC              CCCCC  CCCC    CCCCC     oo    o
 1
-0 -x------x-------x---------x---x----x------x---------x-----x---
+0 -s------s-------s---------s---s----s------s---------s-----s---
 ```
-Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
+Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, i=Metal 1 Input Connection, o=Metal 1 Output Connection, s=VSS Connection, v=VDD Connection
 
 ## Metal 2
 ```
@@ -95,7 +95,7 @@ Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x
 9
 8
 7
-6       xM
+6       mM
 5
 4
 3
@@ -103,4 +103,4 @@ Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x
 1
 0
 ```
-Legend: M=Metal 2, x=Connection (upper side)
+Legend: M=Metal 2, m=Metal 2 Connection
