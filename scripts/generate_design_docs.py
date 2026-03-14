@@ -77,9 +77,10 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     # Check plates
     # Sort parts by some order to ensure deterministic behavior if multiple parts overlap
     # Metal 1 special handling: VSS/VDD/Inputs/Outputs should have priority over Connection
+    # We sort by priority ascending so that higher priority characters are assigned last and "win".
     priority = {'+': 5, '-': 5, 'I': 4, 'O': 3, 'C': 2, 'S': 1, 'N': 1, 'n': 1, 'p': 1, 'G': 1, 'M': 1}
 
-    for p in sorted(parts, key=lambda p: priority.get(color_map.get(p['color'], ' '), 0), reverse=True):
+    for p in sorted(parts, key=lambda p: priority.get(color_map.get(p['color'], ' '), 0), reverse=False):
         if p['y'] in layer_y_list and p['part'] != '3062b.dat':
             # Get dimensions from part name
             pw, pd = 1, 1
@@ -196,7 +197,7 @@ def generate_design_doc(cell_name, parts):
                 line += char
                 if char != ' ':
                     used_chars.add(char)
-            layer_lines.append(line)
+            layer_lines.append(line.rstrip())
 
         doc += "\n".join(layer_lines) + "\n"
         doc += "```\n"

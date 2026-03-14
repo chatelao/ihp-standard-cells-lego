@@ -51,9 +51,9 @@ Legend: n=NMOS Active, p=PMOS Active
 1   G G G G
 0   G G G G
 9   G G G G
-8   G G G G
-7   GGG GGG
-6   G G G G
+8   G G GGG
+7   G G G G
+6   GGG G G
 5   G G G G
 4   G G G G
 3   G G G G

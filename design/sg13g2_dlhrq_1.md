@@ -46,19 +46,19 @@ Legend: n=NMOS Active, p=PMOS Active
 ```
   012345678901234567890123456
 4
-3  G  G                G
-2  G  G                G
-1  G  G                G
-0  G  G                G
-9  G  G                G
-8  G  G                G
-7  G  G                G
-6  G  G                G
-5  G  G                G
-4  G  G                G
-3  G  G                G
-2  G  G                G
-1  G  G                G
+3   G G G
+2   G G G
+1   G G G
+0   G G G
+9   G G G
+8   G G G
+7   G G G
+6   G G G
+5   G G G
+4   G G G
+3   G G G
+2   G G G
+1   G G G
 0
 ```
 Legend: G=Polysilicon
@@ -73,8 +73,8 @@ Legend: G=Polysilicon
 0  CCCCCCCCCC CC C    C + OO
 9  CCC CC C C CC C CCCC + OO
 8    C  C C C CCCCCCC C   OO
-7  x CxICCC CCC C   C Cx   O
-6  I CIIC C   C CC    CI C O
+7   xCx xCC CCC C   C C    O
+6   ICI I C   C CC    C  C O
 5  CCC  C CCCCC CC   CCCCC x
 4  C    CCCCCC CCC   C     x
 3     x C     C  C x C  x xx
