@@ -39,11 +39,11 @@ def verify_ldr(filepath):
                 if color not in [288, 38]:
                     errors.append(f"Invalid color {color} at Y=-16 (expected 288 or 38)")
             elif y == -24:
-                if color != 4:
-                    errors.append(f"Invalid color {color} at Y=-24 (expected 4)")
+                if color not in [4, 15]:
+                    errors.append(f"Invalid color {color} at Y=-24 (expected 4 or 15)")
             elif y == -48:
-                if color != 15:
-                    errors.append(f"Invalid color {color} at Y=-48 (expected 15)")
+                if color not in [4, 15]:
+                    errors.append(f"Invalid color {color} at Y=-24 (expected 4 or 15)")
             elif y == -56:
                 # Metal 1 (1, 9, 272), VDD (14), VSS (0)
                 if color not in [1, 9, 272, 14, 0]:

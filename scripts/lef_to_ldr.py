@@ -349,6 +349,12 @@ def generate_ldr(macro_data):
                         elif is_active and stud_z % 2 == 0:
                             if (stud_z >= 8 and stud_x % 2 == 1) or (stud_z < 8 and stud_x % 2 == 0):
                                 contact_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                # Fill the 8 LDU gap to active (Y=-16) with a plate at Y=-24
+                                contact_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                                # Fill the 8 LDU gap to active (Y=-16) with a plate at Y=-24
+                                contact_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                                # Fill the gap to active (8 LDU plate at Y=-24)
+                                contact_lines.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
 
     for pin in macro_data['pins']:
         pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
