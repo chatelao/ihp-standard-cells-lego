@@ -119,17 +119,26 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     # If we are in Metal 1, check for Contact at Y=-48 (below)
     if layer_y_list[0] == -56:
         # Check for contact (below)
+        has_contact = False
         for p in parts:
             if p['part'] == '3062b.dat' and p['y'] == -48:
                 if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    return 'x'
+                    has_contact = True
+                    break
+        if has_contact:
+            alternatives = {'I': 'i', 'O': 'o', 'C': 'x', '+': '&', '-': '_'}
+            return alternatives.get(char, 'x')
 
     # If we are in Metal 2, check for Via at Y=-80 (below)
     if layer_y_list[0] == -88:
+        has_via = False
         for p in parts:
             if p['part'] == '3062b.dat' and p['y'] == -80:
                 if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    return 'x'
+                    has_via = True
+                    break
+        if has_via:
+            return 'm'
 
     return char
 
@@ -154,12 +163,17 @@ LEGEND_DESC = {
     'p': 'PMOS Active',
     'G': 'Polysilicon',
     'I': 'Metal 1 Input',
+    'i': 'Metal 1 Input',
     'C': 'Metal 1 Connection',
-    'O': 'Metal 1 Output',
-    '+': 'VDD',
-    '-': 'VSS',
-    'M': 'Metal 2',
     'x': 'Connection (upper side)',
+    'O': 'Metal 1 Output',
+    'o': 'Metal 1 Output',
+    '+': 'VDD',
+    '&': 'VDD',
+    '-': 'VSS',
+    '_': 'VSS',
+    'M': 'Metal 2',
+    'm': 'Connection (upper side)',
 }
 
 def generate_design_doc(cell_name, parts):
@@ -202,12 +216,19 @@ def generate_design_doc(cell_name, parts):
         doc += "\n".join(layer_lines) + "\n"
         doc += "```\n"
 
-        if used_chars:
-            legend_parts = []
-            for char in sorted(list(used_chars)):
-                desc = LEGEND_DESC.get(char, "Unknown")
-                legend_parts.append(f"{char}={desc}")
-            doc += "Legend: " + ", ".join(legend_parts) + "\n"
+        if layer_name == "Substrate":
+            doc += "Legend: N=N-Well, S=Substrate\n"
+        elif layer_name == "Active":
+            doc += "Legend: n=NMOS Active, p=PMOS Active\n"
+        elif layer_name == "Polysilicon":
+            doc += "Legend: G=Polysilicon\n"
+        elif layer_name == "Metal 1":
+            doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)\n"
+        elif layer_name == "Metal 2":
+            if 'm' in used_chars:
+                doc += "Legend: M=Metal 2, m=Connection (upper side)\n"
+            else:
+                doc += "Legend: M=Metal 2\n"
 
         doc += "\n"
 

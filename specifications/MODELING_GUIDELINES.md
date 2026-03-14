@@ -28,8 +28,8 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 | Substrate (low) | Dark Gray | 8 | 8 | 0 | Bottom substrate layer, cover all area out to the VDD/VSS |
 | Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer. |
 | N-Well | Light Gray | 8 | 7 | -8 | N-Well region. |
-| Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-Substrate ~5 Stud wide. |
-| Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well ~3 Stud wide. |
+| Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-Substrate, Studs 2-4. |
+| Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well, Studs 8-12. |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width, there may be an additional studs where contacts hit the poly |
 | Contacts | White | 24 | 15 | -48 | 1x1 round brick bridging Active to Metal 1. |
 | Metal 1 | Light Blue | 8 | 9 | -56| Inputs on the first metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
@@ -72,13 +72,12 @@ For each standard cell, a Markdown design documentation file must be maintained 
 - **Active:** `n` (NMOS), `p` (PMOS)
 - **Polysilicon:** `G` (Red)
 - **Metal 1:**
-  - `I`: Input (Light Blue)
-  - `C`: Connection (Blue)
-  - `O`: Output (Dark Blue)
-  - `+`: VDD Rail (Yellow)
-  - `-`: VSS Rail (Black)
-- **Metal 2:** `M` (Green)
-- **Connections (Contacts/Vias):**
-  - `x`: On the upper layer (e.g., in Metal 1/Metal 2 connecting from the layer below).
+  - `I`/`i`: Input (Light Blue)
+  - `C`/`x`: Connection (Blue)
+  - `O`/`o`: Output (Dark Blue)
+  - `+`/`&`: VDD Rail (Yellow)
+  - `-`/`_`: VSS Rail (Black)
+- **Metal 2:** `M`/`m` (Green)
+- **Connections (Contacts/Vias):** Represented by the lowercase version of the layer character (e.g., `i` for input contact, `&` for VDD contact, `m` for via in Metal 2).
 
 One character in the ASCII art represents one LEGO stud.

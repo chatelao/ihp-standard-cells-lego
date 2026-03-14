@@ -25,19 +25,19 @@ Legend: N=N-Well, S=Substrate
 ```
   0123456789012345678901234567890123
 4
-3  pppppppppppppppppppppppppppppppp
+3
 2  pppppppppppppppppppppppppppppppp
 1  pppppppppppppppppppppppppppppppp
-0
-9
-8
+0  pppppppppppppppppppppppppppppppp
+9  pppppppppppppppppppppppppppppppp
+8  pppppppppppppppppppppppppppppppp
 7
 6
-5  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+5
 4  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 3  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 2  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-1  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+1
 0
 ```
 Legend: n=NMOS Active, p=PMOS Active
@@ -53,7 +53,7 @@ Legend: n=NMOS Active, p=PMOS Active
 9   G
 8   G
 7   G
-6   G
+6  GG
 5   G
 4   G
 3   G
@@ -66,23 +66,23 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   0123456789012345678901234567890123
-4 ++++++++++++++++++++++++++++++++++
-3  x   x   x   x  x   x   x   x   x
-2  x   x   x   x  x   x   x   x   x
-1  x x x x x x xx x x x x x x x x x
-0  + O + O + O +O + O + O + O + O +
-9  + O   O   O  O   O   O   O   O +
-8    OOOOOOOOOOOOOOOOOOOOOOOOOOOO
+4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
+3  +   +   +   +  +   +   +   +   +
+2  +   +   +   +  +   +   +   +   +
+1  + o + o + o +o + o + o + o + o +
+0  + o + o + o +o + o + o + o + o +
+9  + o   o   o  o   o   o   o   o +
+8    oooooooooooooooooooooooooooo
 7    O   O   O  O   O   O   O
-6   xO   O   O  O   O   O   O
-5    x   x   x  x   x   x   x
-4  x x x x x x xx x x x x x xxxxxx
-3  x x x x x x xx x x x x x x x xx
-2  x   x   x   x  x   x   x   x  x
-1  x   x   x   x  x   x   x   x  x
-0 ----------------------------------
+6  i O   O   O  O   O   O   O
+5    O   O   O  O   O   O   O
+4  - o - o - o -o - o - o - ooooo-
+3  - o - o - o -o - o - o - o - o-
+2  -   -   -   -  -   -   -   -  -
+1  -   -   -   -  -   -   -   -  -
+0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
-Legend: +=VDD, -=VSS, O=Metal 1 Output, x=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)
 
 ## Metal 2
 ```
@@ -103,3 +103,4 @@ Legend: +=VDD, -=VSS, O=Metal 1 Output, x=Connection (upper side)
 1
 0
 ```
+Legend: M=Metal 2

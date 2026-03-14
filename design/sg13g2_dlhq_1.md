@@ -25,19 +25,19 @@ Legend: N=N-Well, S=Substrate
 ```
   012345678901234567890123456789
 4
-3  pppppppppppppppppppppppppppp
+3
 2  pppppppppppppppppppppppppppp
 1  pppppppppppppppppppppppppppp
-0
-9
-8
+0  pppppppppppppppppppppppppppp
+9  pppppppppppppppppppppppppppp
+8  pppppppppppppppppppppppppppp
 7
 6
-5  nnnnnnnnnnnnnnnnnnnnnnnnnnnn
+5
 4  nnnnnnnnnnnnnnnnnnnnnnnnnnnn
 3  nnnnnnnnnnnnnnnnnnnnnnnnnnnn
 2  nnnnnnnnnnnnnnnnnnnnnnnnnnnn
-1  nnnnnnnnnnnnnnnnnnnnnnnnnnnn
+1
 0
 ```
 Legend: n=NMOS Active, p=PMOS Active
@@ -53,7 +53,7 @@ Legend: n=NMOS Active, p=PMOS Active
 9   G G
 8   G G
 7   G G
-6   G G
+6  GG GG
 5   G G
 4   G G
 3   G G
@@ -66,23 +66,23 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   012345678901234567890123456789
-4 ++++++++++++++++++++++++++++++
-3  x     x           x      x
-2  x     x CC CCC    x      x
-1  x CCCCCCC  C CCCCCCCCCCC x x
-0  + CCC  CCCCC C       CCC + O
-9  + CCC  C  CC CCCCCCCCCCC + O
-8     C     CC CCC CC  CCC    O
-7   x x     CCC  C  C  CCC    O
-6   I I CCCCC   CC  C  CCC  CCO
-5     C C  CCCCCCCC C  C C  C x
-4    CC Cx CCCCCC C C  C    C x
-3  x CCCCx          CCCCCCCCC x
-2  x     x CCCCCCCCCC
-1  x     x            x     x
-0 ------------------------------
+4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
+3  +     +           +      +
+2  +     + CC CCC    +      +
+1  + CCCCCCC  C CCCCCCCCCCC + o
+0  + CCC  CCCCC C       CCC + o
+9  + CCC  C  CC CCCCCCCCCCC + o
+8     C     CC CCC CC  CCC    o
+7     C     CCC  C  C  CCC    O
+6  i  CiCCCCC   CC  C  CCC  CCO
+5     C C  CCCCCCCC C  C C  C O
+4    CC C- CCCCCC C C  C    C o
+3  - CCCC-          CCCCCCCCC o
+2  -     - CCCCCCCCCC
+1  -     -            -     -
+0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
-Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)
 
 ## Metal 2
 ```
@@ -103,3 +103,4 @@ Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x
 1
 0
 ```
+Legend: M=Metal 2
