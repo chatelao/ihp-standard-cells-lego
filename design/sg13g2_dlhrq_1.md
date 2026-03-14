@@ -24,41 +24,41 @@ Legend: N=N-Well, S=Substrate
 ## Active
 ```
   012345678901234567890123456
-4
-3
-2  ppppppppppppppppppppppppp
-1  ppppppppppppppppppppppppp
-0  ppppppppppppppppppppppppp
-9  ppppppppppppppppppppppppp
-8  ppppppppppppppppppppppppp
-7
-6
-5
-4  nnnnnnnnnnnnnnnnnnnnnnnnn
-3  nnnnnnnnnnnnnnnnnnnnnnnnn
-2  nnnnnnnnnnnnnnnnnnnnnnnnn
-1
-0
+4 NNNNNNNNNNNNNNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNNNNNNNNNNNNNN
+2 NpppppppppppppppppppppppppN
+1 NpppppppppppppppppppppppppN
+0 NpppppppppppppppppppppppppN
+9 NpppppppppppppppppppppppppN
+8 NpppppppppppppppppppppppppN
+7 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSS
 ```
-Legend: n=NMOS Active, p=PMOS Active
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate, N=N-Well
 
 ## Polysilicon
 ```
   012345678901234567890123456
 4
-3   G G G
-2   G G G
-1   G G G
-0   G G G
-9   G G G
-8   G G G
-7   G G G
-6  GG GGG
-5   G G G
-4   G G G
-3   G G G
-2   G G G
-1   G G G
+3   G G                 G
+2   G G                 G
+1   G G                 G
+0   G G                 G
+9   G G                 G
+8   G G                 G
+7   G G                 G
+6  GG GG               GG
+5   G G                 G
+4   G G                 G
+3   G G                 G
+2   G G                 G
+1   G G                 G
 0
 ```
 Legend: G=Polysilicon
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   012345678901234567890123456
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&
 3    +      +       +   +
-2    +      + CCCC  +   +
-1  C +      + C  C  + C + oo
-0  CCCCCCCCCC CC C    C + oo
-9  CCC CC C C CC C CCCC + oo
-8    C  C C C CCCCCCC C   oo
-7    C  CCC CCC C   C C    O
-6  i C iC C   C CC    C  C O
+2    &      + CxCx  +   +
+1  C +      + C  C  + C + OO
+0  xCxCxCxCxC Cx x    C + Oo
+9  CCC CC C C CC C CCCC + OO
+8    x  C C C CxCxCxC C   Oo
+7  I CIICCC CCC C   C CI   O
+6  i CIiC C   C CC    Ci C O
 5  CCC  C CCCCC CC   CCCCC O
-4  C    CCCCCC CCC   C     o
-3     - C     C  C - C  - oo
-2     -     - CCCC -    -
+4  C    xCxCxC CxC   C     O
+3     - C     C  C - C  - OO
+2     _     _ xCxC -    _
 1     -     -      -    -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```

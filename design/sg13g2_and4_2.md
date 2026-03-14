@@ -2,7 +2,7 @@
 
 ## Substrate
 ```
-  01234567890123456
+  0123456789012345
 4 NNNNNNNNNNNNNNNN
 3 NNNNNNNNNNNNNNNN
 2 NNNNNNNNNNNNNNNN
@@ -23,62 +23,62 @@ Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-  01234567890123456
-4
-3
-2  pppppppppppppp
-1  pppppppppppppp
-0  pppppppppppppp
-9  pppppppppppppp
-8  pppppppppppppp
-7
-6
-5
-4  nnnnnnnnnnnnnn
-3  nnnnnnnnnnnnnn
-2  nnnnnnnnnnnnnn
-1
-0
+  0123456789012345
+4 NNNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNNN
+2 NppppppppppppppN
+1 NppppppppppppppN
+0 NppppppppppppppN
+9 NppppppppppppppN
+8 NppppppppppppppN
+7 SSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSS
 ```
-Legend: n=NMOS Active, p=PMOS Active
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate, N=N-Well
 
 ## Polysilicon
 ```
-  01234567890123456
+  0123456789012345
 4
-3   G G G G G G G G
-2   G G G G G G G G
-1   G G G G G G G G
-0   G G G G G G G G
-9   G G G G G G G G
-8   G G G G G G G G
-7   G G G G G G G G
-6   GGG GGG GGG GGG
-5   G G G G G G G G
-4   G G G G G G G G
-3   G G G G G G G G
-2   G G G G G G G G
-1   G G G G G G G G
+3   G G G G G
+2   G G G G G
+1   G G G G G
+0   G G G G G
+9   G G G G G
+8   G G G G G
+7   G G G G G
+6   GGGGGGGGG
+5   G G G G G
+4   G G G G G
+3   G G G G G
+2   G G G G G
+1   G G G G G
 0
 ```
 Legend: G=Polysilicon
 
 ## Metal 1
 ```
-  01234567890123456
+  0123456789012345
 4 &+&+&+&+&+&+&+&+
 3   +  +   +    +
-2   +  +   +    +
-1   +C + C +  oo+
-0   +C + C +  oo+
-9  CCCCCCCCCC oo+
-8  C         C o
-7  C         C O
-6  C i   i   i O i
+2   +  &   &    +
+1   +C + C +  OO+
+0   +x & x &  Oo+
+9  CCCCCCCCCC OO+
+8  x         x o
+7  C I I III C O
+6  C i i iIi C O
 5  C           O
-4  CC      -  oo-
-3  CC      -  oo-
-2          -    -
+4  Cx      -  oO_
+3  CC      -  OO-
+2          -    _
 1          -    -
 0 -_-_-_-_-_-_-_-_
 ```
@@ -86,7 +86,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connect
 
 ## Metal 2
 ```
-  01234567890123456
+  0123456789012345
 4
 3
 2

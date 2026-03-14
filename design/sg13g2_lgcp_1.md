@@ -24,41 +24,41 @@ Legend: N=N-Well, S=Substrate
 ## Active
 ```
   012345678901234567890123456
-4
-3
-2  ppppppppppppppppppppppppp
-1  ppppppppppppppppppppppppp
-0  ppppppppppppppppppppppppp
-9  ppppppppppppppppppppppppp
-8  ppppppppppppppppppppppppp
-7
-6
-5
-4  nnnnnnnnnnnnnnnnnnnnnnnnn
-3  nnnnnnnnnnnnnnnnnnnnnnnnn
-2  nnnnnnnnnnnnnnnnnnnnnnnnn
-1
-0
+4 NNNNNNNNNNNNNNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNNNNNNNNNNNNNN
+2 NpppppppppppppppppppppppppN
+1 NpppppppppppppppppppppppppN
+0 NpppppppppppppppppppppppppN
+9 NpppppppppppppppppppppppppN
+8 NpppppppppppppppppppppppppN
+7 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSS
 ```
-Legend: n=NMOS Active, p=PMOS Active
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate, N=N-Well
 
 ## Polysilicon
 ```
   012345678901234567890123456
 4
-3   G G
-2   G G
-1   G G
-0   G G
-9   G G
-8   G G
-7   G G
-6  GG GG
-5   G G
-4   G G
-3   G G
-2   G G
-1   G G
+3       G         G
+2       G         G
+1       G         G
+0       G         G
+9       G         G
+8       G         G
+7      GG         GG
+6       G         G
+5       G         G
+4       G         G
+3       G         G
+2       G         G
+1       G         G
 0
 ```
 Legend: G=Polysilicon
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   012345678901234567890123456
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&
 3    +        +     +   +
-2    +        +     +   +
-1  C +  CCC       C +C  + o
-0  C    C     CCCCC  C  + o
-9  C CCCCCCCCCC C C  CC + o
-8  C C   C    C C C    C  o
-7  C C   C C  CCC C    C  O
-6  iCC i C CCCCCC C    CC O
+2    &        +     +   +
+1  C +  CCC       C +C  + O
+0  x    C     CxCxC  x  + O
+9  C CCCCCCCCCC C C  CC + O
+8  x x I x    C C CI   x  O
+7  C C i C C  CCC CiI  C  O
+6  CCC   C CCCCCC C    CC O
 5  C CCCC       C C-  CC  O
-4  CCCCCCCC  -- C  -  CC -o
-3  C   C      -    -     -o
-2    - CCCCCCC-    -     -
+4  CxCxCxCx  -_ x  -  xC -o
+3  C   C      -    -     -O
+2    - CxCxCxC_    -     -
 1    -        -    -     -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```

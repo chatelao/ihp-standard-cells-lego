@@ -24,41 +24,41 @@ Legend: N=N-Well, S=Substrate
 ## Active
 ```
   0123456
-4
-3
-2  ppppp
-1  ppppp
-0  ppppp
-9  ppppp
-8  ppppp
-7
-6
-5
-4  nnnnn
-3  nnnnn
-2  nnnnn
-1
-0
+4 NNNNNNN
+3 NNNNNNN
+2 NpppppN
+1 NpppppN
+0 NpppppN
+9 NpppppN
+8 NpppppN
+7 SSSSSSS
+6 SSSSSSS
+5 SSSSSSS
+4 SnnnnnS
+3 SnnnnnS
+2 SnnnnnS
+1 SSSSSSS
+0 SSSSSSS
 ```
-Legend: n=NMOS Active, p=PMOS Active
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate, N=N-Well
 
 ## Polysilicon
 ```
   0123456
 4
-3   G G
-2   G G
-1   G G
-0   G G
-9   G G
-8   G G
-7   G G
-6   GGG
-5   G G
-4   G G
-3   G G
-2   G G
-1   G G
+3 G G
+2 G G
+1 G G
+0 G G
+9 G G
+8 G G
+7 G G
+6 GGG
+5 G G
+4 G G
+3 G G
+2 G G
+1 G G
 0
 ```
 Legend: G=Polysilicon
@@ -68,16 +68,16 @@ Legend: G=Polysilicon
   0123456
 4 &+&+&+&
 3  +   +
-2  +   +
-1  + o +
-0  + o +
-9  + o +
+2  &   &
+1  + O +
+0  & o &
+9  + O +
 8    o
 7    O
-6    iOO
+6  i OOO
 5    O
-4  - o -
-3  - o -
+4  - O -
+3  - O -
 2  -   -
 1  -   -
 0 -_-_-_-

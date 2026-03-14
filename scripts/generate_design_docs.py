@@ -219,7 +219,12 @@ def generate_design_doc(cell_name, parts):
         if layer_name == "Substrate":
             doc += "Legend: N=N-Well, S=Substrate\n"
         elif layer_name == "Active":
-            doc += "Legend: n=NMOS Active, p=PMOS Active\n"
+            legend_parts = []
+            if 'n' in used_chars: legend_parts.append("n=NMOS Active")
+            if 'p' in used_chars: legend_parts.append("p=PMOS Active")
+            if 'S' in used_chars: legend_parts.append("S=Substrate")
+            if 'N' in used_chars: legend_parts.append("N=N-Well")
+            doc += f"Legend: {', '.join(legend_parts)}\n"
         elif layer_name == "Polysilicon":
             doc += "Legend: G=Polysilicon\n"
         elif layer_name == "Metal 1":
