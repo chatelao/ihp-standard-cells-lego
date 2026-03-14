@@ -75,7 +75,11 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     char = ' '
 
     # Check plates
-    for p in parts:
+    # Sort parts by some order to ensure deterministic behavior if multiple parts overlap
+    # Metal 1 special handling: VSS/VDD/Inputs/Outputs should have priority over Connection
+    priority = {'+': 5, '-': 5, 'I': 4, 'O': 3, 'C': 2, 'S': 1, 'N': 1, 'n': 1, 'p': 1, 'G': 1, 'M': 1}
+
+    for p in sorted(parts, key=lambda p: priority.get(color_map.get(p['color'], ' '), 0), reverse=True):
         if p['y'] in layer_y_list and p['part'] != '3062b.dat':
             # Get dimensions from part name
             pw, pd = 1, 1
@@ -138,7 +142,7 @@ COLOR_MAP = {
     1: 'C',   # Metal 1 Connection Blue
     272: 'O', # Metal 1 Output Dark Blue
     14: '+',  # VDD Yellow
-    0: '-',   # VSS Black (if at Metal 1)
+    0: '-',   # VSS Black
     2: 'M',   # Metal 2 Green
 }
 

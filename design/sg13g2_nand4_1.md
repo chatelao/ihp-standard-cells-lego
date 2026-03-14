@@ -3,7 +3,6 @@
 ## Substrate
 ```
   01234567890
-5 NNNNNNNNNNN
 4 NNNNNNNNNNN
 3 NNNNNNNNNNN
 2 NNNNNNNNNNN
@@ -25,11 +24,10 @@ Legend: N=N-Well, S=Substrate
 ## Active
 ```
   01234567890
-5
-4  ppppppppp
+4
 3  ppppppppp
 2  ppppppppp
-1
+1  ppppppppp
 0
 9
 8
@@ -47,21 +45,20 @@ Legend: n=NMOS Active, p=PMOS Active
 ## Polysilicon
 ```
   01234567890
-5
-4  G  G G G
-3  G  G G G
-2  G  G G G
-1  G  G G G
-0  G  G G G
-9  G  G G G
-8  G  G G G
-7  G  G G G
-6  G  G G G
-5  G  G G G
-4  G  G G G
-3  G  G G G
-2  G  G G G
-1  G  G G G
+4
+3  G G G G
+2  G G G G
+1  G G G G
+0  G G G G
+9  G G G G
+8  G G G G
+7  G G G G
+6  G G G G
+5  G G G G
+4  G G G G
+3  G G G G
+2  G G G G
+1  G G G G
 0
 ```
 Legend: G=Polysilicon
@@ -69,20 +66,19 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890
-5 +++++++++++
-4
+4 +++++++++++
 3
-2    x   x
-1    O   O
+2
+1    x   x
 0    O   O
-9    OOOOOOOO
-8           O
-7           O
-6  x Ix x x O
-5      xxII O
-4      IIx xO
-3        x xO
-2          xO
+9    O   O
+8    OOOOOOO
+7          O
+6  x x x x O
+5      x I x
+4      x x x
+3        x x
+2          x
 1
 0 -----------
 ```
@@ -91,7 +87,6 @@ Legend: +=VDD, -=VSS, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper sid
 ## Metal 2
 ```
   01234567890
-5
 4
 3
 2

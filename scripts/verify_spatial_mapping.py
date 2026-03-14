@@ -2,8 +2,8 @@ import os
 import re
 import sys
 
-# Scaling factor: 1 LDU = 0.0126 um (0.252 um / 20 LDU)
-LDU_TO_UM = 0.0126
+# Scaling factor: 1 LDU = 0.0135 um (0.27 um / 20 LDU)
+LDU_TO_UM = 0.0135
 
 def parse_lef_rects(lef_filepath):
     with open(lef_filepath, 'r') as f:
@@ -61,11 +61,11 @@ def get_ldr_pins_spatial(ldr_filepath):
 
 def is_point_in_rects(x, y, rects, tolerance=0.25):
     # Adjust Y for rails since we shift them in LDR
-    # 3.78 um LEF height maps to Studs 0 to 15 (center-to-center).
+    # 3.78 um LEF height maps to Studs 0 to 14 (center-to-center).
     # LEF 0 is VSS center, LEF 3.78 is VDD center.
-    # LDR Stud 0 center is 0.126 um, Stud 15 center is 3.906 um.
-    # Offset is 0.126 um.
-    y_adjusted = y - 0.126
+    # LDR Stud 0 center is 0.135 um, Stud 14 center is 3.915 um.
+    # Offset is 0.135 um.
+    y_adjusted = y - 0.135
 
     for r in rects:
         x1, y1, x2, y2 = r

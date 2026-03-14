@@ -2,96 +2,91 @@
 
 ## Substrate
 ```
-  012345678901234
-5 NNNNNNNNNNNNNNN
-4 NNNNNNNNNNNNNNN
-3 NNNNNNNNNNNNNNN
-2 NNNNNNNNNNNNNNN
-1 NNNNNNNNNNNNNNN
-0 NNNNNNNNNNNNNNN
-9 NNNNNNNNNNNNNNN
-8 NNNNNNNNNNNNNNN
-7 SSSSSSSSSSSSSSS
-6 SSSSSSSSSSSSSSS
-5 SSSSSSSSSSSSSSS
-4 SSSSSSSSSSSSSSS
-3 SSSSSSSSSSSSSSS
-2 SSSSSSSSSSSSSSS
-1 SSSSSSSSSSSSSSS
-0 SSSSSSSSSSSSSSS
+  01234567890123
+4 NNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNN
+2 NNNNNNNNNNNNNN
+1 NNNNNNNNNNNNNN
+0 NNNNNNNNNNNNNN
+9 NNNNNNNNNNNNNN
+8 NNNNNNNNNNNNNN
+7 SSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSS
+4 SSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
-  012345678901234
-5
-4  ppppppppppppp
-3  ppppppppppppp
-2  ppppppppppppp
-1
+  01234567890123
+4
+3  pppppppppppp
+2  pppppppppppp
+1  pppppppppppp
 0
 9
 8
 7
 6
-5  nnnnnnnnnnnnn
-4  nnnnnnnnnnnnn
-3  nnnnnnnnnnnnn
-2  nnnnnnnnnnnnn
-1  nnnnnnnnnnnnn
+5  nnnnnnnnnnnn
+4  nnnnnnnnnnnn
+3  nnnnnnnnnnnn
+2  nnnnnnnnnnnn
+1  nnnnnnnnnnnn
 0
 ```
 Legend: n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
-  012345678901234
-5
-4 G G     G G
-3 G G     G G
-2 G G     G G
-1 G G     G G
-0 G G     G G
-9 G G     G G
-8 G G     G G
-7 G G     G G
-6 GGG     GGG
-5 G G     G G
-4 G G     G G
-3 G G     G G
-2 G G     G G
-1 G G     G G
+  01234567890123
+4
+3 G G    G G
+2 G G    G G
+1 G G    G G
+0 G G    G G
+9 G G    G G
+8 G G    G G
+7 G G    G G
+6 GGG    GGG
+5 G G    G G
+4 G G    G G
+3 G G    G G
+2 G G    G G
+1 G G    G G
 0
 ```
 Legend: G=Polysilicon
 
 ## Metal 1
 ```
-  012345678901234
-5 +++++++++++++++
-4
+  01234567890123
+4 ++++++++++++++
 3
-2        x   x
-1        O   O
-0    C   O   O
-9    C   OOOOO
-8    C       O
-7    C       O
-6  x CCC   x O
-5    C       x
-4    C CCCCC x C
-3      C   C   C
-2      C   CCCCC
+2
+1       x   x
+0   C   O   O
+9   C   O   O
+8   CC  OOOOO
+7    C      O
+6  x CC   xIO
+5  I C      x
+4   CCCCCCC x
+3     C   C   C
+2     C   CCCCC
 1
-0 ---------------
+0 --------------
 ```
-Legend: +=VDD, -=VSS, C=Metal 1 Connection, O=Metal 1 Output, x=Connection (upper side)
+Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
 
 ## Metal 2
 ```
-  012345678901234
-5
+  01234567890123
 4
 3
 2
