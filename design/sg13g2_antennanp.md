@@ -25,19 +25,19 @@ Legend: N=N-Well, S=Substrate
 ```
   01234
 4
-3  ppp
+3
 2  ppp
 1  ppp
-0
-9
-8
+0  ppp
+9  ppp
+8  ppp
 7
 6
-5  nnn
+5
 4  nnn
 3  nnn
 2  nnn
-1  nnn
+1
 0
 ```
 Legend: n=NMOS Active, p=PMOS Active
@@ -53,7 +53,7 @@ Legend: n=NMOS Active, p=PMOS Active
 9   G
 8   G
 7   G
-6   G
+6  GG
 5   G
 4   G
 3   G
@@ -66,23 +66,23 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234
-4 +++++
+4 &+&+&
 3
 2
 1
 0
-9   x
-8   I
-7   x
-6   I
-5   I
-4   x
-3   I
+9
+8
+7
+6  i
+5
+4
+3
 2
 1
-0 -----
+0 -_-_-
 ```
-Legend: +=VDD, -=VSS, I=Metal 1 Input, x=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)
 
 ## Metal 2
 ```
@@ -103,3 +103,4 @@ Legend: +=VDD, -=VSS, I=Metal 1 Input, x=Connection (upper side)
 1
 0
 ```
+Legend: M=Metal 2
