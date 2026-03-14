@@ -240,26 +240,27 @@ def generate_ldr(macro_data):
         if pin['direction'] == 'INPUT':
             # For each input pin, we place a vertical gate crossing both active regions
             # Use the center X of the first Metal1 rectangle as the gate position
-            input_x = None
+            input_rect = None
             for rect in pin['rects']:
                 if rect['layer'] == 'Metal1':
-                    x1, y1, x2, y2 = rect['coords']
-                    input_x = um_to_ldu_coord((x1 + x2) / 2)
+                    input_rect = rect
                     break
 
-            if input_x is not None:
+            if input_rect is not None:
                 # Use the same snapping logic as contacts for consistency
-                rect = pin['rects'][0] # Use first Metal1 rect
-                x1_ldu, x2_ldu = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][2])
-                z1_ldu, z2_ldu = um_to_ldu_coord(rect['coords'][1]), um_to_ldu_coord(rect['coords'][3])
+                x1, y1, x2, y2 = input_rect['coords']
+                x1_ldu, x2_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(x2)
+                z1_ldu, z2_ldu = um_to_ldu_coord(y1), um_to_ldu_coord(y2)
                 xmin = snap_to_grid(min(x1_ldu, x2_ldu))
                 xmax = snap_to_grid(max(x1_ldu, x2_ldu))
+                zmin = snap_to_grid(min(z1_ldu, z2_ldu))
+                zmax = snap_to_grid(max(z1_ldu, z2_ldu))
                 input_x = snap_to_grid((xmin + xmax) / 2 - 10) + 10
 
                 z_start = 20
                 z_end = 300
-                # Use the center Z of the pin's Metal1 rectangle
-                cz = (z1_ldu + z2_ldu) // 2
+                # Use the center Z of the pin's Metal1 rectangle (snapped)
+                cz = (zmin + zmax) // 2
                 cz = (cz // 20) * 20 + 10 # Center for widened poly and contact
 
                 if is_drive_2:
