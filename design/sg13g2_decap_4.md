@@ -66,22 +66,22 @@ Legend: n=NMOS Active, p=PMOS Active
 ```
   0123456
 4 +++++++
-3
-2
-1
-0
-9
-8
-7
-6
-5
-4
-3
-2
-1
+3 +x  xx+
+2 +x  xx+
+1 +x  xx+
+0 ++  +++
+9 ++  +++
+8     +
+7     +
+6   - +
+5   x
+4   x
+3 -xx   -
+2 -xx   -
+1 -xx   -
 0 -------
 ```
-Legend: +=VDD, -=VSS
+Legend: +=VDD, -=VSS, x=Connection (upper side)
 
 ## Metal 2
 ```

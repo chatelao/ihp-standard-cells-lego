@@ -66,19 +66,19 @@ Legend: n=NMOS Active, p=PMOS Active
 ```
   0123456
 4 +++++++
-3
-2
+3   x
+2   x
 1
-0      C
+0  C   C
 9  C   C
 8  C   C
 7    C C
 6    C C
-5    C C
+5    C
 4  CCC x
 3      x
-2     xx
-1
+2   x xx
+1   x
 0 -------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, x=Connection (upper side)

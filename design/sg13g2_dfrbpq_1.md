@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   012345678901234567890123456789012345678901234567
 4 ++++++++++++++++++++++++++++++++++++++++++++++++
-3
-2
-1    CCCCCCCC CCCCC CCCCCCCCCCCCCCCCCCCC    C   x
-0    C    C C C   C    CCCCCCCCCC           C   O
-9    CCCC C CCC C C    C        C           C   O
-8    CC CCCCCCCCC C CCCCCCCCCC CCCCC   C    C   O
-7    CC C       C C  C  C      CC  CCCCCCCC C   O
-6  I CC C xI C  C C  C CC xI CCCCC CC     C CCCCO
-5  x CC      C C  CCCC  C    C     CCCCCC C C CCx
-4  I CCCCCCCCC CCCC CC  CCCC CC CCCC      C C   x
-3    C  C   C CCCCCCCCCC   C CCCCCCCC    C  C  xx
-2  CCC      CCCCCCCCCCCCCCCCCCCCCCC C   CC  C  xx
-1
+3  x         x                           x    x
+2  x CCCCCCC xCCCCC CCCCCCCCCCCCCCCCCCCC x    x
+1  x C      CxC   C                      x  C x x
+0  + CCCC C CCC C C    CCCCCCCCCC        +  C + O
+9  + CC   C     C C    C       CCCCC   C +  C + O
+8    CC CCCCCCCCC C CCCCCCCCCC CC  C   C    C + O
+7  I CC C xI C  C C  C  C      CC  CCCCCCCC C   O
+6  x CC   II C CC CCCC CC xI CCCCC CCCCCC C CCCCO
+5  I CCCCCCCCC CCCC CC  C    C  CCCC      C C   x
+4  I C  C   C       CCCCCCCC CCCCCCC     CC C xxx
+3  CCCx   x C CCCCCCC        C      Cx  CC  C xxx
+2     x   x CCCCCCCCCCCCCCCCCCCCCCC  x        x
+1     x   x                          x        x
 0 ------------------------------------------------
 ```
 Legend: +=VDD, -=VSS, C=Metal 1 Connection, I=Metal 1 Input, O=Metal 1 Output, x=Connection (upper side)
