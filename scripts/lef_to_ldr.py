@@ -355,7 +355,7 @@ def generate_ldr(macro_data):
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif is_active and stud_z % 2 == 0:
+                        elif 0 < stud_z < 14 and is_active and stud_z % 2 == 0:
                             # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
                             if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
