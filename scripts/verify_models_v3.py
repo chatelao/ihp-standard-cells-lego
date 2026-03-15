@@ -50,6 +50,17 @@ def verify_ldr(filepath):
                 # VSS (Z=0) must be ODD
                 elif stud_z == 0 and stud_x % 2 == 0:
                     errors.append(f"VSS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
+                # Input contacts (typically at Stud Z=6)
+                elif stud_z == 6:
+                    if not is_big:
+                        if stud_x % 2 == 0:
+                            errors.append(f"Input contact at Stud X={stud_x} has EVEN parity in small model (expected ODD)")
+                    else:
+                        # Big model symmetric parity: ODD if X < 8, EVEN if X >= 8
+                        expected = 1 if stud_x < 8 else 0
+                        if stud_x % 2 != expected:
+                            parity_name = "ODD" if expected == 1 else "EVEN"
+                            errors.append(f"Input contact at Stud X={stud_x} has incorrect symmetric parity (expected {parity_name})")
                 # Active region contacts
                 elif 2 <= stud_z <= 12:
                     # NMOS (Z < 8) always EVEN
@@ -62,17 +73,6 @@ def verify_ldr(filepath):
                         if stud_x % 2 != pmos_parity:
                             parity_name = "EVEN" if pmos_parity == 0 else "ODD"
                             errors.append(f"PMOS contact at Stud X={stud_x} has opposite parity (expected {parity_name})")
-                # Input contacts (typically at Stud Z=6)
-                elif stud_z == 6:
-                    if not is_big:
-                        if stud_x % 2 == 0:
-                            errors.append(f"Input contact at Stud X={stud_x} has EVEN parity in small model (expected ODD)")
-                    else:
-                        # Big model symmetric parity: ODD if X < 8, EVEN if X >= 8
-                        expected = 1 if stud_x < 8 else 0
-                        if stud_x % 2 != expected:
-                            parity_name = "ODD" if expected == 1 else "EVEN"
-                            errors.append(f"Input contact at Stud X={stud_x} has incorrect symmetric parity (expected {parity_name})")
 
             # Gold Standard Physical Dimensions
             if y == -8 and color == 7: # N-Well

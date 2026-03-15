@@ -43,8 +43,6 @@ Legend: N=N-Well, S=Substrate
 Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 
 ## Polysilicon
-GOLDEN STANDARD
-
 ```
   01234
 4
@@ -66,23 +64,21 @@ GOLDEN STANDARD
 Legend: G=Polysilicon
 
 ## Metal 1
-GOLDEN STANDARD
-
 ```
   01234
 4 &+&+&
 3  +
-2  & o
+2  &
 1  + O
 0  & o
 9  + O
-8  & o
+8    o
 7    O
 6  i O
 5    O
-4  _ o
+4  - O
 3  - O
-2  _ o
+2  -
 1  -
 0 -_-_-
 ```
