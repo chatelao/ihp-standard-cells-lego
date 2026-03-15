@@ -46,19 +46,19 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 ```
   01234567890123456789012345678901234567890123456789
 4
-3 G G    G G             G G
-2 G G    G G             G G
-1 G G    G G             G G
-0 G G    G G             G G
-9 G G    G G             G G
-8 G G    G G             G G
-7 G G    G G             G G
-6 GGG    GGG             GGG
-5 G G    G G             G G
-4 G G    G G             G G
-3 G G    G G             G G
-2 G G    G G             G G
-1 G G    G G             G G
+3 G G     G G            G G
+2 G G     G G            G G
+1 G G     G G            G G
+0 G G     G G            G G
+9 G G     G G            G G
+8 G G     G G            G G
+7 G G     G G            G G
+6 GGG     GGG            GGG
+5 G G     G G            G G
+4 G G     G G            G G
+3 G G     G G            G G
+2 G G     G G            G G
+1 G G     G G            G G
 0
 ```
 Legend: G=Polysilicon
@@ -68,19 +68,19 @@ Legend: G=Polysilicon
   01234567890123456789012345678901234567890123456789
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +         +                           +    +   +
-2  & xCxCxCx & xCxC CxCxCxCxCxCxCxCxCxCx &    +   +
+2  + CcCcCcC + CcCc cCcCcCcCcCcCcCcCcCcC +    &   &
 1  + C      C+ C  C                      + C  + O +
-0  & xCxC C CxCxC C   CxCxCxCxCxC        & x  + O +
+0  + CcCc c cCcCc c   cCcCcCcCcCc        + C  & o &
 9  + CC   C     C C   C        CCC     C   C  + O +
-8    xC CxCxCxCxC C  xC CxCxCx xCxCxCxCxCx x    O
+8    Cc cCcCcCcCc c  Cc cCcCcC CcCcCcCcCcC C    o
 7    CC C II C  C C  C  C II   CC  CC    C C    O
-6  i CC   iI C CC CC C CC iI CCCCC C    CC CCC  OOO
+6  i CC   Ii C CC CC C CC iI CCCCC C    CC CCC  OOO
 5    CCCCCCCCC CCCCC C  C II C  CCCCCCCCCC  C   O
-4    C  x   x      C    xCxC CxCxCxC     C_ x _ o _
+4    C  c   c      C    cCcC CcCcCcC     C_ c _ o _
 3  CCC-   - C CCCCCC         C      C-  CC- C - O -
-2     _   _ xCxCxCxCxCxCxCxCxCxCxCx  -    _   _   _
+2     _   _ cCcCcCcCcCcCcCcCcCcCcCc  -    _   _   _
 1     -   -                          -    -   -   -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

@@ -46,19 +46,19 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 ```
   012345678901234567890123456789012345678
 4
-3   G                       G
-2   G                       G
-1   G                       G
-0   G                       G
-9   G                       G
-8   G                       G
-7   G                       G
-6  GG                       GG
-5   G                       G
-4   G                       G
-3   G                       G
-2   G                       G
-1   G                       G
+3 G G                       G G
+2 G G                       G G
+1 G G                       G G
+0 G G                       G G
+9 G G                       G G
+8 G G                       G G
+7 G G                       G G
+6 GGG                       GGG
+5 G G                       G G
+4 G G                       G G
+3 G G                       G G
+2 G G                       G G
+1 G G                       G G
 0
 ```
 Legend: G=Polysilicon
@@ -68,19 +68,19 @@ Legend: G=Polysilicon
   012345678901234567890123456789012345678
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
 3  +     +   +   +  +
-2  &     &   &   &  +  xCxCxCxCxCxCxCxC
+2  +     +   +   +  &  CcCcCcCcCcCcCcCc
 1  + C C + C + C + C+  C   C   C   C  C
-0  & x x & x & x & x+  x o x o x o x oC
+0  + C C + C + C + C&  C O C O C O C Oc
 9  + C C + C + C + CCCCC O   O   O   OC
-8  & x xCxCxCxCxCxCx     oOoOoOoOoOoOo
+8  + C CcCcCcCcCcCcC     OoOoOoOoOoOoO
 7    C                   OOO
-6  i C  CCCCCCCCCCCCCCCC OOO xIIIIIIII
+6  i C  CCCCCCCCCCCCCCCC OOO cIIIIIIII
 5    CCCC   C   C   C  C OOOOOOOOOOOOO
-4  - CxCx _ x _ x _ x- C O   O   O   Ox
+4  - CcCc _ c _ c _ c- C O   O   O   Oc
 3  - CCCC - C - C - C- CCCCCCCCC   C  C
-2  -      _   _   _  -         CxCxCxCx
+2  -      _   _   _  -         CcCcCcCc
 1  -      -   -   -  -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

@@ -68,11 +68,11 @@ Legend: G=Polysilicon
   01234567890
 4 &+&+&+&+&+&
 3    +
-2    &
+2    +
 1  C + CCCCC
-0  x & x o x
+0  C + C O C
 9  CCCCC OOO
-8          o
+8          O
 7          O
 6    i   i O
 5          O
@@ -82,5 +82,5 @@ Legend: G=Polysilicon
 1  -   -   -
 0 -_-_-_-_-_-
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 
