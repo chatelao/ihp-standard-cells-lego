@@ -29,7 +29,7 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 | Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer. |
 | N-Well | Light Gray | 8 | 7 | -8 | N-Well region. |
 | Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-Substrate, Studs 2-4. |
-| Substrate (low) | Dark Gray | 8 | 8 | -16 | Top substrate (N) layer, cover all area above the Substrate (low) around the Diffusion (NMOS) |
+| Substrate fill (P) | Dark Gray | 8 | 8 | -16 | Substrate fill around NMOS. |
 | Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well, Studs 8-12. |
 | Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer, cover all area above the Substrate (high) around the Diffusion (PMOS) |
 | Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width, there may be an additional studs where contacts hit the poly |
