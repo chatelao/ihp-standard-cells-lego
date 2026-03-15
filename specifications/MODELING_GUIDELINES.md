@@ -31,10 +31,10 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 | Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-Substrate, Studs 2-4. |
 | Substrate fill (P) | Dark Gray | 8 | 8 | -16 | Substrate fill around NMOS. |
 | Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well, Studs 8-12. |
-| Substrate fill (N) | Light Gray | 8 | 7 | -16 | N-Well fill around PMOS. |
-| Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width. |
-| Contacts | White | 24 | 15 | -48 | Bridging Polysilicon to Metal 1: One 1x1 round brick (24). |
-| Contacts | White | 32 | 15 | -48 | Bridging Active to Metal 1: One 1x1 round brick (24) + one 1x1 plate (8) at Y=-24. |
+| Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer, cover all area above the Substrate (high) around the Diffusion (PMOS) |
+| Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width, there may be an additional studs where contacts hit the poly |
+| Contacts | White | 32 | 15 | -48 | One 1x1 round brick (24) bridging Polysilicon to Metal 1. |
+| Contacts | White | 24 | 15 | -48 | One 1x1 round brick (24 LDU, 3062b.dat) at Y=-48 and one 1x1 round plate (8 LDU, 6141.dat) at Y=-24 bridging Active to Metal 1. |
 | Metal 1 | Light Blue | 8 | 9 | -56| Inputs on the first metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
 | Metal 1 | Blue  | 8 | 1 | -56| Cell internal connections on the metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
 | Metal 1 | Dark Blue  | 8 | 272 | -56| Outputs First metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
@@ -61,9 +61,9 @@ Based on 1 Stud = 0.27 µm:
 - **Multi-Rectangle Geometries:** When a pin or obstruction is defined by multiple rectangles in the LEF, model them as a collection of LEGO plates. Ensure they are logically connected or stacked at the same Y-offset.
 - **Vertical Orientation:** To rotate a 1xN plate from the X-axis (horizontal) to the Z-axis (vertical height in the cell), use the rotation matrix `0 0 1 0 1 0 -1 0 0`.
 - VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis) at Y=-56.
-- **Interconnects (Contacts and Vias):** Use 1x1 round bricks (`3062b.dat`).
-  - **Contacts** are white (Color 15) and placed at Y=-48.
-  - **Vias** are black (Color 0) and placed at Y=-80.
+- **Interconnects (Contacts and Vias):** Use 1x1 round bricks (`3062b.dat`) and round plates (`6141.dat`).
+  - **Contacts** are white (Color 15). They use a round brick at Y=-48 and, for active regions, an additional round plate at Y=-24.
+  - **Vias** are black (Color 0) and use a round brick placed at Y=-80.
   - These bricks are oriented with identity rotation (`1 0 0 0 1 0 0 0 1`) so their studs point upwards (towards negative Y), allowing the next metal layer to be built on top of them.
 - **Header Comment:** Every LDR file must start with the comment `0 // Substrate low (V3)` for verification.
 
