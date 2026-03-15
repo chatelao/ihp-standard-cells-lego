@@ -220,10 +220,14 @@ def generate_ldr(macro_data):
     # 4. Polysilicon Gates
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Polysilicon Gates")
-    is_drive_2 = macro_data['name'].endswith('_2')
+
+    # Extract drive strength
+    drive_match = re.search(r'_(\d+)$', macro_data['name'])
+    drive_strength = int(drive_match.group(1)) if drive_match else 1
 
     # Pre-calculate pin assignments for fixed columns
     input_pins = [p for p in macro_data['pins'] if p['direction'] == 'INPUT']
+    num_inputs = len(input_pins)
     def get_pin_x(p):
         for r in p['rects']:
             if r['layer'] == 'Metal1':
@@ -284,29 +288,51 @@ def generate_ldr(macro_data):
                 best_c = min(possible_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
 
         # Determine gate stud(s)
-        if is_drive_2:
-            gates = [best_c[0] - 1, best_c[0] + 1]
-            pad_x = best_c[0] * 20 + 10
-            pad_part = '3623.dat'
+        fingers_per_input = drive_strength
+        total_fingers = num_inputs * fingers_per_input
+
+        if total_fingers >= 2:
+            fingers_w = total_fingers * 2 - 1
+            start_g = (w_studs - fingers_w + 1) // 2
+            gates = [start_g + 2*(j*fingers_per_input + k) for k in range(fingers_per_input)]
+
+            # Try to pick a best_c[0] that is NOT on a gate
+            non_gate_studs = [s for s in possible_studs if s[0] not in gates]
+            if non_gate_studs:
+                best_c = min(non_gate_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
+
+            bridge_min = min(min(gates), best_c[0])
+            bridge_max = max(max(gates), best_c[0])
+            bridge_w = bridge_max - bridge_min + 1
         else:
             if ideal_g_x > ideal_c_x: g = best_c[0] + 1
             else: g = best_c[0] - 1
             gates = [g]
-            pad_x = ((best_c[0] + g) / 2) * 20 + 10
-            pad_part = '3023.dat'
+            bridge_min = min(g, best_c[0])
+            bridge_max = max(g, best_c[0])
+            bridge_w = bridge_max - bridge_min + 1
 
         pin_assignments[pin['name']] = {
             'gate': gates,
             'contact': best_c[0],
             'contact_z': best_c[1],
-            'pad_x': pad_x,
-            'pad_part': pad_part
+            'bridge_w': bridge_w
         }
 
     for pin in macro_data['pins']:
         if pin['direction'] == 'INPUT':
             config = pin_assignments[pin['name']]
-            ldr_lines.append(f"1 {COLOR_POLY} {config['pad_x']} {Y_POLY} {config['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {config['pad_part']}")
+            # Generate Bridge
+            bridge_grid = [[COLOR_POLY for _ in range(1)] for _ in range(config['bridge_w'])]
+            bridge_tiles = get_best_plates_multi(bridge_grid)
+            for pfile, tx_off, tz_off, color, rotated in bridge_tiles:
+                # tx_off is relative to bridge start
+                bridge_min = min(min(config['gate']), config['contact'])
+                bx = bridge_min * 20 + tx_off
+                bz = config['contact_z'] * 20 + 10
+                ldr_lines.append(f"1 {color} {bx} {Y_POLY} {bz} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {pfile}")
+
+            # Generate Gate Fingers
             for gs in config['gate']:
                 gx = gs * 20 + 10
                 gate_tiles = get_best_plates_multi([[COLOR_POLY for _ in range(13)]]) # Studs 1-13
