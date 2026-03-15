@@ -73,19 +73,19 @@ GOLDEN STANDARD
   0123456
 4 &+&+&+&
 3    +
-2  c & o
-1  C   O
-0  cCC o
+2    &
+1  C + O
+0  cCc o
 9    C O
-8  iIC o
+8  i c o
 7    C O
-6    CcO
+6    CCO
 5  CCC O
-4  c   o
-3    _ O
-2    - o
-1    - 
-0 _-_-_-_
+4  C   O
+3    - O
+2    -
+1    -
+0 -_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

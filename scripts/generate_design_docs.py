@@ -162,7 +162,67 @@ LEGEND_DESC = {
     '_': 'VSS',
 }
 
-def generate_design_doc(cell_name, parts):
+def extract_golden_sections(design_dir):
+    golden_sections = {}
+    if not os.path.exists(design_dir):
+        return golden_sections
+
+    for filename in os.listdir(design_dir):
+        if filename.endswith('.md'):
+            cell_name = filename[:-3]
+            filepath = os.path.join(design_dir, filename)
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            # Split by "## " to get sections.
+            sections = content.split('\n## ')
+            for section in sections[1:]:
+                if 'GOLDEN STANDARD' in section:
+                    lines = section.split('\n')
+                    layer_name = lines[0].strip()
+                    # Store the whole section including the header we'll use it verbatim
+                    golden_sections[(cell_name, layer_name)] = '## ' + section.strip()
+    return golden_sections
+
+def update_golden_standard_file(all_golden):
+    filepath = 'GOLDEN_STANDARD.md'
+    if not os.path.exists(filepath):
+        return
+
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    header = "## 7. Golden Design Examples"
+
+    if all_golden:
+        new_text = header + "\n"
+        for (cell, layer), text in sorted(all_golden.items()):
+            new_text += f"### {cell} - {layer}\n"
+            content_lines = text.split('\n')
+            new_text += '\n'.join(content_lines[1:]).strip() + "\n\n"
+        new_text = new_text.strip() + "\n"
+    else:
+        new_text = ""
+
+    if header in content:
+        # Keep everything before the header
+        before = content.split(header)[0]
+        # Check if there is anything after section 7 (we'll assume anything starting with ## [8-9] or higher)
+        # For simplicity in this project, we assume 7 is the last one or we manage it carefully.
+        # Let's try to find if there's a "## 8." or similar.
+        after_match = re.search(r'\n## [8-9]\.', content.split(header)[1])
+        if after_match:
+            after = content.split(header)[1][after_match.start():]
+            content = before + new_text + after
+        else:
+            content = before + new_text
+    elif new_text:
+        content = content.strip() + "\n\n" + new_text
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+def generate_design_doc(cell_name, parts, golden_sections):
     width_studs, height_studs, min_x, min_z = get_dimensions(parts)
 
     doc = f"# Design Documentation for {cell_name}\n\n"
@@ -177,6 +237,10 @@ def generate_design_doc(cell_name, parts):
     scale = "  " + "".join([str(i % 10) for i in range(width_studs)])
 
     for layer_name, y_list in layers:
+        if (cell_name, layer_name) in golden_sections:
+            doc += golden_sections[(cell_name, layer_name)] + "\n\n"
+            continue
+
         doc += f"## {layer_name}\n"
         doc += "```\n"
         doc += scale + "\n"
@@ -223,17 +287,21 @@ def main():
     if not os.path.exists('design'):
         os.makedirs('design')
 
+    golden_sections = extract_golden_sections('design')
+
     for filename in os.listdir('models'):
         if filename.startswith('sg13g2_') and filename.endswith('.ldr'):
             cell_name = filename[:-4]
             filepath = os.path.join('models', filename)
             parts = parse_ldr_full(filepath)
-            doc = generate_design_doc(cell_name, parts)
+            doc = generate_design_doc(cell_name, parts, golden_sections)
 
             output_path = os.path.join('design', f"{cell_name}.md")
-            with open(output_path, 'w') as f:
+            with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(doc)
             print(f"Generated {output_path}")
+
+    update_golden_standard_file(golden_sections)
 
 if __name__ == "__main__":
     main()

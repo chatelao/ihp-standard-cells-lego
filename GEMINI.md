@@ -23,3 +23,4 @@
 # Design Documentation Rules
 - For each standard cell, maintain a Markdown file in `/design` with layer-by-layer ASCII art.
 - The ASCII art should follow the character mapping defined in `specifications/MODELING_GUIDELINES.md`.
+- Never change 'GOLDEN STANDARD' sections in `/design/*.md`. These sections are automatically mirrored to `GOLDEN_STANDARD.md` on every run of the generation script.
