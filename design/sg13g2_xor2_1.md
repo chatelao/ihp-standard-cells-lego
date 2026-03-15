@@ -70,17 +70,17 @@ Legend: G=Polysilicon
 3   +      +
 2   &      +
 1   +  C C + C O
-0   &  C CcCcC O
+0   &  c ccccc O
 9   + CCCCCCCC O
 8     c       cO
 7     C       CO
 6  iI C IiIII CO
 5     C     OOOO
-4  -_ c  -  oO
+4  -_ c  -  oo
 3  --    -  OO-
 2  -_    -    _
 1  --    -    -
-0 ______________
+0 -_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

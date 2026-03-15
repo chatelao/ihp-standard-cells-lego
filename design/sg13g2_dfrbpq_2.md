@@ -68,19 +68,19 @@ Legend: G=Polysilicon
   01234567890123456789012345678901234567890123456789
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +         +                           +    +   +
-2  + CcCcCcC + CcCc cCcCcCcCcCcCcCcCcCcC +    &   &
+2  + ccccccc + cccc cccccccccccccccccccc +    &   &
 1  + C      C+ C  C                      + C  + O +
-0  + CcCc c cCcCc c   cCcCcCcCcCc        + C  & o &
+0  + cccc c ccccc c   ccccccccccc        + c  & o &
 9  + CC   C     C C   C        CCC     C   C  + O +
-8    Cc cCcCcCcCc c  Cc cCcCcC CcCcCcCcCcC C    o
+8    cc ccccccccc c  cc cccccc ccccccccccc c    o
 7    CC C II C  C C  C  C II   CC  CC    C C    O
 6  i CC   Ii C CC CC C CC iI CCCCC C    CC CCC  OOO
 5    CCCCCCCCC CCCCC C  C II C  CCCCCCCCCC  C   O
-4    C  c   c      C    cCcC CcCcCcC     C_ c _ o _
+4    c  c   c      c    cccc ccccccc     c_ c _ o _
 3  CCC-   - C CCCCCC         C      C-  CC- C - O -
-2     _   _ cCcCcCcCcCcCcCcCcCcCcCc  -    _   _   _
+2     _   _ ccccccccccccccccccccccc  -    _   _   _
 1     -   -                          -    -   -   -
-0 __________________________________________________
+0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

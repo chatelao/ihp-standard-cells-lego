@@ -68,19 +68,19 @@ Legend: G=Polysilicon
   01234567890123456789012345678901234567890123456789012345678901234567
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3     +        +     +         +                          +   +   +
-2     & cCcCcCc+     + CcCcCcC + CcCc cCcCcCcCcCcCcCcCcCcC&   &   &
+2     & ccccccc+     + ccccccc + cccc cccccccccccccccccccc&   &   &
 1     + C     C+ CC  + C     C + C  C                     + O +   + O
-0  CcCcCc cC  c+ Cc  + CcCc cCcCcCc c   cCcCcCcCcCc       & o & c & o
+0  cccccc cc  c+ cc  + cccc ccccccc c   ccccccccccc       & o & c & o
 9  C     CCC  C+ CC  +CCC   C     C C   C       C CC    C   O + C + O
-8  C   CcC    c+ Cc    Cc cCcCcCcCc c cCc cCcCcCc cCc cCcCcCo & c   o
+8  c   ccc    c+ cc    cc ccccccccc c ccc ccccccc ccc cccccco & c   o
 7  C   C  I I C   C    CC C II C  C C  C  CIII  C C C C    CO   C   O
 6  CIi CI i i CC CCCCC CC   iI CC C CC C CCIiICCC CCC    C CO   CC OO
 5  C   CI   I    CC    CCCCCCCCCCCCCCC C  CIIIC  CCCCCCCCC COOO C   O
-4  C - CIIIII cCcCc    C  c   c      C    cCcCc cCcCcC     CoOo c _ o
+4  c - cIIIII ccccc    c  c   c      c    ccccc cccccc     cooo c _ o
 3  C - CCCCCCCC-  C  CCC-   - C CCCCCC        C      C -  CCO - C - O
-2    -         -        _   _ cCcCcCcCcCcCcCcCcCcCcC   -      _   _
+2    -         -        _   _ cccccccccccccccccccccc   -      _   _
 1    -         -        -   -                          -      -   -
-0 ____________________________________________________________________
+0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

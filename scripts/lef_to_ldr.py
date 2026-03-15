@@ -342,25 +342,40 @@ def generate_ldr(macro_data):
         pmos_parity = 0 if (is_drive_2 or is_big) else 1
 
         for sx in range(10, width_ldu, 20):
-            if xmin <= sx <= xmax:
+            # Tolerance check (+/- 5 LDU) for inclusive matching
+            if xmin - 5 <= sx <= xmax + 5:
                 for sz in range(10, height_ldu, 20):
-                    if zmin <= sz <= zmax:
+                    if zmin - 5 <= sz <= zmax + 5:
                         stud_x, stud_z = sx // 20, sz // 20
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
-                        if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
-                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
-                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif is_active and stud_z % 2 == 0:
-                            # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
-                            if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
+
+                        # Handle Rails (Z=0 and Z=14) separately to enforce parity
+                        if stud_z == 14:
+                            if pin_name == 'VDD' and stud_x % 2 == 0:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                # Fill the gap to active (8 LDU round plate at Y=-24)
+                                if is_active:
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            continue # Skip general logic for rail studs
+
+                        if stud_z == 0:
+                            if pin_name == 'VSS' and stud_x % 2 == 1:
+                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                if is_active:
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            continue # Skip general logic for rail studs
+
+                        # General active region contacts
+                        if is_active and stud_z % 2 == 0:
+                            # Strict parity for Power/Ground/Inputs, relaxed for Signal Outputs/Internal
+                            is_signal = direction in ['OUTPUT', 'UNKNOWN']
+                            if is_signal:
+                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            else:
+                                # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
+                                if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
     for pin in macro_data['pins']:
         current_pin_contacts = []
