@@ -35,11 +35,9 @@ COLOR_POLY = 4           # Red
 COLOR_METAL1_INTERNAL = 1 # Blue
 COLOR_METAL1_INPUT = 9    # Light Blue
 COLOR_METAL1_OUTPUT = 272 # Dark Blue
-COLOR_METAL2 = 2         # Green
 COLOR_VDD = 14           # Yellow
 COLOR_VSS = 0            # Black
 COLOR_CONTACT = 15       # White
-COLOR_VIA = 0            # Black (per guidelines)
 
 # Y-Offsets (Negative is up in LDraw)
 Y_SUBSTRATE_LOW = 0
@@ -48,8 +46,6 @@ Y_ACTIVE = -16
 Y_POLY = -24
 Y_METAL1 = -56
 Y_CONTACT = -48
-Y_METAL2 = -88
-Y_VIA = -80
 
 def get_best_plates_multi(grid):
     """
@@ -314,11 +310,9 @@ def generate_ldr(macro_data):
                     gz = 20 + tz_off
                     ldr_lines.append(f"1 {color} {gx} {Y_POLY} {gz} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {pfile}")
 
-    # 5. Pins, Rails, Contacts, Vias and Metal 2
+    # 5. Pins, Rails, and Contacts
     contact_lines = []
     metal1_lines = []
-    via_lines = []
-    metal2_lines = []
 
     def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts):
         for sx in range(10, width_ldu, 20):
@@ -340,8 +334,6 @@ def generate_ldr(macro_data):
     for pin in macro_data['pins']:
         current_pin_contacts = []
         current_pin_metal1 = []
-        current_pin_vias = []
-        current_pin_metal2 = []
         current_pin_metal1_rects = []
 
         pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
@@ -378,51 +370,8 @@ def generate_ldr(macro_data):
                 else:
                     add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts)
 
-        for rect in pin['rects']:
-            if rect['layer'] == 'Metal2':
-                x1, y1, x2, y2 = rect['coords']
-                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1) + 10
-                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2) + 10
-
-                xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
-                xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
-                zmin = max(0, min(height_ldu, snap_to_grid(min(y1_ldu, y2_ldu))))
-                zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
-
-                if xmax <= xmin:
-                    if xmax + 20 <= width_ldu: xmax += 20
-                    elif xmin - 20 >= 0: xmin -= 20
-                    else: xmax = xmin + 20
-                if zmax <= zmin:
-                    if zmax + 20 <= height_ldu: zmax += 20
-                    elif zmin - 20 >= 0: zmin -= 20
-                    else: zmax = zmin + 20
-
-                w = xmax - xmin
-                h = zmax - zmin
-                rect_tiles = get_best_plates_multi([[COLOR_METAL2 for _ in range(h // 20)] for _ in range(w // 20)])
-                for plate, tx_off, tz_off, c, rotated in rect_tiles:
-                    gx = xmin + tx_off
-                    gz = zmin + tz_off
-                    if rotated:
-                        current_pin_metal2.append(f"1 {c} {gx} {Y_METAL2} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
-                    else:
-                        current_pin_metal2.append(f"1 {c} {gx} {Y_METAL2} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
-
-                # Add Vias (Black Round Bricks)
-                for mxmin, mxmax, mzmin, mzmax in current_pin_metal1_rects:
-                    oxmin, oxmax = max(xmin, mxmin), min(xmax, mxmax)
-                    ozmin, ozmax = max(zmin, mzmin), min(zmax, mzmax)
-                    if oxmin < oxmax and ozmin < ozmax:
-                        sx = (oxmin // 20) * 20 + 10
-                        sz = (ozmin // 20) * 20 + 10
-                        if sx <= oxmax and sz <= ozmax:
-                             current_pin_vias.append(f"1 {COLOR_VIA} {sx} {Y_VIA} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-
         if current_pin_contacts: contact_lines.extend(current_pin_contacts)
         if len(current_pin_metal1) > 1: metal1_lines.extend(current_pin_metal1)
-        if current_pin_vias: via_lines.extend(current_pin_vias)
-        if current_pin_metal2: metal2_lines.extend(current_pin_metal2)
 
     # Obstructions
     if macro_data['obs']:
@@ -473,16 +422,6 @@ def generate_ldr(macro_data):
         ldr_lines.append("0 STEP")
         ldr_lines.append("0 // Metal 1")
         ldr_lines.extend(metal1_lines)
-
-    if via_lines:
-        ldr_lines.append("0 STEP")
-        ldr_lines.append("0 // Vias")
-        ldr_lines.extend(via_lines)
-
-    if metal2_lines:
-        ldr_lines.append("0 STEP")
-        ldr_lines.append("0 // Metal 2")
-        ldr_lines.extend(metal2_lines)
 
     return "\n".join(ldr_lines)
 

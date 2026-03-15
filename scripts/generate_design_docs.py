@@ -79,7 +79,7 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     # Sort parts by some order to ensure deterministic behavior if multiple parts overlap
     # Metal 1 special handling: VSS/VDD/Inputs/Outputs should have priority over Connection
     # We sort by priority ascending so that higher priority characters are assigned last and "win".
-    priority = {'+': 5, '-': 5, 'I': 4, 'O': 3, 'C': 2, 'S': 1, 'N': 1, 'n': 1, 'p': 1, 'G': 1, 'M': 1}
+    priority = {'+': 5, '-': 5, 'I': 4, 'O': 3, 'C': 2, 'S': 1, 'N': 1, 'n': 1, 'p': 1, 'G': 1}
 
     for p in sorted(parts, key=lambda p: priority.get(color_map.get(p['color'], ' '), 0), reverse=False):
         if p['y'] in layer_y_list and p['part'] != '3062b.dat':
@@ -115,8 +115,6 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     # Poly: Y=-24
     # Contacts: Y=-48 (Between Active/Poly and Metal 1)
     # Metal 1: Y=-56
-    # Vias: Y=-80 (Between Metal 1 and Metal 2)
-    # Metal 2: Y=-88
 
     # If we are in Metal 1, check for Contact at Y=-48 (below)
     if layer_y_list[0] == -56:
@@ -131,17 +129,6 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
             alternatives = {'I': 'i', 'O': 'o', 'C': 'x', '+': '&', '-': '_'}
             return alternatives.get(char, 'x')
 
-    # If we are in Metal 2, check for Via at Y=-80 (below)
-    if layer_y_list[0] == -88:
-        has_via = False
-        for p in parts:
-            if p['part'] == '3062b.dat' and p['y'] == -80:
-                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    has_via = True
-                    break
-        if has_via:
-            return 'm'
-
     return char
 
 COLOR_MAP = {
@@ -155,7 +142,6 @@ COLOR_MAP = {
     272: 'O', # Metal 1 Output Dark Blue
     14: '+',  # VDD Yellow
     0: '-',   # VSS Black
-    2: 'M',   # Metal 2 Green
 }
 
 LEGEND_DESC = {
@@ -174,8 +160,6 @@ LEGEND_DESC = {
     '&': 'VDD',
     '-': 'VSS',
     '_': 'VSS',
-    'M': 'Metal 2',
-    'm': 'Connection (upper side)',
 }
 
 def generate_design_doc(cell_name, parts):
@@ -187,8 +171,7 @@ def generate_design_doc(cell_name, parts):
         ("Substrate", [0, -8]),
         ("Active", [-16]),
         ("Polysilicon", [-24]),
-        ("Metal 1", [-56]),
-        ("Metal 2", [-88])
+        ("Metal 1", [-56])
     ]
 
     scale = "  " + "".join([str(i % 10) for i in range(width_studs)])
@@ -231,11 +214,6 @@ def generate_design_doc(cell_name, parts):
             doc += "Legend: G=Polysilicon\n"
         elif layer_name == "Metal 1":
             doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)\n"
-        elif layer_name == "Metal 2":
-            if 'm' in used_chars:
-                doc += "Legend: M=Metal 2, m=Connection (upper side)\n"
-            else:
-                doc += "Legend: M=Metal 2\n"
 
         doc += "\n"
 
