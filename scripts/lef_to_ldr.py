@@ -167,10 +167,13 @@ def generate_ldr(macro_data):
         ""
     ]
 
-    width_ldu = snap_to_grid(um_to_ldu_coord(macro_data['width_um']))
-    # Force standard cell height to 15 studs (300 LDU)
+    # Golden rule: Calculate cell width in studs based on PDK site pitch (0.48 um)
+    # The cell must be an odd number of studs (2 * N - 1)
+    w_studs = int(round(macro_data['width_um'] / 0.48) * 2 - 1)
+    # 1 stud = 0.27 um = 20 LDU
+    width_ldu = w_studs * 20
+    # Force standard cell height to 15 studs (300 LDU, approx 4.05 um)
     height_ldu = 300
-    w_studs = width_ldu // 20
     d_studs = height_ldu // 20
 
     # 1. Substrate low (V3)
@@ -250,9 +253,9 @@ def generate_ldr(macro_data):
         for rect in pin['rects']:
             if rect['layer'] == 'Metal1':
                 # Exact bounds in LDU
-                lx1 = um_to_ldu_coord(rect['coords'][0])
+                lx1 = um_to_ldu_coord(rect['coords'][0]) + 10
                 lz1 = um_to_ldu_coord(rect['coords'][1]) + 10
-                lx2 = um_to_ldu_coord(rect['coords'][2])
+                lx2 = um_to_ldu_coord(rect['coords'][2]) + 10
                 lz2 = um_to_ldu_coord(rect['coords'][3]) + 10
                 for i in range(w_studs):
                     cx = i * 20 + 10
@@ -275,24 +278,34 @@ def generate_ldr(macro_data):
             return 1 if x < 8 else 0 # ODD if < 8, EVEN if >= 8
 
         if not possible_studs:
-            # Fallback to nearest stud center if none strictly inside
-            best_c = (ideal_c_x, 6) # Default
+            # Fallback: check all studs for best parity match near rect mid-point
             min_dist = float('inf')
+            best_c = (ideal_c_x, 6) # Default
             for rect in pin['rects']:
                 if rect['layer'] == 'Metal1':
                     mid_x = (rect['coords'][0] + rect['coords'][2]) / 2
                     mid_y = (rect['coords'][1] + rect['coords'][3]) / 2
-                    mid_x_ldu = um_to_ldu_coord(mid_x)
+                    mid_x_ldu = um_to_ldu_coord(mid_x) + 10
                     mid_z_ldu = um_to_ldu_coord(mid_y) + 10
-                    si, sk = mid_x_ldu // 20, mid_z_ldu // 20
-                    dist = abs(sk - 6) * 10 + abs(si - ideal_c_x)
-                    if dist < min_dist:
-                        min_dist = dist
-                        best_c = (si, sk)
+                    si_raw, sk_raw = mid_x_ldu // 20, mid_z_ldu // 20
+
+                    for si in range(w_studs):
+                        target_p = (1 if si < 8 else 0) if is_big else 1
+                        if si % 2 == target_p:
+                            # Heuristic: prioritize Z=6, then closeness to mid_x and ideal_c_x
+                            dist = abs(sk_raw - 6) * 10 + abs(si - si_raw) + abs(si - ideal_c_x)
+                            if dist < min_dist:
+                                min_dist = dist
+                                best_c = (si, 6 if abs(sk_raw-6) < 3 else sk_raw)
         else:
             # Filter by parity
-            target_parity = get_input_parity(ideal_c_x, is_big)
-            parity_studs = [s for s in possible_studs if s[0] % 2 == target_parity]
+            if is_big:
+                # Big model symmetric parity: ODD if X < 8, EVEN if X >= 8
+                parity_studs = [s for s in possible_studs if s[0] % 2 == (1 if s[0] < 8 else 0)]
+            else:
+                # Small models (<= 7 studs): Always ODD
+                parity_studs = [s for s in possible_studs if s[0] % 2 == 1]
+
             if not parity_studs:
                 parity_studs = possible_studs # Relax if no matches
 
@@ -337,7 +350,7 @@ def generate_ldr(macro_data):
     contact_lines = []
     metal1_lines = []
 
-    def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts):
+    def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts, pin_generated_contacts):
         # drive-2 or big models use even studs for PMOS
         pmos_parity = 0 if (is_drive_2 or is_big) else 1
 
@@ -345,13 +358,16 @@ def generate_ldr(macro_data):
             if xmin <= sx <= xmax:
                 for sz in range(10, height_ldu, 20):
                     if zmin <= sz <= zmax:
+                        if (sx, sz) in pin_generated_contacts:
+                            continue
+                        pin_generated_contacts.add((sx, sz))
                         stud_x, stud_z = sx // 20, sz // 20
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
                         if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
+                        elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 0:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
@@ -366,6 +382,9 @@ def generate_ldr(macro_data):
         current_pin_contacts = []
         current_pin_metal1 = []
         current_pin_metal1_rects = []
+        # Track generated coordinates to prevent duplicates (Code Review Feedback)
+        generated_coords = set()
+        pin_generated_contacts = set()
 
         pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
         color = COLOR_VDD if pin['name']=='VDD' else COLOR_VSS if pin['name']=='VSS' else COLOR_METAL1_INPUT if pin['direction']=='INPUT' else COLOR_METAL1_OUTPUT if pin['direction']=='OUTPUT' else COLOR_METAL1_INTERNAL
@@ -373,10 +392,24 @@ def generate_ldr(macro_data):
 
         for rect in pin['rects']:
             if rect['layer'] == 'Metal1':
-                x1_ldu, y1_ldu = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][1]) + 10
-                x2_ldu, y2_ldu = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
-                xmin, xmax = snap_to_grid(min(x1_ldu, x2_ldu)), snap_to_grid(max(x1_ldu, x2_ldu))
-                zmin, zmax = snap_to_grid(min(y1_ldu, y2_ldu)), snap_to_grid(max(y1_ldu, y2_ldu))
+                x1_ldu, y1_ldu = um_to_ldu_coord(rect['coords'][0]) + 10, um_to_ldu_coord(rect['coords'][1]) + 10
+                x2_ldu, y2_ldu = um_to_ldu_coord(rect['coords'][2]) + 10, um_to_ldu_coord(rect['coords'][3]) + 10
+                xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
+                xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
+                zmin = max(0, min(height_ldu, snap_to_grid(min(y1_ldu, y2_ldu))))
+                zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
+
+                if pin['name'] in ['VDD', 'VSS']:
+                    # Special handling for power rails to avoid covering too much area in documentation
+                    # but ensure they span the full width
+                    xmin = 0
+                    xmax = width_ldu
+                    # Rails are typically at Z=0 (VSS) and Z=14 (VDD)
+                    # We restrict them to only one stud wide in Z to match typical LEF
+                    if pin['name'] == 'VSS':
+                        zmin, zmax = 0, 20
+                    else:
+                        zmin, zmax = 280, 300
 
                 if xmax <= xmin:
                     if xmax + 20 <= width_ldu: xmax += 20
@@ -393,13 +426,20 @@ def generate_ldr(macro_data):
 
                 for plate, tx_off, tz_off, c, rotated in rect_tiles:
                     gx, gz = xmin + tx_off, zmin + tz_off
-                    current_pin_metal1.append(f"1 {c} {gx} {Y_METAL1} {gz} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+                    # Check if this exact plate placement was already done for this pin
+                    # Using a simple tuple of relevant parameters for deduplication
+                    coord_key = (gx, Y_METAL1, gz, c, plate, rotated)
+                    if coord_key not in generated_coords:
+                        current_pin_metal1.append(f"1 {c} {gx} {Y_METAL1} {gz} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+                        generated_coords.add(coord_key)
 
                 if pin['direction'] == 'INPUT':
                     cfg = pin_assignments[pin['name']]
-                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {cfg['contact']*20+10} {Y_CONTACT} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                    if (cfg['contact']*20+10, cfg['contact_z']*20+10) not in pin_generated_contacts:
+                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {cfg['contact']*20+10} {Y_CONTACT} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                        pin_generated_contacts.add((cfg['contact']*20+10, cfg['contact_z']*20+10))
                 else:
-                    add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts)
+                    add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts, pin_generated_contacts)
 
         if current_pin_contacts: contact_lines.extend(current_pin_contacts)
         if len(current_pin_metal1) > 1: metal1_lines.extend(current_pin_metal1)
@@ -410,8 +450,8 @@ def generate_ldr(macro_data):
         for rect in macro_data['obs']:
             if rect['layer'] == 'Metal1':
                 x1, y1, x2, y2 = rect['coords']
-                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1) + 10
-                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2) + 10
+                x1_ldu, y1_ldu = um_to_ldu_coord(x1) + 10, um_to_ldu_coord(y1) + 10
+                x2_ldu, y2_ldu = um_to_ldu_coord(x2) + 10, um_to_ldu_coord(y2) + 10
 
                 xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
                 xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
@@ -440,7 +480,8 @@ def generate_ldr(macro_data):
 
                 # Add Contacts for Obstructions
                 obs_contacts = []
-                add_contacts_for_rect(xmin, xmax, zmin, zmax, "OBS", "UNKNOWN", obs_contacts)
+                obs_generated_contacts = set()
+                add_contacts_for_rect(xmin, xmax, zmin, zmax, "OBS", "UNKNOWN", obs_contacts, obs_generated_contacts)
                 contact_lines.extend(obs_contacts)
 
     # Write layers in order

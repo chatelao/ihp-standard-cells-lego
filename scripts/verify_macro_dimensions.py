@@ -113,11 +113,12 @@ def main():
             # Guidance: 3.78 um LEF height maps to 14 studs between rails.
             # Total cell height is 15 studs = 4.05 um.
             target_h = 4.05 if abs(exp_h - 3.78) < 0.001 else exp_h
+            # Golden rule for width:
+            target_w = int(round(exp_w / 0.48) * 2 - 1) * 0.27
 
-            # Allow some tolerance for rounding/quantization (0.15 um)
-            # 0.252 um / 2 = 0.126 um max error per side
-            if abs(exp_w - ldr_w) > 0.15 or abs(target_h - ldr_h) > 0.15:
-                print(f"FAIL: {filename} - Size mismatch. LEF: {exp_w:.3f}x{exp_h:.3f} (target {exp_w:.3f}x{target_h:.3f}), LDR: {ldr_w:.3f}x{ldr_h:.3f}")
+            # Allow some tolerance for rounding/quantization (0.01 um)
+            if abs(target_w - ldr_w) > 0.01 or abs(target_h - ldr_h) > 0.01:
+                print(f"FAIL: {filename} - Size mismatch. LEF: {exp_w:.3f}x{exp_h:.3f} (target {target_w:.3f}x{target_h:.3f}), LDR: {ldr_w:.3f}x{ldr_h:.3f}")
                 all_passed = False
             else:
                 print(f"PASS: {filename} - Size matches LEF definition (quantized)")

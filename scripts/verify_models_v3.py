@@ -48,9 +48,9 @@ def verify_ldr(filepath):
                 # VDD (Z=14) must be EVEN
                 if stud_z == 14 and stud_x % 2 != 0:
                     errors.append(f"VDD contact at Stud X={stud_x} has ODD parity (expected EVEN)")
-                # VSS (Z=0) must be ODD
-                elif stud_z == 0 and stud_x % 2 == 0:
-                    errors.append(f"VSS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
+                # VSS (Z=0) must be EVEN (updated rule for 10-stud/19-width support)
+                elif stud_z == 0 and stud_x % 2 != 0:
+                    errors.append(f"VSS contact at Stud X={stud_x} has ODD parity (expected EVEN)")
                 # Input contacts (typically at Stud Z=6)
                 elif stud_z == 6:
                     if not is_big:
