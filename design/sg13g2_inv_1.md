@@ -76,13 +76,13 @@ GOLDEN STANDARD
 1  + O
 0  & o
 9  + O
-8    o
+8  & o
 7    O
 6  i O
 5    O
-4  - O
+4  _ o
 3  - O
-2  -
+2  _ o
 1  -
 0 -_-_-
 ```
