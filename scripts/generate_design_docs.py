@@ -126,8 +126,8 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
                     has_contact = True
                     break
         if has_contact:
-            alternatives = {'I': 'i', 'O': 'o', 'C': 'x', '+': '&', '-': '_'}
-            return alternatives.get(char, 'x')
+            alternatives = {'I': 'i', 'O': 'o', 'C': 'c', '+': '&', '-': '_'}
+            return alternatives.get(char, 'c')
 
     return char
 
@@ -153,7 +153,7 @@ LEGEND_DESC = {
     'I': 'Metal 1 Input',
     'i': 'Metal 1 Input',
     'C': 'Metal 1 Connection',
-    'x': 'Connection (upper side)',
+    'c': 'Connection (upper side)',
     'O': 'Metal 1 Output',
     'o': 'Metal 1 Output',
     '+': 'VDD',
@@ -213,7 +213,7 @@ def generate_design_doc(cell_name, parts):
         elif layer_name == "Polysilicon":
             doc += "Legend: G=Polysilicon\n"
         elif layer_name == "Metal 1":
-            doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)\n"
+            doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)\n"
 
         doc += "\n"
 

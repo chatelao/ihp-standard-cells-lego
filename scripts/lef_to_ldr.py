@@ -217,6 +217,7 @@ def generate_ldr(macro_data):
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Polysilicon Gates")
     is_drive_2 = macro_data['name'].endswith('_2')
+    is_big = w_studs > 7
 
     # Pre-calculate pin assignments for fixed columns
     input_pins = [p for p in macro_data['pins'] if p['direction'] == 'INPUT']
@@ -252,10 +253,16 @@ def generate_ldr(macro_data):
                                 possible_studs.append((i, k))
 
         # Gold Standard ideals:
-        if j % 2 == 0:
-            ideal_c_x, ideal_g_x = 4 * (j // 2) + 1, 4 * (j // 2) + 2
-        else:
-            ideal_c_x, ideal_g_x = 4 * (j // 2) + 5, 4 * (j // 2) + 4
+        # Distribution: 2 pins -> 1, 5. 3 pins -> 1, 5, 9. 4 pins -> 1, 5, 9, 13
+        ideal_c_x = 4 * j + 1
+
+        # Parity rules for input contacts:
+        # Small models (<= 7 studs): Always ODD
+        # Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8
+        def get_input_parity(x, is_big_model):
+            if not is_big_model:
+                return 1 # ODD
+            return 1 if x < 8 else 0 # ODD if < 8, EVEN if >= 8
 
         if not possible_studs:
             # Fallback to nearest stud center if none strictly inside
@@ -273,20 +280,26 @@ def generate_ldr(macro_data):
                         min_dist = dist
                         best_c = (si, sk)
         else:
-            at_6 = [s for s in possible_studs if s[1] == 6]
+            # Filter by parity
+            target_parity = get_input_parity(ideal_c_x, is_big)
+            parity_studs = [s for s in possible_studs if s[0] % 2 == target_parity]
+            if not parity_studs:
+                parity_studs = possible_studs # Relax if no matches
+
+            at_6 = [s for s in parity_studs if s[1] == 6]
             if at_6:
                 best_c = min(at_6, key=lambda s: abs(s[0] - ideal_c_x))
             else:
-                best_c = min(possible_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
+                best_c = min(parity_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
 
         # Determine gate stud(s)
-        if is_drive_2:
+        # Gold standard: gates at C-1 and C+1 for Big/Drive-2, or C+1 for Drive-1 Small
+        if is_drive_2 or is_big:
             gates = [best_c[0] - 1, best_c[0] + 1]
             pad_x = best_c[0] * 20 + 10
             pad_part = '3623.dat'
         else:
-            if ideal_g_x > ideal_c_x: g = best_c[0] + 1
-            else: g = best_c[0] - 1
+            g = best_c[0] + 1
             gates = [g]
             pad_x = ((best_c[0] + g) / 2) * 20 + 10
             pad_part = '3023.dat'
@@ -315,6 +328,9 @@ def generate_ldr(macro_data):
     metal1_lines = []
 
     def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts):
+        # drive-2 or big models use even studs for PMOS
+        pmos_parity = 0 if (is_drive_2 or is_big) else 1
+
         for sx in range(10, width_ldu, 20):
             if xmin <= sx <= xmax:
                 for sz in range(10, height_ldu, 20):
@@ -326,7 +342,8 @@ def generate_ldr(macro_data):
                         elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                         elif is_active and stud_z % 2 == 0:
-                            if (stud_z >= 8 and stud_x % 2 == 1) or (stud_z < 8 and stud_x % 2 == 0):
+                            # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
+                            if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                                 # Fill the gap to active (8 LDU round plate at Y=-24)
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
