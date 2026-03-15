@@ -164,6 +164,28 @@ LEGEND_DESC = {
 
 def extract_golden_sections(design_dir):
     golden_sections = {}
+
+    # First, try to extract from GOLDEN_STANDARD.md to ensure no loss
+    gs_path = 'GOLDEN_STANDARD.md'
+    if os.path.exists(gs_path):
+        with open(gs_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Look for the section "## 7. Golden Design Examples"
+        header = "## 7. Golden Design Examples"
+        if header in content:
+            examples_part = content.split(header)[1]
+            # Examples are in format "### {cell} - {layer}\nGOLDEN STANDARD\n\n```...```"
+            # Or similar. Let's use a regex to be more robust.
+            # Example: ### sg13g2_buf_1 - Active
+            pattern = r'### (sg13g2_[a-z0-9_]+) - ([A-Za-z0-9 ]+)\n(.*?)(?=\n### |\n## |$)'
+            matches = re.findall(pattern, examples_part, re.DOTALL)
+            for cell_name, layer_name, text in matches:
+                # Reconstruct the section format expected by the rest of the script
+                # The text usually starts with GOLDEN STANDARD and then the code block
+                full_text = f"## {layer_name}\n{text.strip()}"
+                golden_sections[(cell_name, layer_name)] = full_text
+
     if not os.path.exists(design_dir):
         return golden_sections
 
@@ -181,6 +203,7 @@ def extract_golden_sections(design_dir):
                     lines = section.split('\n')
                     layer_name = lines[0].strip()
                     # Store the whole section including the header we'll use it verbatim
+                    # If it was already in GOLDEN_STANDARD.md, this will overwrite it with potentially newer content from the design file
                     golden_sections[(cell_name, layer_name)] = '## ' + section.strip()
     return golden_sections
 
