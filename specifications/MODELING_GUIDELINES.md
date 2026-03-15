@@ -28,13 +28,13 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 | Substrate (low) | Dark Gray | 8 | 8 | 0 | Bottom substrate layer, cover all area out to the VDD/VSS |
 | Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer. |
 | N-Well | Light Gray | 8 | 7 | -8 | N-Well region. |
-| Diffusion (NMOS) | ? | 8 | 27 | -16 | Active area in P-Substrate, Studs 2-4. |
-| Substrate (low) | Dark Gray | 8 | 8 | -16 | Top substrate (N) layer, cover all area above the Substrate (low) around the Diffusion (NMOS) |
-| Diffusion (PMOS) | ? | 8 | 13 | -16 | Active area in N-Well, Studs 8-12. |
-| Substrate (high) | Dark Gray | 8 | 8 | -8 | Top substrate (P) layer, cover all area above the Substrate (high) around the Diffusion (PMOS) |
-| Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width, there may be an additional studs where contacts hit the poly |
-| Contacts | White | 32 | 15 | -48 | One 1x1 round brick (24) bridging Polysilicon to Metal 1. |
-| Contacts | White | 24 | 15 | -48 | Two 1x1 round brick (8+24) bridging Active to Metal 1. |
+| Diffusion (NMOS) | Dark Green | 8 | 288 | -16 | Active area in P-Substrate, Studs 2-4. |
+| Substrate fill (P) | Dark Gray | 8 | 8 | -16 | Substrate fill around NMOS. |
+| Diffusion (PMOS) | Dark Orange | 8 | 38 | -16 | Active area in N-Well, Studs 8-12. |
+| Substrate fill (N) | Light Gray | 8 | 7 | -16 | N-Well fill around PMOS. |
+| Polysilicon | Red | 8 | 4 | -24 | Gate material, 1 stud standard width. |
+| Contacts | White | 24 | 15 | -48 | Bridging Polysilicon to Metal 1: One 1x1 round brick (24). |
+| Contacts | White | 32 | 15 | -48 | Bridging Active to Metal 1: One 1x1 round brick (24) + one 1x1 plate (8) at Y=-24. |
 | Metal 1 | Light Blue | 8 | 9 | -56| Inputs on the first metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
 | Metal 1 | Blue  | 8 | 1 | -56| Cell internal connections on the metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
 | Metal 1 | Dark Blue  | 8 | 272 | -56| Outputs First metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
