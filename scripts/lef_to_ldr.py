@@ -209,6 +209,13 @@ def generate_ldr(macro_data):
         for z in range(8, 13):
             grid3[x][z] = COLOR_ACTIVE_PMOS
 
+    # Add active regions under rails for the full width of the cell
+    for x in range(w_studs):
+        # South border (VSS, Stud 0)
+        grid3[x][0] = COLOR_ACTIVE_NMOS
+        # North border (VDD, Stud 14)
+        grid3[x][14] = COLOR_ACTIVE_PMOS
+
     tiles3 = get_best_plates_multi(grid3)
     for plate, x_off, z_off, color, rotated in tiles3:
         ldr_lines.append(f"1 {color} {x_off} {Y_ACTIVE} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
@@ -231,7 +238,10 @@ def generate_ldr(macro_data):
     pin_assignments = {} # name -> config dict
     active_regions = [
         (x_start_active * 20, x_end_active * 20, 40, 100),
-        (x_start_active * 20, x_end_active * 20, 160, 260)
+        (x_start_active * 20, x_end_active * 20, 160, 260),
+        # Active regions under rails for the full width of the cell
+        (0, width_ldu, 0, 20),
+        (0, width_ldu, 280, 300)
     ]
 
     for j, pin in enumerate(input_pins):
@@ -339,8 +349,12 @@ def generate_ldr(macro_data):
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
                         if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                            if is_active:
+                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                            if is_active:
+                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif is_active and stud_z % 2 == 0:
                             # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
                             if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
