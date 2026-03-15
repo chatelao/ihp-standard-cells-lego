@@ -19,7 +19,6 @@ The models are designed on a grid where LEGO studs represent the physical dimens
     - **Layer 3 (Y=-16):** Active Regions (Diffusion).
     - **Layer 4 (Y=-24):** Polysilicon (Gates).
     - **Layer 5 (Y=-56):** Metal 1, Rails, and Contacts.
-    - **Layer 6 (Y=-88):** Metal 2 and Vias.
 
 ## 2. Layer to Color Mapping (V3)
 
@@ -40,8 +39,6 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 | Metal 1 | Dark Blue  | 8 | 272 | -56| Outputs First metal layer, keep at a multiple (1..N) one stud (20 LDU) distance between different signals. |
 | VDD Rail | Yellow | 8 | 14 | -56 | Power supply rail. |
 | VSS Rail | Black | 8 | 0 | -56 | Ground rail. |
-| Vias | Black | 24 | 0 | -80 | 1x1 round brick bridging Metal 1 to Metal 2. |
-| Metal 2 | Green | 8 | 2 | -88 | Second metal interconnect layer. |
 
 ## 3. LDraw Unit Mapping
 - 1 LEGO Stud  = 24 LDU (Height).
@@ -61,9 +58,8 @@ Based on 1 Stud = 0.27 µm:
 - **Multi-Rectangle Geometries:** When a pin or obstruction is defined by multiple rectangles in the LEF, model them as a collection of LEGO plates. Ensure they are logically connected or stacked at the same Y-offset.
 - **Vertical Orientation:** To rotate a 1xN plate from the X-axis (horizontal) to the Z-axis (vertical height in the cell), use the rotation matrix `0 0 1 0 1 0 -1 0 0`.
 - VDD and VSS rails should be clearly visible at the top and bottom of the cell (along the Z-axis) at Y=-56.
-- **Interconnects (Contacts and Vias):** Use 1x1 round bricks (`3062b.dat`) and round plates (`6141.dat`).
+- **Interconnects (Contacts):** Use 1x1 round bricks (`3062b.dat`) and round plates (`6141.dat`).
   - **Contacts** are white (Color 15). They use a round brick at Y=-48 and, for active regions, an additional round plate at Y=-24.
-  - **Vias** are black (Color 0) and use a round brick placed at Y=-80.
   - These bricks are oriented with identity rotation (`1 0 0 0 1 0 0 0 1`) so their studs point upwards (towards negative Y), allowing the next metal layer to be built on top of them.
 - **Header Comment:** Every LDR file must start with the comment `0 // Substrate low (V3)` for verification.
 
@@ -80,7 +76,6 @@ For each standard cell, a Markdown design documentation file must be maintained 
   - `O`/`o`: Output (Dark Blue)
   - `+`/`&`: VDD Rail (Yellow)
   - `-`/`_`: VSS Rail (Black)
-- **Metal 2:** `M`/`m` (Green)
-- **Connections (Contacts/Vias):** Represented by the lowercase version of the layer character (e.g., `i` for input contact, `&` for VDD contact, `m` for via in Metal 2).
+- **Connections (Contacts):** Represented by the lowercase version of the layer character (e.g., `i` for input contact, `&` for VDD contact).
 
 One character in the ASCII art represents one LEGO stud.

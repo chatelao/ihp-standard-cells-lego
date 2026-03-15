@@ -49,12 +49,9 @@ def verify_ldr(filepath):
                 if color not in [1, 9, 272, 14, 0]:
                     errors.append(f"Invalid color {color} at Y=-56 (expected 1, 9, 272, 14, or 0)")
             elif y == -80:
-                if color != 0:
-                    errors.append(f"Invalid color {color} at Y=-80 (expected 0)")
+                errors.append(f"Detected component at Y=-80 (Vias are removed)")
             elif y == -88:
-                # Metal 2 (2)
-                if color != 2:
-                    errors.append(f"Invalid color {color} at Y=-88 (expected 2)")
+                errors.append(f"Detected component at Y=-88 (Metal 2 is removed)")
 
     if not has_substrate_low_v3:
         errors.append("Missing 'Substrate low (V3)' marker")
