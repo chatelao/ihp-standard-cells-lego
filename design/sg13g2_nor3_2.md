@@ -40,7 +40,7 @@ Legend: N=N-Well, S=Substrate
 1 SSSSSSSSSSSSSSSS
 0 SSSSSSSSSSSSSSSS
 ```
-Legend: n=NMOS Active, p=PMOS Active, S=Substrate, N=N-Well
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 
 ## Polysilicon
 ```
