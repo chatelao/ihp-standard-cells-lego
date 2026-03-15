@@ -336,6 +336,7 @@ def generate_ldr(macro_data):
     # 5. Pins, Rails, and Contacts
     contact_lines = []
     metal1_lines = []
+    placed_contacts = set()
 
     def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts):
         # drive-2 or big models use even studs for PMOS
@@ -346,21 +347,29 @@ def generate_ldr(macro_data):
                 for sz in range(10, height_ldu, 20):
                     if zmin <= sz <= zmax:
                         stud_x, stud_z = sx // 20, sz // 20
+                        if (stud_x, stud_z) in placed_contacts:
+                            continue
+
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
-                        if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
-                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
-                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+
+                        contact_needed = False
+                        if stud_z == 14: # VDD border
+                            if stud_x % 2 == 0:
+                                contact_needed = True
+                        elif stud_z == 0: # VSS border
+                            if stud_x % 2 == 1:
+                                contact_needed = True
                         elif is_active and stud_z % 2 == 0:
                             # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
                             if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                contact_needed = True
+
+                        if contact_needed:
+                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                            if is_active:
                                 # Fill the gap to active (8 LDU round plate at Y=-24)
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            placed_contacts.add((stud_x, stud_z))
 
     for pin in macro_data['pins']:
         current_pin_contacts = []
@@ -397,7 +406,9 @@ def generate_ldr(macro_data):
 
                 if pin['direction'] == 'INPUT':
                     cfg = pin_assignments[pin['name']]
-                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {cfg['contact']*20+10} {Y_CONTACT} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                    if (cfg['contact'], cfg['contact_z']) not in placed_contacts:
+                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {cfg['contact']*20+10} {Y_CONTACT} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                        placed_contacts.add((cfg['contact'], cfg['contact_z']))
                 else:
                     add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts)
 
