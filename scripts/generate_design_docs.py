@@ -20,6 +20,7 @@ def get_dimensions(parts):
         elif p['part'] == '3022.dat': pw, pd = 2, 2
         elif p['part'] == '3023.dat': pw, pd = 2, 1
         elif p['part'] == '3024.dat': pw, pd = 1, 1
+        elif p['part'] == '6141.dat': pw, pd = 1, 1
         elif p['part'] == '3062b.dat': pw, pd = 1, 1
 
         # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
@@ -93,6 +94,7 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
             elif p['part'] == '3022.dat': pw, pd = 2, 2
             elif p['part'] == '3023.dat': pw, pd = 2, 1
             elif p['part'] == '3024.dat': pw, pd = 1, 1
+            elif p['part'] == '6141.dat': pw, pd = 1, 1
 
             # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
             is_rotated = p['rot'][0] == 0

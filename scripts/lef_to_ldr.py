@@ -24,6 +24,7 @@ PLATES = [
 ]
 
 ROUND_BRICK = "3062b.dat" # 1x1 round brick
+ROUND_PLATE = "6141.dat"  # 1x1 round plate
 
 # LDraw Colors (V3)
 COLOR_SUBSTRATE = 8      # Dark Gray
@@ -333,8 +334,8 @@ def generate_ldr(macro_data):
                         elif is_active and stud_z % 2 == 0:
                             if (stud_z >= 8 and stud_x % 2 == 1) or (stud_z < 8 and stud_x % 2 == 0):
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                # Fill the gap to active (8 LDU plate at Y=-24)
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                                # Fill the gap to active (8 LDU round plate at Y=-24)
+                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
     for pin in macro_data['pins']:
         current_pin_contacts = []
