@@ -3,7 +3,7 @@
 This document defines the "Gold Standard" for IHP SG13G2 LEGO models. These rules ensure consistency, physical buildability, and accurate representation of the semiconductor process.
 
 ## 0. Rules
-- **NEVER override GOLDEN STANDARD chapters.** These sections are the source of truth for validated designs and must be preserved across all automated script runs.
+- **NEVER override GOLDEN STANDARD chapters in /design.** These sections are the source of truth for validated designs and must be preserved across all automated script runs.
 - **Reference each GOLDEN STANDARD chapter in this file.** Every section marked as "GOLDEN STANDARD" in the individual design files must be automatically mirrored to Section 7 of this document.
 
 ## 1. Physical Dimensions & Scaling
