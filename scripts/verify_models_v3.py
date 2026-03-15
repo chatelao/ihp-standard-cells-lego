@@ -22,6 +22,7 @@ def verify_ldr(filepath):
         if match:
             max_x = max(max_x, float(match.group(1)))
     is_big = max_x > 140 # > 7 studs
+    w_studs = int(max_x // 20) + 1
 
     for line in lines:
         if line.startswith('0 // Substrate low (V3)'):
@@ -80,10 +81,10 @@ def verify_ldr(filepath):
                     errors.append(f"N-Well at Stud Z={stud_z} extends below Stud 8")
             elif y == -16:
                 if color == 288: # NMOS
-                    if not (2 <= stud_z <= 4):
+                    if not (2 <= stud_z <= 4) and not (stud_z == 0):
                         errors.append(f"NMOS Active at Stud Z={stud_z} outside standard Studs 2-4")
                 elif color == 38: # PMOS
-                    if not (8 <= stud_z <= 12):
+                    if not (8 <= stud_z <= 12) and not (stud_z == 14):
                         errors.append(f"PMOS Active at Stud Z={stud_z} outside standard Studs 8-12")
 
             # Check specific layer mappings based on V3 guidelines
