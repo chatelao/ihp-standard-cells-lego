@@ -1,6 +1,6 @@
 # IHP SG13G2 LEGO Modeling Guidelines
 
-To ensure consistency across all LEGO models of IHP standard cells, the following guidelines must be followed.
+To ensure consistency across all LEGO models of IHP standard cells, the following guidelines must be followed. Update this rules based on the "GOLDEN STANDARD" designs.
 
 ## 1. Scale and Dimensions
 The models are designed on a grid where LEGO studs represent the physical dimensions of the semiconductor cell.
