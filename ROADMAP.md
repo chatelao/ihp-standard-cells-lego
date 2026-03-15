@@ -7,14 +7,21 @@
 - [x] **Phase 2: Automation & Library Generation**
   - Developed `scripts/lef_to_ldr.py` with 2D tiling and grid alignment for accurate LEF-to-LDR conversion.
   - Automated the generation of all 84 standard cell LDR models.
-- [x] **Phase 3: Verification & Quality Assurance**
-  - Implemented a V2 verification suite (`scripts/verify_models_v2.py`) and validated the entire library.
+- [x] **Phase 3: Verification & Quality Assurance (V2)**
+  - Implemented a V2 verification suite and validated the initial library.
   - Integrated visual regression testing for the project gallery.
 - [x] **Phase 4: CI/CD & Deployment**
   - Configured GitHub Actions for automated headless rendering and documentation deployment.
 - [x] **Phase 5: Building Instructions**
-  - Implemented automated generation of multi-page PDF building instructions for the entire library.
-  - Optimized repository storage by moving instruction PDFs to GitHub Pages artifacts.
+  - Implemented automated generation of multi-page PDF building instructions.
+
+## Current Focus
+- [ ] **Phase 6: V3 Gold Standard Migration & Validation**
+  - [x] Define V3 Gold Standard specifications (stacking, parity, dimensions).
+  - [ ] Achieve 100% compliance with the V3 verification suite (Current: 12/84).
+  - [ ] Fix VSS/VDD rail contact parity issues (standardizing on ODD studs for VSS).
+  - [ ] Correct NMOS and PMOS active contact alignment across all 84 cells.
+  - [ ] Resolve symmetric parity for input pins in "Big" models (> 7 studs).
 
 ## Future Work
 - [ ] Implement advanced modeling for custom macros and analog blocks.
