@@ -67,21 +67,21 @@ Legend: G=Polysilicon
 GOLDEN STANDARD
 ```
   0123456
-4 &+&+&+&
+4 &+&+&
 3  +
-2  & o &
-1  + O +
-0  & o &
-9  + O +
-8  & o &
+2  & o
+1  + O
+0  & o
+9  + O
+8  & o
 7    O
-6  i OOO
+6  i O
 5    O
-4  _ o _
-3  - O -
-2  _ o _
-1  -   -
-0 -_-_-_-
+4  _ o
+3  - O
+2  _ o
+1  -  
+0 -_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, x/o/&/_=Connection (upper side)
 
