@@ -7,10 +7,11 @@ LDRAW_DIR="/usr/share/ldraw"
 OUTPUT_DIR="$(pwd)/images"
 INSTRUCTIONS_DIR="$(pwd)/instructions"
 MODELS_DIR="$(pwd)/models"
-LOG_FILE="$(pwd)/ldview_render.log"
+LOG_FILE="$(pwd)/logs/ldview_render.log"
 
 mkdir -p "$OUTPUT_DIR"
 mkdir -p "$INSTRUCTIONS_DIR"
+mkdir -p "$(dirname "$LOG_FILE")"
 rm -f "$OUTPUT_DIR"/*.jpg
 rm -f "$INSTRUCTIONS_DIR"/*.pdf
 
@@ -100,5 +101,4 @@ for file in "$MODELS_DIR"/*.ldr; do
 
 done
 
-rm -f "$LOG_FILE"
-echo "Rendering complete."
+echo "Rendering complete. Log saved to $LOG_FILE"

@@ -1,3 +1,9 @@
 instructions/*.pdf
 images/*.jpg
 index.html
+logs/
+*.log
+*_fails.txt
+*_results.txt
+*_final.txt
+library.zip
