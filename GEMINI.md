@@ -25,3 +25,4 @@
 - The ASCII art should follow the character mapping defined in `specifications/MODELING_GUIDELINES.md`.
 - Never change 'GOLDEN STANDARD' sections in `/design/*.md`. These sections are automatically mirrored to `GOLDEN_STANDARD.md` on every run of the generation script.
 - All 'GOLDEN STANDARD' chapters must be referenced in the `GOLDEN_STANDARD.md` file.
+- Maintain a comprehensive `specifications/MAPPING_RULEBOOK.md` detailing the conversion logic from LEF to LDR. Update this rulebook whenever `scripts/lef_to_ldr.py` or the underlying transformation logic is modified.
