@@ -77,8 +77,8 @@ def annotate_image(image_path, parts_in_step):
     # Try to load a font, fallback to default
     try:
         # Using DejaVuSansMono as it was found in the environment
-        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", 16)
-        header_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf", 18)
+        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", 8)
+        header_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf", 9)
     except:
         font = ImageFont.load_default()
         header_font = ImageFont.load_default()
@@ -91,7 +91,7 @@ def annotate_image(image_path, parts_in_step):
         lines.append(f"{count}x {part_name} ({color_name})")
 
     # Calculate box size
-    line_height = 20
+    line_height = 10
     max_width = 0
     for line in lines:
         # Use getbbox instead of deprecated getsize
@@ -99,7 +99,7 @@ def annotate_image(image_path, parts_in_step):
         w = bbox[2] - bbox[0]
         max_width = max(max_width, w)
 
-    padding = 10
+    padding = 5
     box_width = max_width + 2 * padding
     box_height = len(lines) * line_height + 2 * padding
 
