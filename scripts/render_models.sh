@@ -83,6 +83,8 @@ for file in "$MODELS_DIR"/*.ldr; do
     for (( s=1; s<=total_steps; s++ )); do
         step_img="$TEMP_STEP_DIR/step_${s}.jpg"
         if "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=30 -Longitude=45 -Step="$s" -SaveSnapshot="$step_img" > "$LOG_FILE" 2>&1; then
+            # Annotate step with parts needed
+            python3 scripts/annotate_step.py "$file" "$s" "$step_img"
             step_images+=("$step_img")
         else
             echo "  Error: Failed to render step $s for $filename"
