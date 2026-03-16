@@ -4,7 +4,10 @@ import subprocess
 def main():
     celllist_path = 'specifications/sg13g2_stdcell.celllist'
     lef_path = 'specifications/sg13g2_stdcell.lef'
-    script_path = 'scripts/lef_to_ldr.py'
+    lef_to_ldr_script = 'scripts/lef_to_ldr.py'
+    gen_design_docs_script = 'scripts/generate_design_docs.py'
+    design_to_ldr_script = 'scripts/design_to_ldr.py'
+    gen_gallery_script = 'scripts/generate_gallery.py'
 
     if not os.path.exists(celllist_path):
         print(f"Error: Cell list not found at {celllist_path}")
@@ -13,16 +16,33 @@ def main():
     with open(celllist_path, 'r') as f:
         cells = [line.strip() for line in f if line.strip()]
 
-    print(f"Found {len(cells)} cells. Starting generation...")
-
+    print(f"Found {len(cells)} cells. Starting initial LDR generation from LEF...")
     for cell in cells:
-        print(f"Generating {cell}...")
+        print(f"  Generating {cell}...")
         try:
-            subprocess.run(['python3', script_path, lef_path, cell], check=True)
+            subprocess.run(['python3', lef_to_ldr_script, lef_path, cell], check=True)
         except subprocess.CalledProcessError as e:
-            print(f"Error generating {cell}: {e}")
+            print(f"  Error generating {cell} from LEF: {e}")
 
-    print("Generation complete.")
+    print("Step 2: Generating design documentation (preserving GOLDEN STANDARDs)...")
+    try:
+        subprocess.run(['python3', gen_design_docs_script], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running {gen_design_docs_script}: {e}")
+
+    print("Step 3: Propagating design documentation back to LDR models...")
+    try:
+        subprocess.run(['python3', design_to_ldr_script], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running {design_to_ldr_script}: {e}")
+
+    print("Step 4: Updating the HTML gallery...")
+    try:
+        subprocess.run(['python3', gen_gallery_script], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running {gen_gallery_script}: {e}")
+
+    print("Generation chain complete.")
 
 if __name__ == "__main__":
     main()

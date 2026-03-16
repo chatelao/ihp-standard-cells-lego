@@ -166,7 +166,7 @@ def extract_golden_sections(design_dir):
     golden_sections = {}
 
     # First, try to extract from GOLDEN_STANDARD.md to ensure no loss
-    gs_path = 'GOLDEN_STANDARD.md'
+    gs_path = 'specifications/GOLDEN_STANDARD.md'
     if os.path.exists(gs_path):
         with open(gs_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -208,7 +208,7 @@ def extract_golden_sections(design_dir):
     return golden_sections
 
 def update_golden_standard_file(all_golden):
-    filepath = 'GOLDEN_STANDARD.md'
+    filepath = 'specifications/GOLDEN_STANDARD.md'
     if not os.path.exists(filepath):
         return
 

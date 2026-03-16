@@ -94,9 +94,9 @@ GOLDEN STANDARD
 3    +     +
 2  o & c c & c
 1  O + C C + C
-0  o + c c & c
+0  o & c c & c
 9  O + C C   C
-8  o + c cCCCc
+8  o & c cCCCc
 7  O   C
 6  OcCCCi i
 5  O   CCC --_
@@ -159,7 +159,7 @@ GOLDEN STANDARD
 
 ```
   01234
-4 &&&&&
+4 &+&+&
 3  +
 2  & o
 1  + O
@@ -173,6 +173,6 @@ GOLDEN STANDARD
 3  - O
 2  _ o
 1  -
-0 _____
+0 _-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)

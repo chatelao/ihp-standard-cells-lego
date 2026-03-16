@@ -14,6 +14,10 @@
   - Configured GitHub Actions for automated headless rendering and documentation deployment.
 - [x] **Phase 5: Building Instructions**
   - Implemented automated generation of multi-page PDF building instructions.
+- [x] **Phase 6: Bidirectional Generation Chain**
+  - Implemented `scripts/design_to_ldr.py` to allow manual edits in design documentation to propagate back to LEGO models.
+  - Completed the full automation loop: LEF -> LDR -> Design Docs (Golden Standards) -> LDR.
+  - Successfully preserved pin metadata and contact stacks during back-propagation.
 
 ## Current Focus
 - [ ] **Phase 6: V3 Gold Standard Migration & Validation**
