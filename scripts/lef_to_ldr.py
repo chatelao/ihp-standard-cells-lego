@@ -47,7 +47,7 @@ Y_POLY = -24
 Y_METAL1 = -56
 Y_CONTACT = -48
 
-def get_best_plates_multi(grid):
+def get_best_plates_multi(grid, prefer_rotated=False):
     """
     Greedily tile the given color grid with standard LEGO plates.
     'grid' is a 2D list [x][z] of color IDs.
@@ -61,29 +61,30 @@ def get_best_plates_multi(grid):
     # Sort plates by area descending
     sorted_plates = sorted(PLATES, key=lambda x: x[0]*x[1], reverse=True)
 
-    for z in range(d_studs):
-        for x in range(w_studs):
+    # Interlocking: if prefer_rotated, scan X then Z
+    outer_range = range(w_studs) if prefer_rotated else range(d_studs)
+    inner_range = range(d_studs) if prefer_rotated else range(w_studs)
+
+    for o in outer_range:
+        for i in inner_range:
+            x, z = (o, i) if prefer_rotated else (i, o)
             if not covered[x][z]:
                 color = grid[x][z]
                 best_p = None
                 for pw, pd, pfile in sorted_plates:
-                    # Try normal
-                    if x + pw <= w_studs and z + pd <= d_studs:
-                        if all(not covered[ix][iz] and grid[ix][iz] == color
-                               for ix in range(x, x+pw) for iz in range(z, z+pd)):
-                            best_p = (pw, pd, pfile, False)
-                            break
-                    # Try rotated
-                    if x + pd <= w_studs and z + pw <= d_studs:
-                        if all(not covered[ix][iz] and grid[ix][iz] == color
-                               for ix in range(x, x+pd) for iz in range(z, z+pw)):
-                            best_p = (pw, pd, pfile, True)
-                            break
+                    # Interlocking: if prefer_rotated, try rotated first
+                    configs = [(pd, pw, pfile, True), (pw, pd, pfile, False)] if prefer_rotated else [(pw, pd, pfile, False), (pd, pw, pfile, True)]
+
+                    for cpw, cpd, cpfile, crotated in configs:
+                        if x + cpw <= w_studs and z + cpd <= d_studs:
+                            if all(not covered[ix][iz] and grid[ix][iz] == color
+                                   for ix in range(x, x+cpw) for iz in range(z, z+cpd)):
+                                best_p = (cpw, cpd, cpfile, crotated)
+                                break
+                    if best_p: break
 
                 if best_p:
-                    pw, pd, pfile, rotated = best_p
-                    rw = pd if rotated else pw
-                    rd = pw if rotated else pd
+                    rw, rd, pfile, rotated = best_p
                     for ix in range(x, x+rw):
                         for iz in range(z, z+rd):
                             covered[ix][iz] = True
@@ -176,7 +177,8 @@ def generate_ldr(macro_data):
     # 1. Substrate low (V3)
     ldr_lines.append("0 // Substrate low (V3)")
     grid1 = [[COLOR_SUBSTRATE for _ in range(d_studs)] for _ in range(w_studs)]
-    tiles1 = get_best_plates_multi(grid1)
+    # Interlocking: use prefer_rotated=True for the bottom layer
+    tiles1 = get_best_plates_multi(grid1, prefer_rotated=True)
     for plate, x_off, z_off, color, rotated in tiles1:
         ldr_lines.append(f"1 {color} {x_off} {Y_SUBSTRATE_LOW} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
