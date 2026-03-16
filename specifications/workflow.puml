@@ -12,11 +12,11 @@ package "Data Sources" {
 }
 
 package "Processing Scripts" {
-    [lef_to_ldr.py] as LEF2LDR
-    [generate_design_docs.py] as GenDocs
-    [design_to_ldr.py] as Design2LDR
-    [render_models.sh] as Render
-    [generate_gallery.py] as GenGallery
+    [1. lef_to_ldr.py] as LEF2LDR
+    [2. generate_design_docs.py] as GenDocs
+    [3. design_to_ldr.py] as Design2LDR
+    [4. render_models.sh] as Render
+    [5. generate_gallery.py] as GenGallery
 }
 
 package "Intermediate Results" {
@@ -31,10 +31,10 @@ package "Final Outputs" {
 }
 
 package "Verification" {
-    [verify_models_v3.py] as V3
-    [verify_spatial_mapping.py] as Spatial
-    [verify_macro_dimensions.py] as Dim
-    [verify_pin_existence.py] as Pins
+    [6. verify_models_v3.py] as V3
+    [6. verify_spatial_mapping.py] as Spatial
+    [6. verify_macro_dimensions.py] as Dim
+    [6. verify_pin_existence.py] as Pins
     folder "/logs/*.log" as Logs
 }
 
