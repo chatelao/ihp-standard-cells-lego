@@ -10,6 +10,11 @@ The models are designed on a grid where LEGO studs represent the physical dimens
   - LEF Y-coordinate maps to LEGO Z-coordinate.
   - Standard cell height is **15 studs** (300 LDU).
   - Power rails (VSS and VDD) are placed with a **14 stud** center-to-center distance.
+  - **Contact Parity:**
+    - VSS Rail (Z=0): ODD X-studs.
+    - VDD Rail (Z=14): EVEN X-studs.
+    - Active/Input (Z=2..12): ODD X-studs.
+  - **Contact Tracks:** Contacts MUST be placed on EVEN Z-tracks only (0, 2, 4, 6, 8, 10, 12, 14).
 - **Vertical Scale (Y):** Each physical layer is represented by a LEGO Plate (1/3 of a brick height).
   - Layers are stacked from bottom to top.
   - In LDraw, the negative Y direction is "up".
