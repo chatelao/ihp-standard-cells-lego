@@ -165,6 +165,7 @@ def generate_ldr(macro_data):
         f"0 Name: {macro_data['name']}.ldr",
         "0 Author: lef_to_ldr.py",
         "0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt",
+        "0 !LPUB PLI GLOBAL ON",
         ""
     ]
 

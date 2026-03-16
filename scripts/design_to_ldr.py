@@ -160,6 +160,7 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
         f"0 Name: {cell_name}.ldr",
         "0 Author: design_to_ldr.py",
         "0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt",
+        "0 !LPUB PLI GLOBAL ON",
         ""
     ]
 
