@@ -186,25 +186,26 @@ def extract_golden_sections(design_dir):
                 full_text = f"## {layer_name}\n{text.strip()}"
                 golden_sections[(cell_name, layer_name)] = full_text
 
-    if not os.path.exists(design_dir):
-        return golden_sections
+    for d in [design_dir, 'handmade']:
+        if not os.path.exists(d):
+            continue
 
-    for filename in os.listdir(design_dir):
-        if filename.endswith('.md'):
-            cell_name = filename[:-3]
-            filepath = os.path.join(design_dir, filename)
-            with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
+        for filename in os.listdir(d):
+            if filename.endswith('.md'):
+                cell_name = filename[:-3]
+                filepath = os.path.join(d, filename)
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    content = f.read()
 
-            # Split by "## " to get sections.
-            sections = content.split('\n## ')
-            for section in sections[1:]:
-                if 'GOLDEN STANDARD' in section:
-                    lines = section.split('\n')
-                    layer_name = lines[0].strip()
-                    # Store the whole section including the header we'll use it verbatim
-                    # If it was already in GOLDEN_STANDARD.md, this will overwrite it with potentially newer content from the design file
-                    golden_sections[(cell_name, layer_name)] = '## ' + section.strip()
+                # Split by "## " to get sections.
+                sections = content.split('\n## ')
+                for section in sections[1:]:
+                    if 'GOLDEN STANDARD' in section:
+                        lines = section.split('\n')
+                        layer_name = lines[0].strip()
+                        # Store the whole section including the header we'll use it verbatim
+                        # If it was already in GOLDEN_STANDARD.md, this will overwrite it with potentially newer content from the design file
+                        golden_sections[(cell_name, layer_name)] = '## ' + section.strip()
     return golden_sections
 
 def update_golden_standard_file(all_golden):

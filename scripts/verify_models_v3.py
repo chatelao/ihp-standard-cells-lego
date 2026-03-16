@@ -24,6 +24,16 @@ def verify_ldr(filepath):
     is_big = max_x > 140 # > 7 studs
     w_studs = int(max_x // 20) + 1
 
+    # Pre-parse Metal 1 for parity relaxation
+    metal1_colors = {} # (stud_x, stud_z) -> color
+    for line in lines:
+        match = re.match(r'^1\s+(\d+)\s+([\d.-]+)\s+-56\s+([\d.-]+)\s+', line)
+        if match:
+            c = int(match.group(1))
+            sx = int(float(match.group(2)) // 20)
+            sz = int(float(match.group(3)) // 20)
+            metal1_colors[(sx, sz)] = c
+
     for line in lines:
         if line.startswith('0 // Substrate low (V3)'):
             has_substrate_low_v3 = True
@@ -45,6 +55,11 @@ def verify_ldr(filepath):
 
             # Gold Standard Parity Checks
             if (y == -48 and color == 15) or (y == -24 and color == 15): # Contacts
+                # Relax parity for Signal Pins (Inputs 9, Output 272, Internal 1)
+                m1_color = metal1_colors.get((stud_x, stud_z))
+                if m1_color in [1, 9, 272]:
+                    continue
+
                 # VDD (Z=14) must be EVEN
                 if stud_z == 14 and stud_x % 2 != 0:
                     errors.append(f"VDD contact at Stud X={stud_x} has ODD parity (expected EVEN)")

@@ -94,9 +94,9 @@ GOLDEN STANDARD
 3    +     +
 2  o & c c & c
 1  O + C C + C
-0  o & c c & c
+0  o + c c & c
 9  O + C C   C
-8  o & c cCCCc
+8  o + c cCCCc
 7  O   C
 6  OcCCCi i
 5  O   CCC --_
@@ -154,6 +154,29 @@ GOLDEN STANDARD
 ```
 Legend: N=N-Well, S=Substrate
 
+### sg13g2_inv_1 - Active
+GOLDEN STANDARD
+
+```
+  01234
+4 ppppp
+3 NNNNN
+2 NpppN
+1 NpppN
+0 NpppN
+9 NpppN
+8 NpppN
+7 SSSSS
+6 SSSSS
+5 SSSSS
+4 SnnnS
+3 SnnnS
+2 SnnnS
+1 SSSSS
+0 nnnnn
+```
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+
 ### sg13g2_inv_1 - Metal 1
 GOLDEN STANDARD
 
@@ -169,10 +192,240 @@ GOLDEN STANDARD
 7    O
 6  i O
 5    O
-4  _ o
+4   _o
 3  - O
-2  _ o
+2   _o
 1  -
-0 _-_-_
+0  _ _
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+
+### sg13g2_inv_1 - Polysilicon
+GOLDEN STANDARD
+
+```
+  01234
+4
+3   G
+2   G
+1   G
+0   G
+9   G
+8   G
+7   G
+6   G
+5   G
+4   G
+3   G
+2   G
+1   G
+0
+```
+Legend: G=Polysilicon
+
+### sg13g2_inv_1 - Substrate
+GOLDEN STANDARD
+
+```
+  01234
+4 NNNNN
+3 NNNNN
+2 NNNNN
+1 NNNNN
+0 NNNNN
+9 NNNNN
+8 NNNNN
+7 SSSSS
+6 SSSSS
+5 SSSSS
+4 SSSSS
+3 SSSSS
+2 SSSSS
+1 SSSSS
+0 SSSSS
+```
+Legend: N=N-Well, S=Substrate
+
+### sg13g2_nand2_1 - Active
+GOLDEN STANDARD
+
+```
+  0123456
+4 ppppppp
+3 NNNNNNN
+2 NpppppN
+1 NpppppN
+0 NpppppN
+9 NpppppN
+8 NpppppN
+7 SSSSSSS
+6 SSSSSSS
+5 SSSSSSS
+4 SnnnnnS
+3 SnnnnnS
+2 SnnnnnS
+1 SSSSSSS
+0 nnnnnnn
+```
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+
+### sg13g2_nand2_1 - Metal 1
+GOLDEN STANDARD
+
+```
+  0123456
+4 &+&+&+&
+3  +   +
+2  & o &
+1  + O +
+0  & o &
+9  + O +
+8  & o &
+7  I O I
+6  i O i
+5    O
+4   _OOo
+3  -   O
+2   _  o
+1  -
+0  _ _ _
+```
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+
+### sg13g2_nand2_1 - Polysilicon
+GOLDEN STANDARD
+
+```
+  0123456
+4
+3   G   G
+2   G   G
+1   G   G
+0   G   G
+9   G   G
+8   G   G
+7   G   G
+6   G   G
+5   G   G
+4   G   G
+3   G   G
+2   G   G
+1   G   G
+0
+```
+Legend: G=Polysilicon
+
+### sg13g2_nand2_1 - Substrate
+GOLDEN STANDARD
+
+```
+  0123456
+4 NNNNNNN
+3 NNNNNNN
+2 NNNNNNN
+1 NNNNNNN
+0 NNNNNNN
+9 NNNNNNN
+8 NNNNNNN
+7 SSSSSSS
+6 SSSSSSS
+5 SSSSSSS
+4 SSSSSSS
+3 SSSSSSS
+2 SSSSSSS
+1 SSSSSSS
+0 SSSSSSS
+```
+Legend: N=N-Well, S=Substrate
+
+### sg13g2_nand2b_2 - Active
+GOLDEN STANDARD
+
+```
+  01234567890123
+4 pppppppppppppp
+3 NNNNNNNNNNNNNN
+2 NppppppppppppN
+1 NppppppppppppN
+0 NppppppppppppN
+9 NppppppppppppN
+8 NppppppppppppN
+7 SSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSS
+0 nnnnnnnnnnnnnn
+```
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+
+### sg13g2_nand2b_2 - Metal 1
+GOLDEN STANDARD
+
+```
+  01234567890123
+4 &+&+&+&+&+&+&+
+3 +   +   +   +
+2 +   &   &   &
+1 +   + O + O +
+0 + c & o & o &
+9 + C + OOOOO +
+8    C&     o
+7    C      O
+6  i CC   IiO
+5    C      O
+4 - cCcCcCc o c
+3 -   C - C   C
+2 -     _ cCcCc
+1 -     -
+0  _ _ _ _ _ _ _
+```
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+
+### sg13g2_nand2b_2 - Polysilicon
+GOLDEN STANDARD
+
+```
+  01234567890123
+4
+3 G G     G G
+2 G G     G G
+1 G G     G G
+0 G G     G G
+9 G G     G G
+8 G G     G G
+7 G G     G G
+6 GGG     GGG
+5 G G     G G
+4 G G     G G
+3 G G     G G
+2 G G     G G
+1 G G     G G
+0
+```
+Legend: G=Polysilicon
+
+### sg13g2_nand2b_2 - Substrate
+GOLDEN STANDARD
+
+```
+  01234567890123
+4 NNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNN
+2 NNNNNNNNNNNNNN
+1 NNNNNNNNNNNNNN
+0 NNNNNNNNNNNNNN
+9 NNNNNNNNNNNNNN
+8 NNNNNNNNNNNNNN
+7 SSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSS
+4 SSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSS
+```
+Legend: N=N-Well, S=Substrate
