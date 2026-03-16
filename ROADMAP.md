@@ -20,6 +20,12 @@
   - Successfully preserved pin metadata and contact stacks during back-propagation.
 
 ## Current Focus
+- [ ] **Phase 0: Repository Housekeeping (Highest Priority)**
+  - [ ] Clean up transient log files and verification results from the root directory.
+  - [ ] Update `.gitignore` to include all transient logs and result files.
+  - [ ] Centralize verification outputs into a dedicated `logs/` directory.
+  - [ ] Deprecate and remove obsolete V2 scripts (`scripts/migrate_models_v2.py`, `scripts/verify_models_v2.py`).
+
 - [ ] **Phase 6: V3 Gold Standard Migration & Validation**
   - [x] Define V3 Gold Standard specifications (stacking, parity, dimensions).
   - [ ] Achieve 100% compliance with the V3 verification suite (Current: 12/84).
