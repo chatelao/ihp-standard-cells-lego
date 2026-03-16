@@ -158,6 +158,10 @@ def snap_to_grid(value, grid=20):
 def um_to_ldu_coord(um):
     return round(um * UM_TO_LDU)
 
+def um_to_stud(um):
+    # Standard Gold rule: round((um * UM_TO_LDU + 10) / 20)
+    return int((um * UM_TO_LDU + 10) // 20)
+
 def generate_ldr(macro_data):
     ldr_lines = [
         f"0 {macro_data['name']}.ldr",
@@ -167,10 +171,11 @@ def generate_ldr(macro_data):
         ""
     ]
 
-    width_ldu = snap_to_grid(um_to_ldu_coord(macro_data['width_um']))
+    # Golden Rule for width calculation
+    w_studs = int(round(macro_data['width_um'] / 0.48) * 2 - 1)
+    width_ldu = w_studs * 20
     # Force standard cell height to 15 studs (300 LDU)
     height_ldu = 300
-    w_studs = width_ldu // 20
     d_studs = height_ldu // 20
 
     # 1. Substrate low (V3)
@@ -274,6 +279,11 @@ def generate_ldr(macro_data):
                 return 1 # ODD
             return 1 if x < 8 else 0 # ODD if < 8, EVEN if >= 8
 
+        # Adjust ideal to match target parity
+        target_p = get_input_parity(ideal_c_x, is_big)
+        if ideal_c_x % 2 != target_p:
+            ideal_c_x += 1
+
         if not possible_studs:
             # Fallback to nearest stud center if none strictly inside
             best_c = (ideal_c_x, 6) # Default
@@ -303,13 +313,20 @@ def generate_ldr(macro_data):
                 best_c = min(parity_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
 
         # Determine gate stud(s)
-        # Gold standard: gates at C-1 and C+1 for Big/Drive-2, or C+1 for Drive-1 Small
+        # Gold standard: gates at C-1 and C+1 for Big/Drive-2, or C+1/C-1 for Drive-1 Small
         if is_drive_2 or is_big:
             gates = [best_c[0] - 1, best_c[0] + 1]
             pad_x = best_c[0] * 20 + 10
             pad_part = '3623.dat'
         else:
+            # For small cells, pick the side that is further from the boundary
             g = best_c[0] + 1
+            if g >= w_studs - 1: # Too close to right edge
+                g = best_c[0] - 1
+
+            # Ensure we are not at the very edge if possible
+            if g < 1: g = best_c[0] + 1
+
             gates = [g]
             pad_x = ((best_c[0] + g) / 2) * 20 + 10
             pad_part = '3023.dat'
@@ -337,6 +354,12 @@ def generate_ldr(macro_data):
     contact_lines = []
     metal1_lines = []
 
+    # Collect all gate studs
+    gate_studs = set()
+    for config in pin_assignments.values():
+        for gs in config['gate']:
+            gate_studs.add(gs)
+
     def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts):
         # drive-2 or big models use even studs for PMOS
         pmos_parity = 0 if (is_drive_2 or is_big) else 1
@@ -346,21 +369,40 @@ def generate_ldr(macro_data):
                 for sz in range(10, height_ldu, 20):
                     if zmin <= sz <= zmax:
                         stud_x, stud_z = sx // 20, sz // 20
-                        is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
+
                         if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif 0 < stud_z < 14 and is_active and stud_z % 2 == 0:
-                            # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
-                            if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
+                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                        elif 0 < stud_z < 14:
+                            is_diffusion = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions[:2])
+                            has_gate = (stud_x in gate_studs)
+
+                            if not is_diffusion and not has_gate:
+                                continue
+
+                            # For signal pins, we relax parity to allow better internal connectivity
+                            # but we still prefer even/odd based on pmos_parity for standard active regions
+                            is_signal = direction in ['OUTPUT', 'UNKNOWN']
+
+                            # NMOS (Z < 8). PMOS (Z >= 8) parity depends on cell size/drive
+                            matches_parity = False
+                            if stud_z < 8: # NMOS
+                                if stud_x % 2 == 0: matches_parity = True
+                            else: # PMOS
+                                if stud_x % 2 == pmos_parity: matches_parity = True
+
+                            if matches_parity or is_signal:
+                                # Avoid diffusion contacts on gate studs unless it's a signal pin (potential gate contact)
+                                if has_gate and is_diffusion and not is_signal:
+                                    continue
+
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                # Fill the gap to active (8 LDU round plate at Y=-24)
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                                if is_diffusion and not has_gate:
+                                    # Fill the gap to active (8 LDU round plate at Y=-24)
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
     for pin in macro_data['pins']:
         current_pin_contacts = []

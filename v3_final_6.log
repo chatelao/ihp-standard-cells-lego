@@ -1,0 +1,134 @@
+FAIL: sg13g2_a21o_1.ldr
+  - Input contact at Stud X=2 has incorrect symmetric parity (expected ODD)
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+PASS: sg13g2_a21o_2.ldr
+PASS: sg13g2_a21oi_1.ldr
+PASS: sg13g2_a21oi_2.ldr
+FAIL: sg13g2_a221oi_1.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+PASS: sg13g2_a22oi_1.ldr
+PASS: sg13g2_and2_1.ldr
+PASS: sg13g2_and2_2.ldr
+PASS: sg13g2_and3_1.ldr
+FAIL: sg13g2_and3_2.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+FAIL: sg13g2_and4_1.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_and4_2.ldr
+PASS: sg13g2_antennanp.ldr
+PASS: sg13g2_buf_1.ldr
+FAIL: sg13g2_buf_16.ldr
+  - Input contact at Stud X=39 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_buf_2.ldr
+FAIL: sg13g2_buf_4.ldr
+  - Input contact at Stud X=11 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_buf_8.ldr
+PASS: sg13g2_decap_4.ldr
+PASS: sg13g2_decap_8.ldr
+FAIL: sg13g2_dfrbp_1.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dfrbp_2.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dfrbpq_1.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dfrbpq_2.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dlhq_1.ldr
+  - Input contact at Stud X=25 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dlhr_1.ldr
+  - Input contact at Stud X=21 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dlhrq_1.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+  - Input contact at Stud X=21 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dllr_1.ldr
+  - Input contact at Stud X=23 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_dllrq_1.ldr
+  - Input contact at Stud X=23 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_dlygate4sd1_1.ldr
+PASS: sg13g2_dlygate4sd2_1.ldr
+PASS: sg13g2_dlygate4sd3_1.ldr
+PASS: sg13g2_ebufn_2.ldr
+PASS: sg13g2_ebufn_4.ldr
+FAIL: sg13g2_ebufn_8.ldr
+  - Input contact at Stud X=37 has incorrect symmetric parity (expected EVEN)
+  - Input contact at Stud X=41 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_einvn_2.ldr
+FAIL: sg13g2_einvn_4.ldr
+  - Input contact at Stud X=17 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_einvn_8.ldr
+  - Input contact at Stud X=27 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_fill_1.ldr
+PASS: sg13g2_fill_2.ldr
+PASS: sg13g2_fill_4.ldr
+PASS: sg13g2_fill_8.ldr
+FAIL: sg13g2_inv_1.ldr
+  - VSS contact at Stud X=0 has EVEN parity (expected ODD)
+  - VSS contact at Stud X=0 has EVEN parity (expected ODD)
+  - VSS contact at Stud X=2 has EVEN parity (expected ODD)
+  - VSS contact at Stud X=2 has EVEN parity (expected ODD)
+  - VSS contact at Stud X=4 has EVEN parity (expected ODD)
+  - VSS contact at Stud X=4 has EVEN parity (expected ODD)
+FAIL: sg13g2_inv_16.ldr
+  - Input contact at Stud X=31 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_inv_2.ldr
+PASS: sg13g2_inv_4.ldr
+PASS: sg13g2_inv_8.ldr
+PASS: sg13g2_lgcp_1.ldr
+PASS: sg13g2_mux2_1.ldr
+PASS: sg13g2_mux2_2.ldr
+FAIL: sg13g2_mux4_1.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+  - Input contact at Stud X=21 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_nand2_1.ldr
+FAIL: sg13g2_nand2_2.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+PASS: sg13g2_nand2b_1.ldr
+FAIL: sg13g2_nand2b_2.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_nand3_1.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+FAIL: sg13g2_nand3b_1.ldr
+  - Input contact at Stud X=2 has incorrect symmetric parity (expected ODD)
+PASS: sg13g2_nand4_1.ldr
+PASS: sg13g2_nor2_1.ldr
+PASS: sg13g2_nor2_2.ldr
+PASS: sg13g2_nor2b_1.ldr
+FAIL: sg13g2_nor2b_2.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_nor3_1.ldr
+  - Input contact at Stud X=4 has incorrect symmetric parity (expected ODD)
+PASS: sg13g2_nor3_2.ldr
+FAIL: sg13g2_nor4_1.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+FAIL: sg13g2_nor4_2.ldr
+  - Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_o21ai_1.ldr
+PASS: sg13g2_or2_1.ldr
+PASS: sg13g2_or2_2.ldr
+FAIL: sg13g2_or3_1.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+FAIL: sg13g2_or3_2.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+FAIL: sg13g2_or4_1.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+FAIL: sg13g2_or4_2.ldr
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+FAIL: sg13g2_sdfbbp_1.ldr
+  - Input contact at Stud X=2 has incorrect symmetric parity (expected ODD)
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+  - Input contact at Stud X=13 has incorrect symmetric parity (expected EVEN)
+  - Input contact at Stud X=25 has incorrect symmetric parity (expected EVEN)
+  - Input contact at Stud X=51 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_sdfrbp_1.ldr
+PASS: sg13g2_sdfrbp_2.ldr
+PASS: sg13g2_sdfrbpq_1.ldr
+PASS: sg13g2_sdfrbpq_2.ldr
+PASS: sg13g2_sighold.ldr
+FAIL: sg13g2_slgcp_1.ldr
+  - Input contact at Stud X=4 has incorrect symmetric parity (expected ODD)
+  - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
+  - Input contact at Stud X=21 has incorrect symmetric parity (expected EVEN)
+PASS: sg13g2_tiehi.ldr
+PASS: sg13g2_tielo.ldr
+PASS: sg13g2_xnor2_1.ldr
+PASS: sg13g2_xor2_1.ldr
