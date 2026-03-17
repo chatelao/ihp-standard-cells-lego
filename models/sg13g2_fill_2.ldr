@@ -2,6 +2,7 @@
 0 Name: sg13g2_fill_2.ldr
 0 Author: design_to_ldr.py
 0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+0 !LPUB PLI GLOBAL ON
 
 0 // Substrate low (V3)
 1 8 20 0 80 0 0 1 0 1 0 -1 0 0 3034.dat
@@ -52,3 +53,9 @@
 1 14 40 -56 290 1 0 0 0 1 0 0 0 1 3710.dat
 0 // VSS Rail
 1 0 40 -56 10 1 0 0 0 1 0 0 0 1 3710.dat
+0 STEP
+0 // Metal 2 Connections
+1 14 10 -64 290 1 0 0 0 1 0 0 0 1 3024.dat
+1 0 30 -64 10 1 0 0 0 1 0 0 0 1 3024.dat
+1 14 50 -64 290 1 0 0 0 1 0 0 0 1 3024.dat
+1 0 70 -64 10 1 0 0 0 1 0 0 0 1 3024.dat

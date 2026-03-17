@@ -71,9 +71,7 @@ def generate_gallery():
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
         }
         .view-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
+            display: block;
             background-color: #1a1a1a;
         }
         .view-grid img {
@@ -132,12 +130,7 @@ def generate_gallery():
         name = os.path.splitext(ldr_file)[0]
 
         views = [
-            {'suffix': '', 'label': 'Perspective'},
-            {'suffix': '_top', 'label': 'Top'},
-            {'suffix': '_front', 'label': 'Front'},
-            {'suffix': '_side', 'label': 'Side'},
-            {'suffix': '_top_angled', 'label': 'Top Angled'},
-            {'suffix': '_side_angled', 'label': 'Side Angled'}
+            {'suffix': '', 'label': 'Perspective'}
         ]
 
         html_content += f'        <div class="card">\n'
