@@ -116,16 +116,25 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     # Contacts: Y=-48 (Between Active/Poly and Metal 1)
     # Metal 1: Y=-56
 
-    # If we are in Metal 1, check for Contact at Y=-48 (below)
+    # If we are in Metal 1, check for Contact at Y=-48 (below) or Metal 2 Connection at Y=-64 (above)
     if layer_y_list[0] == -56:
         # Check for contact (below)
-        has_contact = False
+        has_contact_below = False
         for p in parts:
             if p['part'] == '3062b.dat' and p['y'] == -48:
                 if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    has_contact = True
+                    has_contact_below = True
                     break
-        if has_contact:
+
+        # Check for Metal 2 connection plate (above)
+        has_plate_above = False
+        for p in parts:
+            if p['part'] == '3024.dat' and p['y'] == -64:
+                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
+                    has_plate_above = True
+                    break
+
+        if has_contact_below or has_plate_above:
             alternatives = {'I': 'i', 'O': 'o', 'C': 'c', '+': '&', '-': '_'}
             return alternatives.get(char, 'c')
 
