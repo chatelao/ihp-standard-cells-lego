@@ -46,6 +46,7 @@ Y_ACTIVE = -16
 Y_POLY = -24
 Y_METAL1 = -56
 Y_CONTACT = -48
+Y_METAL2_PLATE = -64
 
 def get_best_plates_multi(grid, prefer_rotated=False):
     """
@@ -339,8 +340,9 @@ def generate_ldr(macro_data):
     # 5. Pins, Rails, and Contacts
     contact_lines = []
     metal1_lines = []
+    metal2_plate_lines = []
 
-    def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts):
+    def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts, current_pin_upward_plates, color):
         # drive-2 or big models use even studs for PMOS
         pmos_parity = 0 if (is_drive_2 or is_big) else 1
 
@@ -352,27 +354,48 @@ def generate_ldr(macro_data):
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
                         if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif 0 < stud_z < 14 and is_active and stud_z % 2 == 0:
                             # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
                             if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
                                 # Fill the gap to active (8 LDU round plate at Y=-24)
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
     for pin in macro_data['pins']:
         current_pin_contacts = []
+        current_pin_upward_plates = []
         current_pin_metal1 = []
-        current_pin_metal1_rects = []
 
         pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
         color = COLOR_VDD if pin['name']=='VDD' else COLOR_VSS if pin['name']=='VSS' else COLOR_METAL1_INPUT if pin['direction']=='INPUT' else COLOR_METAL1_OUTPUT if pin['direction']=='OUTPUT' else COLOR_METAL1_INTERNAL
         current_pin_metal1.append(pin_comment)
+
+        # First, check for explicit Via1 rects for upward plates
+        has_via1 = False
+        for rect in pin['rects']:
+            if rect['layer'] == 'Via1':
+                has_via1 = True
+                vx1_ldu, vy1_ldu = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][1]) + 10
+                vx2_ldu, vy2_ldu = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
+                vxmin, vxmax = snap_to_grid(min(vx1_ldu, vx2_ldu)), snap_to_grid(max(vx1_ldu, vx2_ldu))
+                vzmin, vzmax = snap_to_grid(min(vy1_ldu, vy2_ldu)), snap_to_grid(max(vy1_ldu, vy2_ldu))
+
+                # Ensure at least one stud if rect is very small
+                if vxmax <= vxmin: vxmax = vxmin + 20
+                if vzmax <= vzmin: vzmax = vzmin + 20
+
+                for vsx in range(vxmin + 10, vxmax, 20):
+                    for vsz in range(vzmin + 10, vzmax, 20):
+                        current_pin_upward_plates.append(f"1 {color} {vsx} {Y_METAL2_PLATE} {vsz} 1 0 0 0 1 0 0 0 1 3024.dat")
 
         for rect in pin['rects']:
             if rect['layer'] == 'Metal1':
@@ -390,7 +413,6 @@ def generate_ldr(macro_data):
                     elif zmin - 20 >= 0: zmin -= 20
                     else: zmax = zmin + 20
 
-                current_pin_metal1_rects.append((xmin, xmax, zmin, zmax))
                 w, h = xmax - xmin, zmax - zmin
                 rect_tiles = get_best_plates_multi([[color for _ in range(h // 20)] for _ in range(w // 20)])
 
@@ -401,10 +423,14 @@ def generate_ldr(macro_data):
                 if pin['direction'] == 'INPUT':
                     cfg = pin_assignments[pin['name']]
                     current_pin_contacts.append(f"1 {COLOR_CONTACT} {cfg['contact']*20+10} {Y_CONTACT} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                    if not has_via1:
+                        current_pin_upward_plates.append(f"1 {color} {cfg['contact']*20+10} {Y_METAL2_PLATE} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 3024.dat")
                 else:
-                    add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts)
+                    # If we don't have Via1, we'll add upward plates based on contacts inside add_contacts_for_rect
+                    add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color)
 
         if current_pin_contacts: contact_lines.extend(current_pin_contacts)
+        if current_pin_upward_plates: metal2_plate_lines.extend(current_pin_upward_plates)
         if len(current_pin_metal1) > 1: metal1_lines.extend(current_pin_metal1)
 
     # Obstructions
@@ -443,8 +469,10 @@ def generate_ldr(macro_data):
 
                 # Add Contacts for Obstructions
                 obs_contacts = []
-                add_contacts_for_rect(xmin, xmax, zmin, zmax, "OBS", "UNKNOWN", obs_contacts)
+                obs_upward = []
+                add_contacts_for_rect(xmin, xmax, zmin, zmax, "OBS", "UNKNOWN", obs_contacts, obs_upward, COLOR_METAL1_INTERNAL)
                 contact_lines.extend(obs_contacts)
+                metal2_plate_lines.extend(obs_upward)
 
     # Write layers in order
     if contact_lines:
@@ -456,6 +484,11 @@ def generate_ldr(macro_data):
         ldr_lines.append("0 STEP")
         ldr_lines.append("0 // Metal 1")
         ldr_lines.extend(metal1_lines)
+
+    if metal2_plate_lines:
+        ldr_lines.append("0 STEP")
+        ldr_lines.append("0 // Metal 2 Connections")
+        ldr_lines.extend(metal2_plate_lines)
 
     return "\n".join(ldr_lines)
 

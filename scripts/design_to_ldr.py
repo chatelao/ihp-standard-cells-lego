@@ -46,6 +46,7 @@ Y_ACTIVE = -16
 Y_POLY = -24
 Y_METAL1 = -56
 Y_CONTACT = -48
+Y_METAL2_PLATE = -64
 
 def get_best_plates_multi(grid, prefer_rotated=False):
     if not grid: return []
@@ -200,6 +201,7 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
         grid = layers['Metal 1']
         w, h = len(grid), len(grid[0])
         contacts = []
+        metal2_plates = []
         for x in range(w):
             for z in range(h):
                 char = grid[x][z]
@@ -213,6 +215,13 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                     if z == 0 or z == 14: is_active = True
                     if is_active:
                          contacts.append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+
+                    # Add Metal 2 connection plate
+                    real_char = CONTACT_MAP.get(char, char)
+                    color = COLOR_MAP_REV.get(real_char)
+                    if color is not None:
+                        metal2_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+
         if contacts:
             ldr_lines.append("0 STEP")
             ldr_lines.append("0 // Contacts")
@@ -264,6 +273,11 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
             ldr_lines.append("0 // Internal / Obstructions")
             for plate, x, z, c, rot in get_best_plates_multi(rem_grid):
                 ldr_lines.append(f"1 {c} {x} {Y_METAL1} {z} {'0 0 1 0 1 0 -1 0 0' if rot else '1 0 0 0 1 0 0 0 1'} {plate}")
+
+        if metal2_plates:
+            ldr_lines.append("0 STEP")
+            ldr_lines.append("0 // Metal 2 Connections")
+            ldr_lines.extend(metal2_plates)
 
     return "\n".join(ldr_lines)
 
