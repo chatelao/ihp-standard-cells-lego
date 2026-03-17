@@ -1,6 +1,8 @@
 # Design Documentation for sg13g2_nand2b_2
 
 ## Substrate
+GOLDEN STANDARD
+
 ```
   01234567890123
 4 NNNNNNNNNNNNNN
@@ -22,6 +24,8 @@
 Legend: N=N-Well, S=Substrate
 
 ## Active
+GOLDEN STANDARD
+
 ```
   01234567890123
 4 pppppppppppppp
@@ -43,6 +47,8 @@ Legend: N=N-Well, S=Substrate
 Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 
 ## Polysilicon
+GOLDEN STANDARD
+
 ```
   01234567890123
 4
@@ -64,6 +70,8 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 Legend: G=Polysilicon
 
 ## Metal 1
+GOLDEN STANDARD
+
 ```
   01234567890123
 4 &+&+&+&+&+&+&+
@@ -74,7 +82,7 @@ Legend: G=Polysilicon
 9 + C + OOOOO +
 8    C&     o
 7    C      O
-6  i CC   IiO
+6  i CC   iIO
 5    C      O
 4 - cCcCcCc o c
 3 -   C - C   C

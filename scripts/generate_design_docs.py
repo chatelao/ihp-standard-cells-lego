@@ -311,6 +311,8 @@ def main():
         os.makedirs('design')
 
     golden_sections = extract_golden_sections('design')
+    # Priority to handmade
+    golden_sections.update(extract_golden_sections('handmade'))
 
     for filename in os.listdir('models'):
         if filename.startswith('sg13g2_') and filename.endswith('.ldr'):

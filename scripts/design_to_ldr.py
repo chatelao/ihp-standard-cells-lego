@@ -268,16 +268,32 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
     return "\n".join(ldr_lines)
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cell', help='Specific cell to process')
+    args = parser.parse_args()
+
     lef_path = 'specifications/sg13g2_stdcell.lef'
     with open(lef_path, 'r') as f: lef_content = f.read()
     design_dir, models_dir = 'design', 'models'
     if not os.path.exists(models_dir): os.makedirs(models_dir)
-    for filename in os.listdir(design_dir):
+
+    if args.cell:
+        files = [f"{args.cell}.md"]
+    else:
+        files = [f for f in os.listdir(design_dir) if f.endswith('.md')]
+
+    for filename in files:
         if filename.endswith('.md'):
             cell_name = filename[:-3]
+            design_path = os.path.join(design_dir, filename)
+            if not os.path.exists(design_path):
+                print(f"Error: {design_path} not found.")
+                continue
+
             print(f"Processing {cell_name}...")
             macro_data = parse_lef_macro(lef_content, cell_name)
-            layers = parse_design_md(os.path.join(design_dir, filename))
+            layers = parse_design_md(design_path)
             ldr_content = generate_ldr_from_layers(cell_name, layers, macro_data)
             with open(os.path.join(models_dir, f"{cell_name}.ldr"), 'w', encoding='utf-8') as f:
                 f.write(ldr_content)

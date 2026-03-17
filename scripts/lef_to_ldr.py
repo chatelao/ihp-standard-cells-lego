@@ -294,8 +294,7 @@ def generate_ldr(macro_data):
                         best_c = (si, sk)
         else:
             # Filter by parity
-            target_parity = get_input_parity(ideal_c_x, is_big)
-            parity_studs = [s for s in possible_studs if s[0] % 2 == target_parity]
+            parity_studs = [s for s in possible_studs if s[0] % 2 == get_input_parity(s[0], is_big)]
             if not parity_studs:
                 parity_studs = possible_studs # Relax if no matches
 

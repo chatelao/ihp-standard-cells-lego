@@ -28,7 +28,11 @@ Contacts are strictly permitted only on EVEN Z-tracks:
 To maintain grid alignment and prevent illegal overlaps, contacts follow a strict parity rule on the X-axis:
 - **VSS Rail (Z=0)**: MUST use ODD X-studs (1, 3, 5, ...).
 - **VDD Rail (Z=14)**: MUST use EVEN X-studs (0, 2, 4, ...).
-- **Active & Input (Z=2..12)**: MUST use ODD X-studs (1, 3, 5, ...).
+- **Active & Input (Z=2..12)**:
+  - For small cells (Width ≤ 7 studs): MUST use ODD X-studs (1, 3, 5, ...).
+  - For big cells (Width > 7 studs): MUST follow symmetric parity:
+    - ODD X-studs (1, 3, 5, 7) if X < 8.
+    - EVEN X-studs (8, 10, 12, ...) if X ≥ 8.
 
 ### 3.3 Generation Logic
 A contact is generated at a coordinate `(x_stud, z_stud)` if:
