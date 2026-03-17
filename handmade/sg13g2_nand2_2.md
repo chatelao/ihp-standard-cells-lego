@@ -1,4 +1,4 @@
-# Design Documentation for sg13g2_nand2b_2
+# Design Documentation for sg13g2_nand2_2
 
 ## Substrate
 ```
