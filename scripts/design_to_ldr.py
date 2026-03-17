@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import argparse
 
 # Constants from modeling_guidelines.md (V3)
 PLATES = [
@@ -210,8 +211,10 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                     contacts.append(f"1 15 {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                     is_active = False
                     if 'Active' in layers:
-                        active_char = layers['Active'][x][z]
-                        if active_char in ['n', 'p']: is_active = True
+                        active_grid = layers['Active']
+                        if x < len(active_grid) and z < len(active_grid[x]):
+                            active_char = active_grid[x][z]
+                            if active_char in ['n', 'p']: is_active = True
                     if z == 0 or z == 14: is_active = True
                     if is_active:
                          contacts.append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
@@ -282,16 +285,29 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
     return "\n".join(ldr_lines)
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cell', help='Process only a specific cell')
+    args = parser.parse_args()
+
     lef_path = 'specifications/sg13g2_stdcell.lef'
     with open(lef_path, 'r') as f: lef_content = f.read()
     design_dir, models_dir = 'design', 'models'
     if not os.path.exists(models_dir): os.makedirs(models_dir)
-    for filename in os.listdir(design_dir):
+
+    files = os.listdir(design_dir)
+    if args.cell:
+        files = [f"{args.cell}.md"]
+
+    for filename in files:
         if filename.endswith('.md'):
+            filepath = os.path.join(design_dir, filename)
+            if not os.path.exists(filepath):
+                print(f"Error: {filepath} not found")
+                continue
             cell_name = filename[:-3]
             print(f"Processing {cell_name}...")
             macro_data = parse_lef_macro(lef_content, cell_name)
-            layers = parse_design_md(os.path.join(design_dir, filename))
+            layers = parse_design_md(filepath)
             ldr_content = generate_ldr_from_layers(cell_name, layers, macro_data)
             with open(os.path.join(models_dir, f"{cell_name}.ldr"), 'w', encoding='utf-8') as f:
                 f.write(ldr_content)
