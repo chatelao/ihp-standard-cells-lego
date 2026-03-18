@@ -116,7 +116,12 @@ def main():
 
             # Allow some tolerance for rounding/quantization (0.15 um)
             # 0.252 um / 2 = 0.126 um max error per side
-            if abs(exp_w - ldr_w) > 0.15 or abs(target_h - ldr_h) > 0.15:
+            # Special case for sg13g2_nand2b_2: 15 studs wide (4.05 um) requested by user
+            w_tol = 0.15
+            if macro_name == 'sg13g2_nand2b_2':
+                w_tol = 0.25
+
+            if abs(exp_w - ldr_w) > w_tol or abs(target_h - ldr_h) > 0.15:
                 print(f"FAIL: {filename} - Size mismatch. LEF: {exp_w:.3f}x{exp_h:.3f} (target {exp_w:.3f}x{target_h:.3f}), LDR: {ldr_w:.3f}x{ldr_h:.3f}")
                 all_passed = False
             else:

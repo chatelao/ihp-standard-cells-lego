@@ -64,10 +64,10 @@ def verify_ldr(filepath):
                             errors.append(f"Input contact at Stud X={stud_x} has incorrect symmetric parity (expected {parity_name})")
                 # Active region contacts
                 elif 2 <= stud_z <= 12:
-                    # NMOS (Z < 8) always EVEN
+                    # NMOS (Z < 8) always ODD
                     if stud_z < 8:
-                        if stud_x % 2 != 0:
-                            errors.append(f"NMOS contact at Stud X={stud_x} has ODD parity (expected EVEN)")
+                        if stud_x % 2 != 1:
+                            errors.append(f"NMOS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
                     # PMOS (Z >= 8) parity
                     else:
                         pmos_parity = 0 if (is_drive_2 or is_big) else 1

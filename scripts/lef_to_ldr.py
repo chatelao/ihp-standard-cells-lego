@@ -171,6 +171,11 @@ def generate_ldr(macro_data):
     ]
 
     width_ldu = snap_to_grid(um_to_ldu_coord(macro_data['width_um']))
+
+    # Special case for sg13g2_nand2b_2: 15 studs wide (4.05 um) requested by user
+    if macro_data['name'] == 'sg13g2_nand2b_2':
+        width_ldu = 300
+
     # Force standard cell height to 15 studs (300 LDU)
     height_ldu = 300
     w_studs = width_ldu // 20
@@ -363,8 +368,8 @@ def generate_ldr(macro_data):
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif 0 < stud_z < 14 and is_active and stud_z % 2 == 0:
-                            # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
-                            if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
+                            # NMOS (Z < 8) always ODD (1). PMOS (Z >= 8) parity depends on cell size/drive
+                            if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 1):
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                                 current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
                                 # Fill the gap to active (8 LDU round plate at Y=-24)

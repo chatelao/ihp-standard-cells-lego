@@ -76,9 +76,9 @@ Legend: G=Polysilicon
 7  C I I I I C O
 6  C i i i i C O
 5  C           O
-4  Cc      -  oO
+4  cC      _  OO
 3  CC      -  OO
-2          -
+2          _
 1          -
 0 -_-_-_-_-_-_-_
 ```

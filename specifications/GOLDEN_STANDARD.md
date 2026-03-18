@@ -35,7 +35,7 @@ This document defines the "Gold Standard" for IHP SG13G2 LEGO models. These rule
 To ensure consistent staggered patterns:
 - **VDD Rail (Z=14):** EVEN studs.
 - **VSS Rail (Z=0):** ODD studs.
-- **NMOS Contacts:** Always EVEN studs.
+- **NMOS Contacts:** Always ODD studs.
 - **PMOS Contacts:**
   - Drive-1 cells: ODD studs.
   - Drive-2 and "Big" models: EVEN studs.
@@ -229,19 +229,19 @@ GOLDEN STANDARD
 ```
   012345678901234
 4
-3     G G  G G
-2 G   G G  G G
-1 G   G G  G G
-0 G   G G  G G
-9 G   G G  G G
-8 G   G G  G G
-7 G   G G  G G
-6 G  GGGG  GGG
-5 G   G G  G G
-4 G   G G  G G
-3 G   G G  G G
-2 G   G G  G G
-1     G G  G G
+3      G G  G G
+2  G   G G  G G
+1  G   G G  G G
+0  G   G G  G G
+9  G   G G  G G
+8  G   G G  G G
+7  G   G G  G G
+6  G  GGGG  GGG
+5  G   G G  G G
+4  G   G G  G G
+3  G   G G  G G
+2  G   G G  G G
+1      G G  G G
 0
 ```
 Legend: G=Polysilicon

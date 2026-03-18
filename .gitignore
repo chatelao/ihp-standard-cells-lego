@@ -7,3 +7,5 @@ logs/
 *_results.txt
 *_final.txt
 library.zip
+__pycache__/
+*.pyc

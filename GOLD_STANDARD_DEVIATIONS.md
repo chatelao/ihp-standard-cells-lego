@@ -96,9 +96,6 @@ These failures are reported by `scripts/verify_models_v3.py` and indicate physic
 #### sg13g2_nand2_2.ldr
 - NMOS contact at Stud X=7 has ODD parity (expected EVEN)
 
-#### sg13g2_nand2b_2.ldr
-- Input contact at Stud X=9 has incorrect symmetric parity (expected EVEN)
-
 #### sg13g2_nand3_1.ldr
 - Input contact at Stud X=6 has incorrect symmetric parity (expected ODD)
 
