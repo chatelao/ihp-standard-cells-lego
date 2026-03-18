@@ -111,6 +111,8 @@ def verify_ldr(filepath):
                 # Metal 2 Connection Plates (1, 9, 272, 14, 0)
                 if color not in [1, 9, 272, 14, 0]:
                     errors.append(f"Invalid color {color} at Y=-64 (expected 1, 9, 272, 14, or 0)")
+                if "3070.dat" not in line:
+                    errors.append(f"Invalid part at Y=-64 (expected 3070.dat 1x1 tile)")
             elif y == -80:
                 errors.append(f"Detected component at Y=-80 (Vias are removed)")
             elif y == -88:

@@ -16,6 +16,7 @@ PLATES = [
     (1, 1, "3024.dat"),
 ]
 
+TILE_1X1 = "3070.dat"     # 1x1 flat tile
 ROUND_BRICK = "3062b.dat" # 1x1 round brick
 ROUND_PLATE = "6141.dat"  # 1x1 round plate
 
@@ -223,7 +224,7 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                     real_char = CONTACT_MAP.get(char, char)
                     color = COLOR_MAP_REV.get(real_char)
                     if color is not None:
-                        metal2_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                        metal2_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
 
         if contacts:
             ldr_lines.append("0 STEP")
