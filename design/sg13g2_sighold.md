@@ -4,20 +4,20 @@
 ```
   012345678
 4 NNNNNNNNN
-3 NNNNNNNNN
-2 NNNNNNNNN
-1 NNNNNNNNN
-0 NNNNNNNNN
-9 NNNNNNNNN
-8 NNNNNNNNN
+3        SN
+2        SN
+1    NN   N
+0    NN   N
+9         N
+8         N
 7 SSSSSSSSS
 6 SSSSSSSSS
-5 SSSSSSSSS
-4 SSSSSSSSS
-3 SSSSSSSSS
-2 SSSSSSSSS
-1 SSSSSSSSS
-0 SSSSSSSSS
+5       SSS
+4         S
+3    SS   S
+2    SS   S
+1         S
+0         S
 ```
 Legend: N=N-Well, S=Substrate
 
@@ -27,16 +27,16 @@ Legend: N=N-Well, S=Substrate
 4 ppppppppp
 3 NNNNNNNNN
 2 NpppppppN
-1 NpppppppN
-0 NpppppppN
-9 NpppppppN
-8 NpppppppN
+1 N      pN
+0 N  pp  pN
+9 N  pp  pN
+8 N      pN
 7 SSSSSSSSS
-6 SSSSSSSSS
-5 SSSSSSSSS
+6 S  SS  SS
+5 S  SS  SS
 4 SnnnnnnnS
-3 SnnnnnnnS
-2 SnnnnnnnS
+3 S  nn  nS
+2 S  nn  nS
 1 SSSSSSSSS
 0 nnnnnnnnn
 ```
@@ -68,15 +68,15 @@ Legend: G=Polysilicon
   012345678
 4 &+&+&+&+&
 3   +++++
-2   &+&+&
+2   +++++
 1
 0
 9
-8  C     C
+8  c     c
 7  CCCCCCC
-6  C     C
+6  c     c
 5  CCCC  C
-4  C     C
+4  c     c
 3
 2
 1   -----

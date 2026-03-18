@@ -181,6 +181,16 @@ def snap_to_grid(value, grid=20):
 def um_to_ldu_coord(um):
     return round(um * UM_TO_LDU)
 
+def get_unified_parity(stud_x, is_big):
+    """
+    Unified parity rule for active and gate tracks (Z=2..12):
+    - Small models (width <= 7): Always ODD (1).
+    - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
+    """
+    if not is_big:
+        return 1 # ODD
+    return 1 if stud_x < 8 else 0 # ODD if < 8, EVEN if >= 8
+
 def generate_ldr(macro_data):
     ldr_lines = [
         f"0 {macro_data['name']}.ldr",
@@ -291,14 +301,6 @@ def generate_ldr(macro_data):
         # Distribution: 2 pins -> 1, 5. 3 pins -> 1, 5, 9. 4 pins -> 1, 5, 9, 13
         ideal_c_x = 4 * j + 1
 
-        # Parity rules for input contacts:
-        # Small models (<= 7 studs): Always ODD
-        # Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8
-        def get_input_parity(x, is_big_model):
-            if not is_big_model:
-                return 1 # ODD
-            return 1 if x < 8 else 0 # ODD if < 8, EVEN if >= 8
-
         if not possible_studs:
             # Fallback to nearest stud center if none strictly inside
             best_c = (ideal_c_x, 6) # Default
@@ -316,7 +318,7 @@ def generate_ldr(macro_data):
                         best_c = (si, sk)
         else:
             # Filter by parity
-            target_parity = get_input_parity(ideal_c_x, is_big)
+            target_parity = get_unified_parity(ideal_c_x, is_big)
             parity_studs = [s for s in possible_studs if s[0] % 2 == target_parity]
             if not parity_studs:
                 parity_studs = possible_studs # Relax if no matches
@@ -364,32 +366,36 @@ def generate_ldr(macro_data):
     metal2_plate_lines = []
 
     def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts, current_pin_upward_plates, color):
-        # drive-2 or big models use even studs for PMOS
-        pmos_parity = 0 if (is_drive_2 or is_big) else 1
-
         for sx in range(10, width_ldu, 20):
             if xmin <= sx <= xmax:
                 for sz in range(10, height_ldu, 20):
                     if zmin <= sz <= zmax:
                         stud_x, stud_z = sx // 20, sz // 20
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
-                        if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
-                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
-                            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                            if is_active:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif 0 < stud_z < 14 and is_active and stud_z % 2 == 0:
-                            # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
-                            if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
+
+                        # Power Rails: Must use exact tracks (Z=0 or Z=14)
+                        if pin_name == 'VDD':
+                            if stud_z == 14 and stud_x % 2 == 0:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                                 current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                                # Fill the gap to active (8 LDU round plate at Y=-24)
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                                if is_active:
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                        elif pin_name == 'VSS':
+                            if stud_z == 0 and stud_x % 2 == 1:
+                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                                if is_active:
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                        # Signal pins and Obstructions: Must use even tracks 2-12
+                        elif 0 < stud_z < 14 and stud_z % 2 == 0:
+                            # Unified parity rule for active and gate tracks (Z=2..12)
+                            if stud_x % 2 == get_unified_parity(stud_x, is_big):
+                                # Contacts are allowed in active regions or on the gate track (Z=6)
+                                if is_active or stud_z == 6:
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                                    # Fill the gap to active/poly (8 LDU round plate at Y=-24)
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
     for pin in macro_data['pins']:
         current_pin_contacts = []

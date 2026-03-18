@@ -1,6 +1,16 @@
 import os
 import re
 
+def get_unified_parity(stud_x, is_big):
+    """
+    Unified parity rule for active and gate tracks (Z=2..12):
+    - Small models (width <= 7): Always ODD (1).
+    - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
+    """
+    if not is_big:
+        return 1 # ODD
+    return 1 if stud_x < 8 else 0 # ODD if < 8, EVEN if >= 8
+
 def verify_ldr(filepath):
     with open(filepath, 'r') as f:
         lines = f.readlines()
@@ -13,14 +23,22 @@ def verify_ldr(filepath):
     found_y_levels = set()
     found_round_bricks = False
 
-    is_drive_2 = os.path.basename(filepath).endswith('_2.ldr')
-
-    # Calculate width from model
+    # Pre-scan for Metal 2 connections to identify pin types at coordinates
+    pin_map = {} # (stud_x, stud_z) -> color
     max_x = 0
     for line in lines:
-        match = re.match(r'^1\s+\d+\s+([\d.-]+)\s+[\d.-]+\s+[\d.-]+\s+', line)
+        match = re.match(r'^1\s+(\d+)\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)\s+', line)
         if match:
-            max_x = max(max_x, float(match.group(1)))
+            color = int(match.group(1))
+            x = float(match.group(2))
+            y = float(match.group(3))
+            z = float(match.group(4))
+            max_x = max(max_x, x)
+            if y == -64:
+                stud_x = int(x // 20)
+                stud_z = int(z // 20)
+                pin_map[(stud_x, stud_z)] = color
+
     is_big = max_x > 140 # > 7 studs
     w_studs = int(max_x // 20) + 1
 
@@ -45,35 +63,29 @@ def verify_ldr(filepath):
 
             # Gold Standard Parity Checks
             if (y == -48 and color == 15) or (y == -24 and color == 15): # Contacts
-                # VDD (Z=14) must be EVEN
-                if stud_z == 14 and stud_x % 2 != 0:
-                    errors.append(f"VDD contact at Stud X={stud_x} has ODD parity (expected EVEN)")
-                # VSS (Z=0) must be ODD
-                elif stud_z == 0 and stud_x % 2 == 0:
-                    errors.append(f"VSS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
-                # Input contacts (typically at Stud Z=6)
-                elif stud_z == 6:
-                    if not is_big:
-                        if stud_x % 2 == 0:
-                            errors.append(f"Input contact at Stud X={stud_x} has EVEN parity in small model (expected ODD)")
-                    else:
-                        # Big model symmetric parity: ODD if X < 8, EVEN if X >= 8
-                        expected = 1 if stud_x < 8 else 0
-                        if stud_x % 2 != expected:
-                            parity_name = "ODD" if expected == 1 else "EVEN"
-                            errors.append(f"Input contact at Stud X={stud_x} has incorrect symmetric parity (expected {parity_name})")
-                # Active region contacts
-                elif 2 <= stud_z <= 12:
-                    # NMOS (Z < 8) always EVEN
-                    if stud_z < 8:
-                        if stud_x % 2 != 0:
-                            errors.append(f"NMOS contact at Stud X={stud_x} has ODD parity (expected EVEN)")
-                    # PMOS (Z >= 8) parity
-                    else:
-                        pmos_parity = 0 if (is_drive_2 or is_big) else 1
-                        if stud_x % 2 != pmos_parity:
-                            parity_name = "EVEN" if pmos_parity == 0 else "ODD"
-                            errors.append(f"PMOS contact at Stud X={stud_x} has opposite parity (expected {parity_name})")
+                pin_color = pin_map.get((stud_x, stud_z))
+
+                # Check Track Alignment (Only EVEN tracks)
+                if stud_z % 2 != 0:
+                    errors.append(f"Contact at Stud Z={stud_z} is on an ODD track (expected EVEN)")
+
+                if pin_color == 14: # VDD
+                    if stud_z != 14:
+                        errors.append(f"VDD contact at Stud Z={stud_z} (expected Track 14)")
+                    if stud_x % 2 != 0:
+                        errors.append(f"VDD contact at Stud X={stud_x} has ODD parity (expected EVEN)")
+                elif pin_color == 0: # VSS
+                    if stud_z != 0:
+                        errors.append(f"VSS contact at Stud Z={stud_z} (expected Track 0)")
+                    if stud_x % 2 == 0:
+                        errors.append(f"VSS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
+                elif pin_color in [1, 9, 272]: # Signal (Internal, Input, Output)
+                    if not (2 <= stud_z <= 12):
+                        errors.append(f"Signal contact at Stud Z={stud_z} outside tracks 2-12")
+                    expected_parity = get_unified_parity(stud_x, is_big)
+                    if stud_x % 2 != expected_parity:
+                        parity_name = "ODD" if expected_parity == 1 else "EVEN"
+                        errors.append(f"Signal contact at Stud X={stud_x} has incorrect parity (expected {parity_name})")
 
             # Gold Standard Physical Dimensions
             if y == -8 and color == 7: # N-Well
