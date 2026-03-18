@@ -30,17 +30,17 @@ GOLDEN STANDARD
   012345678901234
 4 ppppppppppppppp
 3 NNNNNNNNNNNNNNN
-2 NpppppppppppppN
-1 NpppppppppppppN
-0 NpppppppppppppN
-9 NpppppppppppppN
-8 NpppppppppppppN
+2 pppNppppppppppN
+1 pppNppppppppppN
+0 pppNppppppppppN
+9 pppNppppppppppN
+8 pppNppppppppppN
 7 SSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSS
-4 SnnnnnnnnnnnnnS
-3 SnnnnnnnnnnnnnS
-2 SnnnnnnnnnnnnnS
+4 SnnnSnnnnnnnnnS
+3 SnnnSnnnnnnnnnS
+2 SnnnSnnnnnnnnnS
 1 SSSSSSSSSSSSSSS
 0 nnnnnnnnnnnnnnn
 ```
