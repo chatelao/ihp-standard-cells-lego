@@ -28,13 +28,16 @@ Contacts are strictly permitted only on EVEN Z-tracks:
 To maintain grid alignment and prevent illegal overlaps, contacts follow a strict parity rule on the X-axis:
 - **VSS Rail (Z=0)**: MUST use ODD X-studs (1, 3, 5, ...).
 - **VDD Rail (Z=14)**: MUST use EVEN X-studs (0, 2, 4, ...).
-- **Active & Input (Z=2..12)**: MUST use ODD X-studs (1, 3, 5, ...).
+- **Active & Gate Tracks (Z=2..12)**:
+  - Small models (width <= 7): Always ODD (1, 3, 5, ...).
+  - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
 
 ### 3.3 Generation Logic
 A contact is generated at a coordinate `(x_stud, z_stud)` if:
 1. The track `z_stud` is valid (even).
 2. The parity of `x_stud` matches the rule for that track.
-3. The center of the stud `(x_stud * 20 + 10, z_stud * 20 + 10)` in LDU is geometrically contained within a LEF `RECT` defined for a `PIN` on the `Metal1` layer.
+3. The center of the stud `(x_stud * 20 + 10, z_stud * 20 + 10)` in LDU is geometrically contained within a LEF `RECT` defined for a `PIN` or `OBS` (Obstruction) on the `Metal1` layer.
+4. For signal tracks (Z=2..12), the contact is either within an `Active` region or on the `Gate Track` (Z=6).
 
 ## 4. Layer Stacking (V3)
 - Y=0: Substrate base
