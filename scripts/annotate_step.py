@@ -19,18 +19,38 @@ COLOR_MAP = {
 
 # LDraw Part ID to Name mapping
 PART_MAP = {
+    '91405.dat': 'Plate 16x16',
+    '92438.dat': 'Plate 16x8',
+    '3027.dat': 'Plate 16x6',
+    '3456.dat': 'Plate 14x6',
+    '3028.dat': 'Plate 12x6',
+    '3033.dat': 'Plate 10x6',
+    '3029.dat': 'Plate 12x4',
+    '3036.dat': 'Plate 8x6',
+    '3030.dat': 'Plate 10x4',
+    '3958.dat': 'Plate 6x6',
+    '4282.dat': 'Plate 16x2',
+    '3035.dat': 'Plate 8x4',
+    '2445.dat': 'Plate 12x2',
+    '3032.dat': 'Plate 6x4',
+    '3832.dat': 'Plate 10x2',
     '3034.dat': 'Plate 2x8',
+    '3031.dat': 'Plate 4x4',
+    '60479.dat': 'Plate 1x12',
+    '3795.dat': 'Plate 2x6',
+    '4477.dat': 'Plate 1x10',
     '3460.dat': 'Plate 1x8',
-    '3666.dat': 'Plate 1x6',
     '3020.dat': 'Plate 2x4',
+    '3666.dat': 'Plate 1x6',
+    '3021.dat': 'Plate 2x3',
     '3710.dat': 'Plate 1x4',
-    '3623.dat': 'Plate 1x3',
     '3022.dat': 'Plate 2x2',
+    '3623.dat': 'Plate 1x3',
     '3023.dat': 'Plate 1x2',
     '3024.dat': 'Plate 1x1',
-    '3070.dat': 'Tile 1x1',
-    '6141.dat': 'Plate 1x1 Round',
     '3062b.dat': 'Brick 1x1 Round',
+    '6141.dat': 'Plate 1x1 Round',
+    '3070.dat': 'Tile 1x1',
 }
 
 def parse_ldr_step(ldr_path, step_num):
@@ -88,7 +108,7 @@ def annotate_image(image_path, parts_in_step):
     lines = ["Parts Needed:"]
     for (color_id, part_id), count in sorted(parts_in_step.items()):
         color_name = COLOR_MAP.get(color_id, f"Color {color_id}")
-        part_name = PART_MAP.get(part_id, part_id)
+        part_name = PART_MAP.get(part_id, part_id.replace('.dat', ''))
         lines.append(f"{count}x {part_name} ({color_name})")
 
     # Calculate box size
