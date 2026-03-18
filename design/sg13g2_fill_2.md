@@ -4,20 +4,20 @@
 ```
   0123
 4 NNNN
-3 NNNN
-2 NNNN
-1 NNNN
-0 NNNN
-9 NNNN
-8 NNNN
-7 SSSS
-6 SSSS
-5 SSSS
-4 SSSS
 3 SSSS
 2 SSSS
-1 SSSS
-0 SSSS
+1  NN
+0  NN
+9
+8
+7
+6  SS
+5  SS
+4  SS
+3  SS
+2
+1
+0
 ```
 Legend: N=N-Well, S=Substrate
 
@@ -31,12 +31,12 @@ Legend: N=N-Well, S=Substrate
 0 NppN
 9 NppN
 8 NppN
-7 SSSS
+7 S  S
 6 SSSS
-5 SSSS
-4 SnnS
+5 S  S
+4 S  S
 3 SnnS
-2 SnnS
+2 S  S
 1 SSSS
 0 nnnn
 ```
