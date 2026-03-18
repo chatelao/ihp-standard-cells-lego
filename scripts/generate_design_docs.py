@@ -11,13 +11,33 @@ def get_dimensions(parts):
     for p in parts:
         # Determine part size in studs (Standard Width x Depth)
         pw, pd = 1, 1
-        if p['part'] == '3034.dat': pw, pd = 8, 2
+        if p['part'] == '91405.dat': pw, pd = 16, 16
+        elif p['part'] == '92438.dat': pw, pd = 16, 8
+        elif p['part'] == '3027.dat': pw, pd = 16, 6
+        elif p['part'] == '3456.dat': pw, pd = 14, 6
+        elif p['part'] == '3028.dat': pw, pd = 12, 6
+        elif p['part'] == '3033.dat': pw, pd = 10, 6
+        elif p['part'] == '3029.dat': pw, pd = 12, 4
+        elif p['part'] == '3036.dat': pw, pd = 8, 6
+        elif p['part'] == '3030.dat': pw, pd = 10, 4
+        elif p['part'] == '3958.dat': pw, pd = 6, 6
+        elif p['part'] == '4282.dat': pw, pd = 16, 2
+        elif p['part'] == '3035.dat': pw, pd = 8, 4
+        elif p['part'] == '2445.dat': pw, pd = 12, 2
+        elif p['part'] == '3032.dat': pw, pd = 6, 4
+        elif p['part'] == '3832.dat': pw, pd = 10, 2
+        elif p['part'] == '3034.dat': pw, pd = 8, 2
+        elif p['part'] == '3031.dat': pw, pd = 4, 4
+        elif p['part'] == '60479.dat': pw, pd = 12, 1
+        elif p['part'] == '3795.dat': pw, pd = 6, 2
+        elif p['part'] == '4477.dat': pw, pd = 10, 1
         elif p['part'] == '3460.dat': pw, pd = 8, 1
-        elif p['part'] == '3666.dat': pw, pd = 6, 1
         elif p['part'] == '3020.dat': pw, pd = 4, 2
+        elif p['part'] == '3666.dat': pw, pd = 6, 1
+        elif p['part'] == '3021.dat': pw, pd = 3, 2
         elif p['part'] == '3710.dat': pw, pd = 4, 1
-        elif p['part'] == '3623.dat': pw, pd = 3, 1
         elif p['part'] == '3022.dat': pw, pd = 2, 2
+        elif p['part'] == '3623.dat': pw, pd = 3, 1
         elif p['part'] == '3023.dat': pw, pd = 2, 1
         elif p['part'] == '3024.dat': pw, pd = 1, 1
         elif p['part'] == '6141.dat': pw, pd = 1, 1
@@ -85,13 +105,33 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
         if p['y'] in layer_y_list and p['part'] != '3062b.dat':
             # Get dimensions from part name
             pw, pd = 1, 1
-            if p['part'] == '3034.dat': pw, pd = 8, 2
+            if p['part'] == '91405.dat': pw, pd = 16, 16
+            elif p['part'] == '92438.dat': pw, pd = 16, 8
+            elif p['part'] == '3027.dat': pw, pd = 16, 6
+            elif p['part'] == '3456.dat': pw, pd = 14, 6
+            elif p['part'] == '3028.dat': pw, pd = 12, 6
+            elif p['part'] == '3033.dat': pw, pd = 10, 6
+            elif p['part'] == '3029.dat': pw, pd = 12, 4
+            elif p['part'] == '3036.dat': pw, pd = 8, 6
+            elif p['part'] == '3030.dat': pw, pd = 10, 4
+            elif p['part'] == '3958.dat': pw, pd = 6, 6
+            elif p['part'] == '4282.dat': pw, pd = 16, 2
+            elif p['part'] == '3035.dat': pw, pd = 8, 4
+            elif p['part'] == '2445.dat': pw, pd = 12, 2
+            elif p['part'] == '3032.dat': pw, pd = 6, 4
+            elif p['part'] == '3832.dat': pw, pd = 10, 2
+            elif p['part'] == '3034.dat': pw, pd = 8, 2
+            elif p['part'] == '3031.dat': pw, pd = 4, 4
+            elif p['part'] == '60479.dat': pw, pd = 12, 1
+            elif p['part'] == '3795.dat': pw, pd = 6, 2
+            elif p['part'] == '4477.dat': pw, pd = 10, 1
             elif p['part'] == '3460.dat': pw, pd = 8, 1
-            elif p['part'] == '3666.dat': pw, pd = 6, 1
             elif p['part'] == '3020.dat': pw, pd = 4, 2
+            elif p['part'] == '3666.dat': pw, pd = 6, 1
+            elif p['part'] == '3021.dat': pw, pd = 3, 2
             elif p['part'] == '3710.dat': pw, pd = 4, 1
-            elif p['part'] == '3623.dat': pw, pd = 3, 1
             elif p['part'] == '3022.dat': pw, pd = 2, 2
+            elif p['part'] == '3623.dat': pw, pd = 3, 1
             elif p['part'] == '3023.dat': pw, pd = 2, 1
             elif p['part'] == '3024.dat': pw, pd = 1, 1
             elif p['part'] == '6141.dat': pw, pd = 1, 1
