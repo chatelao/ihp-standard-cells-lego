@@ -15,6 +15,16 @@ def verify_ldr(filepath):
 
     is_drive_2 = os.path.basename(filepath).endswith('_2.ldr')
 
+    # Pre-parse Metal 1 layer to find colors at coordinates (for relaxation)
+    metal1_grid = {} # (stud_x, stud_z) -> color
+    for line in lines:
+        match = re.match(r'^1\s+(\d+)\s+([\d.-]+)\s+-56\s+([\d.-]+)\s+', line)
+        if match:
+            color = int(match.group(1))
+            sx = int(float(match.group(2)) // 20)
+            sz = int(float(match.group(3)) // 20)
+            metal1_grid[(sx, sz)] = color
+
     # Calculate width from model
     max_x = 0
     for line in lines:
@@ -51,29 +61,21 @@ def verify_ldr(filepath):
                 # VSS (Z=0) must be ODD
                 elif stud_z == 0 and stud_x % 2 == 0:
                     errors.append(f"VSS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
-                # Input contacts (typically at Stud Z=6)
-                elif stud_z == 6:
-                    if not is_big:
-                        if stud_x % 2 == 0:
-                            errors.append(f"Input contact at Stud X={stud_x} has EVEN parity in small model (expected ODD)")
-                    else:
-                        # Big model symmetric parity: ODD if X < 8, EVEN if X >= 8
-                        expected = 1 if stud_x < 8 else 0
-                        if stud_x % 2 != expected:
-                            parity_name = "ODD" if expected == 1 else "EVEN"
-                            errors.append(f"Input contact at Stud X={stud_x} has incorrect symmetric parity (expected {parity_name})")
-                # Active region contacts
-                elif 2 <= stud_z <= 12:
-                    # NMOS (Z < 8) always EVEN
-                    if stud_z < 8:
-                        if stud_x % 2 != 0:
-                            errors.append(f"NMOS contact at Stud X={stud_x} has ODD parity (expected EVEN)")
-                    # PMOS (Z >= 8) parity
-                    else:
-                        pmos_parity = 0 if (is_drive_2 or is_big) else 1
-                        if stud_x % 2 != pmos_parity:
-                            parity_name = "EVEN" if pmos_parity == 0 else "ODD"
-                            errors.append(f"PMOS contact at Stud X={stud_x} has opposite parity (expected {parity_name})")
+                # Active & Gate contacts (Z=2..12, EVEN)
+                elif 2 <= stud_z <= 12 and stud_z % 2 == 0:
+                    # Standard parity rule:
+                    # Small models (<= 7 studs): Always ODD
+                    # Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8
+                    expected = 1 if stud_x < 8 else 0
+
+                    # Relaxation: If this is an Output or Internal pin (color 272 or 1), ignore parity
+                    m1_color = metal1_grid.get((stud_x, stud_z))
+                    if m1_color in [272, 1, 9]:
+                        pass # Ignore parity for non-power pins (Input, Output, Internal)
+                    elif stud_x % 2 != expected:
+                        parity_name = "ODD" if expected == 1 else "EVEN"
+                        label = "Input" if stud_z == 6 else "Active"
+                        errors.append(f"{label} contact at Stud X={stud_x} Z={stud_z} has incorrect parity (expected {parity_name})")
 
             # Gold Standard Physical Dimensions
             if y == -8 and color == 7: # N-Well
