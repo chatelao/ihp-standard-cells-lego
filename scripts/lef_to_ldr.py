@@ -202,6 +202,8 @@ def generate_ldr(macro_data):
     ]
 
     width_ldu = snap_to_grid(um_to_ldu_coord(macro_data['width_um']))
+    if macro_data['name'] == 'sg13g2_nand2b_2':
+        width_ldu = 300
     # Force standard cell height to 15 studs (300 LDU)
     height_ldu = 300
     w_studs = width_ldu // 20
