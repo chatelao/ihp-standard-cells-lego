@@ -238,13 +238,26 @@ def generate_ldr(macro_data):
 
     # Substrate fill in Active layer
     grid3 = [[(COLOR_SUBSTRATE if (z*20+10) < split_z else COLOR_NWELL) for z in range(d_studs)] for x in range(w_studs)]
-    for x in range(x_start_active, x_end_active):
-        # NMOS (Studs 2-4, Z=40 to 100)
-        for z in range(2, 5):
-            grid3[x][z] = COLOR_ACTIVE_NMOS
-        # PMOS (Studs 8-12, Z=160 to 260)
-        for z in range(8, 13):
-            grid3[x][z] = COLOR_ACTIVE_PMOS
+    if macro_data['name'] == 'sg13g2_nand2b_2':
+        # Specialized Active regions for nand2b_2 (15 studs wide)
+        # PMOS (Z=8..12): Gaps at X=3, X=14
+        pmos_x = [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        for x in pmos_x:
+            for z in range(8, 13):
+                grid3[x][z] = COLOR_ACTIVE_PMOS
+        # NMOS (Z=2..4): Gaps at X=0, X=4, X=14
+        nmos_x = [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        for x in nmos_x:
+            for z in range(2, 5):
+                grid3[x][z] = COLOR_ACTIVE_NMOS
+    else:
+        for x in range(x_start_active, x_end_active):
+            # NMOS (Studs 2-4, Z=40 to 100)
+            for z in range(2, 5):
+                grid3[x][z] = COLOR_ACTIVE_NMOS
+            # PMOS (Studs 8-12, Z=160 to 260)
+            for z in range(8, 13):
+                grid3[x][z] = COLOR_ACTIVE_PMOS
 
     # Add active regions under rails for the full width of the cell
     for x in range(w_studs):
