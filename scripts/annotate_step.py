@@ -28,6 +28,7 @@ PART_MAP = {
     '3022.dat': 'Plate 2x2',
     '3023.dat': 'Plate 1x2',
     '3024.dat': 'Plate 1x1',
+    '3070.dat': 'Tile 1x1',
     '6141.dat': 'Plate 1x1 Round',
     '3062b.dat': 'Brick 1x1 Round',
 }

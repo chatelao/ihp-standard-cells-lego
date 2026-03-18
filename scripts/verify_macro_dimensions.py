@@ -53,15 +53,36 @@ def get_ldr_substrate_size(ldr_filepath):
                 # Determine part size in studs (Standard Width x Depth)
                 # These match PLATES in lef_to_ldr.py
                 pw, pd = 0, 0
-                if '3034' in part: pw, pd = 8, 2
+                if '91405' in part: pw, pd = 16, 16
+                elif '92438' in part: pw, pd = 16, 8
+                elif '3027' in part: pw, pd = 16, 6
+                elif '3456' in part: pw, pd = 14, 6
+                elif '3028' in part: pw, pd = 12, 6
+                elif '3033' in part: pw, pd = 10, 6
+                elif '3029' in part: pw, pd = 12, 4
+                elif '3036' in part: pw, pd = 8, 6
+                elif '3030' in part: pw, pd = 10, 4
+                elif '3958' in part: pw, pd = 6, 6
+                elif '4282' in part: pw, pd = 16, 2
+                elif '3035' in part: pw, pd = 8, 4
+                elif '2445' in part: pw, pd = 12, 2
+                elif '3032' in part: pw, pd = 6, 4
+                elif '3832' in part: pw, pd = 10, 2
+                elif '3034' in part: pw, pd = 8, 2
+                elif '3031' in part: pw, pd = 4, 4
+                elif '60479' in part: pw, pd = 12, 1
+                elif '3795' in part: pw, pd = 6, 2
+                elif '4477' in part: pw, pd = 10, 1
                 elif '3460' in part: pw, pd = 8, 1
-                elif '3666' in part: pw, pd = 6, 1
                 elif '3020' in part: pw, pd = 4, 2
+                elif '3666' in part: pw, pd = 6, 1
+                elif '3021' in part: pw, pd = 3, 2
                 elif '3710' in part: pw, pd = 4, 1
-                elif '3623' in part: pw, pd = 3, 1
                 elif '3022' in part: pw, pd = 2, 2
+                elif '3623' in part: pw, pd = 3, 1
                 elif '3023' in part: pw, pd = 2, 1
                 elif '3024' in part: pw, pd = 1, 1
+                elif '3070' in part: pw, pd = 1, 1
                 else: continue # Unknown part size
 
                 # Check rotation matrix for orientation
