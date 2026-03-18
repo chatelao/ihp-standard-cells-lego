@@ -20,6 +20,7 @@ def get_dimensions(parts):
         elif p['part'] == '3022.dat': pw, pd = 2, 2
         elif p['part'] == '3023.dat': pw, pd = 2, 1
         elif p['part'] == '3024.dat': pw, pd = 1, 1
+        elif p['part'] == '3070.dat': pw, pd = 1, 1
         elif p['part'] == '6141.dat': pw, pd = 1, 1
         elif p['part'] == '3062b.dat': pw, pd = 1, 1
 
@@ -94,6 +95,7 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
             elif p['part'] == '3022.dat': pw, pd = 2, 2
             elif p['part'] == '3023.dat': pw, pd = 2, 1
             elif p['part'] == '3024.dat': pw, pd = 1, 1
+            elif p['part'] == '3070.dat': pw, pd = 1, 1
             elif p['part'] == '6141.dat': pw, pd = 1, 1
 
             # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
@@ -129,7 +131,7 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
         # Check for Metal 2 connection plate (above)
         has_plate_above = False
         for p in parts:
-            if p['part'] == '3024.dat' and p['y'] == -64:
+            if (p['part'] == '3024.dat' or p['part'] == '3070.dat') and p['y'] == -64:
                 if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
                     has_plate_above = True
                     break

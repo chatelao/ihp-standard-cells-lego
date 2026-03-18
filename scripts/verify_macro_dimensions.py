@@ -62,6 +62,7 @@ def get_ldr_substrate_size(ldr_filepath):
                 elif '3022' in part: pw, pd = 2, 2
                 elif '3023' in part: pw, pd = 2, 1
                 elif '3024' in part: pw, pd = 1, 1
+                elif '3070' in part: pw, pd = 1, 1
                 else: continue # Unknown part size
 
                 # Check rotation matrix for orientation

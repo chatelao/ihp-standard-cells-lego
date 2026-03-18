@@ -25,6 +25,7 @@ PLATES = [
 
 ROUND_BRICK = "3062b.dat" # 1x1 round brick
 ROUND_PLATE = "6141.dat"  # 1x1 round plate
+TILE_1X1 = "3070.dat"     # 1x1 flat tile
 
 # LDraw Colors (V3)
 COLOR_SUBSTRATE = 8      # Dark Gray
@@ -354,19 +355,19 @@ def generate_ldr(macro_data):
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
                         if pin_name == 'VDD' and stud_z == 14 and stud_x % 2 == 0:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif pin_name == 'VSS' and stud_z == 0 and stud_x % 2 == 1:
                             current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
                             if is_active:
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif 0 < stud_z < 14 and is_active and stud_z % 2 == 0:
                             # NMOS (Z < 8) always EVEN (0). PMOS (Z >= 8) parity depends on cell size/drive
                             if (stud_z >= 8 and stud_x % 2 == pmos_parity) or (stud_z < 8 and stud_x % 2 == 0):
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
                                 # Fill the gap to active (8 LDU round plate at Y=-24)
                                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
@@ -395,7 +396,7 @@ def generate_ldr(macro_data):
 
                 for vsx in range(vxmin + 10, vxmax, 20):
                     for vsz in range(vzmin + 10, vzmax, 20):
-                        current_pin_upward_plates.append(f"1 {color} {vsx} {Y_METAL2_PLATE} {vsz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                        current_pin_upward_plates.append(f"1 {color} {vsx} {Y_METAL2_PLATE} {vsz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
 
         for rect in pin['rects']:
             if rect['layer'] == 'Metal1':
@@ -424,7 +425,7 @@ def generate_ldr(macro_data):
                     cfg = pin_assignments[pin['name']]
                     current_pin_contacts.append(f"1 {COLOR_CONTACT} {cfg['contact']*20+10} {Y_CONTACT} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
                     if not has_via1:
-                        current_pin_upward_plates.append(f"1 {color} {cfg['contact']*20+10} {Y_METAL2_PLATE} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 3024.dat")
+                        current_pin_upward_plates.append(f"1 {color} {cfg['contact']*20+10} {Y_METAL2_PLATE} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
                 else:
                     # If we don't have Via1, we'll add upward plates based on contacts inside add_contacts_for_rect
                     add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color)
