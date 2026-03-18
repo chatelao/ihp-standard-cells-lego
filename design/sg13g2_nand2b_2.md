@@ -30,17 +30,17 @@ GOLDEN STANDARD
   012345678901234
 4 ppppppppppppppp
 3 NNNNNNNNNNNNNNN
-2 NpppppppppppppN
-1 NpppppppppppppN
-0 NpppppppppppppN
-9 NpppppppppppppN
-8 NpppppppppppppN
+2 pppNppppppppppN
+1 pppNppppppppppN
+0 pppNppppppppppN
+9 pppNppppppppppN
+8 pppNppppppppppN
 7 SSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSS
-4 SnnnnnnnnnnnnnS
-3 SnnnnnnnnnnnnnS
-2 SnnnnnnnnnnnnnS
+4 SnnnSnnnnnnnnnS
+3 SnnnSnnnnnnnnnS
+2 SnnnSnnnnnnnnnS
 1 SSSSSSSSSSSSSSS
 0 nnnnnnnnnnnnnnn
 ```
@@ -77,18 +77,17 @@ GOLDEN STANDARD
 4 &+&+&+&+&+&+&+&
 3 +   +    +   +
 2 +   & o  & o &
-1 &   + O  + O +
-0 + c & o  & o &
+1 & c + O  + O +
+0 + C & o  & o &
 9 & C + OOOOOO +
-8   c &      o &
+8   C &      o &
 7   C        O
-6  iCc     IiO
-5    C       O
-4 _  c cCcCc o c
+6 IiCCc    IiO
+5   C        O
+4 _ c  cCcCc o c
 3 -    C   C   C
 2 -    c _ cCCCc
 1 -      -
 0 _-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
-
