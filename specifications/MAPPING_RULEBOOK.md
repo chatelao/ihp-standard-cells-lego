@@ -43,4 +43,4 @@ A contact is generated at a coordinate `(x_stud, z_stud)` if:
 - Y=-24: Polysilicon / Gates
 - Y=-48: Contact Brick (3062b.dat)
 - Y=-56: Metal 1 / Rails
-- Y=-64: Metal 2 Connection Plates (3024.dat)
+- Y=-64: Metal 2 Connection Plates (3070.dat)

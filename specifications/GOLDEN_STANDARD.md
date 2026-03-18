@@ -215,11 +215,11 @@ GOLDEN STANDARD
 7   C        O
 6  iCc     IiO
 5    C       O
-4 _  c cCcCc o c
-3 -    C   C   C
-2 -    c _ cCCCc
-1 -      -
-0 _-_-_-_-_-_-_
+4  _ c cCcCc o c
+3  -   C   C   C
+2  -   c _ cCCCc
+1  -     -
+0  _ _ _ _ _ _ _
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 
@@ -229,19 +229,19 @@ GOLDEN STANDARD
 ```
   012345678901234
 4
-3      G G  G G
-2  G   G G  G G
-1  G   G G  G G
-0  G   G G  G G
-9  G   G G  G G
-8  G   G G  G G
-7  G   G G  G G
-6  G  GGGG  GGG
-5  G   G G  G G
-4  G   G G  G G
-3  G   G G  G G
-2  G   G G  G G
-1      G G  G G
+3     G G  G G
+2 G   G G  G G
+1 G   G G  G G
+0 G   G G  G G
+9 G   G G  G G
+8 G   G G  G G
+7 G   G G  G G
+6 G  GGGG  GGG
+5 G   G G  G G
+4 G   G G  G G
+3 G   G G  G G
+2 G   G G  G G
+1     G G  G G
 0
 ```
 Legend: G=Polysilicon

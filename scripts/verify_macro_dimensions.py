@@ -7,38 +7,6 @@ LDU_PER_STUD = 20
 UM_PER_STUD = 0.27
 LDU_TO_UM = UM_PER_STUD / LDU_PER_STUD
 
-PART_DIMENSIONS = {
-    '91405': (16, 16),
-    '92438': (16, 8),
-    '3027': (16, 6),
-    '3456': (14, 6),
-    '3028': (12, 6),
-    '3033': (10, 6),
-    '3029': (12, 4),
-    '3036': (8, 6),
-    '3030': (10, 4),
-    '3958': (6, 6),
-    '4282': (16, 2),
-    '3035': (8, 4),
-    '2445': (12, 2),
-    '3032': (6, 4),
-    '3832': (10, 2),
-    '3034': (8, 2),
-    '3031': (4, 4),
-    '60479': (12, 1),
-    '3795': (6, 2),
-    '4477': (10, 1),
-    '3460': (8, 1),
-    '3020': (4, 2),
-    '3666': (6, 1),
-    '3021': (3, 2),
-    '3710': (4, 1),
-    '3022': (2, 2),
-    '3623': (3, 1),
-    '3023': (2, 1),
-    '3024': (1, 1),
-}
-
 def parse_lef_sizes(lef_filepath):
     with open(lef_filepath, 'r') as f:
         content = f.read()
@@ -76,23 +44,26 @@ def get_ldr_substrate_size(ldr_filepath):
             x = float(match.group(2))
             y = float(match.group(3))
             z = float(match.group(4))
-            part = match.group(6).replace('.dat', '')
+            part = match.group(6)
 
             # Check if it's a substrate component (Dark Gray 8 or Light Gray 7 at Y=0, -8)
             if color in [8, 7] and y in [0, -8]:
                 found_substrate = True
 
                 # Determine part size in studs (Standard Width x Depth)
+                # These match PLATES in lef_to_ldr.py
                 pw, pd = 0, 0
-                found_dims = False
-                for pid, dims in PART_DIMENSIONS.items():
-                    if pid in part:
-                        pw, pd = dims
-                        found_dims = True
-                        break
-
-                if not found_dims:
-                    continue
+                if '3034' in part: pw, pd = 8, 2
+                elif '3460' in part: pw, pd = 8, 1
+                elif '3666' in part: pw, pd = 6, 1
+                elif '3020' in part: pw, pd = 4, 2
+                elif '3710' in part: pw, pd = 4, 1
+                elif '3623' in part: pw, pd = 3, 1
+                elif '3022' in part: pw, pd = 2, 2
+                elif '3023' in part: pw, pd = 2, 1
+                elif '3024' in part: pw, pd = 1, 1
+                elif '3070' in part: pw, pd = 1, 1
+                else: continue # Unknown part size
 
                 # Check rotation matrix for orientation
                 # Standard (Identity): 1 0 0 0 1 0 0 0 1 -> X=Width, Z=Depth
