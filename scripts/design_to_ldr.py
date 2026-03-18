@@ -5,17 +5,38 @@ import argparse
 
 # Constants from modeling_guidelines.md (V3)
 PLATES = [
-    (8, 2, "3034.dat"),
-    (8, 1, "3460.dat"),
-    (6, 1, "3666.dat"),
-    (4, 2, "3020.dat"),
-    (4, 1, "3710.dat"),
-    (3, 1, "3623.dat"),
-    (2, 2, "3022.dat"),
-    (2, 1, "3023.dat"),
-    (1, 1, "3024.dat"),
+    (16, 16, "91405.dat"), # 256
+    (16, 8, "92438.dat"),  # 128
+    (16, 6, "3027.dat"),   # 96
+    (14, 6, "3456.dat"),   # 84
+    (12, 6, "3028.dat"),   # 72
+    (10, 6, "3033.dat"),   # 60
+    (12, 4, "3029.dat"),   # 48
+    (8, 6, "3036.dat"),    # 48
+    (10, 4, "3030.dat"),   # 40
+    (6, 6, "3958.dat"),    # 36
+    (16, 2, "4282.dat"),   # 32
+    (8, 4, "3035.dat"),    # 32
+    (12, 2, "2445.dat"),   # 24
+    (6, 4, "3032.dat"),    # 24
+    (10, 2, "3832.dat"),   # 20
+    (8, 2, "3034.dat"),    # 16
+    (4, 4, "3031.dat"),    # 16
+    (12, 1, "60479.dat"),  # 12
+    (6, 2, "3795.dat"),    # 12
+    (10, 1, "4477.dat"),   # 10
+    (8, 1, "3460.dat"),    # 8
+    (4, 2, "3020.dat"),    # 8
+    (6, 1, "3666.dat"),    # 6
+    (3, 2, "3021.dat"),    # 6
+    (4, 1, "3710.dat"),    # 4
+    (2, 2, "3022.dat"),    # 4
+    (3, 1, "3623.dat"),    # 3
+    (2, 1, "3023.dat"),    # 2
+    (1, 1, "3024.dat"),    # 1
 ]
 
+TILE_1X1 = "3070.dat"     # 1x1 flat tile
 ROUND_BRICK = "3062b.dat" # 1x1 round brick
 ROUND_PLATE = "6141.dat"  # 1x1 round plate
 
@@ -219,11 +240,11 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                     if is_active:
                          contacts.append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
-                    # Add Metal 2 connection plate
+                    # Add Metal 2 connection point
                     real_char = CONTACT_MAP.get(char, char)
                     color = COLOR_MAP_REV.get(real_char)
                     if color is not None:
-                        metal2_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 3024.dat")
+                        metal2_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
 
         if contacts:
             ldr_lines.append("0 STEP")
