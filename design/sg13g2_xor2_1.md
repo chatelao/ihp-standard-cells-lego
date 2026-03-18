@@ -1,86 +1,93 @@
 # Design Documentation for sg13g2_xor2_1
 
 ## Substrate
+GOLDEN STANDARD
+
 ```
-  01234567890123
-4      NN     NN
-3             SS
-2
-1       NN
-0       NN
-9
-8
-7   SS SS SS  SS
-6   SS SS SS  SS
-5             SS
-4
-3       SS
-2       SS
-1
-0
+  012345678901234
+4 NNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNN
+2 NNNNNNNNNNNNNNN
+1 NNNNNNNNNNNNNNN
+0 NNNNNNNNNNNNNNN
+9 NNNNNNNNNNNNNNN
+8 NNNNNNNNNNNNNNN
+7 SSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSS
+4 SSSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
+GOLDEN STANDARD
+
 ```
-  01234567890123
-4      pp     pp
-3 N     NN     N
-2 N     pp     N
-1 N            N
-0 N     pp     N
-9 N     pp     N
-8 N            N
-7 S     SS     S
-6 S     SS     S
-5 S     SS     S
-4 S     nn     S
-3 S     nn     S
-2 S     nn     S
-1      SS     SS
-0      nn     nn
+  012345678901234
+4 ppppppppppppppp
+3 NNNNNNNNNNNNNNN
+2 NpppppppppppppN
+1 NpppppppppppppN
+0 NpppppppppppppN
+9 NpppppppppppppN
+8 NpppppppppppppN
+7 SSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSS
+0 nnnnnnnnnnnnnnn
 ```
 Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 
 ## Polysilicon
+GOLDEN STANDARD
+
 ```
-  01234567890123
+  012345678901234
 4
-3 G G   G G
-2
-1
-0
-9
-8
-7 G G   G G
-6 GGG   GGG
-5
-4
-3
-2
-1
+3  G G      G G
+2  G G      G G
+1  G G      G G
+0  G G      G G
+9  G G      G G
+8  G G      G G
+7  G G      G G
+6 GGG      GGG
+5  G G      G G
+4  G G      G G
+3  G G      G G
+2  G G      G G
+1  G G      G G
 0
 ```
 Legend: G=Polysilicon
 
 ## Metal 1
+GOLDEN STANDARD
+
 ```
-  01234567890123
-4 c & c+& c+c &+
-3   +      +
-2   +      +
-1   +  C C + C O
-0   +  c ccCcC O
-9   + CCCCCCCC O
-8     C       cO
-7     C       CO
-6  iI C IiIII cO
-5     C     OOOO
-4  -- C  -  oO
-3  --    -  OO-
-2  --    -    -
-1  --    -    -
-0  _-c _-_ c c-_
+  012345678901234
+4 & & & & & & & &
+3
+2
+1  I        I    O
+0  i c      i c  o
+9  I CCCCC  I C  O
+8  c        c    o
+7  C        C    C
+6  C        C   oOO
+5  C        C    O
+4  c        c    o
+3
+2
+1
+0  _ _ _ _ _ _ _
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
-
