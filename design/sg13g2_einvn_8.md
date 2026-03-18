@@ -3,42 +3,42 @@
 ## Substrate
 ```
   012345678901234567890123456789012345678
-4      NN          NN          NN     NNN
-3                                       N
-2                                       N
-1        NN              NN         NN  N
-0        NN              NN         NN  N
-9                                       N
-8                                       N
-7                                   SS  S
-6                                   SS  S
-5                                       S
-4        SS              SS         SS  S
-3        SS              SS         SS  S
-2                                       S
-1                                       S
-0                                       S
+4 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+2 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+1 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+0 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+9 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+8 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+4 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
 ## Active
 ```
   012345678901234567890123456789012345678
-4      pp          pp          pp     ppp
-3 N     NN          NN          NN     NN
-2 N     pp          pp          pp     pN
-1 N                                    pN
-0 N     pp          pp          pp     pN
-9 N     pp          pp          pp     pN
-8 N                                    pN
-7 S     SS          SS          SS     SS
-6 S       SS              SS       SSSSSS
-5 S       SS              SS       SSSSSS
-4 S     nn          nn          nn     nS
-3 S       nn              nn       nnnnnS
-2 S       nn              nn       nnnnnS
-1      SS          SS          SS     SSS
-0      nn          nn          nn     nnn
+4 ppppppppppppppppppppppppppppppppppppppp
+3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+2 NpppppppppppppppppppppppppppppppppppppN
+1 NpppppppppppppppppppppppppppppppppppppN
+0 NpppppppppppppppppppppppppppppppppppppN
+9 NpppppppppppppppppppppppppppppppppppppN
+8 NpppppppppppppppppppppppppppppppppppppN
+7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 ```
 Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 
@@ -47,18 +47,18 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
   012345678901234567890123456789012345678
 4
 3 G G                       G G
-2
-1
-0
-9
-8
+2 G G                       G G
+1 G G                       G G
+0 G G                       G G
+9 G G                       G G
+8 G G                       G G
 7 G G                       G G
 6 GGG                       GGG
-5
-4
-3
-2
-1
+5 G G                       G G
+4 G G                       G G
+3 G G                       G G
+2 G G                       G G
+1 G G                       G G
 0
 ```
 Legend: G=Polysilicon
@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   012345678901234567890123456789012345678
-4 c+c c+&+c c+c c+c+& c c c c c+& c c &+&
+4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
 3  +     +   +   +  +
-2  +     +   +   +  +  Cc cCcCcCc cCcCc
+2  +     +   +   +  +  CcCcCcCcCcCcCcCc
 1  + C C + C + C + C+  C   C   C   C  C
 0  + c c + C + C + C+  C O C O C O C Oc
 9  + C C + C + C + CCCCC O   O   O   OC
-8  + c c ccCcCcCc cC     OoOcOoOcOc cO
+8  + c cCccCcCcCcCcC     OoOoOoOoOoOoO
 7    C                   OOO
-6  i c  Ccc cCc c c cCcC OoO cIIIIIIII
-5    CCCC   C   C   C  C OOO  OO     O
+6  i c  CccCcCcCcCcCcCcC OoO cIIIIIIII
+5    CCCC   C   C   C  C OOOOOOOOOOOOO
 4  - cCcC - c - c - c- C O   O   O   Oc
-3  -  C C - C - C - C- CCCCCCCCC   C  C
+3  - CCCC - C - C - C- CCCCCCCCC   C  C
 2  -      -   -   -  -         CcCcCcCc
 1  -      -   -   -  -
-0  _ c _-c-c c-c c-_-_ c c c c _-c c c-_-
+0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

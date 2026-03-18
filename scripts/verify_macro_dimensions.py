@@ -25,6 +25,41 @@ def parse_lef_sizes(lef_filepath):
 
     return macros
 
+PLATE_DIMENSIONS = {
+    "91405.dat": (16, 16),
+    "92438.dat": (16, 8),
+    "3027.dat": (16, 6),
+    "3456.dat": (14, 6),
+    "3028.dat": (12, 6),
+    "3033.dat": (10, 6),
+    "3029.dat": (12, 4),
+    "3036.dat": (8, 6),
+    "3030.dat": (10, 4),
+    "3958.dat": (6, 6),
+    "4282.dat": (16, 2),
+    "3035.dat": (8, 4),
+    "2445.dat": (12, 2),
+    "3032.dat": (6, 4),
+    "3832.dat": (10, 2),
+    "3034.dat": (8, 2),
+    "3031.dat": (4, 4),
+    "60479.dat": (12, 1),
+    "3795.dat": (6, 2),
+    "4477.dat": (10, 1),
+    "3460.dat": (8, 1),
+    "3020.dat": (4, 2),
+    "3666.dat": (6, 1),
+    "3021.dat": (3, 2),
+    "3710.dat": (4, 1),
+    "3022.dat": (2, 2),
+    "3623.dat": (3, 1),
+    "3023.dat": (2, 1),
+    "3024.dat": (1, 1),
+    "3070.dat": (1, 1),
+    "6141.dat": (1, 1),
+    "3062b.dat": (1, 1),
+}
+
 def get_ldr_substrate_size(ldr_filepath):
     with open(ldr_filepath, 'r') as f:
         lines = f.readlines()
@@ -52,39 +87,7 @@ def get_ldr_substrate_size(ldr_filepath):
 
                 # Determine part size in studs (Standard Width x Depth)
                 # These match PLATES in lef_to_ldr.py
-                pw, pd = 1, 1
-                if '91405' in part: pw, pd = 16, 16
-                elif '92438' in part: pw, pd = 16, 8
-                elif '3027' in part: pw, pd = 16, 6
-                elif '3456' in part: pw, pd = 14, 6
-                elif '3028' in part: pw, pd = 12, 6
-                elif '3033' in part: pw, pd = 10, 6
-                elif '3029' in part: pw, pd = 12, 4
-                elif '3036' in part: pw, pd = 8, 6
-                elif '3030' in part: pw, pd = 10, 4
-                elif '3958' in part: pw, pd = 6, 6
-                elif '4282' in part: pw, pd = 16, 2
-                elif '3035' in part: pw, pd = 8, 4
-                elif '2445' in part: pw, pd = 12, 2
-                elif '3032' in part: pw, pd = 6, 4
-                elif '3832' in part: pw, pd = 10, 2
-                elif '3034' in part: pw, pd = 8, 2
-                elif '3031' in part: pw, pd = 4, 4
-                elif '60479' in part: pw, pd = 12, 1
-                elif '3795' in part: pw, pd = 6, 2
-                elif '4477' in part: pw, pd = 10, 1
-                elif '3460' in part: pw, pd = 8, 1
-                elif '3020' in part: pw, pd = 4, 2
-                elif '3666' in part: pw, pd = 6, 1
-                elif '3021' in part: pw, pd = 3, 2
-                elif '3710' in part: pw, pd = 4, 1
-                elif '3022' in part: pw, pd = 2, 2
-                elif '3623' in part: pw, pd = 3, 1
-                elif '3023' in part: pw, pd = 2, 1
-                elif '3024' in part: pw, pd = 1, 1
-                elif '3070' in part: pw, pd = 1, 1
-                elif '6141' in part: pw, pd = 1, 1
-                elif '3062b' in part: pw, pd = 1, 1
+                pw, pd = PLATE_DIMENSIONS.get(part, (1, 1))
 
                 # Check rotation matrix for orientation
                 # Standard (Identity): 1 0 0 0 1 0 0 0 1 -> X=Width, Z=Depth

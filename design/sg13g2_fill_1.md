@@ -4,12 +4,12 @@
 ```
   01
 4 NN
-3 SS
-2
+3 NN
+2 NN
 1 NN
 0 NN
-9
-8
+9 NN
+8 NN
 7 SS
 6 SS
 5 SS

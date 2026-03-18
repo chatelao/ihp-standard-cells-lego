@@ -4,20 +4,20 @@
 ```
   012345678
 4 NNNNNNNNN
-3        SN
-2        SN
-1    NN   N
-0    NN   N
-9         N
-8         N
+3 NNNNNNNNN
+2 NNNNNNNNN
+1 NNNNNNNNN
+0 NNNNNNNNN
+9 NNNNNNNNN
+8 NNNNNNNNN
 7 SSSSSSSSS
 6 SSSSSSSSS
-5       SSS
-4         S
-3    SS   S
-2    SS   S
-1         S
-0         S
+5 SSSSSSSSS
+4 SSSSSSSSS
+3 SSSSSSSSS
+2 SSSSSSSSS
+1 SSSSSSSSS
+0 SSSSSSSSS
 ```
 Legend: N=N-Well, S=Substrate
 
@@ -27,16 +27,16 @@ Legend: N=N-Well, S=Substrate
 4 ppppppppp
 3 NNNNNNNNN
 2 NpppppppN
-1 N      pN
-0 N  pp  pN
-9 N  pp  pN
-8 N      pN
+1 NpppppppN
+0 NpppppppN
+9 NpppppppN
+8 NpppppppN
 7 SSSSSSSSS
-6 S  SS  SS
-5 S  SS  SS
+6 SSSSSSSSS
+5 SSSSSSSSS
 4 SnnnnnnnS
-3 S  nn  nS
-2 S  nn  nS
+3 SnnnnnnnS
+2 SnnnnnnnS
 1 SSSSSSSSS
 0 nnnnnnnnn
 ```
@@ -47,18 +47,18 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
   012345678
 4
 3       G G
-2
-1
-0
-9
-8
+2       G G
+1       G G
+0       G G
+9       G G
+8       G G
 7       G G
 6       GGG
-5
-4
-3
-2
-1
+5       G G
+4       G G
+3       G G
+2       G G
+1       G G
 0
 ```
 Legend: G=Polysilicon

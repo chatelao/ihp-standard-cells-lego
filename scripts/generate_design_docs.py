@@ -1,6 +1,41 @@
 import os
 import re
 
+PLATE_DIMENSIONS = {
+    "91405.dat": (16, 16),
+    "92438.dat": (16, 8),
+    "3027.dat": (16, 6),
+    "3456.dat": (14, 6),
+    "3028.dat": (12, 6),
+    "3033.dat": (10, 6),
+    "3029.dat": (12, 4),
+    "3036.dat": (8, 6),
+    "3030.dat": (10, 4),
+    "3958.dat": (6, 6),
+    "4282.dat": (16, 2),
+    "3035.dat": (8, 4),
+    "2445.dat": (12, 2),
+    "3032.dat": (6, 4),
+    "3832.dat": (10, 2),
+    "3034.dat": (8, 2),
+    "3031.dat": (4, 4),
+    "60479.dat": (12, 1),
+    "3795.dat": (6, 2),
+    "4477.dat": (10, 1),
+    "3460.dat": (8, 1),
+    "3020.dat": (4, 2),
+    "3666.dat": (6, 1),
+    "3021.dat": (3, 2),
+    "3710.dat": (4, 1),
+    "3022.dat": (2, 2),
+    "3623.dat": (3, 1),
+    "3023.dat": (2, 1),
+    "3024.dat": (1, 1),
+    "3070.dat": (1, 1),
+    "6141.dat": (1, 1),
+    "3062b.dat": (1, 1),
+}
+
 def get_dimensions(parts):
     if not parts:
         return 0, 0, 0, 0
@@ -10,19 +45,7 @@ def get_dimensions(parts):
 
     for p in parts:
         # Determine part size in studs (Standard Width x Depth)
-        pw, pd = 1, 1
-        if p['part'] == '3034.dat': pw, pd = 8, 2
-        elif p['part'] == '3460.dat': pw, pd = 8, 1
-        elif p['part'] == '3666.dat': pw, pd = 6, 1
-        elif p['part'] == '3020.dat': pw, pd = 4, 2
-        elif p['part'] == '3710.dat': pw, pd = 4, 1
-        elif p['part'] == '3623.dat': pw, pd = 3, 1
-        elif p['part'] == '3022.dat': pw, pd = 2, 2
-        elif p['part'] == '3023.dat': pw, pd = 2, 1
-        elif p['part'] == '3024.dat': pw, pd = 1, 1
-        elif p['part'] == '3070.dat': pw, pd = 1, 1
-        elif p['part'] == '6141.dat': pw, pd = 1, 1
-        elif p['part'] == '3062b.dat': pw, pd = 1, 1
+        pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
 
         # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
         is_rotated = p['rot'][0] == 0
@@ -85,18 +108,7 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
     for p in sorted(parts, key=lambda p: priority.get(color_map.get(p['color'], ' '), 0), reverse=False):
         if p['y'] in layer_y_list and p['part'] != '3062b.dat':
             # Get dimensions from part name
-            pw, pd = 1, 1
-            if p['part'] == '3034.dat': pw, pd = 8, 2
-            elif p['part'] == '3460.dat': pw, pd = 8, 1
-            elif p['part'] == '3666.dat': pw, pd = 6, 1
-            elif p['part'] == '3020.dat': pw, pd = 4, 2
-            elif p['part'] == '3710.dat': pw, pd = 4, 1
-            elif p['part'] == '3623.dat': pw, pd = 3, 1
-            elif p['part'] == '3022.dat': pw, pd = 2, 2
-            elif p['part'] == '3023.dat': pw, pd = 2, 1
-            elif p['part'] == '3024.dat': pw, pd = 1, 1
-            elif p['part'] == '3070.dat': pw, pd = 1, 1
-            elif p['part'] == '6141.dat': pw, pd = 1, 1
+            pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
 
             # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
             is_rotated = p['rot'][0] == 0
