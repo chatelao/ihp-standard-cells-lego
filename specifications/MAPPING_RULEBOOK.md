@@ -7,7 +7,7 @@ This document defines the standardized transformation rules from LEF (Library Ex
 - 1 LEGO Stud = 20 LDU (LDraw Units).
 - LEF X maps to LDR X.
 - LEF Y maps to LDR Z.
-- Origin Offset: A +10 LDU (0.135 µm) offset is applied to both axes to align the center of Stud 0 with the LEF origin.
+- Origin Offset: A +10 LDU (0.135 µm) offset is applied to the LEF Y / LDR Z axis to align the center of Stud 0 with the LEF origin. The LEF X / LDR X axis uses a direct mapping where Stud 0 center is at X=10 LDU, matching the LEF X=0 boundary.
 
 ## 2. Standard Cell Architecture
 - Total Height: 15 studs (300 LDU).
