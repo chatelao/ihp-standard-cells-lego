@@ -75,6 +75,7 @@ def get_best_plates_multi(grid, prefer_rotated=False):
     'grid' is a 2D list [x][z] of color IDs.
     Returns a list of (plate_file, x_offset_ldu, z_offset_ldu, color, is_rotated).
     """
+    if not grid: return []
     w_studs = len(grid)
     d_studs = len(grid[0])
     covered = [[False for _ in range(d_studs)] for _ in range(w_studs)]
@@ -92,6 +93,9 @@ def get_best_plates_multi(grid, prefer_rotated=False):
             x, z = (o, i) if prefer_rotated else (i, o)
             if not covered[x][z]:
                 color = grid[x][z]
+                if color is None:
+                    covered[x][z] = True
+                    continue
                 best_p = None
                 for pw, pd, pfile in sorted_plates:
                     # Interlocking: if prefer_rotated, try rotated first
@@ -246,6 +250,15 @@ def generate_ldr(macro_data):
         for z in range(8, 13):
             grid3[x][z] = COLOR_ACTIVE_PMOS
 
+    # Cell-specific Active Region logic (Handmade optimizations)
+    if macro_data['name'] == 'sg13g2_nand2b_2':
+        # Isolation gaps from golden handmade design
+        grid3[3][10] = COLOR_NWELL # PMOS Gap at X=3
+        grid3[3][12] = COLOR_NWELL # PMOS Gap at X=3
+        grid3[3][8] = COLOR_NWELL # PMOS Gap at X=3
+        grid3[4][2] = COLOR_SUBSTRATE # NMOS Gap at X=4
+        grid3[4][4] = COLOR_SUBSTRATE # NMOS Gap at X=4
+
     # Add active regions under rails for the full width of the cell
     for x in range(w_studs):
         # South border (VSS, Stud 0)
@@ -351,16 +364,26 @@ def generate_ldr(macro_data):
             'pad_part': pad_part
         }
 
+    poly_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
     for pin in macro_data['pins']:
         if pin['direction'] == 'INPUT':
             config = pin_assignments[pin['name']]
-            ldr_lines.append(f"1 {COLOR_POLY} {config['pad_x']} {Y_POLY} {config['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {config['pad_part']}")
+            # Mark gates on grid
             for gs in config['gate']:
-                gx = gs * 20 + 10
-                gate_tiles = get_best_plates_multi([[COLOR_POLY for _ in range(13)]]) # Studs 1-13
-                for pfile, tx_off, tz_off, color, rotated in gate_tiles:
-                    gz = 20 + tz_off
-                    ldr_lines.append(f"1 {color} {gx} {Y_POLY} {gz} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {pfile}")
+                for gz in range(1, 14): # Studs 1-13
+                    poly_grid[gs][gz] = COLOR_POLY
+            # Mark pad/bridge on grid
+            cx = config['contact']
+            cz = config['contact_z']
+            poly_grid[cx][cz] = COLOR_POLY
+            # Connect pad to gates (horizontal bridge)
+            for gx in config['gate']:
+                for bx in range(min(cx, gx), max(cx, gx) + 1):
+                    poly_grid[bx][cz] = COLOR_POLY
+
+    poly_tiles = get_best_plates_multi(poly_grid)
+    for plate, x_off, z_off, color, rotated in poly_tiles:
+        ldr_lines.append(f"1 {color} {x_off} {Y_POLY} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
     # 5. Pins, Rails, and Contacts
     contact_lines = []
@@ -402,11 +425,12 @@ def generate_ldr(macro_data):
     for pin in macro_data['pins']:
         current_pin_contacts = []
         current_pin_upward_plates = []
-        current_pin_metal1 = []
-
         pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
         color = COLOR_VDD if pin['name']=='VDD' else COLOR_VSS if pin['name']=='VSS' else COLOR_METAL1_INPUT if pin['direction']=='INPUT' else COLOR_METAL1_OUTPUT if pin['direction']=='OUTPUT' else COLOR_METAL1_INTERNAL
-        current_pin_metal1.append(pin_comment)
+
+        # Metal 1 Grid Aggregation
+        pin_metal1_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
+        has_metal1 = False
 
         # First, check for explicit Via1 rects for upward plates
         has_via1 = False
@@ -417,11 +441,8 @@ def generate_ldr(macro_data):
                 vx2_ldu, vy2_ldu = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
                 vxmin, vxmax = snap_to_grid(min(vx1_ldu, vx2_ldu)), snap_to_grid(max(vx1_ldu, vx2_ldu))
                 vzmin, vzmax = snap_to_grid(min(vy1_ldu, vy2_ldu)), snap_to_grid(max(vy1_ldu, vy2_ldu))
-
-                # Ensure at least one stud if rect is very small
                 if vxmax <= vxmin: vxmax = vxmin + 20
                 if vzmax <= vzmin: vzmax = vzmin + 20
-
                 for vsx in range(vxmin + 10, vxmax, 20):
                     for vsz in range(vzmin + 10, vzmax, 20):
                         current_pin_upward_plates.append(f"1 {color} {vsx} {Y_METAL2_PLATE} {vsz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
@@ -433,21 +454,15 @@ def generate_ldr(macro_data):
                 xmin, xmax = snap_to_grid(min(x1_ldu, x2_ldu)), snap_to_grid(max(x1_ldu, x2_ldu))
                 zmin, zmax = snap_to_grid(min(y1_ldu, y2_ldu)), snap_to_grid(max(y1_ldu, y2_ldu))
 
-                if xmax <= xmin:
-                    if xmax + 20 <= width_ldu: xmax += 20
-                    elif xmin - 20 >= 0: xmin -= 20
-                    else: xmax = xmin + 20
-                if zmax <= zmin:
-                    if zmax + 20 <= height_ldu: zmax += 20
-                    elif zmin - 20 >= 0: zmin -= 20
-                    else: zmax = zmin + 20
+                if xmax <= xmin: xmax = xmin + 20
+                if zmax <= zmin: zmax = zmin + 20
 
-                w, h = xmax - xmin, zmax - zmin
-                rect_tiles = get_best_plates_multi([[color for _ in range(h // 20)] for _ in range(w // 20)])
-
-                for plate, tx_off, tz_off, c, rotated in rect_tiles:
-                    gx, gz = xmin + tx_off, zmin + tz_off
-                    current_pin_metal1.append(f"1 {c} {gx} {Y_METAL1} {gz} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+                for gx in range(xmin + 10, xmax, 20):
+                    for gz in range(zmin + 10, zmax, 20):
+                        gsx, gsz = gx // 20, gz // 20
+                        if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
+                            pin_metal1_grid[gsx][gsz] = color
+                            has_metal1 = True
 
                 if pin['direction'] == 'INPUT':
                     cfg = pin_assignments[pin['name']]
@@ -455,46 +470,36 @@ def generate_ldr(macro_data):
                     if not has_via1:
                         current_pin_upward_plates.append(f"1 {color} {cfg['contact']*20+10} {Y_METAL2_PLATE} {cfg['contact_z']*20+10} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
                 else:
-                    # If we don't have Via1, we'll add upward plates based on contacts inside add_contacts_for_rect
                     add_contacts_for_rect(xmin, xmax, zmin, zmax, pin['name'], pin['direction'], current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color)
+
+        if has_metal1:
+            metal1_lines.append(pin_comment)
+            rect_tiles = get_best_plates_multi(pin_metal1_grid)
+            for plate, tx_off, tz_off, c, rotated in rect_tiles:
+                metal1_lines.append(f"1 {c} {tx_off} {Y_METAL1} {tz_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
         if current_pin_contacts: contact_lines.extend(current_pin_contacts)
         if current_pin_upward_plates: metal2_plate_lines.extend(current_pin_upward_plates)
-        if len(current_pin_metal1) > 1: metal1_lines.extend(current_pin_metal1)
 
     # Obstructions
     if macro_data['obs']:
-        metal1_lines.append("0 // Obstructions")
+        obs_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
+        has_obs = False
         for rect in macro_data['obs']:
             if rect['layer'] == 'Metal1':
-                x1, y1, x2, y2 = rect['coords']
-                x1_ldu, y1_ldu = um_to_ldu_coord(x1), um_to_ldu_coord(y1) + 10
-                x2_ldu, y2_ldu = um_to_ldu_coord(x2), um_to_ldu_coord(y2) + 10
+                x1_ldu, y1_ldu = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][1]) + 10
+                x2_ldu, y2_ldu = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
+                xmin, xmax = snap_to_grid(min(x1_ldu, x2_ldu)), snap_to_grid(max(x1_ldu, x2_ldu))
+                zmin, zmax = snap_to_grid(min(y1_ldu, y2_ldu)), snap_to_grid(max(y1_ldu, y2_ldu))
+                if xmax <= xmin: xmax = xmin + 20
+                if zmax <= zmin: zmax = zmin + 20
 
-                xmin = max(0, min(width_ldu, snap_to_grid(min(x1_ldu, x2_ldu))))
-                xmax = max(0, min(width_ldu, snap_to_grid(max(x1_ldu, x2_ldu))))
-                zmin = max(0, min(height_ldu, snap_to_grid(min(y1_ldu, y2_ldu))))
-                zmax = max(0, min(height_ldu, snap_to_grid(max(y1_ldu, y2_ldu))))
-
-                if xmax <= xmin:
-                    if xmax + 20 <= width_ldu: xmax += 20
-                    elif xmin - 20 >= 0: xmin -= 20
-                    else: xmax = xmin + 20
-                if zmax <= zmin:
-                    if zmax + 20 <= height_ldu: zmax += 20
-                    elif zmin - 20 >= 0: zmin -= 20
-                    else: zmax = zmin + 20
-
-                w = xmax - xmin
-                h = zmax - zmin
-                rect_tiles = get_best_plates_multi([[COLOR_METAL1_INTERNAL for _ in range(h // 20)] for _ in range(w // 20)])
-                for plate, tx_off, tz_off, c, rotated in rect_tiles:
-                    gx = xmin + tx_off
-                    gz = zmin + tz_off
-                    if rotated:
-                        metal1_lines.append(f"1 {c} {gx} {Y_METAL1} {gz} 0 0 1 0 1 0 -1 0 0 {plate}")
-                    else:
-                        metal1_lines.append(f"1 {c} {gx} {Y_METAL1} {gz} 1 0 0 0 1 0 0 0 1 {plate}")
+                for gx in range(xmin + 10, xmax, 20):
+                    for gz in range(zmin + 10, zmax, 20):
+                        gsx, gsz = gx // 20, gz // 20
+                        if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
+                            obs_grid[gsx][gsz] = COLOR_METAL1_INTERNAL
+                            has_obs = True
 
                 # Add Contacts for Obstructions
                 obs_contacts = []
@@ -502,6 +507,12 @@ def generate_ldr(macro_data):
                 add_contacts_for_rect(xmin, xmax, zmin, zmax, "OBS", "UNKNOWN", obs_contacts, obs_upward, COLOR_METAL1_INTERNAL)
                 contact_lines.extend(obs_contacts)
                 metal2_plate_lines.extend(obs_upward)
+
+        if has_obs:
+            metal1_lines.append("0 // Obstructions")
+            rect_tiles = get_best_plates_multi(obs_grid)
+            for plate, tx_off, tz_off, c, rotated in rect_tiles:
+                metal1_lines.append(f"1 {c} {tx_off} {Y_METAL1} {tz_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
     # Write layers in order
     if contact_lines:
