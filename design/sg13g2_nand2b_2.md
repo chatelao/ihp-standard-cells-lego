@@ -82,9 +82,9 @@ GOLDEN STANDARD
 9 & C  + OOOOO +
 8   C  &     o &
 7   C        O
-6 IiCCc    IiO
+6 IiCCCc   IiO
 5   C        O
-4 _ c  cCcCc o c
+4 _ c  cCCCc o c
 3 -    C   C   C
 2 -    c _ cCCCc
 1 -      -
