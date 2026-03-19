@@ -273,6 +273,7 @@ def generate_ldr(macro_data):
     # 4. Polysilicon Gates
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Polysilicon Gates")
+    is_decap = 'decap' in macro_data['name'].lower()
     is_drive_2 = macro_data['name'].endswith('_2')
     is_big = w_studs > 7
 
@@ -365,25 +366,29 @@ def generate_ldr(macro_data):
         }
 
     poly_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
-    for pin in macro_data['pins']:
-        if pin['direction'] == 'INPUT':
-            config = pin_assignments[pin['name']]
-            # Mark gates on grid
-            for gs in config['gate']:
-                for gz in range(1, 14): # Studs 1-13
-                    poly_grid[gs][gz] = COLOR_POLY
-            # Mark pad/bridge on grid
-            cx = config['contact']
-            cz = config['contact_z']
-            poly_grid[cx][cz] = COLOR_POLY
-            # Connect pad to gates (horizontal bridge)
-            for gx in config['gate']:
-                for bx in range(min(cx, gx), max(cx, gx) + 1):
-                    poly_grid[bx][cz] = COLOR_POLY
 
-    poly_tiles = get_best_plates_multi(poly_grid)
-    for plate, x_off, z_off, color, rotated in poly_tiles:
-        ldr_lines.append(f"1 {color} {x_off} {Y_POLY} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+    if is_decap:
+        # Specialized Polysilicon for DECAP: Fill all active regions
+        # We will later remove Poly where the Active-connected pin (VSS) has contacts.
+        for x in range(x_start_active, x_end_active):
+            for z in range(2, 13):
+                poly_grid[x][z] = COLOR_POLY
+    else:
+        for pin in macro_data['pins']:
+            if pin['direction'] == 'INPUT':
+                config = pin_assignments[pin['name']]
+                # Mark gates on grid
+                for gs in config['gate']:
+                    for gz in range(1, 14): # Studs 1-13
+                        poly_grid[gs][gz] = COLOR_POLY
+                # Mark pad/bridge on grid
+                cx = config['contact']
+                cz = config['contact_z']
+                poly_grid[cx][cz] = COLOR_POLY
+                # Connect pad to gates (horizontal bridge)
+                for gx in config['gate']:
+                    for bx in range(min(cx, gx), max(cx, gx) + 1):
+                        poly_grid[bx][cz] = COLOR_POLY
 
     # 5. Pins, Rails, and Contacts
     contact_lines = []
@@ -391,6 +396,7 @@ def generate_ldr(macro_data):
     metal2_plate_lines = []
 
     def add_contacts_for_rect(xmin, xmax, zmin, zmax, pin_name, direction, current_pin_contacts, current_pin_upward_plates, color):
+        nonlocal poly_grid
         for sx in range(10, width_ldu, 20):
             if xmin <= sx <= xmax:
                 for sz in range(10, height_ldu, 20):
@@ -398,18 +404,32 @@ def generate_ldr(macro_data):
                         stud_x, stud_z = sx // 20, sz // 20
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
 
-                        # Power Rails: Must use exact tracks (Z=0 or Z=14)
+                        # Power Rails: Must use exact tracks (Z=0 or Z=14) or internal fingers (Z=2..12)
                         if pin_name == 'VDD':
-                            if stud_z == 14 and stud_x % 2 == 0:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                                if is_active:
-                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            if stud_z == 14:
+                                if stud_x % 2 == 0:
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                                    if is_active:
+                                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            elif 2 <= stud_z <= 12 and stud_z % 2 == 0:
+                                if stud_x % 2 == get_unified_parity(stud_x, is_big):
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                                    # DECAP: VDD connects to Poly, VSS to Active.
+                                    if not is_decap:
+                                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         elif pin_name == 'VSS':
-                            if stud_z == 0 and stud_x % 2 == 1:
-                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                                if is_active:
+                            if stud_z == 0:
+                                if stud_x % 2 == 1:
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                                    if is_active:
+                                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                            elif 2 <= stud_z <= 12 and stud_z % 2 == 0:
+                                if stud_x % 2 == get_unified_parity(stud_x, is_big):
+                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
                                     current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         # Signal pins and Obstructions: Must use even tracks 2-12
                         elif 0 < stud_z < 14 and stud_z % 2 == 0:
@@ -481,7 +501,12 @@ def generate_ldr(macro_data):
         if current_pin_contacts: contact_lines.extend(current_pin_contacts)
         if current_pin_upward_plates: metal2_plate_lines.extend(current_pin_upward_plates)
 
-    # Obstructions
+    # 6. Polysilicon Tiles (Finalized after contacts)
+    poly_tiles = get_best_plates_multi(poly_grid)
+    for plate, x_off, z_off, color, rotated in poly_tiles:
+        ldr_lines.append(f"1 {color} {x_off} {Y_POLY} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+
+    # 7. Obstructions
     if macro_data['obs']:
         obs_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
         has_obs = False
