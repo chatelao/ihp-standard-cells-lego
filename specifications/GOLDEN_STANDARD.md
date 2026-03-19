@@ -184,17 +184,17 @@ GOLDEN STANDARD
   012345678901234
 4 ppppppppppppppp
 3 NNNNNNNNNNNNNNN
-2 NpppppppppppppN
-1 NpppppppppppppN
-0 NpppppppppppppN
-9 NpppppppppppppN
-8 NpppppppppppppN
+2 pppNppppppppppN
+1 pppNppppppppppN
+0 pppNppppppppppN
+9 pppNppppppppppN
+8 pppNppppppppppN
 7 SSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSS
-4 SnnnnnnnnnnnnnS
-3 SnnnnnnnnnnnnnS
-2 SnnnnnnnnnnnnnS
+4 SnnnSnnnnnnnnnS
+3 SnnnSnnnnnnnnnS
+2 SnnnSnnnnnnnnnS
 1 SSSSSSSSSSSSSSS
 0 nnnnnnnnnnnnnnn
 ```
@@ -247,6 +247,98 @@ GOLDEN STANDARD
 Legend: G=Polysilicon
 
 ### sg13g2_nand2b_2 - Substrate
+GOLDEN STANDARD
+
+```
+  012345678901234
+4 NNNNNNNNNNNNNNN
+3 NNNNNNNNNNNNNNN
+2 NNNNNNNNNNNNNNN
+1 NNNNNNNNNNNNNNN
+0 NNNNNNNNNNNNNNN
+9 NNNNNNNNNNNNNNN
+8 NNNNNNNNNNNNNNN
+7 SSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSS
+4 SSSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSS
+```
+Legend: N=N-Well, S=Substrate
+
+### sg13g2_xor2_1 - Active
+GOLDEN STANDARD
+
+```
+  012345678901234
+4 ppppppppppppppp
+3 NNNNNNNNNNNNNNN
+2 NpppppppppppppN
+1 NpppppppppppppN
+0 NpppppppppppppN
+9 NpppppppppppppN
+8 NpppppppppppppN
+7 SSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSS
+4 SnnnnnnnnnnnnnS
+3 SnnnnnnnnnnnnnS
+2 SnnnnnnnnnnnnnS
+1 SSSSSSSSSSSSSSS
+0 nnnnnnnnnnnnnnn
+```
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+
+### sg13g2_xor2_1 - Metal 1
+GOLDEN STANDARD
+
+```
+  012345678901234
+4 & & & & & & & &
+3
+2
+1  I        I    O
+0  i c      i c  o
+9  I CCCCC  I C  O
+8  c        c    o
+7  C        C    C
+6  C        C   oOO
+5  C        C    O
+4  c        c    o
+3
+2
+1
+0  _ _ _ _ _ _ _
+```
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+
+### sg13g2_xor2_1 - Polysilicon
+GOLDEN STANDARD
+
+```
+  012345678901234
+4
+3  G G      G G
+2  G G      G G
+1  G G      G G
+0  G G      G G
+9  G G      G G
+8  G G      G G
+7  G G      G G
+6 GGG      GGG
+5  G G      G G
+4  G G      G G
+3  G G      G G
+2  G G      G G
+1  G G      G G
+0
+```
+Legend: G=Polysilicon
+
+### sg13g2_xor2_1 - Substrate
 GOLDEN STANDARD
 
 ```
