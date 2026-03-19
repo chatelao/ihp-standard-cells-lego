@@ -75,12 +75,12 @@ GOLDEN STANDARD
 ```
   012345678901234
 4 &+&+&+&+&+&+&+&
-3 +   +    +   +
-2 +   & o  & o &
-1 & c + O  + O +
-0 + C & o  & o &
-9 & C + OOOOOO +
-8   C &      o &
+3 +    +   +   +
+2 +    & o & o &
+1 & c  + O + O +
+0 + C  & o & o &
+9 & C  + OOOOO +
+8   C  &     o &
 7   C        O
 6 IiCCc    IiO
 5   C        O
