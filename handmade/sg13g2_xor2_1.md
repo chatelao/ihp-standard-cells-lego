@@ -60,11 +60,11 @@ GOLDEN STANDARD
 8  G GGG   G G G
 7  G   GGG G G G
 6  GGG   G G G G
-5    G   G G G G
-4    G   G G G G
-3    G   G G G G
-2    G     G G G
-1    GGGGGGG
+5  G G   G G G G
+4  G G   G G G G
+3  G G   G G G G
+2  G G     G G G
+1  G GGGGGGG
 0
 ```
 Legend: G=Polysilicon

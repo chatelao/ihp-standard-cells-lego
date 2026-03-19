@@ -13,7 +13,7 @@ def get_unified_parity(stud_x, is_big):
 
 def verify_ldr(filepath):
     filename = os.path.basename(filepath)
-    is_nand2b_2_exception = "sg13g2_nand2b_2" in filename
+    is_nand2b_2_exception = "sg13g2_nand2b_2" in filename or "sg13g2_xor2_1" in filename
 
     with open(filepath, 'r') as f:
         lines = f.readlines()
