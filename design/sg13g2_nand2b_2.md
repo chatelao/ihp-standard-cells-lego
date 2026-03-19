@@ -52,19 +52,19 @@ GOLDEN STANDARD
 ```
   012345678901234
 4
-3      G G  G G
-2  G   G G  G G
-1  G   G G  G G
-0  G   G G  G G
-9  G   G G  G G
-8  G   G G  G G
-7  G   G G  G G
-6  G  GGGG  GGG
-5  G   G G  G G
-4  G   G G  G G
-3  G   G G  G G
-2  G   G G  G G
-1      G G  G G
+3       G G G G
+2  G    G G G G
+1  G    G G G G
+0  G    G G G G
+9  G    G G G G
+8  G    G G G G
+7  G    G G G G
+6  G   GGGG GGG
+5  G    G G G G
+4  G    G G G G
+3  G    G G G G
+2  G    G G G G
+1       G G G G
 0
 ```
 Legend: G=Polysilicon
@@ -75,12 +75,12 @@ GOLDEN STANDARD
 ```
   012345678901234
 4 &+&+&+&+&+&+&+&
-3 +   +    +   +
-2 +   & o  & o &
-1 & c + O  + O +
-0 + C & o  & o &
-9 & C + OOOOOO +
-8   C &      o &
+3 +    +   +   +
+2 +    & o & o &
+1 & c  + O + O +
+0 + C  & o & o &
+9 & C  + OOOOO +
+8   C  &     o &
 7   C        O
 6 IiCCc    IiO
 5   C        O
