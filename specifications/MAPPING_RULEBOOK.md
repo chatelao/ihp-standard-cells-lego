@@ -12,7 +12,7 @@ This document defines the standardized transformation rules from LEF (Library Ex
 ## 2. Standard Cell Architecture
 - Total Height: 15 studs (300 LDU).
 - Power Rails: Located at Track 0 (VSS) and Track 14 (VDD), resulting in a 14-stud center-to-center distance.
-- **Exceptions**: `sg13g2_nand2b_2` is hardcoded to 15 studs (300 LDU) wide to match its specialized golden design, exceeding its 3.84 µm (14.2 stud) LEF definition. It is also exempt from strict track alignment and parity rules in Section 3.
+- **Exceptions**: `sg13g2_nand2b_2` and `sg13g2_xor2_1` are hardcoded to 15 studs (300 LDU) wide to match their specialized golden designs, exceeding their 3.84 µm (14.2 stud) LEF definitions. They are also exempt from strict track alignment and parity rules in Section 3.
 
 ## 3. Contact Placement Rules
 Contacts bridge the gap between Metal 1 and underlying layers (Active or Polysilicon). To ensure buildability and electrical consistency, contacts must follow these placement rules:
