@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   01234567890123456789012345678901234567890123456789012345678901
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3     +        +     +         +                          + +
-2     + CccCcCc+     + CcCcCcC + CcCc cCcCcCcCcCcCcCcCcCcC+ +
+2     & CccCcCc+     + CcCcCcC + CcCc cCcCcCcCcCcCcCcCcCcC& &
 1     + C     C+ CC  + C     C + C  C                     + + O
-0  cCcCcC cC  c+ Cc  + CcCc cCcCcCc c   cCcCcCcCcCc       + + o
+0  cCcCcC cC  c+ Cc  + CcCc cCcCcCc c   cCcCcCcCcCc       & & o
 9  C     CCC  C+ CC  +CCC   C     C C   C       C CC    C   + O
-8  c   cCc    c+ Cc    Cc cCcCcCcCc c cCc cCcCcCc cCc cCcCcC+ o
+8  c   cCc    c+ Cc    Cc cCcCcCcCc c cCc cCcCcCc cCc cCcCcC& o
 7  C   C  I I C   C    CC C II C  C C  C  CIII  C C C C    C  O
 6  cIi cI i i cC CcCcC Cc   iI Cc c cC C CcIiIcCc cCc    C Cc o
 5  C   CI   I    CC    CCCCCCCCCCCCCCC C  CIIIC  CCCCCCCCC C OO
-4  c - cIIIII cCcCc    C  c   c      C    cCcCc cCcCcC     C Oo
+4  c _ cIIIII cCcCc    C  c   c      C    cCcCc cCcCcC     C Oo
 3  C - CCCCCCCC-  C  CCC-   - C CCCCCC        C      C -  CC- O
-2    -         -        -   - cCcCcCcCcCcCcCcCcCcCcC   -    -
+2    _         _        -   - cCcCcCcCcCcCcCcCcCcCcC   _    -
 1    -         -        -   -                          -    -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```

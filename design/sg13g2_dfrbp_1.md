@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   0123456789012345678901234567890123456789012345678901
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +         +                            +      +
-2  + cCcCccC +cCcCc cCcCcCcCcCcCcCcCcCcC  +      +
+2  + cCcCccC +cCcCc cCcCcCcCcCcCcCcCcCcC  &      +
 1  + C      C+C   C                       + O  C + O
-0  + cCcC c cCc c c    CcCcCcCcCc         + o  C + O
+0  + cCcC c cCc c c    CcCcCcCcCc         & o  C + O
 9  + CC   C     C C    C       CCCCC   C    O  C + O
 8    cC CccCcCcCc c cCcCcCcCcC Cc  CcCcCcCc o  C + O
 7  I CC C II C  C C  C  C      CC  CC     C O  C   O
 6  i cC   Ii C Cc cCcC Cc iI CcCcC CcCcCc c o  CcCcO
 5  I CCCCCCCCC CCCC CC  C    C  CCCC      C O  C   O
-4  I c  C   c       cCcCcCcC CcCcCcC     Cc o  C - O
+4  I c  C   c       cCcCcCcC CcCcCcC     Cc o  C _ O
 3  CCC-   - C CCCCCCC        C      C-  CC- O  C - O
-2     -   - cCcCcCcCcCcCcCcCcCcCcCc  -    -      -
+2     -   - cCcCcCcCcCcCcCcCcCcCcCc  _    -      _
 1     -   -                          -    -      -
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
