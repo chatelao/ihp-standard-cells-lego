@@ -405,32 +405,21 @@ def generate_ldr(macro_data):
                         is_active = any(ax1 <= sx <= ax2 and az1 <= sz <= az2 for ax1, ax2, az1, az2 in active_regions)
 
                         # Power Rails: Must use exact tracks (Z=0 or Z=14) or internal fingers (Z=2..12)
-                        if pin_name == 'VDD':
-                            if stud_z == 14:
-                                if stud_x % 2 == 0:
-                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                        # Power pins (VDD/VSS) are exempt from strict parity rules to ensure full connectivity for fingers.
+                        if pin_name in ['VDD', 'VSS']:
+                            if 0 <= stud_z <= 14 and stud_z % 2 == 0:
+                                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                                # Power rails (Z=0, 14) connect to Active; Fingers (Z=2..12) connect to Active or Poly.
+                                # Fill the gap to active/poly (8 LDU round plate at Y=-24)
+                                if stud_z in [0, 14]:
                                     if is_active:
                                         current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                            elif 2 <= stud_z <= 12 and stud_z % 2 == 0:
-                                if stud_x % 2 == get_unified_parity(stud_x, is_big):
-                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                                    # DECAP: VDD connects to Poly, VSS to Active.
-                                    if not is_decap:
+                                else:
+                                    # For internal fingers, always add the plate unless it's a VDD finger in DECAP
+                                    # (which connects primarily to Poly at Y=-24).
+                                    if not (pin_name == 'VDD' and is_decap):
                                         current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                        elif pin_name == 'VSS':
-                            if stud_z == 0:
-                                if stud_x % 2 == 1:
-                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                                    if is_active:
-                                        current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                            elif 2 <= stud_z <= 12 and stud_z % 2 == 0:
-                                if stud_x % 2 == get_unified_parity(stud_x, is_big):
-                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                                    current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-                                    current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                         # Signal pins and Obstructions: Must use even tracks 2-12
                         elif 0 < stud_z < 14 and stud_z % 2 == 0:
                             # Unified parity rule for active and gate tracks (Z=2..12)

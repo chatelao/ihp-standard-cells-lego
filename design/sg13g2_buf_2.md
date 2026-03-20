@@ -68,7 +68,7 @@ Legend: G=Polysilicon
   012345678
 4 &+&+&+&+&
 3  +    +
-2  +    +
+2  +    &
 1  +    +C
 0  +CcCcCc
 9  CC  C C

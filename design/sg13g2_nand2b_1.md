@@ -68,7 +68,7 @@ Legend: G=Polysilicon
   012345678
 4 &+&+&+&+&
 3    +  +
-2    +  +
+2    +  &
 1    +O +
 0  c +OoOo
 9  CCCCC O
@@ -78,7 +78,7 @@ Legend: G=Polysilicon
 5  CCCCC O
 4  c    Oo
 3    -  OO
-2    -
+2    _
 1    -
 0 -_-_-_-_-
 ```
