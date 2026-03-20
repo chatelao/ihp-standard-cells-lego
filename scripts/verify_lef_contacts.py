@@ -48,15 +48,46 @@ def get_expected_contacts(macro):
     width_ldu = round(macro['width_um'] * UM_TO_LDU / 20) * 20
     w_studs = width_ldu // 20
     d_studs = 15 # Fixed height
+    is_big = w_studs > 7
 
     expected = set() # Set of (x, z)
 
-    all_rects = []
+    # Process Pins
     for pin in macro['pins']:
-        all_rects.extend(pin['rects'])
-    all_rects.extend(macro['obs'])
+        pin_name = pin['name']
+        for r in pin['rects']:
+            x1, y1, x2, y2 = r
+            lx1, lx2 = um_to_ldu_coord(min(x1, x2)), um_to_ldu_coord(max(x1, x2))
+            lz1, lz2 = um_to_ldu_coord(min(y1, y2)) + LDU_OFFSET, um_to_ldu_coord(max(y1, y2)) + LDU_OFFSET
 
-    for r in all_rects:
+            for sx in range(w_studs):
+                cx = sx * 20 + 10
+                if lx1 <= cx <= lx2:
+                    for sz in range(d_studs):
+                        if sz % 2 != 0: continue # Only EVEN tracks
+                        cz = sz * 20 + 10
+                        if lz1 <= cz <= lz2:
+                            # Apply Parity Rules
+                            if pin_name == 'VDD':
+                                if sz == 14:
+                                    if sx % 2 == 0: expected.add((sx, sz))
+                                elif 2 <= sz <= 12:
+                                    # Unified parity for internal fingers
+                                    if sx % 2 == (1 if sx < 8 or not is_big else 0):
+                                        expected.add((sx, sz))
+                            elif pin_name == 'VSS':
+                                if sz == 0:
+                                    if sx % 2 != 0: expected.add((sx, sz))
+                                elif 2 <= sz <= 12:
+                                    if sx % 2 == (1 if sx < 8 or not is_big else 0):
+                                        expected.add((sx, sz))
+                            else: # Signal Pins
+                                if 2 <= sz <= 12:
+                                    if sx % 2 == (1 if sx < 8 or not is_big else 0):
+                                        expected.add((sx, sz))
+
+    # Process Obstructions
+    for r in macro['obs']:
         x1, y1, x2, y2 = r
         lx1, lx2 = um_to_ldu_coord(min(x1, x2)), um_to_ldu_coord(max(x1, x2))
         lz1, lz2 = um_to_ldu_coord(min(y1, y2)) + LDU_OFFSET, um_to_ldu_coord(max(y1, y2)) + LDU_OFFSET
@@ -64,17 +95,12 @@ def get_expected_contacts(macro):
         for sx in range(w_studs):
             cx = sx * 20 + 10
             if lx1 <= cx <= lx2:
-                for sz in range(d_studs):
+                for sz in range(2, 13, 2): # Only internal tracks for OBS
                     cz = sz * 20 + 10
                     if lz1 <= cz <= lz2:
-                        # Apply Parity Rules
-                        if sz % 2 == 0:
-                            if sz in [0, 14]:
-                                if sx % 2 == 0: # Rails are EVEN
-                                    expected.add((sx, sz))
-                            elif 2 <= sz <= 12:
-                                if sx % 2 != 0: # Active/Input are ODD
-                                    expected.add((sx, sz))
+                        if sx % 2 == (1 if sx < 8 or not is_big else 0):
+                            expected.add((sx, sz))
+
     return expected
 
 def parse_md_contacts(md_filepath):

@@ -74,15 +74,27 @@ def verify_ldr(filepath):
                         errors.append(f"Contact at Stud Z={stud_z} is on an ODD track (expected EVEN)")
 
                     if pin_color == 14: # VDD
-                        if stud_z != 14:
-                            errors.append(f"VDD contact at Stud Z={stud_z} (expected Track 14)")
-                        if stud_x % 2 != 0:
-                            errors.append(f"VDD contact at Stud X={stud_x} has ODD parity (expected EVEN)")
+                        if stud_z == 14:
+                            if stud_x % 2 != 0:
+                                errors.append(f"VDD contact at Stud X={stud_x} has ODD parity (expected EVEN)")
+                        elif 2 <= stud_z <= 12:
+                            expected_parity = get_unified_parity(stud_x, is_big)
+                            if stud_x % 2 != expected_parity:
+                                parity_name = "ODD" if expected_parity == 1 else "EVEN"
+                                errors.append(f"VDD finger contact at Stud X={stud_x} has incorrect parity (expected {parity_name})")
+                        else:
+                            errors.append(f"VDD contact at Stud Z={stud_z} (expected Track 14 or 2-12)")
                     elif pin_color == 0: # VSS
-                        if stud_z != 0:
-                            errors.append(f"VSS contact at Stud Z={stud_z} (expected Track 0)")
-                        if stud_x % 2 == 0:
-                            errors.append(f"VSS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
+                        if stud_z == 0:
+                            if stud_x % 2 == 0:
+                                errors.append(f"VSS contact at Stud X={stud_x} has EVEN parity (expected ODD)")
+                        elif 2 <= stud_z <= 12:
+                            expected_parity = get_unified_parity(stud_x, is_big)
+                            if stud_x % 2 != expected_parity:
+                                parity_name = "ODD" if expected_parity == 1 else "EVEN"
+                                errors.append(f"VSS finger contact at Stud X={stud_x} has incorrect parity (expected {parity_name})")
+                        else:
+                            errors.append(f"VSS contact at Stud Z={stud_z} (expected Track 0 or 2-12)")
                     elif pin_color in [1, 9, 272]: # Signal (Internal, Input, Output)
                         if not (2 <= stud_z <= 12):
                             errors.append(f"Signal contact at Stud Z={stud_z} outside tracks 2-12")
