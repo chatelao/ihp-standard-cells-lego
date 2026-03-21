@@ -18,7 +18,7 @@ This document defines the standardized transformation rules from LEF (Library Ex
 Contacts bridge the gap between Metal 1 and underlying layers (Active or Polysilicon). To ensure buildability and electrical consistency, contacts must follow these placement rules:
 
 ### 3.1 Track Alignment
-Contacts are strictly permitted only on EVEN Z-tracks:
+Contacts are prefered only on every second stud in a metal:
 - **0**: VSS Rail
 - **2, 4**: NMOS Active Region
 - **6**: Input Gates (Standard)
@@ -31,9 +31,6 @@ Contacts are strictly permitted only on EVEN Z-tracks:
 To maintain grid alignment and prevent illegal overlaps, contacts follow a strict parity rule on the X-axis:
 - **VSS Contacts (All Tracks)**: MUST use ODD X-studs (1, 3, 5, ...).
 - **VDD Contacts (All Tracks)**: MUST use EVEN X-studs (0, 2, 4, ...).
-- **Signal Contacts (Active & Gate Tracks Z=2..12)**:
-  - Small models (width <= 7): Always ODD (1, 3, 5, ...).
-  - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
 
 ### 3.3 Generation Logic
 To ensure robust electrical connectivity, every `Metal1` strip (rectangle) MUST have at least one contact. The generation logic uses a scoring and prioritization system:
@@ -41,8 +38,8 @@ To ensure robust electrical connectivity, every `Metal1` strip (rectangle) MUST 
 1. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) is evaluated to find at least one valid stud.
 2. **Prioritization (Scoring)**:
    - **Track Alignment**: Preferred on EVEN tracks (0, 2, 4, 6, 8, 10, 12, 14).
-   - **Target Layer Match**: Pins marked as `is_gate` (Input) prioritize Track 6. Pins marked as `is_diff` (Output/Other) prioritize Tracks 2, 4, 8, 10, or 12.
    - **Parity Match**: Studs matching the `Stud Parity` rules (Section 3.2) receive a higher score.
+   - Polysilicon ist prefered to run in long strips.
 3. **Connectivity Guarantee**: If a contact is placed, the generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at the `Y=-24` and `Y=-16` layers respectively to complete the connection to the substrate or channel.
 4. **Fallback**: If no studs within a rectangle satisfy the strict parity and track rules, the generator will select the highest-scoring available stud (e.g., relaxing parity or track requirements) to ensure at least one contact is placed.
 
