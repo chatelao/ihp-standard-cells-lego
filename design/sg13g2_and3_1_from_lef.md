@@ -1,4 +1,4 @@
-# Design Documentation for sg13g2_and3_1
+# Design Documentation for sg13g2_and3_1_from_lef
 
 ## Substrate
 ```
@@ -66,20 +66,20 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   012345678901
-4  & & & & & &
+4 &&&&&&&&&&&&
 3    +   ++
-2    & & & &
-1   C+ C ++   O
-0   C& c &    O
-9   C  C      O
-8   CcCcCcc   O
-7   C II ICC  O
-6   C Ii icC  O
-5   C       OOO
-4      i _  O
-3      I -  O
+2    &   &&
+1   C+ C ++ OO
+0   C& c && oO
+9   C  C    OO
+8   CcCcCcc  O
+7   C II ICC O
+6   C Ii icC O
+5   C      OOO
+4      i _ O
+3      I - O
 2  IIIII _
 1        -
-0  _ _ _ _ _ _
+0 ____________
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)

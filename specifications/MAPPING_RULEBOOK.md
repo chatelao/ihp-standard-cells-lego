@@ -25,13 +25,13 @@ Contacts are strictly permitted only on EVEN Z-tracks:
 - **8, 10, 12**: PMOS Active Region
 - **14**: VDD Rail
 
-**Power Fingers**: VDD and VSS pins may have contacts on internal tracks (2-12) if their Metal 1 layout extends into the cell. These internal contacts must follow the **Unified Parity** rule defined in Section 3.2.
+**Power Fingers**: VDD and VSS pins may have contacts on internal tracks (2-12) if their Metal 1 layout extends into the cell. These internal contacts must follow the **Rail Parity** rule defined in Section 3.2.
 
 ### 3.2 Stud Parity (X-axis)
 To maintain grid alignment and prevent illegal overlaps, contacts follow a strict parity rule on the X-axis:
-- **VSS Rail (Z=0)**: MUST use ODD X-studs (1, 3, 5, ...).
-- **VDD Rail (Z=14)**: MUST use EVEN X-studs (0, 2, 4, ...).
-- **Active & Gate Tracks (Z=2..12)**:
+- **VSS Contacts (All Tracks)**: MUST use ODD X-studs (1, 3, 5, ...).
+- **VDD Contacts (All Tracks)**: MUST use EVEN X-studs (0, 2, 4, ...).
+- **Signal Contacts (Active & Gate Tracks Z=2..12)**:
   - Small models (width <= 7): Always ODD (1, 3, 5, ...).
   - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
 

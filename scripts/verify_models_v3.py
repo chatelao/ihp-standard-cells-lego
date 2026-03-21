@@ -76,9 +76,13 @@ def verify_ldr(filepath):
                     if pin_color == 14: # VDD
                         if not (stud_z == 14 or 2 <= stud_z <= 12):
                             errors.append(f"VDD contact at Stud Z={stud_z} (expected Track 14 or 2-12)")
+                        if stud_x % 2 != 0: # EVEN
+                            errors.append(f"VDD contact at Stud X={stud_x} has incorrect parity (expected EVEN)")
                     elif pin_color == 0: # VSS
                         if not (stud_z == 0 or 2 <= stud_z <= 12):
                             errors.append(f"VSS contact at Stud Z={stud_z} (expected Track 0 or 2-12)")
+                        if stud_x % 2 != 1: # ODD
+                            errors.append(f"VSS contact at Stud X={stud_x} has incorrect parity (expected ODD)")
                     elif pin_color in [1, 9, 272]: # Signal (Internal, Input, Output)
                         if not (2 <= stud_z <= 12):
                             errors.append(f"Signal contact at Stud Z={stud_z} outside tracks 2-12")
