@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   0123456
-4 &+&&&+&
+4 &+&+&+&
 3    +
-2    +
+2   &+
 1  C + O
-0  cCc o
+0  cCC o
 9    C O
-8  i c o
+8  I c o
 7    C O
-6    cCo
-5  cCC O
+6  c cCo
+5  CCC O
 4  c   o
 3    - O
 2    _
 1    -
 0 -_-_-_-
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 

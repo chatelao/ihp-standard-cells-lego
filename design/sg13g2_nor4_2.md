@@ -26,14 +26,14 @@ Legend: N=N-Well, S=Substrate
   012345678901234567890
 4 ppppppppppppppppppppp
 3 NNNNNNNNNNNNNNNNNNNNN
-2 NpppppppppppppppppppN
+2 ppppppppppppppppppppN
 1 NpppppppppppppppppppN
-0 NpppppppppppppppppppN
+0 Npppppppppppppppppppp
 9 NpppppppppppppppppppN
-8 NpppppppppppppppppppN
+8 Npppppppppppppppppppp
 7 SSSSSSSSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSSSSSSSS
-5 SSSnSSSSSSSSSSSSSSSSS
+5 SSSSSSSSSSSSSSSSSSSSS
 4 SnnnnnnnnnnnnnnnnnnnS
 3 SnnnnnnnnnnnnnnnnnnnS
 2 SnnnnnnnnnnnnnnnnnnnS
@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   012345678901234567890
-4 &&&+&&&+&+&+&+&+&+&+&
+4 &+&+&+&+&+&+&+&+&+&+&
 3  +   +
-2  +   + ccCcCcCc cCcCc
+2 &+  &+ CCCcCCCC CCcCC
 1  + C + C  C   C C   C
 0  + c + cc c c c c o c
-9  + cCCCCC C cCCCC O C
-8                   o c
+9  + CCCCCC C CCCCC O C
+8      c        c   o c
 7                   O
-6   Ii    iI  iI Ii oO
-5    oOOOOOOOOOOOOOOO
-4  _ o    o   o     o -
+6   II    iI  II II oO
+5    OOOOOOOOOOOOOOOO
+4  _ o    o o o     o -
 3  - O ---O - O --- O -
-2  _   _-_  -   -_-   -
+2  _   _-_  -_  -_-  _-
 1  -   ---  -   ---   -
-0 -_-_-_-_-___-_-_-_-__
+0 -_-_-_-_-_-_-_-_-_-_-
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 

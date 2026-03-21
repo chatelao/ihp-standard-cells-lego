@@ -26,7 +26,7 @@ Legend: N=N-Well, S=Substrate
   012345678901234567890123456789012345678901234567
 4 pppppppppppppppppppppppppppppppppppppppppppppppp
 3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-2 NppppppppppppppppppppppppppppppppppppppppppppppN
+2 pppppppppppppppppppppppppppppppppppppppppppppppN
 1 NppppppppppppppppppppppppppppppppppppppppppppppN
 0 NppppppppppppppppppppppppppppppppppppppppppppppN
 9 NppppppppppppppppppppppppppppppppppppppppppppppN
@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   012345678901234567890123456789012345678901234567
-4 &&&+&+&+&+&&&+&+&+&+&+&+&+&+&+&+&+&+&+&&&+&+&+&+
+4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +         +                           +    +
-2  + cCcCccC +cCcCc cCcCcCcCcCcCcCcCcCcc +    &
+2 &+ cCcCccC&+cCcCc cCcCcCcCcCcCcCcCcCcC +&   &
 1  + C      C+C   C                      +  C + O
 0  + cCcC c cCc c c    CcCcCcCcCc        +  c & o
-9  + cC   C     C C    C       CCCcC   C +  C + O
-8    cC cccCcCcCc c cCcccCcCcC Cc  C   c    c & o
-7  I CC C II c  C C  C  C      CC  CcCCCCCC C   O
-6  i cc   iI c cc cccC Cc iI CcccC ccCcCc c cCcCo
-5  I CCcCCCCCC CcCC CC  C    C  cCCc      C C   O
-4  i c  c   c       cccCcCcc CcCcCcC     cc c -Oo
-3  cCC-   - C cCCCCCC        C      c-  cC  C -OO
-2     -   - cCcCcCcCcCcCcCcCcccCcCc  _        -
+9  + CC   C     C C    C       CCCCC   C +  C + O
+8    cCcCccCcCcCc c cCcCcCcCcCcCc cC  cCc   c & o
+7  I CC C II C  C C  C  C      CC  CCCCCCCC C   O
+6  I cC   iIcCcCc cCcCcCc II CcCcCcCcCcCc c cCcCo
+5  I CCCCCCCCC CCCC CC  C    C  CCCC      C C   O
+4  i c  Cc  c   c   cCcCcCcCcCcCcCcC    cCC c -Oo
+3  CCC-   - C CCCCCCC        C      C-  CC  C -OO
+2  c  -_  -_cCcCcCcCcCcCcCcCcCcCcCc c_  c    _-
 1     -   -                          -        -
-0 -_-___-___-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-___-_
+0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
