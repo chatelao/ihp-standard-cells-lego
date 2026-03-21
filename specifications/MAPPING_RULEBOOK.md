@@ -36,11 +36,15 @@ To maintain grid alignment and prevent illegal overlaps, contacts follow a stric
   - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
 
 ### 3.3 Generation Logic
-A contact is generated at a coordinate `(x_stud, z_stud)` if:
-1. The track `z_stud` is valid (even).
-2. The parity of `x_stud` matches the rule for that track.
-3. The center of the stud `(x_stud * 20 + 10, z_stud * 20 + 10)` in LDU is geometrically contained within a LEF `RECT` defined for a `PIN` or `OBS` (Obstruction) on the `Metal1` layer.
-4. For signal tracks (Z=2..12), the contact is either within an `Active` region or on the `Gate Track` (Z=6).
+To ensure robust electrical connectivity, every `Metal1` strip (rectangle) MUST have at least one contact. The generation logic uses a scoring and prioritization system:
+
+1. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) is evaluated to find at least one valid stud.
+2. **Prioritization (Scoring)**:
+   - **Track Alignment**: Preferred on EVEN tracks (0, 2, 4, 6, 8, 10, 12, 14).
+   - **Target Layer Match**: Pins marked as `is_gate` (Input) prioritize Track 6. Pins marked as `is_diff` (Output/Other) prioritize Tracks 2, 4, 8, 10, or 12.
+   - **Parity Match**: Studs matching the `Stud Parity` rules (Section 3.2) receive a higher score.
+3. **Connectivity Guarantee**: If a contact is placed, the generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at the `Y=-24` and `Y=-16` layers respectively to complete the connection to the substrate or channel.
+4. **Fallback**: If no studs within a rectangle satisfy the strict parity and track rules, the generator will select the highest-scoring available stud (e.g., relaxing parity or track requirements) to ensure at least one contact is placed.
 
 ## 4. Layer Stacking (V3)
 - Y=0: Substrate base

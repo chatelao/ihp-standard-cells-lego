@@ -53,11 +53,11 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 9 G G G
 8 G G G
 7 G G G
-6 G GGG
+6 G GGG  G
 5 G G G
 4 G G G
 3 GGG G
-2 G G G
+2 GGG G
 1 G G G
 0
 ```
@@ -66,7 +66,7 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890
-4 &+&+&+&+&+&
+4 &&&+&&&+&+&
 3  +   +  +
 2  +   +  &
 1  + C + O+
@@ -77,10 +77,10 @@ Legend: G=Polysilicon
 6  c i c o
 5  C     O
 4      _ o-
-3 IiI  - O-
-2 III  _  -
+3 III  - O-
+2 IiI  _  -
 1      -  -
-0 -_-_-_-_-_-
+0 -_-_-_-___-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 
