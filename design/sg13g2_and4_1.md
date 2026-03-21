@@ -34,7 +34,7 @@ Legend: N=N-Well, S=Substrate
 7 SSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSS
-4 SnnnnnnnnnnnnS
+4 Snnnnnnnnnnnnn
 3 SnnnnnnnnnnnnS
 2 SnnnnnnnnnnnnS
 1 SSSSSSSSSSSSSS
@@ -66,17 +66,17 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890123
-4 &+&+&+&+&+&+&+
+4 &+&+&&&+&&&+&+
 3   +  +   +
 2   &  +   +
 1   +C + C +  OO
 0   &c + c +  oO
-9  CCCCCCCCCC OO
+9  cCCCCCCCCC OO
 8  c         CoO
 7  C I I I I C O
-6  c i i i i C O
+6  c i i i i c O
 5  C           O
-4  cC      _  oO
+4  cC      _  oo
 3  CC      -  OO
 2          _
 1          -

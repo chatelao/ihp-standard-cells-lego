@@ -53,7 +53,7 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 9 G G     G G            G G
 8 G G     G G            G G
 7 G G     G G            G G
-6 GGG     GGG            GGG
+6 GGG     GGG            GGG                    G G
 5 G G     G G            G G
 4 G G     G G            G G
 3 G G     G G            G G
@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890123456789012345678901234567890123456789
-4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
+4 &&&+&+&+&+&&&+&+&+&+&+&+&+&+&+&+&+&+&+&&&+&+&+&+&+
 3  +         +                           +    +   +
-2  + cCcCccC + CcCc cCcCcCcCcCcCcCcCcCcC +    &   &
+2  + cCcCccC + CcCc cCcCcCcCcCcCcCcCcCcc +    &   &
 1  + C      C+ C  C                      + C  + O +
-0  + cCcC c cCcCc c   cCcCcCcCcCc        + C  & o &
-9  + CC   C     C C   C        CCC     C   C  + O +
-8    cC CccCcCcCc c  Cc cCcCcC CcCcCcCcCcC C    o
-7    CC C II C  C C  C  C II   CC  CC    C C    O
-6  i cC   Ii C Cc cC C Cc iI CcCcC C    cC CcC  oOo
-5    CCCCCCCCC CCCCC C  C II C  CCCCCCCCCC  C   O
-4    c  C   c      C    cCcC CcCcCcC     C- c - o -
-3  CCC-   - C CCCCCC         C      C-  CC- C - O -
-2     -   - cCcCcCcCcCcCcCcCcCcCcCc  _    -   -   -
+0  + cCcC c cCccc c   cCcCcCcCcCc        + C  & o &
+9  + cC   C     C C   C        CCC     C   C  + O +
+8    cC cccCcCcCc c  Cc cCcCcc CcccCcCcccC C    o
+7    CC C II c  C C  C  C II   CC  CC    C C    O
+6  i cc   iI c cc cc c Cc iI CcccC c    cC ccC  oOo
+5    CCcCCCCCC CcCCC C  C II C  cCCCcCCCCC  C   O
+4    c  c   c      c    cCcc CcCcCcC     c- c - o -
+3  cCC-   - C cCCCCC         C      c-  cC- C - O -
+2     -   - cCcCcCcCcCcCcCcCcccCcCc  _    -   -   -
 1     -   -                          -    -   -   -
-0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+0 -_-___-___-_-_-_-_-_-_-_-_-_-_-_-_-_-_-___-___-___
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

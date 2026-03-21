@@ -53,9 +53,9 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 9   G G  G G G             G G             G G
 8   G G  G G G             G G             G G
 7   G G  G G G             G G             G G
-6   GGG  GGGGG             GGG             GGG
+6   GGG GGGGGG             GGG             GGG              G       G
 5   G G  G G G             G G             G G
-4   G G  G G G             G G             G G
+4   G G  GGGGG             G G             G G
 3   G G  G G G             G G             G G
 2   G G  G G G             G G             G G
 1   G G  G G G             G G             G G
@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890123456789012345678901234567890123456789012345678901234567
-4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
+4 &+&+&+&+&+&+&&&+&+&&&+&+&+&+&&&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3     +        +     +         +                          +   +   +
 2     & CccCcCc+     + CcCcCcC + CcCc cCcCcCcCcCcCcCcCcCcC&   &   &
 1     + C     C+ CC  + C     C + C  C                     + O +   + O
-0  cCcCcC cC  c+ Cc  + CcCc cCcCcCc c   cCcCcCcCcCc       & o & c & o
-9  C     CCC  C+ CC  +CCC   C     C C   C       C CC    C   O + C + O
-8  c   cCc    c+ Cc    Cc cCcCcCcCc c cCc cCcCcCc cCc cCcCcCo & c   o
-7  C   C  I I C   C    CC C II C  C C  C  CIII  C C C C    CO   C   O
-6  cIi cI i i cC CcCcC Cc   iI Cc c cC C CcIiIcCc cCc    C Co   cC Oo
-5  C   CI   I    CC    CCCCCCCCCCCCCCC C  CIIIC  CCCCCCCCC COOO C   O
-4  c _ cIIIII cCcCc    C  c   c      C    cCcCc cCcCcC     CoOo c - o
-3  C - CCCCCCCC-  C  CCC-   - C CCCCCC        C      C -  CCO - C - O
-2    _         _        -   - cCcCcCcCcCcCcCcCcCcCcC   _      -   -
+0  cCcCcc cC  c+ Cc  + ccCc cccCccc c   cCcCcCcCcCc       & o & c & o
+9  C     cCC  C+ CC  +cCC   C     C C   C       C CC    C   O + C + O
+8  c   cCc    c+ Cc    Cc cCcCcCcCc c cCc cCcCccc ccc cCcCcCo & c   o
+7  C   C  I I C   C    CC C II c  C C  C  CIII  C C C C    CO   C   O
+6  cIi ci i i cC ccCcc Cc   iI cc c cc c ccIiIcCc cCc    c Co   cC Oo
+5  C   CI   I    CC    CcCCCCCCCCCcCCC C  CIIIC  CcCcCCCCC COOO C   O
+4  c _ cIiiIi cCccc    c  c   c      c    cCccc cCcCcC     coOo c - o
+3  c - cCCCCCCC-  C  CcC-   - C cCCCCC        C      c -  cCO - C - O
+2    _         _        -   - cCcCcCcCcCcCcCcCcCcCcc   _      -   -
 1    -         -        -   -                          -      -   -
-0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+0 -_-_-_-_-_-_-_-_-_-_-___-___-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-___-___-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
 

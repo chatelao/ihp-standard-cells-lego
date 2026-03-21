@@ -66,15 +66,15 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   012345678
-4 &+&+&+&+&
+4 &&&+&&&+&
 3  +   +
 2  +   +
 1  + O + O
 0  + o + o
-9  + OOOOO
+9  + oOOOO
 8      o
 7  I I OII
-6  i i oiI
+6  i i oIi
 5      O
 4  _   oOo
 3  -     O
