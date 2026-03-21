@@ -26,7 +26,7 @@ Legend: N=N-Well, S=Substrate
   012345678901234567890123456789
 4 pppppppppppppppppppppppppppppp
 3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-2 NppppppppppppppppppppppppppppN
+2 pppppppppppppppppppppppppppppN
 1 NppppppppppppppppppppppppppppN
 0 NppppppppppppppppppppppppppppN
 9 NppppppppppppppppppppppppppppN
@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   012345678901234567890123456789
-4 &&&+&+&&&+&+&+&+&+&&&+&+&+&+&+
+4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +     +           +      +
-2  +     + Cc cCc    +      &
-1  + CCcCCCc  C cCCCCCCCCCC + O
-0  + cCc  cCcCc c       cCc & o
-9  + CCC  c  Cc CCcCCCCCCCC + O
-8     C     cC CcC Cc  CcC    o
-7  II C     CCc  C  C  CCCII  O
-6  iI c CccCc   cc  c  CcciIcCo
-5     C C  CcCcCCCC C  C c  C O
-4    cc c_ ccCcCc c c  c    c o
-3  - CCcC-          cCCCCCcCC O
-2  _     _ ccCcCcCcCc
+2 &+     +cCc cCc    +      &
+1  + CCCCCCC  C CCCCCCCCCCC + O
+0  + cCc ccCcCc c   c   cCc & o
+9  + CCC  C  CC CCCCCCCCCCC + O
+8    cC     cCcCcCcCc  CcC    o
+7  II C     CCC  C  C  CCCII  O
+6  IIcC CccCc c cC  c cCcCiIcCo
+5     C C  CCCCCCCC C  C C  C O
+4    cCcC_cCcCcCc c c  Cc c c o
+3  - CCCC-          CCCCCCCCC O
+2  _     _cCcCcCcCcCc c   c
 1  -     -            -     -
-0 -_-_-_-_-_-_-_-_-_-___-_-___-_
+0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 

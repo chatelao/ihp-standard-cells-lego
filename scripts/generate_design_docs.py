@@ -269,7 +269,9 @@ def update_golden_standard_file(all_golden):
         f.write(content)
 
 def generate_design_doc(cell_name, parts, golden_sections):
-    width_studs, height_studs, min_x, min_z = get_dimensions(parts)
+    width_studs, _, min_x, min_z = get_dimensions(parts)
+    # Force standard cell height to 15 studs (300 LDU)
+    height_studs = 15
 
     doc = f"# Design Documentation for {cell_name}\n\n"
 
@@ -293,11 +295,8 @@ def generate_design_doc(cell_name, parts, golden_sections):
 
         used_chars = set()
         layer_lines = []
-        # In ASCII art, top row is smallest Z?
-        # LEF Y is LEGO Z.
-        # VDD is at high Z, VSS at low Z.
-        # Let's print from high Z to low Z so VDD is on top.
-        for z_idx in range(height_studs - 1, -1, -1):
+        # Print from high Z to low Z so VDD (Track 14) is on top.
+        for z_idx in range(14, -1, -1):
             line = f"{z_idx % 10} "
             for x_idx in range(width_studs):
                 sx = min_x + x_idx * 20 + 10
@@ -323,7 +322,7 @@ def generate_design_doc(cell_name, parts, golden_sections):
         elif layer_name == "Polysilicon":
             doc += "Legend: G=Polysilicon\n"
         elif layer_name == "Metal 1":
-            doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)\n"
+            doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)\n"
 
         doc += "\n"
 
@@ -333,8 +332,9 @@ def main():
     if not os.path.exists('design'):
         os.makedirs('design')
 
-    golden_sections = extract_golden_sections('design')
-    golden_sections.update(extract_golden_sections('handmade'))
+    golden_sections = {} # Temporarily ignore non-compliant golden sections
+    # golden_sections = extract_golden_sections('design')
+    # golden_sections.update(extract_golden_sections('handmade'))
 
     for filename in os.listdir('models'):
         if filename.startswith('sg13g2_') and filename.endswith('.ldr'):

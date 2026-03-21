@@ -229,22 +229,26 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                 char = grid[x][z]
                 if char in CONTACT_MAP or char == 'c':
                     sx, sz = x * 20 + 10, z * 20 + 10
-                    contacts.append(f"1 15 {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-                    is_active = False
-                    if 'Active' in layers:
-                        active_grid = layers['Active']
-                        if x < len(active_grid) and z < len(active_grid[x]):
-                            active_char = active_grid[x][z]
-                            if active_char in ['n', 'p']: is_active = True
-                    if z == 0 or z == 14: is_active = True
-                    if is_active:
-                         contacts.append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-
-                    # Add Metal 2 connection point
+                    # 1. Metal 1 to Metal 2 connection (Y=-64)
                     real_char = CONTACT_MAP.get(char, char)
                     color = COLOR_MAP_REV.get(real_char)
                     if color is not None:
                         metal2_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+
+                    # 2. Contact Stack (Y=-48 Brick)
+                    contacts.append(f"1 15 {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+
+                    # 3. Connectivity to underlying layers (Active or Poly)
+                    is_to_poly = False
+                    if 'Polysilicon' in layers:
+                        poly_grid = layers['Polysilicon']
+                        if x < len(poly_grid) and z < len(poly_grid[x]):
+                            if poly_grid[x][z] == 'G': is_to_poly = True
+                    if z == 6: is_to_poly = True # Track 6 is Polysilicon track
+
+                    if not is_to_poly:
+                         # Active connection: Need 1x1 plate at Y=-24 to bridge brick to Active.
+                         contacts.append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
         if contacts:
             ldr_lines.append("0 STEP")

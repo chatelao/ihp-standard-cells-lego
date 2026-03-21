@@ -1,8 +1,6 @@
 # Design Documentation for sg13g2_xor2_1
 
 ## Substrate
-GOLDEN STANDARD
-
 ```
   012345678901234
 4 NNNNNNNNNNNNNNN
@@ -24,8 +22,6 @@ GOLDEN STANDARD
 Legend: N=N-Well, S=Substrate
 
 ## Active
-GOLDEN STANDARD
-
 ```
   012345678901234
 4 ppppppppppppppp
@@ -47,47 +43,43 @@ GOLDEN STANDARD
 Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 
 ## Polysilicon
-GOLDEN STANDARD
-
 ```
   012345678901234
 4
-3  G G     G G G
-2  G G     G G G
-1  G G     G G G
-0  G G     G G G
-9  G G     G G G
-8  G GGG   G G G
-7  G   GGG G G G
-6  GGG   G G G G
-5  G G   G G G G
-4  G G   G G G G
-3  G G   G G G G
-2  G G     G G G
-1  G GGGGGGG
+3 G G   G G
+2 G G   G G
+1 G G   G G
+0 G G   G G
+9 G G   G G
+8 G G   G G
+7 G G   G G
+6 GGG   GGG G
+5 G G   G G
+4 G G   G G
+3 G G   G G
+2 G G   G G
+1 G G   G G
 0
 ```
 Legend: G=Polysilicon
 
 ## Metal 1
-GOLDEN STANDARD
-
 ```
   012345678901234
-4 &+&+&+&+&+&+&+&
-3  +        +
-2  &      c & c o
-1  +      C   C O
-0  &      cCCCc o
-9  +            O
-8  &    cCCCCCCcO
-7  C        C   O
-6           C oOO
-5 IIi  C    C O
-4      C    c o _
-3 _-_  c
-2 ---
-1 ---           -
-0 _-_-_-_-_-_-_-_
+4 &+&+&+&+&+&+&+
+3   +      +
+2   &     &+
+1   +  C C + C O
+0   &  c ccCcCoO
+9   + CCCCCCCC O
+8     C  c    oO
+7     C       CO
+6  IIcC IIiIi cO
+5     C     OOOO
+4  _-cC  _  oOo
+3  --    -  OO-
+2  _-    _    -_
+1  --    -    -
+0 -_-_-_-_-_-_-_
 ```
-Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Connection (upper side)
+Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
