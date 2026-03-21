@@ -12,7 +12,7 @@ This document defines the "Gold Standard" for IHP SG13G2 LEGO models. These rule
 - **Conversion Factor:** 1 LEGO stud = 20 LDU = 0.27 µm.
 - **Alignment Offset:** A +10 LDU (0.135 µm) offset is applied to align LEF coordinates with LEGO stud centers.
 
-*Referenced in:* [MODELING_GUIDELINES.md](specifications/MODELING_GUIDELINES.md), [verify_macro_dimensions.py](scripts/verify_macro_dimensions.py)
+*Referenced in:* [MAPPING_RULEBOOK.md](specifications/MAPPING_RULEBOOK.md), [verify_macro_dimensions.py](scripts/verify_macro_dimensions.py)
 
 ## 2. Layer Stacking (V3)
 - **Y=0:** Substrate base (Dark Gray, 8)
