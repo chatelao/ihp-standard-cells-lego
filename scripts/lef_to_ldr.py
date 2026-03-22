@@ -318,6 +318,10 @@ def generate_ldr(macro_data):
         if not possible_studs:
             # Fallback to nearest stud center if none strictly inside
             best_c = (ideal_c_x, 6) # Default
+            # Ensure it's on an even track and satisfies parity
+            target_parity = get_unified_parity(ideal_c_x, is_big)
+            if best_c[0] % 2 != target_parity:
+                best_c = (best_c[0] + 1 if best_c[0] < w_studs - 1 else best_c[0] - 1, 6)
             min_dist = float('inf')
             for rect in pin['rects']:
                 if rect['layer'] == 'Metal1':
@@ -377,7 +381,7 @@ def generate_ldr(macro_data):
                 config = pin_assignments[pin['name']]
                 # Mark gates on grid
                 for gs in config['gate']:
-                    for gz in range(1, 14): # Studs 1-13
+                    for gz in range(2, 13): # Studs 2-12 (~2/3 height)
                         poly_grid[gs][gz] = COLOR_POLY
                 # Mark pad/bridge on grid
                 cx = config['contact']
@@ -449,14 +453,10 @@ def generate_ldr(macro_data):
 
         best_studs = sorted(compliant_studs, key=lambda s: score_stud(*s), reverse=True)
 
-        added_any = already_covered
+        # For small metal pieces, ensure at least one contact.
+        # For large/vertical metal pieces, we want multiple contacts on different tracks.
         for sx, sz in best_studs:
-            if not added_any or (sx, sz) not in added_coords:
-                if (sx, sz) in added_coords and (added_any or not already_covered):
-                    # If it's already in added_coords, we don't need to add it again
-                    added_any = True
-                    continue
-
+            if (sx, sz) not in added_coords:
                 added_coords.add((sx, sz))
                 stud_x, stud_z = sx // 20, sz // 20
 
@@ -471,7 +471,8 @@ def generate_ldr(macro_data):
                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
                 # 3. Connectivity to underlying layers (Active or Poly)
-                is_to_poly = (stud_z == 6) or is_gate
+                # Power pins (except DECAP VDD) never connect to Poly
+                is_to_poly = ((stud_z == 6) or is_gate) and (pin_name not in ['VDD', 'VSS'])
                 # Special case: VDD fingers in DECAP cells connect to Poly
                 if pin_name == 'VDD' and is_decap and stud_z != 14:
                     is_to_poly = True
@@ -492,8 +493,6 @@ def generate_ldr(macro_data):
                         active_grid[stud_x][stud_z] = COLOR_ACTIVE_PMOS
                     else:
                         active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS if stud_z < 8 else COLOR_ACTIVE_PMOS
-
-                added_any = True
 
     for pin in macro_data['pins']:
         added_coords = set() # (sx, sz) to prevent duplicates per pin/macro
@@ -605,6 +604,26 @@ def generate_ldr(macro_data):
             rect_tiles = get_best_plates_multi(obs_grid)
             for plate, tx_off, tz_off, c, rotated in rect_tiles:
                 metal1_lines.append(f"1 {c} {tx_off} {Y_METAL1} {tz_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+
+    # Remove Poly under VDD/VSS fingers/rails (except for DECAP)
+    if not is_decap:
+        for pin in macro_data['pins']:
+            if pin['name'] in ['VDD', 'VSS']:
+                for rect in pin['rects']:
+                    if rect['layer'] == 'Metal1':
+                        lx1 = um_to_ldu_coord(rect['coords'][0])
+                        lz1 = um_to_ldu_coord(rect['coords'][1]) + 10
+                        lx2 = um_to_ldu_coord(rect['coords'][2])
+                        lz2 = um_to_ldu_coord(rect['coords'][3]) + 10
+                        xmin, xmax = snap_to_grid(min(lx1, lx2)), snap_to_grid(max(lx1, lx2))
+                        zmin, zmax = snap_to_grid(min(lz1, lz2)), snap_to_grid(max(lz1, lz2))
+                        if xmax <= xmin: xmax = xmin + 20
+                        if zmax <= zmin: zmax = zmin + 20
+                        for gx in range(xmin + 10, xmax, 20):
+                            for gz in range(zmin + 10, zmax, 20):
+                                gsx, gsz = gx // 20, gz // 20
+                                if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
+                                    poly_grid[gsx][gsz] = None
 
     # 3. Active Regions (Tiling deferred to now)
     tiles3 = get_best_plates_multi(active_grid)
