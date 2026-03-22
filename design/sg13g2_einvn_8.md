@@ -86,7 +86,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | A | Internal2 | Internal3 | Internal1 | VDD | VSS |
+| Silicon | A | Internal1 | Internal2 | Z | VDD | VSS |
 | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   |   |   |   |   | X |
 | NMOS2 |   | X |   | X |   | X |
@@ -101,9 +101,15 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Silicon Neighbourhood
 
-| Silicon | Overlaps With |
-| --- | --- |
-| NMOS2 | Poly1 |
-| NMOS2 | Poly2 |
-| PMOS1 | Poly1 |
-| PMOS1 | Poly2 |
+| Silicon | NMOS1 | NMOS2 | PMOS1 | PMOS2 | Poly1 | Poly2 | Poly3 | Poly4 | Poly5 | Poly6 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   |   |   |   |   |
+| NMOS2 |   |   |   |   | O | O |   |   |   |   |
+| PMOS1 |   |   |   |   | O | O |   |   |   |   |
+| PMOS2 |   |   |   |   |   |   |   |   |   |   |
+| Poly1 |   | O | O |   |   |   |   |   |   |   |
+| Poly2 |   | O | O |   |   |   |   |   |   |   |
+| Poly3 |   |   |   |   |   |   |   |   |   |   |
+| Poly4 |   |   |   |   |   |   |   |   |   |   |
+| Poly5 |   |   |   |   |   |   |   |   |   |   |
+| Poly6 |   |   |   |   |   |   |   |   |   |   |
