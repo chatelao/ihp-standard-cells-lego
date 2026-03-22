@@ -108,11 +108,14 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conne
 
 ## Silicon Neighbourhood
 
-| Silicon | Overlaps With |
-| --- | --- |
-| NMOS2 | Poly3 |
-| NMOS3 | Poly1 |
-| NMOS3 | Poly2 |
-| PMOS1 | Poly3 |
-| PMOS2 | Poly1 |
-| PMOS2 | Poly2 |
+| Silicon | NMOS1 | NMOS2 | NMOS3 | PMOS1 | PMOS2 | PMOS3 | Poly1 | Poly2 | Poly3 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   | N | N |   |
+| NMOS2 |   |   |   |   |   |   |   |   | O |
+| NMOS3 |   |   |   |   |   |   | O | O |   |
+| PMOS1 |   |   |   |   |   |   |   |   | O |
+| PMOS2 |   |   |   |   |   |   | O | O |   |
+| PMOS3 |   |   |   |   |   |   | S | S |   |
+| Poly1 | S |   | O |   | O | N |   |   |   |
+| Poly2 | S |   | O |   | O | N |   |   |   |
+| Poly3 |   | O |   | O |   |   |   |   |   |

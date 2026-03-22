@@ -78,6 +78,8 @@ def parse_ldr_full(filepath):
             comment = line[4:].strip()
             if comment.startswith("Pin ") or "Rail" in comment or "Internal" in comment:
                 current_label = comment
+        elif line.startswith('0 STEP'):
+            current_label = None
         elif line.startswith('1 '):
             tokens = line.split()
             if len(tokens) >= 15:
@@ -148,38 +150,63 @@ def find_blobs(parts, y_levels, color_filter=None):
         blob_studs = set()
         for p in blob_parts: blob_studs.update(get_part_studs(p))
         labels = set(p['label'] for p in blob_parts if p['label'])
-        label = list(labels)[0] if labels else None
+
+        # Prioritize better labels
+        label = None
+        if labels:
+            pin_labels = [l for l in labels if l.startswith("Pin ")]
+            rail_labels = [l for l in labels if "Rail" in l]
+            if pin_labels: label = pin_labels[0]
+            elif rail_labels: label = rail_labels[0]
+            else: label = list(labels)[0]
+
         blobs.append({'label': label, 'color': blob_parts[0]['color'], 'studs': blob_studs, 'parts': blob_parts})
     return blobs
 
 def get_blob_name(blob, category_counters):
     color = blob['color']
     label = blob['label']
+
+    # 1. Trust "Pin " labels above all
+    if label and label.startswith("Pin "):
+        return label[4:]
+
+    # 2. Use color-based naming for Power and I/O if label is generic or missing
+    if color == 14: # VDD
+        category_counters['VDD'] += 1
+        return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
+    if color == 0: # VSS
+        category_counters['VSS'] += 1
+        return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
+    if color == 9: # Input
+        if label and not "Internal" in label: return label
+        category_counters['Input'] += 1
+        return f"Input{category_counters['Input']}"
+    if color == 272: # Output
+        if label and not "Internal" in label: return label
+        category_counters['Output'] += 1
+        return f"Output{category_counters['Output']}"
+
+    # 3. Use explicit labels for other things (e.g. Internal)
     if label:
-        if label.startswith("Pin "): return label[4:]
-        if "VDD" in label:
-            category_counters['VDD'] += 1
-            return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
-        if "VSS" in label:
-            category_counters['VSS'] += 1
-            return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
         if "Internal" in label:
             category_counters['Internal'] += 1
             return f"Internal{category_counters['Internal']}"
+        if "Rail" in label:
+            if "VDD" in label:
+                category_counters['VDD'] += 1
+                return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
+            if "VSS" in label:
+                category_counters['VSS'] += 1
+                return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
         return label
+
+    # 4. Fallback to default naming
     cat = ""
     if color == 288: cat = "NMOS"
     elif color == 38: cat = "PMOS"
     elif color == 4: cat = "Poly"
-    elif color == 9: cat = "Input"
-    elif color == 272: cat = "Output"
     elif color == 1: cat = "Internal"
-    elif color == 14:
-        category_counters['VDD'] += 1
-        return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
-    elif color == 0:
-        category_counters['VSS'] += 1
-        return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
     else: cat = "Unknown"
     category_counters[cat] += 1
     return f"{cat}{category_counters[cat]}"
@@ -274,14 +301,54 @@ def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, meta
 
 def generate_silicon_neighbourhood(parts, nmos_blobs, pmos_blobs, poly_blobs):
     all_blobs = nmos_blobs + pmos_blobs + poly_blobs
-    overlaps = set()
-    for i in range(len(all_blobs)):
-        for j in range(i + 1, len(all_blobs)):
-            if all_blobs[i]['studs'].intersection(all_blobs[j]['studs']):
-                overlaps.add(tuple(sorted((all_blobs[i]['name'], all_blobs[j]['name']))))
-    if not overlaps: return ""
-    rows = [f"| {s1} | {s2} |" for s1, s2 in sorted(list(overlaps))]
-    return "## Silicon Neighbourhood\n\n| Silicon | Overlaps With |\n| --- | --- |\n" + "\n".join(rows) + "\n\n"
+    if not all_blobs: return ""
+
+    def silicon_sort_key(name):
+        if name.startswith("NMOS"): return (0, int(name[4:]) if name[4:].isdigit() else 0)
+        if name.startswith("PMOS"): return (1, int(name[4:]) if name[4:].isdigit() else 0)
+        if name.startswith("Poly"): return (2, int(name[4:]) if name[4:].isdigit() else 0)
+        return (3, name)
+
+    all_blobs.sort(key=lambda b: silicon_sort_key(b['name']))
+    names = [b['name'] for b in all_blobs]
+
+    matrix = {name: {other: "" for other in names} for name in names}
+    has_any = False
+
+    for i, b1 in enumerate(all_blobs):
+        s1 = b1['studs']
+        for j, b2 in enumerate(all_blobs):
+            if i == j: continue
+            s2 = b2['studs']
+
+            rel = ""
+            if s1.intersection(s2):
+                rel = "O"
+            else:
+                dirs = set()
+                for x, z in s1:
+                    if (x, z+1) in s2: dirs.add("N")
+                    if (x, z-1) in s2: dirs.add("S")
+                    if (x+1, z) in s2: dirs.add("E")
+                    if (x-1, z) in s2: dirs.add("W")
+                if dirs:
+                    order = {"N": 0, "S": 1, "E": 2, "W": 3}
+                    rel = "".join(sorted(list(dirs), key=lambda d: order[d]))
+
+            if rel:
+                matrix[b1['name']][b2['name']] = rel
+                has_any = True
+
+    if not has_any: return ""
+
+    header = "| Silicon | " + " | ".join(names) + " |"
+    sep = "| --- | " + " | ".join(["---"] * len(names)) + " |"
+    rows = []
+    for name in names:
+        row = f"| {name} | " + " | ".join(matrix[name][other] if matrix[name][other] else " " for other in names) + " |"
+        rows.append(row)
+
+    return "## Silicon Neighbourhood\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
 
 def generate_design_doc(cell_name, parts, golden_sections):
     width_studs, _, min_x, min_z = get_dimensions(parts)
@@ -302,7 +369,7 @@ def generate_design_doc(cell_name, parts, golden_sections):
                 char = get_char_for_stud(parts, min_x+x_idx*20+10, min_z+z_idx*20+10, y_list, COLOR_MAP, {})
                 line += char
                 if char != ' ': used_chars.add(char)
-            layer_lines.append(line.rstrip())
+            layer_lines.append(line)
         doc += "\n".join(layer_lines) + "\n```\n"
         if layer_name == "Substrate": doc += "Legend: N=N-Well, S=Substrate\n"
         elif layer_name == "Active":

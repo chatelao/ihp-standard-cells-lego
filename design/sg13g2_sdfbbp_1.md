@@ -86,13 +86,13 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | D | Internal8 | SET_B | Internal1 | Internal10 | Internal11 | Internal2 | Internal3 | Internal4 | Internal5 | Internal6 | Internal9 | Q | Q_N | VDD | VSS |
+| Silicon | D | Input1 | SET_B | Internal1 | Internal10 | Internal2 | Internal3 | Internal4 | Internal5 | Internal6 | Internal8 | Internal9 | Q | Q_N | VDD | VSS |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
-| NMOS2 |   |   |   | X |   |   | X | X | X | X | X |   | X | X |   | X |
-| PMOS1 |   |   | X | X | X | X |   | X | X | X | X | X | X | X | X |   |
+| NMOS2 |   |   |   | X |   | X | X | X | X | X |   |   | X | X |   | X |
+| PMOS1 |   |   | X | X | X |   | X | X | X | X | X | X | X | X | X |   |
 | PMOS2 |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
-| Poly1 | X |   |   | X |   | X |   |   |   |   |   |   |   |   |   | X |
+| Poly1 | X |   |   | X | X |   |   |   |   |   |   |   |   |   |   | X |
 | Poly10 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
 | Poly11 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
 | Poly12 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -100,7 +100,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | Poly14 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
 | Poly15 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
 | Poly3 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly4 |   |   |   |   |   |   |   |   | X |   |   | X |   |   | X |   |
+| Poly4 |   |   |   |   |   |   |   | X |   |   | X |   |   |   | X |   |
 | Poly5 |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 | Poly6 |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
 | Poly7 |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |   |
@@ -109,21 +109,24 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Silicon Neighbourhood
 
-| Silicon | Overlaps With |
-| --- | --- |
-| NMOS2 | Poly1 |
-| NMOS2 | Poly2 |
-| NMOS2 | Poly3 |
-| NMOS2 | Poly4 |
-| PMOS1 | Poly1 |
-| PMOS1 | Poly10 |
-| PMOS1 | Poly11 |
-| PMOS1 | Poly12 |
-| PMOS1 | Poly13 |
-| PMOS1 | Poly14 |
-| PMOS1 | Poly15 |
-| PMOS1 | Poly2 |
-| PMOS1 | Poly3 |
-| PMOS1 | Poly4 |
-| PMOS1 | Poly8 |
-| PMOS1 | Poly9 |
+| Silicon | NMOS1 | NMOS2 | PMOS1 | PMOS2 | Poly1 | Poly2 | Poly3 | Poly4 | Poly5 | Poly6 | Poly7 | Poly8 | Poly9 | Poly10 | Poly11 | Poly12 | Poly13 | Poly14 | Poly15 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| NMOS2 |   |   |   |   | O | O | O | O |   |   |   |   |   |   |   |   |   |   |   |
+| PMOS1 |   |   |   |   | O | O | O | O |   |   |   | O | O | O | O | O | O | O | O |
+| PMOS2 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly1 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly2 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly3 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly4 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly5 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly6 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly7 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly8 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly9 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly10 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly11 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly12 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly13 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly14 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly15 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
