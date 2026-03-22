@@ -82,8 +82,14 @@ for file in "$MODELS_DIR"/*.ldr; do
     step_images=()
     for (( s=1; s<=total_steps; s++ )); do
         step_img="$TEMP_STEP_DIR/step_${s}.jpg"
-        if "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=30 -Longitude=45 -Step="$s" -SaveSnapshot="$step_img" > "$LOG_FILE" 2>&1; then
-            # Annotate step with parts needed
+        ghosted_ldr="$TEMP_STEP_DIR/ghosted_${s}.ldr"
+
+        # Create ghosted LDR where previous steps are semi-transparent
+        python3 scripts/ghost_ldr.py "$file" "$ghosted_ldr" "$s"
+
+        # Render ghosted LDR.
+        if "$LDVIEW_BIN" "$ghosted_ldr" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=30 -Longitude=45 -Step="$s" -SaveSnapshot="$step_img" > "$LOG_FILE" 2>&1; then
+            # Annotate step with parts needed (use original file for part counts)
             python3 scripts/annotate_step.py "$file" "$s" "$step_img"
             step_images+=("$step_img")
         else
