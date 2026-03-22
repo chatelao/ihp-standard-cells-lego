@@ -1,3 +1,4 @@
+import math
 import os
 import re
 import sys
@@ -267,10 +268,11 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                 color = None
                 for rect in pin['rects']:
                     if rect['layer'] == 'Metal1':
-                        x1 = int(round(rect['coords'][0] * 20 / 0.27 / 20))
-                        z1 = int(round((rect['coords'][1] * 20 / 0.27 + 10) / 20))
-                        x2 = int(round(rect['coords'][2] * 20 / 0.27 / 20))
-                        z2 = int(round((rect['coords'][3] * 20 / 0.27 + 10) / 20))
+                        # Inclusive snapping for pin tiling
+                        x1 = int(math.floor(rect['coords'][0] * 20 / 0.27 / 20))
+                        z1 = int(math.floor((rect['coords'][1] * 20 / 0.27 + 10) / 20))
+                        x2 = int(math.ceil(rect['coords'][2] * 20 / 0.27 / 20))
+                        z2 = int(math.ceil((rect['coords'][3] * 20 / 0.27 + 10) / 20))
                         for ix in range(min(x1, x2), max(x1, x2)):
                             for iz in range(min(z1, z2), max(z1, z2)):
                                 if 0 <= ix < w and 0 <= iz < h and not assigned[ix][iz]:
