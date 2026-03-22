@@ -93,3 +93,10 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conne
 | NMOS |   | X |   | X |
 | PMOS |   | X | X |   |
 | Polysilicon | X |   |   |   |
+
+## Silicon Neighbourhood
+
+| Silicon | Overlaps With |
+| --- | --- |
+| NMOS | Polysilicon |
+| PMOS | Polysilicon |
