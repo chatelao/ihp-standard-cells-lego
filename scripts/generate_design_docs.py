@@ -80,9 +80,12 @@ def parse_ldr_full(filepath):
         lines = f.readlines()
 
     parts = []
+    current_comment = ""
     for line in lines:
         line = line.strip()
-        if line.startswith('1 '):
+        if line.startswith('0 //'):
+            current_comment = line[4:].strip()
+        elif line.startswith('1 '):
             tokens = line.split()
             if len(tokens) >= 15:
                 color = int(tokens[1])
@@ -92,7 +95,7 @@ def parse_ldr_full(filepath):
                 # Rot matrix
                 rot = [float(t) for t in tokens[5:14]]
                 part = tokens[14]
-                parts.append({'color': color, 'x': x, 'y': y, 'z': z, 'rot': rot, 'part': part})
+                parts.append({'color': color, 'x': x, 'y': y, 'z': z, 'rot': rot, 'part': part, 'comment': current_comment})
     return parts
 
 def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
@@ -282,41 +285,179 @@ def is_inside(p, sx, sz):
     # Use a small epsilon for float comparison
     return (p['x'] - half_w - 0.1 <= sx <= p['x'] + half_w + 0.1) and (p['z'] - half_d - 0.1 <= sz <= p['z'] + half_d + 0.1)
 
-def generate_connectivity_matrix(parts):
-    connections = set()
+def find_blobs(parts, y_layers, color_cats):
+    width_studs, height_studs, min_x, min_z = get_dimensions(parts)
+    height_studs = 15
 
-    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Polysilicon'}
+    blobs_named = {}
+    used_names = set()
+    counters = {}
+
+    # Group parts by color category first
+    for cat_color, cat_label in color_cats.items():
+        grid = [[[] for _ in range(height_studs)] for _ in range(width_studs)]
+        for p in parts:
+            if p['y'] in y_layers and p['color'] == cat_color and p['part'] != '3062b.dat':
+                pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
+                is_rotated = p['rot'][0] == 0
+                if is_rotated: pw, pd = pd, pw
+                half_w_ldu = (pw * 20) / 2
+                half_d_ldu = (pd * 20) / 2
+
+                x_start = int(round((p['x'] - half_w_ldu - min_x) / 20))
+                x_end = int(round((p['x'] + half_w_ldu - min_x) / 20))
+                z_start = int(round((p['z'] - half_d_ldu - min_z) / 20))
+                z_end = int(round((p['z'] + half_d_ldu - min_z) / 20))
+
+                for ix in range(max(0, x_start), min(width_studs, x_end)):
+                    for iz in range(max(0, z_start), min(height_studs, z_end)):
+                        grid[ix][iz].append(p)
+
+        # Connected Components for this category
+        blob_id_grid = [[-1 for _ in range(height_studs)] for _ in range(width_studs)]
+        next_blob_id = 0
+
+        for x in range(width_studs):
+            for z in range(height_studs):
+                if grid[x][z] and blob_id_grid[x][z] == -1:
+                    current_blob_id = next_blob_id
+                    next_blob_id += 1
+                    q = [(x, z)]
+                    blob_id_grid[x][z] = current_blob_id
+                    blob_parts_ids = set()
+
+                    while q:
+                        cx, cz = q.pop(0)
+                        for part in grid[cx][cz]:
+                            blob_parts_ids.add(id(part))
+                        for dx, dz in [(0,1), (0,-1), (1,0), (-1,0)]:
+                            nx, nz = cx+dx, cz+dz
+                            if 0 <= nx < width_studs and 0 <= nz < height_studs:
+                                if grid[nx][nz] and blob_id_grid[nx][nz] == -1:
+                                    blob_id_grid[nx][nz] = current_blob_id
+                                    q.append((nx, nz))
+
+                    bparts = [p for p in parts if id(p) in blob_parts_ids]
+
+                    # Naming logic
+                    possible_names = set()
+                    for p in bparts:
+                        comment = p.get('comment', '')
+                        if 'Pin ' in comment:
+                            pname = comment.split('Pin ')[1].split()[0]
+                            possible_names.add(pname)
+                        elif 'Rail' in comment:
+                            pname = comment.split()[0]
+                            possible_names.add(pname)
+                        elif 'Internal' in comment:
+                            possible_names.add('Internal')
+
+                    cat = cat_label
+                    if cat == 'Polysilicon': cat = 'Poly'
+
+                    if cat in ['NMOS', 'PMOS', 'Poly']:
+                        # Always use indexed category name for Silicon
+                        counters[cat] = counters.get(cat, 0) + 1
+                        name = f"{cat}{counters[cat]}"
+                    else:
+                        # Metal layers: try to use pin name
+                        if possible_names:
+                            # Prioritize names that are not 'Internal'
+                            valid_names = [n for n in possible_names if n != 'Internal']
+                            if valid_names:
+                                base_name = sorted(valid_names)[0]
+                                name = base_name
+                                if name in used_names:
+                                    counters[base_name] = counters.get(base_name, 0) + 1
+                                    name = f"{base_name}{counters[base_name]}"
+                            else:
+                                counters['Internal'] = counters.get('Internal', 0) + 1
+                                name = f"Internal{counters['Internal']}"
+                        else:
+                            counters['Internal'] = counters.get('Internal', 0) + 1
+                            name = f"Internal{counters['Internal']}"
+
+                    # Final check to ensure uniqueness
+                    while name in used_names:
+                        # If somehow still not unique, add more indices
+                        if name[-1].isdigit():
+                            # Extract base and increment
+                            match = re.search(r'(\D+)(\d+)', name)
+                            if match:
+                                base, idx = match.groups()
+                                name = f"{base}{int(idx)+1}"
+                            else:
+                                name = name + "1"
+                        else:
+                            name = name + "1"
+
+                    used_names.add(name)
+                    blobs_named[name] = bparts
+
+    return blobs_named
+
+def generate_connectivity_matrix(parts):
+    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Poly'}
     metal_cats = {14: 'VDD', 0: 'VSS', 9: 'Input', 272: 'Output', 1: 'Internal'}
 
+    # Use Metal 1 (Y=-56) and Metal 2 Connection (Y=-64)
+    metal_blobs = find_blobs(parts, [-56, -64], metal_cats)
+    # Use Silicon layers (Active Y=-16, Poly Y=-24)
+    silicon_blobs = find_blobs(parts, [-16, -24], silicon_cats)
+
+    connections = set()
     contacts = [p for p in parts if p['part'] == '3062b.dat' and p['y'] == -48]
 
     for c in contacts:
         cx, cz = c['x'], c['z']
 
-        current_silicon_cats = set()
-        for p in parts:
-            if p['y'] in [-16, -24] and p['part'] != '3062b.dat':
+        current_silicon = set()
+        for sname, sparts in silicon_blobs.items():
+            for p in sparts:
                 if is_inside(p, cx, cz):
-                    if p['color'] in silicon_cats:
-                        current_silicon_cats.add(silicon_cats[p['color']])
+                    current_silicon.add(sname)
+                    break
 
-        current_metal_cats = set()
-        # Check Metal 1 (Y=-56) and Metal 2 Connection (Y=-64)
-        for p in parts:
-            if p['y'] in [-56, -64] and p['part'] != '3062b.dat':
-                 if is_inside(p, cx, cz):
-                    if p['color'] in metal_cats:
-                        current_metal_cats.add(metal_cats[p['color']])
+        current_metal = set()
+        for mname, mparts in metal_blobs.items():
+            for p in mparts:
+                if is_inside(p, cx, cz):
+                    current_metal.add(mname)
+                    break
 
-        for s in current_silicon_cats:
-            for m in current_metal_cats:
+        for s in current_silicon:
+            for m in current_metal:
                 connections.add((s, m))
 
     if not connections:
         return ""
 
     active_s = sorted(list(set(c[0] for c in connections)))
-    active_m = sorted(list(set(c[1] for c in connections)))
+    active_m = list(set(c[1] for c in connections))
+
+    # Logical Sorting for Metal Blobs
+    def sort_key(name):
+        # Determine category for sorting
+        if name == 'VDD': return (3, name)
+        if name == 'VSS': return (4, name)
+
+        # Check blob parts for color
+        parts_list = metal_blobs.get(name, [])
+        if not parts_list: return (5, name)
+
+        # Priority mapping for colors
+        # 9 (Input): 0
+        # 272 (Output): 2
+        # Others (Internal/1): 1
+
+        color = parts_list[0]['color']
+        if color == 9:
+            return (0, name) # Input
+        if color == 272:
+            return (2, name) # Output
+        return (1, name) # Internal
+
+    active_m.sort(key=sort_key)
 
     if not active_s or not active_m:
         return ""
@@ -339,7 +480,8 @@ def generate_silicon_neighbourhood(parts):
     height_studs = 15
 
     overlaps = set()
-    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Polysilicon'}
+    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Poly'}
+    silicon_blobs = find_blobs(parts, [-16, -24], silicon_cats)
 
     for x_idx in range(width_studs):
         for z_idx in range(height_studs):
@@ -347,11 +489,11 @@ def generate_silicon_neighbourhood(parts):
             sz = min_z + z_idx * 20 + 10
 
             present = set()
-            for p in parts:
-                if p['y'] in [-16, -24] and p['part'] != '3062b.dat':
+            for bname, bparts in silicon_blobs.items():
+                for p in bparts:
                     if is_inside(p, sx, sz):
-                        if p['color'] in silicon_cats:
-                            present.add(silicon_cats[p['color']])
+                        present.add(bname)
+                        break
 
             if len(present) > 1:
                 # We have an overlap.
