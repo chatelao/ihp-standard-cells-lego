@@ -268,6 +268,72 @@ def update_golden_standard_file(all_golden):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
 
+def is_inside(p, sx, sz):
+    # Determine part size in studs (Standard Width x Depth)
+    pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
+
+    # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
+    is_rotated = p['rot'][0] == 0
+    if is_rotated:
+        pw, pd = pd, pw
+
+    half_w = (pw * 20) / 2
+    half_d = (pd * 20) / 2
+    # Use a small epsilon for float comparison
+    return (p['x'] - half_w - 0.1 <= sx <= p['x'] + half_w + 0.1) and (p['z'] - half_d - 0.1 <= sz <= p['z'] + half_d + 0.1)
+
+def generate_connectivity_matrix(parts):
+    connections = set()
+
+    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Polysilicon'}
+    metal_cats = {14: 'VDD', 0: 'VSS', 9: 'Input', 272: 'Output', 1: 'Internal'}
+
+    contacts = [p for p in parts if p['part'] == '3062b.dat' and p['y'] == -48]
+
+    for c in contacts:
+        cx, cz = c['x'], c['z']
+
+        current_silicon_cats = set()
+        for p in parts:
+            if p['y'] in [-16, -24] and p['part'] != '3062b.dat':
+                if is_inside(p, cx, cz):
+                    if p['color'] in silicon_cats:
+                        current_silicon_cats.add(silicon_cats[p['color']])
+
+        current_metal_cats = set()
+        # Check Metal 1 (Y=-56) and Metal 2 Connection (Y=-64)
+        for p in parts:
+            if p['y'] in [-56, -64] and p['part'] != '3062b.dat':
+                 if is_inside(p, cx, cz):
+                    if p['color'] in metal_cats:
+                        current_metal_cats.add(metal_cats[p['color']])
+
+        for s in current_silicon_cats:
+            for m in current_metal_cats:
+                connections.add((s, m))
+
+    if not connections:
+        return ""
+
+    active_s = sorted(list(set(c[0] for c in connections)))
+    active_m = sorted(list(set(c[1] for c in connections)))
+
+    if not active_s or not active_m:
+        return ""
+
+    header = "| Silicon | " + " | ".join(active_m) + " |"
+    sep = "| --- | " + " | ".join(["---"] * len(active_m)) + " |"
+    rows = []
+    for s in active_s:
+        row = f"| {s} | "
+        row_vals = []
+        for m in active_m:
+            row_vals.append("X" if (s, m) in connections else " ")
+        row += " | ".join(row_vals) + " |"
+        rows.append(row)
+
+    return "## Connectivity Matrix\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
+
 def generate_design_doc(cell_name, parts, golden_sections):
     width_studs, _, min_x, min_z = get_dimensions(parts)
     # Force standard cell height to 15 studs (300 LDU)
@@ -325,6 +391,8 @@ def generate_design_doc(cell_name, parts, golden_sections):
             doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)\n"
 
         doc += "\n"
+
+    doc += generate_connectivity_matrix(parts)
 
     return doc
 
