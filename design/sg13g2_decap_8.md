@@ -31,9 +31,9 @@ Legend: N=N-Well, S=Substrate
 0 NppppppppppN
 9 NppppppppppN
 8 NppppppppppN
-7 SSSSSSSSSSSS
-6 SSSSSSSSSSSS
-5 SSSSSSSSSSSS
+7 SnnnnnnnnnnS
+6 SnnnnnnnnnnS
+5 SnnnnnnnnnnS
 4 SnnnnnnnnnnS
 3 SnnnnnnnnnnS
 2 Snnnnnnnnnnn
@@ -57,7 +57,7 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 5  GGGGGGGGGG
 4  GGGGGGGGGG
 3  GGGGGGGGGG
-2   GGG GGG G
+2  GGGGGGGGGG
 1
 0
 ```
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   012345678901
 4 &+&+&+&+&+&+
 3  +  ++++   +
-2 &+  &+&+  &+
+2 &+  ++++   +
 1  +  ++++   +
-0  +  &+&+   +
+0  +  ++++   +
 9  +  ++++   +
-8     &+&+
+8     ++++
 7     ++++
-6   - &+&+  -
+6   - ++++  -
 5   -       -
 4   -       -
 3  --   -   --
-2  _-  _-  _-_
+2  --   -   -_
 1  --   -   --
 0 -_-_-_-_-_-_
 ```
@@ -90,7 +90,6 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | --- | --- | --- |
 | NMOS1 |   | X |
 | NMOS2 |   | X |
-| PMOS1 | X |   |
 | PMOS2 | X |   |
 | Poly1 | X |   |
 

@@ -74,6 +74,53 @@ def verify_ldr(filepath):
     if -8 not in found_y_levels: errors.append("Missing Y=-8 layer")
     if -16 not in found_y_levels: errors.append("Missing Y=-16 layer")
     if -56 not in found_y_levels: errors.append("Missing Y=-56 layer")
+
+    # Connectivity Matrix Verification (V4)
+    # Ensure that contacts for a pin only connect to a single silicon blob (or expected blobs)
+    # and that Obstructions do not connect to functional silicon.
+    from generate_design_docs import find_blobs, get_part_studs, parse_ldr_full
+
+    parts = parse_ldr_full(filepath)
+    nmos_blobs = find_blobs(parts, [-16], [288])
+    pmos_blobs = find_blobs(parts, [-16], [38])
+    poly_blobs = find_blobs(parts, [-24], [4])
+    silicon_blobs = nmos_blobs + pmos_blobs + poly_blobs
+
+    metal_blobs = find_blobs(parts, [-56, -64], [14, 0, 9, 272, 1])
+
+    contacts = [p for p in parts if p['part'] == '3062b.dat' and p['y'] == -48]
+    for c in contacts:
+        c_stud = (int(round((c['x'] - 10) / 20)), int(round((c['z'] - 10) / 20)))
+        connected_silicon = [b for b in silicon_blobs if c_stud in b['studs']]
+        connected_metal = [b for b in metal_blobs if c_stud in b['studs']]
+
+        for s in connected_silicon:
+            # V4 Strict Connectivity:
+            # 1. Poly connection: Metal -> Contact Brick (Y=-48) -> Poly (Y=-24)
+            # 2. Active connection: Metal -> Contact Brick (Y=-48) -> Round Plate (Y=-24) -> Active (Y=-16)
+
+            is_poly_blob = s['color'] == 4
+            has_round_plate = any(p['part'] == '6141.dat' and p['y'] == -24 and (int(round((p['x']-10)/20)), int(round((p['z']-10)/20))) == c_stud for p in parts)
+
+            if is_poly_blob:
+                if has_round_plate:
+                    errors.append(f"Contact at {c_stud} for Poly blob {s.get('name', 'unnamed')} unexpectedly has a round plate at Y=-24")
+            else:
+                if not has_round_plate:
+                    errors.append(f"Contact at {c_stud} for Active blob {s.get('name', 'unnamed')} missing required round plate at Y=-24")
+
+        for m in connected_metal:
+            m_color = m['color']
+            # color 1 is internal/obstruction.
+            if m_color == 1:
+                # If it's an obstruction contact (Metal 1 color 1), it should NOT hit functional silicon
+                if connected_silicon:
+                    # Check if any part of the metal blob has a label starting with "Pin"
+                    # If it's truly an obstruction, it shouldn't.
+                    is_real_pin = any(p['label'] and p['label'].startswith("Pin ") for p in m['parts'])
+                    if not is_real_pin:
+                        errors.append(f"Obstruction contact at {c_stud} unexpectedly connects to functional silicon")
+
     return errors
 
 if __name__ == "__main__":

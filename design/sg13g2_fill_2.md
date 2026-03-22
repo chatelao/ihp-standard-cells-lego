@@ -26,17 +26,17 @@ Legend: N=N-Well, S=Substrate
   0123
 4 pppp
 3 NNNN
-2 NppN
-1 NppN
-0 NppN
-9 NppN
-8 NppN
+2 NNNN
+1 NNNN
+0 NNNN
+9 NNNN
+8 NNNN
 7 SSSS
 6 SSSS
 5 SSSS
-4 SnnS
-3 SnnS
-2 SnnS
+4 SSSS
+3 SSSS
+2 SSSS
 1 SSSS
 0 nnnn
 ```
@@ -89,4 +89,4 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | Silicon | VDD | VSS |
 | --- | --- | --- |
 | NMOS1 |   | X |
-| PMOS2 | X |   |
+| PMOS1 | X |   |

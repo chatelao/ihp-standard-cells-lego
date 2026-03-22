@@ -283,7 +283,22 @@ def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, meta
         connected_silicon = [b for b in silicon_blobs if c_stud in b['studs']]
         connected_metal = [b for b in metal_blobs if c_stud in b['studs']]
         for s in connected_silicon:
-            for m in connected_metal: connections.add((s['name'], m['name'], m['color']))
+            # V4 Strict Connectivity:
+            # 1. Poly connection: Metal -> Contact Brick (Y=-48) -> Poly (Y=-24)
+            # 2. Active connection: Metal -> Contact Brick (Y=-48) -> Round Plate (Y=-24) -> Active (Y=-16)
+
+            is_poly_blob = s['color'] == 4
+            has_round_plate = any(p['part'] == '6141.dat' and p['y'] == -24 and (int(round((p['x']-10)/20)), int(round((p['z']-10)/20))) == c_stud for p in parts)
+
+            if is_poly_blob:
+                # Poly blobs MUST NOT have a round plate at Y=-24 to connect
+                if not has_round_plate:
+                    for m in connected_metal: connections.add((s['name'], m['name'], m['color']))
+            else:
+                # NMOS/PMOS blobs MUST have a round plate at Y=-24 to connect
+                if has_round_plate:
+                    for m in connected_metal: connections.add((s['name'], m['name'], m['color']))
+
     if not connections: return ""
     s_names = sorted(list(set(c[0] for c in connections)))
     m_info = {name: color for _, name, color in connections}

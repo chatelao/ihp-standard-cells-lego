@@ -26,17 +26,17 @@ Legend: N=N-Well, S=Substrate
   0123456
 4 ppppppp
 3 NNNNNNN
-2 NpppppN
-1 NpppppN
-0 NpppppN
-9 NpppppN
-8 NpppppN
+2 NNpNNNN
+1 NNNNNNN
+0 NNNNNNN
+9 NNNNNNN
+8 NNNNNNN
 7 SSSSSSS
 6 SSSSSSS
 5 SSSSSSS
-4 SnnnnnS
-3 SnnnnnS
-2 SnnnnnS
+4 SSSSSnS
+3 SSSSSSS
+2 SSSSSnS
 1 SSSSSSS
 0 nnnnnnn
 ```
@@ -86,9 +86,10 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | Internal1 | Internal2 | Internal3 | L_LO | VDD | VSS |
-| --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   | X |
-| NMOS2 | X |   |   | X |   |   |
-| PMOS1 |   | X | X |   | X |   |
-| PMOS2 |   |   |   |   | X |   |
+| Silicon | L_LO | VDD | VSS |
+| --- | --- | --- | --- |
+| NMOS1 |   |   | X |
+| NMOS2 | X |   |   |
+| NMOS3 | X |   |   |
+| PMOS1 |   | X |   |
+| PMOS2 |   | X |   |

@@ -65,13 +65,18 @@ Contacts bridge the gap between Metal 1 and underlying layers (Active or Polysil
   - **Small models (width <= 7)**: ODD X-studs.
   - **Big models (> 7 studs)**: Symmetric parity (ODD if X < 8, EVEN if X >= 8).
 
-### 4.3 Generation Logic
-1. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) MUST have at least one contact.
-2. **Prioritization (Scoring)**:
+### 4.3 Generation Logic (V4 Sparse Silicon)
+1. **Sparse Silicon Generation**: NMOS/PMOS Active (`Y=-16`) and Polysilicon (`Y=-24`) are generated ONLY where functional.
+   - Polysilicon is generated for gates and input pin contacts.
+   - NMOS/PMOS Active is generated only where a contact needs it or underneath a gate finger to form a channel.
+   - Rail taps (Track 0 and 14) still use full-width silicon.
+2. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) MUST have at least one contact.
+3. **Prioritization (Scoring)**:
    - Preferred on EVEN tracks (0, 2, 4, 6, 8, 10, 12, 14).
    - Higher score for studs matching the **Stud Parity** rules.
-3. **Connectivity Guarantee**: The generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at `Y=-24` and `Y=-16` layers to complete the connection.
-4. **Fallback**: If no studs satisfy strict parity/track rules, the highest-scoring available stud is selected to ensure connectivity.
+4. **Connectivity Guarantee**: The generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at `Y=-24` and `Y=-16` layers to complete the connection.
+5. **Obstruction Support**: For non-functional `OBS` (Obstruction) contacts, Substrate color (Dark Gray, ID 8) or N-Well color (Light Gray, ID 7) is used for support at `Y=-16` and `Y=-24` to ensure buildability without creating electrical interconnections.
+6. **Fallback**: If no studs satisfy strict parity/track rules, the highest-scoring available stud is selected to ensure connectivity.
 
 ## 5. Modeling Principles
 - **Header Comment**: Every LDR file must start with the comment `0 // Substrate low (V3)`.
