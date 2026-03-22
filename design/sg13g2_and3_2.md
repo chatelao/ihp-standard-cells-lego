@@ -98,12 +98,9 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Silicon Neighbourhood
 
-| Silicon | NMOS1 | NMOS2 | PMOS1 | PMOS2 | Poly1 | Poly2 | Poly3 |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   |   |   |
-| NMOS2 |   |   |   |   | O | O |   |
-| PMOS1 |   |   |   |   |   | O |   |
-| PMOS2 |   |   |   |   |   |   |   |
-| Poly1 |   | O |   |   |   |   |   |
-| Poly2 |   | O | O |   |   |   |   |
-| Poly3 |   |   |   |   |   |   |   |
+| Silicon | Poly1 | Poly2 | Poly3 |
+| --- | --- | --- | --- |
+| NMOS1 |   |   |   |
+| NMOS2 | O | O |   |
+| PMOS1 |   | O |   |
+| PMOS2 |   |   |   |

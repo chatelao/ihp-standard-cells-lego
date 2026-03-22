@@ -300,8 +300,7 @@ def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, meta
     return "## Connectivity Matrix\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
 
 def generate_silicon_neighbourhood(parts, nmos_blobs, pmos_blobs, poly_blobs):
-    all_blobs = nmos_blobs + pmos_blobs + poly_blobs
-    if not all_blobs: return ""
+    if not poly_blobs or not (nmos_blobs + pmos_blobs): return ""
 
     def silicon_sort_key(name):
         if name.startswith("NMOS"): return (0, int(name[4:]) if name[4:].isdigit() else 0)
@@ -309,16 +308,18 @@ def generate_silicon_neighbourhood(parts, nmos_blobs, pmos_blobs, poly_blobs):
         if name.startswith("Poly"): return (2, int(name[4:]) if name[4:].isdigit() else 0)
         return (3, name)
 
-    all_blobs.sort(key=lambda b: silicon_sort_key(b['name']))
-    names = [b['name'] for b in all_blobs]
+    xmos_blobs = sorted(nmos_blobs + pmos_blobs, key=lambda b: silicon_sort_key(b['name']))
+    poly_blobs_sorted = sorted(poly_blobs, key=lambda b: silicon_sort_key(b['name']))
 
-    matrix = {name: {other: "" for other in names} for name in names}
+    xmos_names = [b['name'] for b in xmos_blobs]
+    poly_names = [b['name'] for b in poly_blobs_sorted]
+
+    matrix = {xn: {pn: "" for pn in poly_names} for xn in xmos_names}
     has_any = False
 
-    for i, b1 in enumerate(all_blobs):
+    for b1 in xmos_blobs:
         s1 = b1['studs']
-        for j, b2 in enumerate(all_blobs):
-            if i == j: continue
+        for b2 in poly_blobs_sorted:
             s2 = b2['studs']
 
             rel = ""
@@ -341,11 +342,11 @@ def generate_silicon_neighbourhood(parts, nmos_blobs, pmos_blobs, poly_blobs):
 
     if not has_any: return ""
 
-    header = "| Silicon | " + " | ".join(names) + " |"
-    sep = "| --- | " + " | ".join(["---"] * len(names)) + " |"
+    header = "| Silicon | " + " | ".join(poly_names) + " |"
+    sep = "| --- | " + " | ".join(["---"] * len(poly_names)) + " |"
     rows = []
-    for name in names:
-        row = f"| {name} | " + " | ".join(matrix[name][other] if matrix[name][other] else " " for other in names) + " |"
+    for xn in xmos_names:
+        row = f"| {xn} | " + " | ".join(matrix[xn][pn] if matrix[xn][pn] else " " for pn in poly_names) + " |"
         rows.append(row)
 
     return "## Silicon Neighbourhood\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
