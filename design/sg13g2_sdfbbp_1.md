@@ -109,24 +109,9 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Silicon Neighbourhood
 
-| Silicon | NMOS1 | NMOS2 | PMOS1 | PMOS2 | Poly1 | Poly2 | Poly3 | Poly4 | Poly5 | Poly6 | Poly7 | Poly8 | Poly9 | Poly10 | Poly11 | Poly12 | Poly13 | Poly14 | Poly15 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| NMOS2 |   |   |   |   | O | O | O | O |   |   |   |   |   |   |   |   |   |   |   |
-| PMOS1 |   |   |   |   | O | O | O | O |   |   |   | O | O | O | O | O | O | O | O |
-| PMOS2 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly1 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly2 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly3 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly4 |   | O | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly5 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly6 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly7 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly8 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly9 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly10 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly11 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly12 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly13 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly14 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly15 |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Silicon | Poly1 | Poly2 | Poly3 | Poly4 | Poly5 | Poly6 | Poly7 | Poly8 | Poly9 | Poly10 | Poly11 | Poly12 | Poly13 | Poly14 | Poly15 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| NMOS2 | O | O | O | O |   |   |   |   |   |   |   |   |   |   |   |
+| PMOS1 | O | O | O | O |   |   |   | O | O | O | O | O | O | O | O |
+| PMOS2 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
