@@ -86,8 +86,16 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | Input | Internal | Output | VDD | VSS |
-| --- | --- | --- | --- | --- | --- |
-| NMOS | X | X | X |   | X |
-| PMOS |   | X | X | X |   |
-| Polysilicon | X | X | X | X | X |
+| Silicon | CLK | D | Q | Q_N | RESET_B | SCE | Int1 | Int2 | Int3 | Int4 | Int5 | VDD | VSS |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   |   |   |   |   |   |   | X |
+| NMOS2 |   | X | X | X |   |   | X | X |   | X | X |   | X |
+| PMOS1 |   |   |   |   |   |   |   |   |   |   |   | X |   |
+| PMOS2 |   |   | X | X |   |   | X | X | X |   | X | X |   |
+| Poly1 |   |   |   |   |   |   |   |   |   |   |   | X |   |
+| Poly2 |   | X |   |   |   |   | X |   |   |   |   |   |   |
+| Poly3 |   |   |   |   |   |   |   |   |   |   |   |   | X |
+| Poly4 |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly5 |   |   |   | X |   |   |   |   |   |   |   |   |   |
+| Poly6 |   |   |   | X |   |   |   |   |   |   |   |   |   |
+| Poly7 |   |   | X |   |   |   |   |   |   |   |   |   |   |

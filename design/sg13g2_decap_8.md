@@ -88,6 +88,8 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 | Silicon | VDD | VSS |
 | --- | --- | --- |
-| NMOS |   | X |
-| PMOS | X |   |
+| NMOS1 |   | X |
+| NMOS2 |   | X |
+| PMOS1 | X |   |
+| PMOS2 | X |   |
 | Polysilicon | X |   |

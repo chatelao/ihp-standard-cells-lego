@@ -86,8 +86,24 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | Input | Internal | Output | VDD | VSS |
-| --- | --- | --- | --- | --- | --- |
-| NMOS |   | X | X |   | X |
-| PMOS | X | X | X | X |   |
-| Polysilicon | X | X | X | X | X |
+| Silicon | CLK | D | Q | Q_N | RESET_B | SCD | SCE | SET_B | Int1 | Int10 | Int11 | Int2 | Int3 | Int4 | Int5 | Int6 | Int7 | Int8 | Int9 | VDD | VSS |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
+| NMOS2 |   |   | X | X |   |   |   |   |   |   | X | X | X |   |   | X | X |   | X |   | X |
+| PMOS1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
+| PMOS2 |   |   | X | X |   |   |   | X | X | X | X | X |   | X |   | X | X |   | X | X |   |
+| Poly1 |   | X |   |   |   |   |   |   | X |   |   | X |   |   |   |   |   |   |   |   | X |
+| Poly10 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly11 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |   |
+| Poly12 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly13 |   |   |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   | X | X |   |
+| Poly14 |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly15 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly2 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly3 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly4 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly5 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly6 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly7 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly8 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly9 |   |   |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
