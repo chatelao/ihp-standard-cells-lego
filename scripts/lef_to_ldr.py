@@ -1,3 +1,4 @@
+import math
 import re
 import sys
 import os
@@ -413,9 +414,10 @@ def generate_ldr(macro_data):
         possible_studs = []
         compliant_studs = []
         for sx in range(10, width_ldu, 20):
-            if xmin_raw <= sx <= xmax_raw:
+            # Inclusive snapping: check for overlap with the stud's 20x20 footprint [sx-10, sx+10]
+            if max(xmin_raw, sx - 10) < min(xmax_raw, sx + 10):
                 for sz in range(10, height_ldu, 20):
-                    if zmin_raw <= sz <= zmax_raw:
+                    if max(zmin_raw, sz - 10) < min(zmax_raw, sz + 10):
                         possible_studs.append((sx, sz))
                         if is_compliant(sx // 20, sz // 20):
                             compliant_studs.append((sx, sz))
@@ -534,9 +536,11 @@ def generate_ldr(macro_data):
                 xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
                 zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
 
-                # Still need snapped bounds for the Metal 1 plate grid
-                xmin, xmax = snap_to_grid(xmin_raw), snap_to_grid(xmax_raw)
-                zmin, zmax = snap_to_grid(zmin_raw), snap_to_grid(zmax_raw)
+                # Inclusive snapping for the Metal 1 plate grid
+                xmin = math.floor(xmin_raw / 20) * 20
+                xmax = math.ceil(xmax_raw / 20) * 20
+                zmin = math.floor(zmin_raw / 20) * 20
+                zmax = math.ceil(zmax_raw / 20) * 20
 
                 if xmax <= xmin: xmax = xmin + 20
                 if zmax <= zmin: zmax = zmin + 20
@@ -579,8 +583,12 @@ def generate_ldr(macro_data):
                 xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
                 zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
 
-                xmin, xmax = snap_to_grid(xmin_raw), snap_to_grid(xmax_raw)
-                zmin, zmax = snap_to_grid(zmin_raw), snap_to_grid(zmax_raw)
+                # Inclusive snapping for the obstruction grid
+                xmin = math.floor(xmin_raw / 20) * 20
+                xmax = math.ceil(xmax_raw / 20) * 20
+                zmin = math.floor(zmin_raw / 20) * 20
+                zmax = math.ceil(zmax_raw / 20) * 20
+
                 if xmax <= xmin: xmax = xmin + 20
                 if zmax <= zmin: zmax = zmin + 20
 
@@ -615,8 +623,11 @@ def generate_ldr(macro_data):
                         lz1 = um_to_ldu_coord(rect['coords'][1]) + 10
                         lx2 = um_to_ldu_coord(rect['coords'][2])
                         lz2 = um_to_ldu_coord(rect['coords'][3]) + 10
-                        xmin, xmax = snap_to_grid(min(lx1, lx2)), snap_to_grid(max(lx1, lx2))
-                        zmin, zmax = snap_to_grid(min(lz1, lz2)), snap_to_grid(max(lz1, lz2))
+                        # Inclusive snapping for Poly removal
+                        xmin = math.floor(min(lx1, lx2) / 20) * 20
+                        xmax = math.ceil(max(lx1, lx2) / 20) * 20
+                        zmin = math.floor(min(lz1, lz2) / 20) * 20
+                        zmax = math.ceil(max(lz1, lz2) / 20) * 20
                         if xmax <= xmin: xmax = xmin + 20
                         if zmax <= zmin: zmax = zmin + 20
                         for gx in range(xmin + 10, xmax, 20):

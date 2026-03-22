@@ -19,6 +19,9 @@ The models are designed on a grid where LEGO studs represent the physical dimens
 - **Origin Offset:**
   - A +10 LDU (0.135 µm) offset is applied to the LEF Y / LDR Z axis to align the center of Stud 0 with the LEF origin.
   - The LEF X / LDR X axis uses a direct mapping where the center of Stud 0 is located at X=10 LDU (corresponding to the LEF X=0 boundary).
+- **Inclusive Snapping:**
+  - A stud is considered occupied if its 20x20 LDU footprint (centered at its X, Z coordinate) has ANY overlap with a geometry rectangle defined in the LEF file.
+  - This is implemented using `math.floor` for minimum bounds and `math.ceil` for maximum bounds when mapping LEF coordinates to the stud grid.
 
 ## 2. Standard Cell Architecture
 - **Total Height:** 15 studs (300 LDU).
