@@ -32,7 +32,7 @@ Legend: N=N-Well, S=Substrate
 9 NpppppppppppppppppppppN
 8 NpppppppppppppppppppppN
 7 SSSSSSSSSSSSSSSSSSSSSSS
-6 SSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSnSSSSSS
 5 SSSSSSSSSSSSSSSSSSSSSSS
 4 Snnnnnnnnnnnnnnnnnnnnnn
 3 SnnnnnnnnnnnnnnnnnnnnnS

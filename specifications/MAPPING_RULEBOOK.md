@@ -70,7 +70,7 @@ Contacts bridge the gap between Metal 1 and underlying layers (Active or Polysil
 2. **Prioritization (Scoring)**:
    - Preferred on EVEN tracks (0, 2, 4, 6, 8, 10, 12, 14).
    - Higher score for studs matching the **Stud Parity** rules.
-3. **Connectivity Guarantee**: The generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at `Y=-24` and `Y=-16` layers to complete the connection.
+3. **Connectivity Guarantee**: The generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at `Y=-24` and `Y=-16` layers to complete the connection. The `is_gate` and `is_diff` flags from LEF macro definitions take precedence over track-based heuristics (like Track 6) when determining whether to connect to Polysilicon or Active.
 4. **Fallback**: If no studs satisfy strict parity/track rules, the highest-scoring available stud is selected to ensure connectivity.
 
 ## 5. Modeling Principles

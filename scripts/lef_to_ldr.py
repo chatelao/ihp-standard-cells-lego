@@ -447,8 +447,9 @@ def generate_ldr(macro_data):
             score = 0
             if pin_name == 'VSS' and stud_z == 0: score += 5000
             elif pin_name == 'VDD' and stud_z == 14: score += 5000
-            elif (is_gate or pin_name not in ['VDD', 'VSS']) and stud_z == 6: score += 5000
+            elif is_gate and stud_z == 6: score += 5000
             elif is_diff and stud_z in [2, 4, 8, 10, 12]: score += 5000
+            elif (not is_gate and not is_diff) and pin_name not in ['VDD', 'VSS'] and stud_z == 6: score += 5000
             return score
 
         best_studs = sorted(compliant_studs, key=lambda s: score_stud(*s), reverse=True)
@@ -472,7 +473,15 @@ def generate_ldr(macro_data):
 
                 # 3. Connectivity to underlying layers (Active or Poly)
                 # Power pins (except DECAP VDD) never connect to Poly
-                is_to_poly = ((stud_z == 6) or is_gate) and (pin_name not in ['VDD', 'VSS'])
+                # Use LEF flags (is_gate/is_diff) to decide layer.
+                if is_gate:
+                    is_to_poly = True
+                elif is_diff:
+                    is_to_poly = False
+                else:
+                    # Fallback for pins without explicit flags
+                    is_to_poly = (stud_z == 6) and (pin_name not in ['VDD', 'VSS'])
+
                 # Special case: VDD fingers in DECAP cells connect to Poly
                 if pin_name == 'VDD' and is_decap and stud_z != 14:
                     is_to_poly = True

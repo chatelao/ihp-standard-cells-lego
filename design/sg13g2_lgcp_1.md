@@ -32,7 +32,7 @@ Legend: N=N-Well, S=Substrate
 9 NpppppppppppppppppppppppppN
 8 NpppppppppppppppppppppppppN
 7 SSSSSSSSSSSSSSSSSSSSSSSSSSS
-6 SSSSSSSSSSSSSSSSSSSSSSSSSSS
+6 SSSSSSSSSSSSSSSSSSSSSSSSnSS
 5 SSSSSSSSSSSSSSSSSSSSSSSSSSS
 4 SnnnnnnnnnnnnnnnnnnnnnnnnnS
 3 SnnnnnnnnnnnnnnnnnnnnnnnnnS
@@ -53,7 +53,7 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 9     G G         G G
 8     GGG         G G
 7     GGG         GGG
-6     G G         G G     G
+6     G G         G G
 5     G G         G G
 4     G G         G G
 3     G G         G G
