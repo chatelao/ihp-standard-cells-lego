@@ -84,3 +84,9 @@ Legend: G=Polysilicon
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
+## Connectivity Matrix
+
+| Silicon | Input | VDD | VSS |
+| --- | --- | --- | --- |
+| NMOS | X |   | X |
+| PMOS | X | X |   |
