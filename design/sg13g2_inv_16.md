@@ -100,3 +100,10 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | Poly6 |   | X |   |   |
 | Poly7 |   | X |   |   |
 | Poly8 | X | X | X |   |
+
+## Silicon Neighbourhood
+
+| Silicon | Overlaps With |
+| --- | --- |
+| NMOS | Polysilicon |
+| PMOS | Polysilicon |

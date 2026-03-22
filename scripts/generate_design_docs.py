@@ -301,6 +301,31 @@ def generate_connectivity_matrix(parts, width_studs, height_studs, min_x, min_z)
         rows.append(f"| {s} | " + " | ".join(row_vals) + " |")
     return "## Connectivity Matrix\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
 
+def generate_silicon_neighbourhood(parts):
+    width_studs, _, min_x, min_z = get_dimensions(parts)
+    height_studs = 15
+    overlaps = set()
+    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Polysilicon'}
+    for x_idx in range(width_studs):
+        for z_idx in range(height_studs):
+            sx, sz = min_x + x_idx * 20 + 10, min_z + z_idx * 20 + 10
+            present = set()
+            for p in parts:
+                if p['y'] in [-16, -24] and p['part'] != '3062b.dat':
+                    if is_inside(p, sx, sz):
+                        if p['color'] in silicon_cats:
+                            present.add(silicon_cats[p['color']])
+            if len(present) > 1:
+                items = sorted(list(present))
+                for i in range(len(items)):
+                    for j in range(i + 1, len(items)):
+                        overlaps.add((items[i], items[j]))
+    if not overlaps: return ""
+    header = "| Silicon | Overlaps With |"
+    sep = "| --- | --- |"
+    rows = [f"| {s1} | {s2} |" for s1, s2 in sorted(list(overlaps))]
+    return "## Silicon Neighbourhood\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
+
 def generate_design_doc(cell_name, parts, golden_sections):
     width_studs, _, min_x, min_z = get_dimensions(parts)
     height_studs = 15
@@ -334,6 +359,7 @@ def generate_design_doc(cell_name, parts, golden_sections):
         elif layer_name == "Metal 1": doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)\n"
         doc += "\n"
     doc += generate_connectivity_matrix(parts, width_studs, height_studs, min_x, min_z)
+    doc += generate_silicon_neighbourhood(parts)
     return doc
 
 def main():
