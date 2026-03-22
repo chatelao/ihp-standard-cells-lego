@@ -46,19 +46,19 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 ```
   01234567890123456789
 4
-3   G G  G G G
-2   G G  G G G
-1   G G  G G G
-0   G G  G G G
-9   G G  G G G
-8   G G  G G G
-7   G G  G G G
-6   GGG  GGGGG
-5   G G  G G G
-4   G G  GGGGG
-3   G G  G G G
-2   G G  G G G
-1   G G  G G G
+3 G G G GG G
+2 G G G GG G
+1 G G G GG G
+0 G G G GG G
+9 G G G GG G
+8 G G G GG G
+7 G G G GG G
+6 GGGGGGGGGGG
+5 G G G GG G
+4 G G G GGGGG
+3 G G G GG G
+2 G G G GG G
+1 G G G GG G
 0
 ```
 Legend: G=Polysilicon
@@ -74,7 +74,7 @@ Legend: G=Polysilicon
 9  C     CCC  C+ OOO+
 8  c   cCcc   c+ OoO&
 7  CII C      C    O
-6  cII cIiI I cCcC O
+6  iIi iIii i cCcC O
 5  C   CI   I CCCC O
 4  c _ CIiiIi c c oO-
 3    - CCCCCCCC-  OO-

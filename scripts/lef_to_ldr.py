@@ -314,45 +314,32 @@ def generate_ldr(macro_data):
         # Gold Standard ideals:
         # Distribution: 2 pins -> 1, 5. 3 pins -> 1, 5, 9. 4 pins -> 1, 5, 9, 13
         ideal_c_x = 4 * j + 1
+        if ideal_c_x >= w_studs: ideal_c_x = w_studs - 1
 
-        if not possible_studs:
-            # Fallback to nearest stud center if none strictly inside
-            best_c = (ideal_c_x, 6) # Default
-            min_dist = float('inf')
-            for rect in pin['rects']:
-                if rect['layer'] == 'Metal1':
-                    mid_x = (rect['coords'][0] + rect['coords'][2]) / 2
-                    mid_y = (rect['coords'][1] + rect['coords'][3]) / 2
-                    mid_x_ldu = um_to_ldu_coord(mid_x)
-                    mid_z_ldu = um_to_ldu_coord(mid_y) + 10
-                    si, sk = mid_x_ldu // 20, mid_z_ldu // 20
-                    dist = abs(sk - 6) * 10 + abs(si - ideal_c_x)
-                    if dist < min_dist:
-                        min_dist = dist
-                        best_c = (si, sk)
-        else:
-            # Filter by parity
-            target_parity = get_unified_parity(ideal_c_x, is_big)
-            parity_studs = [s for s in possible_studs if s[0] % 2 == target_parity]
-            if not parity_studs:
-                parity_studs = possible_studs # Relax if no matches
+        # Find best compliant stud globally, prioritizing ideal_c_x and Track 6
+        best_c = None
+        min_score = float('inf')
+        for sx in range(w_studs):
+            if sx % 2 == get_unified_parity(sx, is_big):
+                for sz in [6, 4, 8, 2, 10]:
+                    score = abs(sx - ideal_c_x) + abs(sz - 6) * 10
+                    if score < min_score:
+                        min_score = score
+                        best_c = (sx, sz)
 
-            at_6 = [s for s in parity_studs if s[1] == 6]
-            if at_6:
-                best_c = min(at_6, key=lambda s: abs(s[0] - ideal_c_x))
-            else:
-                best_c = min(parity_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
+        if best_c is None: best_c = (max(0, min(w_studs-1, ideal_c_x)), 6)
 
         # Determine gate stud(s)
         # Gold standard: gates at C-1 and C+1 for Big/Drive-2, or C+1 for Drive-1 Small
         if is_drive_2 or is_big:
-            gates = [best_c[0] - 1, best_c[0] + 1]
+            gates = [g for g in [best_c[0] - 1, best_c[0] + 1] if 0 <= g < w_studs]
             pad_x = best_c[0] * 20 + 10
             pad_part = '3623.dat'
         else:
             g = best_c[0] + 1
-            gates = [g]
-            pad_x = ((best_c[0] + g) / 2) * 20 + 10
+            if g >= w_studs: g = best_c[0] - 1
+            gates = [g] if 0 <= g < w_studs else []
+            pad_x = ((best_c[0] + (gates[0] if gates else best_c[0])) / 2) * 20 + 10
             pad_part = '3023.dat'
 
         pin_assignments[pin['name']] = {
@@ -508,6 +495,34 @@ def generate_ldr(macro_data):
         # Metal 1 Grid Aggregation
         pin_metal1_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
         has_metal1 = False
+
+        # Bridging for input pins if contact is outside LEF RECT
+        if pin['direction'] == 'INPUT' and pin['name'] in pin_assignments:
+            config = pin_assignments[pin['name']]
+            cx, cz = config['contact'], config['contact_z']
+            nearest_x = None
+            min_dx = float('inf')
+            for rect in pin['rects']:
+                if rect['layer'] == 'Metal1':
+                    lx1 = um_to_ldu_coord(rect['coords'][0])
+                    lx2 = um_to_ldu_coord(rect['coords'][2])
+                    lz1 = um_to_ldu_coord(rect['coords'][1]) + 10
+                    lz2 = um_to_ldu_coord(rect['coords'][3]) + 10
+
+                    if min(lz1, lz2) <= cz * 20 + 10 <= max(lz1, lz2):
+                        rx_start = min(lx1, lx2) // 20
+                        rx_end = max(lx1, lx2) // 20
+                        for rx in range(rx_start, rx_end + 1):
+                            if 0 <= rx < w_studs:
+                                dx = abs(rx - cx)
+                                if dx < min_dx:
+                                    min_dx = dx
+                                    nearest_x = rx
+
+            if nearest_x is not None:
+                for bx in range(min(cx, nearest_x), max(cx, nearest_x) + 1):
+                    pin_metal1_grid[bx][cz] = color
+                    has_metal1 = True
 
         # First, check for explicit Via1 rects for upward plates
         has_via1 = False
