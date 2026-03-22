@@ -66,8 +66,9 @@ Contacts bridge the gap between Metal 1 and underlying layers (Active or Polysil
   - **Big models (> 7 studs)**: Symmetric parity (ODD if X < 8, EVEN if X >= 8).
 
 ### 4.3 Generation Logic
-1. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) MUST have at least one contact.
-2. **Prioritization (Scoring)**:
+1. **Inclusive Snapping**: Metal 1 rectangles and contact placement use inclusive snapping. A stud is considered covered by a rectangle if its 20x20 LDU area has any overlap with the rectangle. This is implemented using `floor` for minimum bounds and `ceil` for maximum bounds (snapped to 20 LDU), and an overlap check for contact centers (`stud_center +/- 10 LDU`).
+2. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) MUST have at least one contact.
+3. **Prioritization (Scoring)**:
    - Preferred on EVEN tracks (0, 2, 4, 6, 8, 10, 12, 14).
    - Higher score for studs matching the **Stud Parity** rules.
 3. **Connectivity Guarantee**: The generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at `Y=-24` and `Y=-16` layers to complete the connection.
