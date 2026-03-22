@@ -86,15 +86,44 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | Input | Internal | Output | VDD | VSS |
-| --- | --- | --- | --- | --- | --- |
-| NMOS |   | X | X |   | X |
-| PMOS | X | X | X | X |   |
-| Polysilicon | X | X | X | X | X |
+| Silicon | D | Internal8 | SET_B | Internal1 | Internal10 | Internal11 | Internal2 | Internal3 | Internal4 | Internal5 | Internal6 | Internal9 | Q | Q_N | VDD | VSS |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
+| NMOS2 |   |   |   | X |   |   | X | X | X | X | X |   | X | X |   | X |
+| PMOS1 |   |   | X | X | X | X |   | X | X | X | X | X | X | X | X |   |
+| PMOS2 |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
+| Poly1 | X |   |   | X |   | X |   |   |   |   |   |   |   |   |   | X |
+| Poly10 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly11 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly12 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly13 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly14 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly15 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly3 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly4 |   |   |   |   |   |   |   |   | X |   |   | X |   |   | X |   |
+| Poly5 |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly6 |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
+| Poly7 |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |   |
+| Poly8 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly9 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
 
 ## Silicon Neighbourhood
 
 | Silicon | Overlaps With |
 | --- | --- |
-| NMOS | Polysilicon |
-| PMOS | Polysilicon |
+| NMOS2 | Poly1 |
+| NMOS2 | Poly2 |
+| NMOS2 | Poly3 |
+| NMOS2 | Poly4 |
+| PMOS1 | Poly1 |
+| PMOS1 | Poly10 |
+| PMOS1 | Poly11 |
+| PMOS1 | Poly12 |
+| PMOS1 | Poly13 |
+| PMOS1 | Poly14 |
+| PMOS1 | Poly15 |
+| PMOS1 | Poly2 |
+| PMOS1 | Poly3 |
+| PMOS1 | Poly4 |
+| PMOS1 | Poly8 |
+| PMOS1 | Poly9 |

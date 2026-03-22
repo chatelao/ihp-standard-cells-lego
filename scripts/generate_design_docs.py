@@ -44,35 +44,26 @@ def get_dimensions(parts):
     min_z, max_z = float('inf'), float('-inf')
 
     for p in parts:
-        # Determine part size in studs (Standard Width x Depth)
         pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
-
-        # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
         is_rotated = p['rot'][0] == 0
         if is_rotated:
             pw, pd = pd, pw
-
         half_w_ldu = (pw * 20) / 2
         half_d_ldu = (pd * 20) / 2
-
         min_x = min(min_x, p['x'] - half_w_ldu)
         max_x = max(max_x, p['x'] + half_w_ldu)
         min_z = min(min_z, p['z'] - half_d_ldu)
         max_z = max(max_z, p['z'] + half_d_ldu)
 
-    # Grid is 20 LDU.
     grid_min_x = int(round(min_x / 20)) * 20
     grid_max_x = int(round(max_x / 20)) * 20
     grid_min_z = int(round(min_z / 20)) * 20
     grid_max_z = int(round(max_z / 20)) * 20
 
-    # For very narrow cells (like fill_1), ensure we have at least one stud width.
     if grid_max_x <= grid_min_x:
         grid_max_x = grid_min_x + 20
-
     width_studs = (grid_max_x - grid_min_x) // 20
     height_studs = (grid_max_z - grid_min_z) // 20
-
     return width_studs, height_studs, grid_min_x, grid_min_z
 
 def parse_ldr_full(filepath):
@@ -80,380 +71,276 @@ def parse_ldr_full(filepath):
         lines = f.readlines()
 
     parts = []
+    current_label = None
     for line in lines:
         line = line.strip()
-        if line.startswith('1 '):
+        if line.startswith('0 //'):
+            comment = line[4:].strip()
+            if comment.startswith("Pin ") or "Rail" in comment or "Internal" in comment:
+                current_label = comment
+        elif line.startswith('1 '):
             tokens = line.split()
             if len(tokens) >= 15:
                 color = int(tokens[1])
                 x = float(tokens[2])
                 y = float(tokens[3])
                 z = float(tokens[4])
-                # Rot matrix
                 rot = [float(t) for t in tokens[5:14]]
                 part = tokens[14]
-                parts.append({'color': color, 'x': x, 'y': y, 'z': z, 'rot': rot, 'part': part})
+                parts.append({
+                    'color': color,
+                    'x': x, 'y': y, 'z': z,
+                    'rot': rot, 'part': part,
+                    'label': current_label
+                })
     return parts
 
+def get_part_studs(p):
+    pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
+    is_rotated = p['rot'][0] == 0
+    if is_rotated:
+        pw, pd = pd, pw
+    half_w_ldu = (pw * 20) / 2
+    half_d_ldu = (pd * 20) / 2
+    min_x_stud = int(round((p['x'] - half_w_ldu) / 20))
+    max_x_stud = int(round((p['x'] + half_w_ldu) / 20))
+    min_z_stud = int(round((p['z'] - half_d_ldu) / 20))
+    max_z_stud = int(round((p['z'] + half_d_ldu) / 20))
+    studs = []
+    for x in range(min_x_stud, max_x_stud):
+        for z in range(min_z_stud, max_z_stud):
+            studs.append((x, z))
+    return studs
+
+def find_blobs(parts, y_levels, color_filter=None):
+    relevant_parts = [p for p in parts if p['y'] in y_levels and p['part'] not in ['3062b.dat', '6141.dat']]
+    if color_filter is not None:
+        relevant_parts = [p for p in relevant_parts if p['color'] in color_filter]
+    if not relevant_parts: return []
+    stud_to_parts = {}
+    for i, p in enumerate(relevant_parts):
+        for stud in get_part_studs(p):
+            if stud not in stud_to_parts: stud_to_parts[stud] = []
+            stud_to_parts[stud].append(i)
+    visited = [False] * len(relevant_parts)
+    blobs = []
+    for i in range(len(relevant_parts)):
+        if visited[i]: continue
+        blob_parts_indices = []
+        queue = [i]
+        visited[i] = True
+        while queue:
+            curr_idx = queue.pop(0)
+            blob_parts_indices.append(curr_idx)
+            curr_part = relevant_parts[curr_idx]
+            curr_studs = get_part_studs(curr_part)
+            potential_neighbor_indices = set()
+            for sx, sz in curr_studs:
+                for idx in stud_to_parts.get((sx, sz), []): potential_neighbor_indices.add(idx)
+                for dx, dz in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                    for idx in stud_to_parts.get((sx + dx, sz + dz), []): potential_neighbor_indices.add(idx)
+            for neighbor_idx in potential_neighbor_indices:
+                if not visited[neighbor_idx]:
+                    if relevant_parts[neighbor_idx]['color'] == curr_part['color']:
+                        visited[neighbor_idx] = True
+                        queue.append(neighbor_idx)
+        blob_parts = [relevant_parts[idx] for idx in blob_parts_indices]
+        blob_studs = set()
+        for p in blob_parts: blob_studs.update(get_part_studs(p))
+        labels = set(p['label'] for p in blob_parts if p['label'])
+        label = list(labels)[0] if labels else None
+        blobs.append({'label': label, 'color': blob_parts[0]['color'], 'studs': blob_studs, 'parts': blob_parts})
+    return blobs
+
+def get_blob_name(blob, category_counters):
+    color = blob['color']
+    label = blob['label']
+    if label:
+        if label.startswith("Pin "): return label[4:]
+        if "VDD" in label:
+            category_counters['VDD'] += 1
+            return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
+        if "VSS" in label:
+            category_counters['VSS'] += 1
+            return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
+        if "Internal" in label:
+            category_counters['Internal'] += 1
+            return f"Internal{category_counters['Internal']}"
+        return label
+    cat = ""
+    if color == 288: cat = "NMOS"
+    elif color == 38: cat = "PMOS"
+    elif color == 4: cat = "Poly"
+    elif color == 9: cat = "Input"
+    elif color == 272: cat = "Output"
+    elif color == 1: cat = "Internal"
+    elif color == 14:
+        category_counters['VDD'] += 1
+        return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
+    elif color == 0:
+        category_counters['VSS'] += 1
+        return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
+    else: cat = "Unknown"
+    category_counters[cat] += 1
+    return f"{cat}{category_counters[cat]}"
+
 def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
-    # Base layer character
     char = ' '
-
-    # Check plates
-    # Sort parts by some order to ensure deterministic behavior if multiple parts overlap
-    # Metal 1 special handling: VSS/VDD/Inputs/Outputs should have priority over Connection
-    # We sort by priority ascending so that higher priority characters are assigned last and "win".
     priority = {'+': 5, '-': 5, 'I': 4, 'O': 3, 'C': 2, 'S': 1, 'N': 1, 'n': 1, 'p': 1, 'G': 1}
-
     for p in sorted(parts, key=lambda p: priority.get(color_map.get(p['color'], ' '), 0), reverse=False):
         if p['y'] in layer_y_list and p['part'] != '3062b.dat':
-            # Get dimensions from part name
             pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
-
-            # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
             is_rotated = p['rot'][0] == 0
-            if is_rotated:
-                pw, pd = pd, pw
-
-            # Boundary
-            half_w = (pw * 20) / 2
-            half_d = (pd * 20) / 2
+            if is_rotated: pw, pd = pd, pw
+            half_w, half_d = (pw * 20) / 2, (pd * 20) / 2
             if (p['x'] - half_w <= x <= p['x'] + half_w) and (p['z'] - half_d <= z <= p['z'] + half_d):
                 char = color_map.get(p['color'], char)
-
-    # Connections
-    # "X for connections between layer on the lower side and x on the upper side"
-    # Mapping provided by user:
-    # Substrate: Y=0, -8
-    # Active: Y=-16
-    # Poly: Y=-24
-    # Contacts: Y=-48 (Between Active/Poly and Metal 1)
-    # Metal 1: Y=-56
-
-    # If we are in Metal 1, check for Contact at Y=-48 (below) or Metal 2 Connection at Y=-64 (above)
     if layer_y_list[0] == -56:
-        # Check for contact (below)
-        has_contact_below = False
-        for p in parts:
-            if p['part'] == '3062b.dat' and p['y'] == -48:
-                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    has_contact_below = True
-                    break
-
-        # Check for Metal 2 connection plate (above)
-        has_plate_above = False
-        for p in parts:
-            if (p['part'] == '3024.dat' or p['part'] == '3070.dat') and p['y'] == -64:
-                if abs(p['x'] - x) < 5 and abs(p['z'] - z) < 5:
-                    has_plate_above = True
-                    break
-
+        has_contact_below = any(p['part'] == '3062b.dat' and p['y'] == -48 and abs(p['x']-x)<5 and abs(p['z']-z)<5 for p in parts)
+        has_plate_above = any((p['part'] == '3024.dat' or p['part'] == '3070.dat') and p['y'] == -64 and abs(p['x']-x)<5 and abs(p['z']-z)<5 for p in parts)
         if has_contact_below or has_plate_above:
-            alternatives = {'I': 'i', 'O': 'o', 'C': 'c', '+': '&', '-': '_'}
-            return alternatives.get(char, 'c')
-
+            return {'I': 'i', 'O': 'o', 'C': 'c', '+': '&', '-': '_'}.get(char, 'c')
     return char
 
-COLOR_MAP = {
-    8: 'S',   # Substrate Dark Gray
-    7: 'N',   # N-Well Light Gray
-    288: 'n', # NMOS Dark Green
-    38: 'p',  # PMOS Dark Orange
-    4: 'G',   # Polysilicon Red
-    9: 'I',   # Metal 1 Input Light Blue
-    1: 'C',   # Metal 1 Connection Blue
-    272: 'O', # Metal 1 Output Dark Blue
-    14: '+',  # VDD Yellow
-    0: '-',   # VSS Black
-}
-
-LEGEND_DESC = {
-    'S': 'Substrate',
-    'N': 'N-Well',
-    'n': 'NMOS Active',
-    'p': 'PMOS Active',
-    'G': 'Polysilicon',
-    'I': 'Metal 1 Input',
-    'i': 'Metal 1 Input',
-    'C': 'Metal 1 Connection',
-    'c': 'Connection (upper side)',
-    'O': 'Metal 1 Output',
-    'o': 'Metal 1 Output',
-    '+': 'VDD',
-    '&': 'VDD',
-    '-': 'VSS',
-    '_': 'VSS',
-}
+COLOR_MAP = {8: 'S', 7: 'N', 288: 'n', 38: 'p', 4: 'G', 9: 'I', 1: 'C', 272: 'O', 14: '+', 0: '-'}
 
 def extract_golden_sections(design_dir):
     golden_sections = {}
-
-    # First, try to extract from GOLDEN_STANDARD.md to ensure no loss
     gs_path = 'specifications/GOLDEN_STANDARD.md'
     if os.path.exists(gs_path):
-        with open(gs_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-
-        # Look for the section "## 7. Golden Design Examples"
+        with open(gs_path, 'r', encoding='utf-8') as f: content = f.read()
         header = "## 7. Golden Design Examples"
         if header in content:
             examples_part = content.split(header)[1]
-            # Examples are in format "### {cell} - {layer}\nGOLDEN STANDARD\n\n```...```"
-            # Or similar. Let's use a regex to be more robust.
-            # Example: ### sg13g2_buf_1 - Active
             pattern = r'### (sg13g2_[a-z0-9_]+) - ([A-Za-z0-9 ]+)\n(.*?)(?=\n### |\n## |$)'
             matches = re.findall(pattern, examples_part, re.DOTALL)
             for cell_name, layer_name, text in matches:
-                # Reconstruct the section format expected by the rest of the script
-                # The text usually starts with GOLDEN STANDARD and then the code block
-                full_text = f"## {layer_name}\n{text.strip()}"
-                golden_sections[(cell_name, layer_name)] = full_text
-
-    if not os.path.exists(design_dir):
-        return golden_sections
-
+                golden_sections[(cell_name, layer_name)] = f"## {layer_name}\n{text.strip()}"
+    if not os.path.exists(design_dir): return golden_sections
     for filename in os.listdir(design_dir):
         if filename.endswith('.md'):
             cell_name = filename[:-3]
-            filepath = os.path.join(design_dir, filename)
-            with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
-
-            # Split by "## " to get sections.
+            with open(os.path.join(design_dir, filename), 'r', encoding='utf-8') as f: content = f.read()
             sections = content.split('\n## ')
             for section in sections[1:]:
                 if 'GOLDEN STANDARD' in section:
-                    lines = section.split('\n')
-                    layer_name = lines[0].strip()
-                    # Store the whole section including the header we'll use it verbatim
-                    # If it was already in GOLDEN_STANDARD.md, this will overwrite it with potentially newer content from the design file
+                    layer_name = section.split('\n')[0].strip()
                     golden_sections[(cell_name, layer_name)] = '## ' + section.strip()
     return golden_sections
 
 def update_golden_standard_file(all_golden):
     filepath = 'specifications/GOLDEN_STANDARD.md'
-    if not os.path.exists(filepath):
-        return
-
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-
+    if not os.path.exists(filepath): return
+    with open(filepath, 'r', encoding='utf-8') as f: content = f.read()
     header = "## 7. Golden Design Examples"
-
     if all_golden:
         new_text = header + "\n"
         for (cell, layer), text in sorted(all_golden.items()):
-            new_text += f"### {cell} - {layer}\n"
-            content_lines = text.split('\n')
-            new_text += '\n'.join(content_lines[1:]).strip() + "\n\n"
+            new_text += f"### {cell} - {layer}\n" + '\n'.join(text.split('\n')[1:]).strip() + "\n\n"
         new_text = new_text.strip() + "\n"
-    else:
-        new_text = ""
-
+    else: new_text = ""
     if header in content:
-        # Keep everything before the header
         before = content.split(header)[0]
-        # Check if there is anything after section 7 (we'll assume anything starting with ## [8-9] or higher)
-        # For simplicity in this project, we assume 7 is the last one or we manage it carefully.
-        # Let's try to find if there's a "## 8." or similar.
         after_match = re.search(r'\n## [8-9]\.', content.split(header)[1])
-        if after_match:
-            after = content.split(header)[1][after_match.start():]
-            content = before + new_text + after
-        else:
-            content = before + new_text
-    elif new_text:
-        content = content.strip() + "\n\n" + new_text
+        after = content.split(header)[1][after_match.start():] if after_match else ""
+        content = before + new_text + after
+    elif new_text: content = content.strip() + "\n\n" + new_text
+    with open(filepath, 'w', encoding='utf-8') as f: f.write(content)
 
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
-
-def is_inside(p, sx, sz):
-    # Determine part size in studs (Standard Width x Depth)
-    pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
-
-    # Check if rotated (simplified check for the matrix 0 0 1 0 1 0 -1 0 0)
-    is_rotated = p['rot'][0] == 0
-    if is_rotated:
-        pw, pd = pd, pw
-
-    half_w = (pw * 20) / 2
-    half_d = (pd * 20) / 2
-    # Use a small epsilon for float comparison
-    return (p['x'] - half_w - 0.1 <= sx <= p['x'] + half_w + 0.1) and (p['z'] - half_d - 0.1 <= sz <= p['z'] + half_d + 0.1)
-
-def generate_connectivity_matrix(parts):
+def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, metal_blobs):
+    silicon_blobs = nmos_blobs + pmos_blobs + poly_blobs
     connections = set()
-
-    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Polysilicon'}
-    metal_cats = {14: 'VDD', 0: 'VSS', 9: 'Input', 272: 'Output', 1: 'Internal'}
-
     contacts = [p for p in parts if p['part'] == '3062b.dat' and p['y'] == -48]
-
     for c in contacts:
-        cx, cz = c['x'], c['z']
-
-        current_silicon_cats = set()
-        for p in parts:
-            if p['y'] in [-16, -24] and p['part'] != '3062b.dat':
-                if is_inside(p, cx, cz):
-                    if p['color'] in silicon_cats:
-                        current_silicon_cats.add(silicon_cats[p['color']])
-
-        current_metal_cats = set()
-        # Check Metal 1 (Y=-56) and Metal 2 Connection (Y=-64)
-        for p in parts:
-            if p['y'] in [-56, -64] and p['part'] != '3062b.dat':
-                 if is_inside(p, cx, cz):
-                    if p['color'] in metal_cats:
-                        current_metal_cats.add(metal_cats[p['color']])
-
-        for s in current_silicon_cats:
-            for m in current_metal_cats:
-                connections.add((s, m))
-
-    if not connections:
-        return ""
-
-    active_s = sorted(list(set(c[0] for c in connections)))
-    active_m = sorted(list(set(c[1] for c in connections)))
-
-    if not active_s or not active_m:
-        return ""
-
-    header = "| Silicon | " + " | ".join(active_m) + " |"
-    sep = "| --- | " + " | ".join(["---"] * len(active_m)) + " |"
+        c_stud = (int(round((c['x'] - 10) / 20)), int(round((c['z'] - 10) / 20)))
+        connected_silicon = [b for b in silicon_blobs if c_stud in b['studs']]
+        connected_metal = [b for b in metal_blobs if c_stud in b['studs']]
+        for s in connected_silicon:
+            for m in connected_metal: connections.add((s['name'], m['name'], m['color']))
+    if not connections: return ""
+    s_names = sorted(list(set(c[0] for c in connections)))
+    m_info = {name: color for _, name, color in connections}
+    def metal_sort_key(name):
+        color = m_info[name]
+        return ({9: 0, 1: 1, 272: 2, 14: 3, 0: 4}.get(color, 5), name)
+    m_names = sorted(list(set(c[1] for c in connections)), key=metal_sort_key)
+    header = "| Silicon | " + " | ".join(m_names) + " |"
+    sep = "| --- | " + " | ".join(["---"] * len(m_names)) + " |"
     rows = []
-    for s in active_s:
-        row = f"| {s} | "
-        row_vals = []
-        for m in active_m:
-            row_vals.append("X" if (s, m) in connections else " ")
-        row += " | ".join(row_vals) + " |"
+    for s in s_names:
+        row = f"| {s} | " + " | ".join("X" if any(c[0]==s and c[1]==m for c in connections) else " " for m in m_names) + " |"
         rows.append(row)
-
     return "## Connectivity Matrix\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
 
-def generate_silicon_neighbourhood(parts):
-    width_studs, _, min_x, min_z = get_dimensions(parts)
-    height_studs = 15
-
+def generate_silicon_neighbourhood(parts, nmos_blobs, pmos_blobs, poly_blobs):
+    all_blobs = nmos_blobs + pmos_blobs + poly_blobs
     overlaps = set()
-    silicon_cats = {288: 'NMOS', 38: 'PMOS', 4: 'Polysilicon'}
-
-    for x_idx in range(width_studs):
-        for z_idx in range(height_studs):
-            sx = min_x + x_idx * 20 + 10
-            sz = min_z + z_idx * 20 + 10
-
-            present = set()
-            for p in parts:
-                if p['y'] in [-16, -24] and p['part'] != '3062b.dat':
-                    if is_inside(p, sx, sz):
-                        if p['color'] in silicon_cats:
-                            present.add(silicon_cats[p['color']])
-
-            if len(present) > 1:
-                # We have an overlap.
-                items = sorted(list(present))
-                for i in range(len(items)):
-                    for j in range(i + 1, len(items)):
-                        overlaps.add((items[i], items[j]))
-
-    if not overlaps:
-        return ""
-
-    header = "| Silicon | Overlaps With |"
-    sep = "| --- | --- |"
-    rows = []
-    for s1, s2 in sorted(list(overlaps)):
-        rows.append(f"| {s1} | {s2} |")
-
-    return "## Silicon Neighbourhood\n\n" + header + "\n" + sep + "\n" + "\n".join(rows) + "\n\n"
+    for i in range(len(all_blobs)):
+        for j in range(i + 1, len(all_blobs)):
+            if all_blobs[i]['studs'].intersection(all_blobs[j]['studs']):
+                overlaps.add(tuple(sorted((all_blobs[i]['name'], all_blobs[j]['name']))))
+    if not overlaps: return ""
+    rows = [f"| {s1} | {s2} |" for s1, s2 in sorted(list(overlaps))]
+    return "## Silicon Neighbourhood\n\n| Silicon | Overlaps With |\n| --- | --- |\n" + "\n".join(rows) + "\n\n"
 
 def generate_design_doc(cell_name, parts, golden_sections):
     width_studs, _, min_x, min_z = get_dimensions(parts)
-    # Force standard cell height to 15 studs (300 LDU)
     height_studs = 15
-
     doc = f"# Design Documentation for {cell_name}\n\n"
-
-    layers = [
-        ("Substrate", [0, -8]),
-        ("Active", [-16]),
-        ("Polysilicon", [-24]),
-        ("Metal 1", [-56])
-    ]
-
+    layers = [("Substrate", [0, -8]), ("Active", [-16]), ("Polysilicon", [-24]), ("Metal 1", [-56])]
     scale = "  " + "".join([str(i % 10) for i in range(width_studs)])
-
     for layer_name, y_list in layers:
         if (cell_name, layer_name) in golden_sections:
             doc += golden_sections[(cell_name, layer_name)] + "\n\n"
             continue
-
-        doc += f"## {layer_name}\n"
-        doc += "```\n"
-        doc += scale + "\n"
-
+        doc += f"## {layer_name}\n```\n{scale}\n"
         used_chars = set()
         layer_lines = []
-        # Print from high Z to low Z so VDD (Track 14) is on top.
         for z_idx in range(14, -1, -1):
             line = f"{z_idx % 10} "
             for x_idx in range(width_studs):
-                sx = min_x + x_idx * 20 + 10
-                sz = min_z + z_idx * 20 + 10
-                char = get_char_for_stud(parts, sx, sz, y_list, COLOR_MAP, {})
+                char = get_char_for_stud(parts, min_x+x_idx*20+10, min_z+z_idx*20+10, y_list, COLOR_MAP, {})
                 line += char
-                if char != ' ':
-                    used_chars.add(char)
+                if char != ' ': used_chars.add(char)
             layer_lines.append(line.rstrip())
-
-        doc += "\n".join(layer_lines) + "\n"
-        doc += "```\n"
-
-        if layer_name == "Substrate":
-            doc += "Legend: N=N-Well, S=Substrate\n"
+        doc += "\n".join(layer_lines) + "\n```\n"
+        if layer_name == "Substrate": doc += "Legend: N=N-Well, S=Substrate\n"
         elif layer_name == "Active":
-            legend_parts = []
-            if 'n' in used_chars: legend_parts.append("n=NMOS Active")
-            if 'p' in used_chars: legend_parts.append("p=PMOS Active")
-            if 'S' in used_chars: legend_parts.append("S=Substrate fill (P)")
-            if 'N' in used_chars: legend_parts.append("N=Substrate fill (N)")
-            doc += f"Legend: {', '.join(legend_parts)}\n"
-        elif layer_name == "Polysilicon":
-            doc += "Legend: G=Polysilicon\n"
-        elif layer_name == "Metal 1":
-            doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)\n"
-
+            legend = []
+            if 'n' in used_chars: legend.append("n=NMOS Active")
+            if 'p' in used_chars: legend.append("p=PMOS Active")
+            if 'S' in used_chars: legend.append("S=Substrate fill (P)")
+            if 'N' in used_chars: legend.append("N=Substrate fill (N)")
+            doc += f"Legend: {', '.join(legend)}\n"
+        elif layer_name == "Polysilicon": doc += "Legend: G=Polysilicon\n"
+        elif layer_name == "Metal 1": doc += "Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)\n"
         doc += "\n"
 
-    doc += generate_connectivity_matrix(parts)
-    doc += generate_silicon_neighbourhood(parts)
+    nmos_blobs = find_blobs(parts, [-16], [288])
+    pmos_blobs = find_blobs(parts, [-16], [38])
+    poly_blobs = find_blobs(parts, [-24], [4])
+    metal_blobs = find_blobs(parts, [-56, -64], [14, 0, 9, 272, 1])
+    counters = {'NMOS': 0, 'PMOS': 0, 'Poly': 0, 'Input': 0, 'Output': 0, 'Internal': 0, 'VDD': 0, 'VSS': 0}
+    for b in nmos_blobs: b['name'] = get_blob_name(b, counters)
+    for b in pmos_blobs: b['name'] = get_blob_name(b, counters)
+    for b in poly_blobs: b['name'] = get_blob_name(b, counters)
+    for b in metal_blobs: b['name'] = get_blob_name(b, counters)
 
+    doc += generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, metal_blobs)
+    doc += generate_silicon_neighbourhood(parts, nmos_blobs, pmos_blobs, poly_blobs)
     return doc
 
 def main():
-    if not os.path.exists('design'):
-        os.makedirs('design')
-
-    golden_sections = extract_golden_sections('design')
-    golden_sections.update(extract_golden_sections('handmade'))
-
+    if not os.path.exists('design'): os.makedirs('design')
+    golden = extract_golden_sections('design')
+    golden.update(extract_golden_sections('handmade'))
     for filename in os.listdir('models'):
         if filename.startswith('sg13g2_') and filename.endswith('.ldr'):
             cell_name = filename[:-4]
-            filepath = os.path.join('models', filename)
-            parts = parse_ldr_full(filepath)
-            doc = generate_design_doc(cell_name, parts, golden_sections)
+            parts = parse_ldr_full(os.path.join('models', filename))
+            doc = generate_design_doc(cell_name, parts, golden)
+            with open(os.path.join('design', f"{cell_name}.md"), 'w', encoding='utf-8') as f: f.write(doc)
+            print(f"Generated design/{cell_name}.md")
+    update_golden_standard_file(golden)
 
-            output_path = os.path.join('design', f"{cell_name}.md")
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(doc)
-            print(f"Generated {output_path}")
-
-    update_golden_standard_file(golden_sections)
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
