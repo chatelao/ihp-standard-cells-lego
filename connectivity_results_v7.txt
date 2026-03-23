@@ -1,0 +1,1391 @@
+FAIL: sg13g2_a21o_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A2
+    NMOS2 -> VSS2
+    NMOS3 -> X
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> A2
+    Poly3 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> Internal1
+    Poly2 -> B1
+    Poly3 -> A1
+FAIL: sg13g2_a21o_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+FAIL: sg13g2_a21oi_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    PMOS1 -> B1
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    PMOS2 -> VDD2
+    Poly2 -> VDD2
+FAIL: sg13g2_a21oi_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A1
+    PMOS1 -> A1
+    Poly1 -> A1
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> A2
+FAIL: sg13g2_a221oi_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS3 -> B2
+    NMOS3 -> Y
+    PMOS1 -> A2
+    Poly1 -> B2
+  Extra (in LDR but not in MD):
+    PMOS1 -> Internal1
+    Poly1 -> C1
+    Poly1 -> Internal1
+    Poly1 -> Y
+FAIL: sg13g2_a22oi_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    PMOS1 -> VSS2
+  Extra (in LDR but not in MD):
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+FAIL: sg13g2_and2_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    PMOS1 -> Internal1
+    Poly1 -> B
+    Poly1 -> Internal1
+FAIL: sg13g2_and2_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    PMOS1 -> Internal1
+    Poly1 -> B
+    Poly1 -> Internal1
+FAIL: sg13g2_and3_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly2 -> A
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> B
+    Poly2 -> B
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+PASS: sg13g2_and3_1_from_lef
+FAIL: sg13g2_and3_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS2 -> X
+    PMOS1 -> VDD
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly1 -> A
+    Poly2 -> A
+    Poly3 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    PMOS2 -> X
+    Poly1 -> B
+    Poly2 -> B
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+FAIL: sg13g2_and4_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> VDD
+    PMOS1 -> VDD2
+    PMOS2 -> VDD2
+    Poly1 -> VDD
+FAIL: sg13g2_and4_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> VDD
+    PMOS1 -> VDD2
+    PMOS2 -> VDD2
+    Poly1 -> VDD
+PASS: sg13g2_antennanp
+FAIL: sg13g2_buf_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    Poly1 -> X
+FAIL: sg13g2_buf_16 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    NMOS2 -> VSS2
+    PMOS1 -> VDD
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS1 -> X
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    PMOS2 -> X
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+FAIL: sg13g2_buf_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> VDD
+    PMOS1 -> VDD2
+    PMOS2 -> VDD2
+    Poly1 -> VDD
+    Poly2 -> VDD
+FAIL: sg13g2_buf_4 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+FAIL: sg13g2_buf_8 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS1 -> X
+    NMOS2 -> VDD
+    PMOS1 -> VDD2
+    PMOS2 -> VDD2
+    Poly2 -> VDD
+    Poly3 -> VDD
+    Poly4 -> VDD
+    Poly5 -> VDD
+    Poly6 -> VDD
+    Poly7 -> VDD
+FAIL: sg13g2_decap_4 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS4 -> VDD
+PASS: sg13g2_decap_8
+FAIL: sg13g2_dfrbp_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> CLK
+    PMOS1 -> CLK
+    Poly1 -> CLK
+    Poly10 -> CLK
+    Poly11 -> CLK
+    Poly12 -> CLK
+    Poly13 -> CLK
+    Poly14 -> CLK
+    Poly15 -> CLK
+    Poly16 -> CLK
+    Poly17 -> CLK
+    Poly18 -> CLK
+    Poly19 -> CLK
+    Poly2 -> CLK
+    Poly3 -> CLK
+    Poly4 -> CLK
+    Poly5 -> CLK
+    Poly6 -> CLK
+    Poly7 -> CLK
+    Poly8 -> CLK
+    Poly9 -> CLK
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    NMOS2 -> Internal2
+    PMOS1 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> Internal1
+    Poly10 -> Internal1
+    Poly11 -> Internal1
+    Poly12 -> Internal1
+    Poly13 -> Internal1
+    Poly14 -> Internal1
+    Poly15 -> Internal1
+    Poly16 -> Internal1
+    Poly17 -> Internal2
+    Poly18 -> Internal2
+    Poly19 -> Internal2
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal1
+FAIL: sg13g2_dfrbp_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> CLK
+    NMOS5 -> CLK
+    NMOS5 -> Q
+    PMOS1 -> CLK
+    Poly1 -> CLK
+    Poly10 -> CLK
+    Poly11 -> CLK
+    Poly12 -> CLK
+    Poly13 -> CLK
+    Poly14 -> CLK
+    Poly15 -> CLK
+    Poly16 -> CLK
+    Poly2 -> CLK
+    Poly3 -> CLK
+    Poly4 -> CLK
+    Poly5 -> CLK
+    Poly6 -> CLK
+    Poly7 -> CLK
+    Poly8 -> CLK
+    Poly9 -> CLK
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    NMOS2 -> Internal2
+    PMOS1 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> Internal1
+    Poly10 -> Internal1
+    Poly11 -> Internal1
+    Poly12 -> Internal1
+    Poly13 -> Internal1
+    Poly14 -> Internal1
+    Poly15 -> Internal1
+    Poly16 -> Internal2
+    Poly17 -> Q
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal1
+FAIL: sg13g2_dfrbpq_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> CLK
+    PMOS1 -> CLK
+    Poly1 -> CLK
+    Poly10 -> CLK
+    Poly11 -> CLK
+    Poly12 -> CLK
+    Poly13 -> CLK
+    Poly14 -> CLK
+    Poly15 -> CLK
+    Poly16 -> CLK
+    Poly17 -> CLK
+    Poly18 -> CLK
+    Poly2 -> CLK
+    Poly3 -> CLK
+    Poly4 -> CLK
+    Poly5 -> CLK
+    Poly6 -> CLK
+    Poly7 -> CLK
+    Poly8 -> CLK
+    Poly9 -> CLK
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly10 -> Internal1
+    Poly11 -> Internal1
+    Poly12 -> Internal1
+    Poly13 -> Internal1
+    Poly14 -> Internal1
+    Poly15 -> Internal1
+    Poly16 -> Internal1
+    Poly17 -> Internal1
+    Poly18 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal1
+FAIL: sg13g2_dfrbpq_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> CLK
+    NMOS2 -> VSS
+    PMOS1 -> CLK
+    Poly1 -> CLK
+    Poly10 -> CLK
+    Poly11 -> CLK
+    Poly12 -> CLK
+    Poly13 -> CLK
+    Poly14 -> CLK
+    Poly15 -> CLK
+    Poly16 -> CLK
+    Poly17 -> CLK
+    Poly18 -> CLK
+    Poly2 -> CLK
+    Poly3 -> CLK
+    Poly4 -> CLK
+    Poly5 -> CLK
+    Poly6 -> CLK
+    Poly7 -> CLK
+    Poly8 -> CLK
+    Poly9 -> CLK
+  Extra (in LDR but not in MD):
+    NMOS1 -> Q
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly10 -> Internal1
+    Poly11 -> Internal1
+    Poly12 -> Internal1
+    Poly13 -> Internal1
+    Poly14 -> Internal1
+    Poly15 -> Internal1
+    Poly16 -> Internal1
+    Poly17 -> Internal1
+    Poly18 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal1
+FAIL: sg13g2_dlhq_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly10 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly1 -> VDD
+    Poly10 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal1
+FAIL: sg13g2_dlhr_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    Poly1 -> Q_N
+    Poly10 -> Q_N
+    Poly2 -> Q_N
+    Poly3 -> Q_N
+    Poly4 -> Q_N
+    Poly5 -> Q_N
+    Poly6 -> Q_N
+    Poly7 -> Q_N
+    Poly8 -> Q_N
+    Poly9 -> Q_N
+  Extra (in LDR but not in MD):
+    NMOS1 -> D
+    NMOS2 -> D
+    NMOS2 -> Internal1
+    NMOS2 -> Internal2
+    PMOS1 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> Internal1
+    Poly10 -> Internal2
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal2
+FAIL: sg13g2_dlhrq_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS3 -> Q
+    NMOS3 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Q
+FAIL: sg13g2_dllr_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    NMOS2 -> VSS2
+    NMOS2 -> VSS3
+    NMOS3 -> Q
+    NMOS3 -> VSS2
+    PMOS1 -> D
+    PMOS1 -> VSS2
+    PMOS1 -> VSS3
+    Poly1 -> VSS2
+    Poly10 -> VSS3
+    Poly11 -> VSS3
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS1 -> D
+    NMOS2 -> D
+    NMOS2 -> Internal1
+    NMOS2 -> Internal2
+    PMOS1 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> Internal1
+    Poly10 -> Internal2
+    Poly11 -> Internal2
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Q
+FAIL: sg13g2_dllrq_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS3 -> Q
+    NMOS3 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> GATE_N
+    PMOS1 -> GATE_N
+    Poly1 -> GATE_N
+    Poly2 -> GATE_N
+    Poly3 -> GATE_N
+    Poly4 -> GATE_N
+    Poly5 -> GATE_N
+    Poly6 -> GATE_N
+    Poly7 -> GATE_N
+    Poly8 -> Q
+FAIL: sg13g2_dlygate4sd1_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS3 -> VSS2
+    NMOS3 -> X
+    PMOS1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> X
+FAIL: sg13g2_dlygate4sd2_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS3 -> VSS2
+    NMOS3 -> X
+    PMOS1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> X
+FAIL: sg13g2_dlygate4sd3_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    PMOS1 -> A
+    Poly2 -> X
+    Poly3 -> X
+    Poly4 -> X
+    Poly5 -> X
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> VDD
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+FAIL: sg13g2_ebufn_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+FAIL: sg13g2_ebufn_4 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly1 -> TE_B
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+FAIL: sg13g2_ebufn_8 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly10 -> VSS2
+    Poly11 -> VSS2
+    Poly12 -> VSS2
+    Poly13 -> VSS2
+    Poly14 -> VSS2
+    Poly15 -> VSS2
+    Poly16 -> VSS2
+    Poly2 -> A
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly1 -> TE_B
+    Poly10 -> Internal1
+    Poly11 -> Internal1
+    Poly12 -> Internal1
+    Poly13 -> Internal1
+    Poly14 -> Internal1
+    Poly15 -> Internal1
+    Poly16 -> Internal1
+    Poly2 -> Internal1
+    Poly2 -> TE_B
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal1
+FAIL: sg13g2_einvn_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly3 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> VDD
+    PMOS1 -> VDD2
+    PMOS2 -> VDD2
+    Poly3 -> VDD
+FAIL: sg13g2_einvn_4 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS3 -> Z
+    PMOS1 -> VSS2
+    PMOS1 -> Z
+    Poly1 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+    Poly2 -> Z
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+FAIL: sg13g2_einvn_8 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly1 -> VSS2
+    Poly10 -> VSS2
+    Poly11 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> VDD
+    PMOS1 -> VDD2
+    PMOS2 -> VDD2
+    Poly1 -> VDD
+    Poly10 -> VDD
+    Poly11 -> VDD
+    Poly2 -> VDD
+    Poly2 -> Z
+    Poly3 -> VDD
+    Poly4 -> VDD
+    Poly5 -> VDD
+    Poly6 -> VDD
+    Poly7 -> VDD
+    Poly8 -> VDD
+    Poly9 -> VDD
+PASS: sg13g2_fill_1
+PASS: sg13g2_fill_2
+PASS: sg13g2_fill_4
+PASS: sg13g2_fill_8
+FAIL: sg13g2_inv_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS3 -> Y
+  Extra (in LDR but not in MD):
+    Poly1 -> A
+FAIL: sg13g2_inv_16 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    NMOS1 -> Y
+    PMOS2 -> Y
+    Poly1 -> Y
+FAIL: sg13g2_inv_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    PMOS2 -> Y
+    Poly1 -> Y
+FAIL: sg13g2_inv_4 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    PMOS2 -> Y
+FAIL: sg13g2_inv_8 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    NMOS1 -> Y
+    PMOS2 -> Y
+FAIL: sg13g2_lgcp_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS2 -> VSS3
+    PMOS1 -> VSS2
+    PMOS1 -> VSS3
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS3
+    Poly8 -> VSS3
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    NMOS2 -> Internal2
+    PMOS1 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal2
+    Poly8 -> Internal2
+FAIL: sg13g2_mux2_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+  Extra (in LDR but not in MD):
+    Poly1 -> X
+    Poly2 -> X
+    Poly3 -> X
+FAIL: sg13g2_mux2_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+  Extra (in LDR but not in MD):
+    Poly1 -> X
+    Poly2 -> X
+    Poly3 -> X
+FAIL: sg13g2_mux4_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly2 -> A1
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> A2
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+FAIL: sg13g2_nand2_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    NMOS1 -> B
+    NMOS2 -> B
+    PMOS2 -> Y
+FAIL: sg13g2_nand2_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS4 -> A
+    NMOS4 -> Y
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+    Poly2 -> A
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS2 -> Y
+    Poly2 -> Internal1
+    Poly2 -> Y
+FAIL: sg13g2_nand2b_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+FAIL: sg13g2_nand2b_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS
+    NMOS2 -> Y
+    PMOS1 -> Y
+  Extra (in LDR but not in MD):
+    NMOS3 -> Internal1
+    NMOS3 -> VSS
+    PMOS2 -> Y
+    PMOS3 -> VDD
+FAIL: sg13g2_nand3_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> Y
+    NMOS3 -> Y
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    PMOS2 -> Y
+    Poly1 -> Y
+FAIL: sg13g2_nand3b_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A_N
+    NMOS3 -> A_N
+    NMOS3 -> Y
+    PMOS1 -> A_N
+    Poly1 -> A_N
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly1 -> Y
+    Poly2 -> Y
+FAIL: sg13g2_nand4_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> Y
+    NMOS3 -> D
+    NMOS3 -> Y
+    PMOS1 -> VDD
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    PMOS2 -> Y
+    Poly1 -> Y
+PASS: sg13g2_nor2_1
+FAIL: sg13g2_nor2_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS3 -> Y
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+  Extra (in LDR but not in MD):
+    PMOS2 -> VDD2
+    Poly1 -> VDD
+    Poly1 -> Y
+    Poly2 -> VDD2
+FAIL: sg13g2_nor2b_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+FAIL: sg13g2_nor2b_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS1 -> VSS3
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS1 -> B_N
+    PMOS1 -> Internal1
+    PMOS1 -> Internal2
+    Poly1 -> Internal1
+    Poly1 -> VDD
+    Poly2 -> Internal2
+    Poly2 -> Y
+FAIL: sg13g2_nor3_1 - Connectivity Matrix mismatch
+  Extra (in LDR but not in MD):
+    Poly2 -> Y
+FAIL: sg13g2_nor3_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    NMOS3 -> Y
+    PMOS1 -> VSS2
+    Poly1 -> A
+  Extra (in LDR but not in MD):
+    NMOS1 -> Y
+    PMOS1 -> VDD2
+    Poly1 -> B
+    Poly1 -> VDD2
+    Poly1 -> Y
+FAIL: sg13g2_nor4_1 - Connectivity Matrix mismatch
+  Extra (in LDR but not in MD):
+    Poly1 -> Y
+FAIL: sg13g2_nor4_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS
+    PMOS1 -> D
+  Extra (in LDR but not in MD):
+    NMOS1 -> Y
+    PMOS1 -> VDD2
+    Poly2 -> VDD2
+    Poly2 -> Y
+FAIL: sg13g2_o21ai_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A2
+    NMOS2 -> Y
+    NMOS3 -> Y
+    PMOS1 -> Y
+  Extra (in LDR but not in MD):
+    NMOS2 -> B1
+    NMOS2 -> Internal1
+    NMOS3 -> B1
+    PMOS1 -> B1
+FAIL: sg13g2_or2_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A
+    PMOS1 -> A
+    Poly1 -> A
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> B
+    Poly1 -> Internal1
+FAIL: sg13g2_or2_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> A
+    PMOS1 -> A
+    Poly1 -> A
+  Extra (in LDR but not in MD):
+    Poly1 -> B
+    Poly1 -> X
+FAIL: sg13g2_or3_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS3 -> VSS2
+    NMOS3 -> X
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> B
+    Poly1 -> Internal1
+    Poly2 -> X
+FAIL: sg13g2_or3_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    NMOS3 -> VSS2
+    NMOS3 -> X
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> B
+    Poly1 -> Internal1
+    Poly2 -> X
+FAIL: sg13g2_or4_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+FAIL: sg13g2_or4_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+FAIL: sg13g2_sdfbbp_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> CLK
+    NMOS2 -> VSS2
+    NMOS2 -> VSS3
+    PMOS1 -> D
+    PMOS1 -> SET_B
+    PMOS1 -> VSS2
+    PMOS1 -> VSS3
+    Poly1 -> VSS2
+    Poly10 -> VSS2
+    Poly11 -> VSS2
+    Poly12 -> VSS2
+    Poly13 -> VSS2
+    Poly14 -> VSS2
+    Poly15 -> VSS2
+    Poly16 -> VSS2
+    Poly17 -> VSS3
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS1 -> Q
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    PMOS1 -> VSS
+    Poly1 -> VSS
+    Poly10 -> VSS
+    Poly11 -> VSS
+    Poly12 -> VSS
+    Poly14 -> VSS
+    Poly15 -> VSS
+    Poly16 -> VSS
+    Poly17 -> Internal1
+    Poly18 -> SET_B
+    Poly19 -> SET_B
+    Poly2 -> VSS
+    Poly22 -> SET_B
+    Poly3 -> VSS
+    Poly4 -> VSS
+    Poly5 -> VSS
+    Poly6 -> VSS
+    Poly7 -> VSS
+    Poly8 -> VSS
+    Poly9 -> VSS
+FAIL: sg13g2_sdfrbp_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> SCE
+    PMOS1 -> SCE
+    Poly1 -> SCE
+    Poly10 -> SCE
+    Poly11 -> SCE
+    Poly12 -> SCE
+    Poly13 -> SCE
+    Poly14 -> SCE
+    Poly15 -> SCE
+    Poly16 -> SCE
+    Poly17 -> SCE
+    Poly18 -> SCE
+    Poly19 -> SCE
+    Poly2 -> SCE
+    Poly20 -> SCE
+    Poly3 -> SCE
+    Poly4 -> SCE
+    Poly5 -> SCE
+    Poly6 -> SCE
+    Poly7 -> SCE
+    Poly8 -> SCE
+    Poly9 -> SCE
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    NMOS2 -> VSS2
+    PMOS1 -> Internal1
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly10 -> VSS2
+    Poly11 -> VSS2
+    Poly12 -> VSS2
+    Poly13 -> VSS2
+    Poly14 -> VSS2
+    Poly15 -> VSS2
+    Poly16 -> VSS2
+    Poly17 -> VSS2
+    Poly18 -> VSS2
+    Poly19 -> VSS2
+    Poly2 -> VSS2
+    Poly20 -> Internal1
+    Poly3 -> VSS
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+FAIL: sg13g2_sdfrbp_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> D
+    PMOS1 -> D
+    Poly1 -> D
+    Poly10 -> D
+    Poly11 -> D
+    Poly12 -> D
+    Poly13 -> D
+    Poly14 -> D
+    Poly15 -> D
+    Poly16 -> D
+    Poly17 -> D
+    Poly18 -> D
+    Poly19 -> D
+    Poly20 -> D
+    Poly21 -> D
+    Poly3 -> D
+    Poly4 -> D
+    Poly5 -> D
+    Poly6 -> D
+    Poly7 -> D
+    Poly8 -> D
+    Poly9 -> D
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    NMOS2 -> VSS2
+    PMOS1 -> Internal1
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly10 -> VSS2
+    Poly11 -> VSS2
+    Poly12 -> VSS2
+    Poly13 -> VSS2
+    Poly14 -> VSS2
+    Poly15 -> VSS2
+    Poly16 -> VSS2
+    Poly17 -> VSS2
+    Poly18 -> VSS2
+    Poly19 -> VSS2
+    Poly2 -> VSS2
+    Poly20 -> Internal1
+    Poly21 -> Internal1
+    Poly3 -> VSS
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+FAIL: sg13g2_sdfrbpq_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VDD
+    PMOS1 -> VDD2
+    PMOS2 -> VDD2
+    Poly1 -> VDD
+    Poly10 -> VDD
+    Poly11 -> VDD
+    Poly12 -> VDD
+    Poly13 -> VDD
+    Poly14 -> VDD
+    Poly15 -> VDD
+    Poly16 -> VDD
+    Poly17 -> VDD
+    Poly18 -> VDD
+    Poly19 -> VDD
+    Poly2 -> VDD
+    Poly20 -> VDD
+    Poly3 -> VDD
+    Poly4 -> VDD
+    Poly5 -> VDD
+    Poly6 -> VDD
+    Poly7 -> VDD
+    Poly8 -> VDD
+    Poly9 -> VDD
+  Extra (in LDR but not in MD):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly1 -> VSS2
+    Poly10 -> VSS2
+    Poly11 -> VSS2
+    Poly12 -> VSS2
+    Poly13 -> VSS2
+    Poly14 -> VSS2
+    Poly15 -> VSS2
+    Poly16 -> VSS2
+    Poly17 -> VSS2
+    Poly18 -> VSS2
+    Poly19 -> VSS2
+    Poly2 -> VSS2
+    Poly20 -> VSS2
+    Poly3 -> VSS
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+FAIL: sg13g2_sdfrbpq_2 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS1 -> VSS
+    NMOS2 -> VSS2
+    NMOS3 -> Q
+    NMOS3 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> VSS2
+    Poly10 -> VSS2
+    Poly11 -> VSS2
+    Poly12 -> VSS2
+    Poly13 -> VSS2
+    Poly14 -> VSS2
+    Poly15 -> VSS2
+    Poly16 -> VSS2
+    Poly17 -> VSS2
+    Poly18 -> VSS2
+    Poly19 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS1 -> Q
+    PMOS1 -> VSS
+    Poly1 -> VSS
+    Poly10 -> VSS
+    Poly11 -> VSS
+    Poly12 -> VSS
+    Poly13 -> VSS
+    Poly14 -> VSS
+    Poly15 -> VSS
+    Poly16 -> VSS
+    Poly17 -> VSS
+    Poly18 -> VSS
+    Poly19 -> VSS
+    Poly2 -> VSS
+    Poly20 -> Q
+    Poly3 -> Q
+    Poly3 -> VSS
+    Poly4 -> VSS
+    Poly5 -> VSS
+    Poly6 -> VSS
+    Poly7 -> VSS
+    Poly8 -> VSS
+    Poly9 -> VSS
+PASS: sg13g2_sighold
+FAIL: sg13g2_slgcp_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> GATE
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+    Poly3 -> VSS2
+    Poly4 -> VSS2
+    Poly5 -> VSS2
+    Poly6 -> VSS2
+    Poly7 -> VSS2
+    Poly8 -> VSS2
+    Poly9 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly1 -> SCE
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+    Poly4 -> Internal1
+    Poly5 -> Internal1
+    Poly6 -> Internal1
+    Poly7 -> Internal1
+    Poly8 -> Internal1
+    Poly9 -> Internal1
+FAIL: sg13g2_tiehi - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> L_HI
+    Poly1 -> L_HI
+    Poly2 -> L_HI
+    Poly3 -> L_HI
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+    Poly3 -> Internal1
+FAIL: sg13g2_tielo - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    PMOS1 -> L_LO
+    Poly1 -> L_LO
+    Poly2 -> L_LO
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+FAIL: sg13g2_xnor2_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VDD
+    PMOS1 -> VSS2
+    PMOS2 -> VDD
+    Poly1 -> A
+    Poly1 -> VSS2
+    Poly2 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> Internal1
+    PMOS1 -> Internal1
+    PMOS2 -> Y
+    Poly1 -> B
+    Poly1 -> Internal1
+    Poly2 -> Internal1
+FAIL: sg13g2_xor2_1 - Connectivity Matrix mismatch
+  Missing (in MD but not in LDR):
+    NMOS2 -> VSS2
+    PMOS1 -> VSS2
+    Poly1 -> A
+    Poly1 -> VSS2
+    Poly2 -> B
+    Poly4 -> VSS2
+  Extra (in LDR but not in MD):
+    NMOS2 -> B
+    NMOS2 -> Internal1
+    PMOS1 -> B
+    Poly1 -> VDD

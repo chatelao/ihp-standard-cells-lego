@@ -99,3 +99,17 @@ Each cell maintains a layer-by-layer ASCII art representation in `/design/*.md`.
   - `+`/`&`: VDD Rail (Yellow)
   - `-`/`_`: VSS Rail (Black)
 - **Connections**: Lowercase characters (`i`, `o`, `c`, `&`, `_`) indicate the presence of a contact stack (Y=-48 brick) and a Metal 2 connection tile (Y=-64).
+
+## 7. Connectivity Matrix
+The `Connectivity Matrix` in `/design/*.md` documents the electrical connections between Silicon regions (NMOS, PMOS, Poly) and Metal 1 pins.
+
+### 7.1 Extraction Rules (Y-Aware)
+To ensure accuracy, connectivity extraction from LDR models is Y-aware:
+- **Active Connection**: A contact (`3062b.dat` at `Y=-48`) connects to an underlying **Active** blob (NMOS/PMOS) ONLY if a bridge plate (`6141.dat` at `Y=-24`) is present at the same (X, Z) coordinate.
+- **Polysilicon Connection**: A contact connects to an underlying **Polysilicon** blob ONLY if the bridge plate is ABSENT.
+
+### 7.2 Exact Matching Requirement
+- The generated LDR model MUST exactly match the Connectivity Matrix.
+- No additional interconnections are allowed.
+- No fewer interconnections are allowed.
+- Multiple contacts between the same two regions are permitted and encouraged for reliability.

@@ -407,6 +407,17 @@ def generate_ldr(macro_data):
 
         def is_compliant(stud_x, stud_z):
             if stud_z % 2 != 0: return False
+
+            # Track restrictions to avoid shorts
+            if pin_name == 'VDD':
+                if stud_z == 0: return False # VDD shouldn't be on Track 0 (VSS)
+            elif pin_name == 'VSS':
+                if stud_z == 14: return False # VSS shouldn't be on Track 14 (VDD)
+            elif not is_decap: # For normal cells, restrict Signal pins
+                if stud_z == 0 or stud_z == 14: return False
+                if is_gate and stud_z != 6: return False
+                if is_diff and stud_z not in [2, 4, 8, 10, 12]: return False
+
             if pin_name == 'VDD': return stud_x % 2 == 0
             if pin_name == 'VSS': return stud_x % 2 == 1
             return stud_x % 2 == get_unified_parity(stud_x, is_big)
@@ -449,8 +460,10 @@ def generate_ldr(macro_data):
             score = 0
             if pin_name == 'VSS' and stud_z == 0: score += 5000
             elif pin_name == 'VDD' and stud_z == 14: score += 5000
-            elif (is_gate or pin_name not in ['VDD', 'VSS']) and stud_z == 6: score += 5000
+            elif is_gate and stud_z == 6: score += 5000
             elif is_diff and stud_z in [2, 4, 8, 10, 12]: score += 5000
+            elif pin_name not in ['VDD', 'VSS'] and not is_gate and not is_diff:
+                if stud_z == 6: score += 5000
             return score
 
         best_studs = sorted(compliant_studs, key=lambda s: score_stud(*s), reverse=True)
@@ -473,11 +486,17 @@ def generate_ldr(macro_data):
                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
                 # 3. Connectivity to underlying layers (Active or Poly)
-                # Power pins (except DECAP VDD) never connect to Poly
-                is_to_poly = ((stud_z == 6) or is_gate) and (pin_name not in ['VDD', 'VSS'])
-                # Special case: VDD fingers in DECAP cells connect to Poly
+                is_to_poly = False
                 if pin_name == 'VDD' and is_decap and stud_z != 14:
                     is_to_poly = True
+                elif pin_name not in ['VDD', 'VSS']:
+                    if is_gate:
+                        is_to_poly = True
+                    elif is_diff:
+                        is_to_poly = False
+                    else:
+                        # Fallback: Default to Poly on Track 6, Active elsewhere
+                        is_to_poly = (stud_z == 6)
 
                 if is_to_poly:
                     # Poly connection: Brick at Y=-48 hits Poly at Y=-24 directly.
@@ -485,9 +504,8 @@ def generate_ldr(macro_data):
                 else:
                     # Active connection: Need 1x1 plate at Y=-24 to bridge brick to Active.
                     current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                    if is_decap:
-                        # Punch hole in Poly for VSS/Active contacts
-                        poly_grid[stud_x][stud_z] = None
+                    # Punch hole in Poly for all Active contacts to avoid unwanted Poly connection
+                    poly_grid[stud_x][stud_z] = None
 
                     if pin_name == 'VSS':
                         active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS
@@ -498,16 +516,28 @@ def generate_ldr(macro_data):
 
     for pin in macro_data['pins']:
         added_coords = set() # (sx, sz) to prevent duplicates per pin/macro
-        if pin['name'] in pin_assignments:
-            config = pin_assignments[pin['name']]
-            added_coords.add((config['contact'] * 20 + 10, config['contact_z'] * 20 + 10))
         current_pin_contacts = []
         current_pin_upward_plates = []
-        pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
         color = COLOR_VDD if pin['name']=='VDD' else COLOR_VSS if pin['name']=='VSS' else COLOR_METAL1_INPUT if pin['direction']=='INPUT' else COLOR_METAL1_OUTPUT if pin['direction']=='OUTPUT' else COLOR_METAL1_INTERNAL
 
         # Metal 1 Grid Aggregation
         pin_metal1_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
+
+        if pin['name'] in pin_assignments:
+            config = pin_assignments[pin['name']]
+            cx, cz = config['contact'], config['contact_z']
+            sx, sz = cx * 20 + 10, cz * 20 + 10
+            added_coords.add((sx, sz))
+            # 1. Metal 1 to Metal 2 connection (Y=-64)
+            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+            # 2. Contact Stack (Y=-48 Brick)
+            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+            # 3. Poly connection (Inputs)
+            poly_grid[cx][cz] = COLOR_POLY
+            # 4. Metal 1 coverage
+            pin_metal1_grid[cx][cz] = color
+
+        pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
         has_metal1 = False
 
         # First, check for explicit Via1 rects for upward plates
@@ -536,11 +566,11 @@ def generate_ldr(macro_data):
                 xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
                 zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
 
-                # Inclusive snapping for the Metal 1 plate grid
-                xmin = math.floor(xmin_raw / 20) * 20
-                xmax = math.ceil(xmax_raw / 20) * 20
-                zmin = math.floor(zmin_raw / 20) * 20
-                zmax = math.ceil(zmax_raw / 20) * 20
+                # Correct snapping: round boundaries to nearest grid line to avoid shorts
+                xmin = int(round(xmin_raw / 20)) * 20
+                xmax = int(round(xmax_raw / 20)) * 20
+                zmin = int(round(zmin_raw / 20)) * 20
+                zmax = int(round(zmax_raw / 20)) * 20
 
                 if xmax <= xmin: xmax = xmin + 20
                 if zmax <= zmin: zmax = zmin + 20
@@ -562,11 +592,6 @@ def generate_ldr(macro_data):
 
         if current_pin_contacts: contact_lines.extend(current_pin_contacts)
         if current_pin_upward_plates: metal2_plate_lines.extend(current_pin_upward_plates)
-
-    # 6. Polysilicon Tiles (Finalized after contacts)
-    poly_tiles = get_best_plates_multi(poly_grid)
-    for plate, x_off, z_off, color, rotated in poly_tiles:
-        ldr_lines.append(f"1 {color} {x_off} {Y_POLY} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
     # 7. Obstructions
     if macro_data['obs']:
@@ -635,6 +660,9 @@ def generate_ldr(macro_data):
                                 gsx, gsz = gx // 20, gz // 20
                                 if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
                                     poly_grid[gsx][gsz] = None
+
+    # 6. Polysilicon Tiles (Finalized after removals)
+    poly_tiles = get_best_plates_multi(poly_grid)
 
     # 3. Active Regions (Tiling deferred to now)
     tiles3 = get_best_plates_multi(active_grid)

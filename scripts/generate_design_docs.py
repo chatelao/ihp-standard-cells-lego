@@ -169,9 +169,16 @@ def get_blob_name(blob, category_counters):
 
     # 1. Trust "Pin " labels above all
     if label and label.startswith("Pin "):
-        return label[4:]
+        name = label[4:]
+        if name.endswith(" Rail"): name = name[:-5]
+        return name
 
-    # 2. Use color-based naming for Power and I/O if label is generic or missing
+    # 2. Special case for VDD/VSS Rails
+    if label and "Rail" in label:
+        if "VDD" in label: return "VDD"
+        if "VSS" in label: return "VSS"
+
+    # 3. Standard Pin naming based on color
     if color == 14: # VDD
         category_counters['VDD'] += 1
         return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
@@ -179,27 +186,11 @@ def get_blob_name(blob, category_counters):
         category_counters['VSS'] += 1
         return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
     if color == 9: # Input
-        if label and not "Internal" in label: return label
         category_counters['Input'] += 1
         return f"Input{category_counters['Input']}"
     if color == 272: # Output
-        if label and not "Internal" in label: return label
         category_counters['Output'] += 1
         return f"Output{category_counters['Output']}"
-
-    # 3. Use explicit labels for other things (e.g. Internal)
-    if label:
-        if "Internal" in label:
-            category_counters['Internal'] += 1
-            return f"Internal{category_counters['Internal']}"
-        if "Rail" in label:
-            if "VDD" in label:
-                category_counters['VDD'] += 1
-                return "VDD" if category_counters['VDD'] == 1 else f"VDD{category_counters['VDD']}"
-            if "VSS" in label:
-                category_counters['VSS'] += 1
-                return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
-        return label
 
     # 4. Fallback to default naming
     cat = ""
@@ -275,16 +266,30 @@ def update_golden_standard_file(all_golden):
     with open(filepath, 'w', encoding='utf-8') as f: f.write(content)
 
 def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, metal_blobs):
-    silicon_blobs = nmos_blobs + pmos_blobs + poly_blobs
     connections = set()
     contacts = [p for p in parts if p['part'] == '3062b.dat' and p['y'] == -48]
+    bridge_plates = set((int(round((p['x'] - 10) / 20)), int(round((p['z'] - 10) / 20)))
+                        for p in parts if p['part'] == '6141.dat' and p['y'] == -24)
+
     for c in contacts:
         c_stud = (int(round((c['x'] - 10) / 20)), int(round((c['z'] - 10) / 20)))
-        connected_silicon = [b for b in silicon_blobs if c_stud in b['studs']]
+        has_bridge = c_stud in bridge_plates
+
+        # Y-aware Silicon Connectivity:
+        # If bridge plate exists, it connects to Active (NMOS/PMOS).
+        # If no bridge plate exists, it connects to Polysilicon.
+        if has_bridge:
+            target_silicon = nmos_blobs + pmos_blobs
+        else:
+            target_silicon = poly_blobs
+
+        connected_silicon = [b for b in target_silicon if c_stud in b['studs']]
         connected_metal = [b for b in metal_blobs if c_stud in b['studs']]
         for s in connected_silicon:
             for m in connected_metal: connections.add((s['name'], m['name'], m['color']))
-    if not connections: return ""
+    if not connections:
+        # Return empty table structure for consistency
+        return "## Connectivity Matrix\n\n| Silicon | |\n| --- | --- |\n\n"
     s_names = sorted(list(set(c[0] for c in connections)))
     m_info = {name: color for _, name, color in connections}
     def metal_sort_key(name):
@@ -388,6 +393,19 @@ def generate_design_doc(cell_name, parts, golden_sections):
     pmos_blobs = find_blobs(parts, [-16], [38])
     poly_blobs = find_blobs(parts, [-24], [4])
     metal_blobs = find_blobs(parts, [-56, -64], [14, 0, 9, 272, 1])
+
+    # Sort blobs for stable naming across different LDR part orderings
+    def blob_sort_key(b):
+        if not b['studs']: return (0, 0)
+        min_x = min(s[0] for s in b['studs'])
+        min_z = min(s[1] for s in b['studs'])
+        return (min_z, min_x)
+
+    nmos_blobs.sort(key=blob_sort_key)
+    pmos_blobs.sort(key=blob_sort_key)
+    poly_blobs.sort(key=blob_sort_key)
+    metal_blobs.sort(key=blob_sort_key)
+
     counters = {'NMOS': 0, 'PMOS': 0, 'Poly': 0, 'Input': 0, 'Output': 0, 'Internal': 0, 'VDD': 0, 'VSS': 0}
     for b in nmos_blobs: b['name'] = get_blob_name(b, counters)
     for b in pmos_blobs: b['name'] = get_blob_name(b, counters)

@@ -47,17 +47,17 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
   01234
 4
 3
-2   G
-1   G
-0   G
-9   G
-8   G
+2
+1
+0
+9
+8
 7   G
-6  GGG
+6  GG
 5   G
-4   G
-3   G
-2   G
+4
+3
+2
 1
 0
 ```
@@ -101,6 +101,6 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conne
 | Silicon | Poly1 |
 | --- | --- |
 | NMOS1 |   |
-| NMOS2 | O |
-| PMOS1 | O |
+| NMOS2 | N |
+| PMOS1 | S |
 | PMOS2 |   |

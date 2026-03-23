@@ -47,17 +47,17 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
   01234567890123456789
 4
 3
-2   G G  G G G
-1   G G  G G G
-0   G G  G G G
+2   G      G G
+1   G    G G G
+0   G    G G G
 9   G G  G G G
-8   G G  G G G
+8   G G    G G
 7   G G  G G G
-6   GGG  GGGGG
+6  GGGGG GGGGGG G
 5   G G  G G G
-4   G G  GGGGG
-3   G G  G G G
-2   G G  G G G
+4   G    G G G
+3   G    G G G
+2   G      G G
 1
 0
 ```
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   01234567890123456789
 4 &+&+&+&+&+&+&+&+&+&+
 3     +        +    +
-2     &cCccCcCc+&   &
-1     + C     C+ OOO+
-0  cCcCcC cC  c+ OoO&
-9  C     CCC  C+ OOO+
-8  c   cCcc   c+ OoO&
-7  CII C      C    O
-6  cII cIiI I cCcC O
-5  C   CI   I CCCC O
-4  c _ CIiiIi c c oO-
-3    - CCCCCCCC-  OO-
-2    _    c    _    -_
+2     &cCccCcCc+& o &
+1  CC +CC CC  C+ OOO+
+0  cCc&cC cC  c+&OoO&
+9  CCCCCCCCC  C+ OOO+
+8  cC CcCcc   c+&OoO&
+7  CIICC      CCCC O
+6  cIiCcIii i cCcC O
+5  C  CCI   ICCCCC O
+4  cC_CcIIIIICcCcCoO-
+3  CC-CCCCCCCCC-  OO-
+2    _CcCccCcCc_  o -_
 1    -         -    -
 0 -_-_-_-_-_-_-_-_-_-_
 ```
@@ -86,20 +86,21 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | A1 | Internal1 | X | VDD | VSS |
+| Silicon | A1 | S | X | VDD | VSS |
 | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   |   |   |   | X |
-| NMOS2 | X | X | X |   | X |
-| PMOS1 |   | X | X | X |   |
+| NMOS2 |   |   | X |   | X |
+| PMOS1 |   |   | X | X | X |
 | PMOS2 |   |   |   | X |   |
-| Poly1 |   |   |   | X |   |
-| Poly2 | X | X |   |   |   |
+| Poly1 |   | X |   |   | X |
+| Poly2 | X |   |   |   | X |
+| Poly3 |   |   |   |   | X |
 
 ## Silicon Neighbourhood
 
-| Silicon | Poly1 | Poly2 |
-| --- | --- | --- |
-| NMOS1 |   |   |
-| NMOS2 | O | O |
-| PMOS1 | O | O |
-| PMOS2 |   |   |
+| Silicon | Poly1 | Poly2 | Poly3 | Poly4 |
+| --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |
+| NMOS2 | O | O |   |   |
+| PMOS1 | O | O |   | O |
+| PMOS2 |   |   |   |   |

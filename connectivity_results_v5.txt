@@ -1,0 +1,710 @@
+FAIL: sg13g2_a21o_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A2
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> X
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> A2
+  Missing: Poly1 -> VSS
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> Internal1
+  Extra: Poly2 -> B1
+  Extra: Poly3 -> A1
+FAIL: sg13g2_a21o_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VSS
+FAIL: sg13g2_a21oi_1 - Connectivity Matrix mismatch
+  Missing: PMOS1 -> B1
+  Missing: PMOS2 -> VDD
+  Extra: PMOS2 -> VDD2
+  Extra: Poly2 -> VDD2
+FAIL: sg13g2_a21oi_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A1
+  Missing: PMOS1 -> A1
+  Missing: PMOS1 -> VDD
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> VSS
+FAIL: sg13g2_a221oi_1 - Connectivity Matrix mismatch
+  Missing: NMOS3 -> C1
+  Missing: NMOS3 -> Y
+  Missing: PMOS1 -> A2
+  Missing: Poly1 -> C1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> Y
+FAIL: sg13g2_a22oi_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS
+  Missing: PMOS1 -> VSS2
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VSS
+FAIL: sg13g2_and2_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> VSS2
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_and2_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_and3_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> C
+  Missing: Poly2 -> C
+  Missing: Poly2 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> A
+  Extra: Poly2 -> A
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+PASS: sg13g2_and3_1_from_lef
+FAIL: sg13g2_and3_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS2 -> X
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Missing: Poly1 -> C
+  Missing: Poly2 -> C
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS2 -> X
+  Extra: Poly1 -> A
+  Extra: Poly2 -> A
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VSS
+  Extra: Poly2 -> X
+FAIL: sg13g2_and4_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Missing: Poly1 -> C
+  Missing: Poly1 -> VSS2
+  Extra: NMOS2 -> VDD
+  Extra: PMOS2 -> VDD2
+  Extra: Poly1 -> A
+  Extra: Poly1 -> VDD
+  Extra: Poly1 -> VDD2
+FAIL: sg13g2_and4_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: NMOS2 -> VDD
+  Extra: PMOS1 -> VDD2
+  Extra: PMOS2 -> VDD2
+  Extra: Poly1 -> VDD
+  Extra: Poly1 -> VDD2
+  Extra: Poly1 -> VSS
+PASS: sg13g2_antennanp
+FAIL: sg13g2_buf_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> VSS2
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_buf_16 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: NMOS1 -> X
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS2 -> X
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> X
+FAIL: sg13g2_buf_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: NMOS2 -> VDD
+  Extra: PMOS1 -> VDD2
+  Extra: PMOS2 -> VDD2
+  Extra: Poly1 -> VDD
+  Extra: Poly1 -> VDD2
+FAIL: sg13g2_buf_4 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_buf_8 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: NMOS1 -> X
+  Extra: NMOS2 -> VDD
+  Extra: PMOS1 -> VDD2
+  Extra: PMOS2 -> VDD2
+  Extra: Poly1 -> VDD2
+FAIL: sg13g2_decap_4 - Connectivity Matrix mismatch
+  Missing: NMOS4 -> VDD
+PASS: sg13g2_decap_8
+FAIL: sg13g2_dfrbp_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> CLK
+  Missing: PMOS1 -> CLK
+  Missing: Poly2 -> CLK
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS2 -> Internal2
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dfrbp_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> CLK
+  Missing: NMOS5 -> CLK
+  Missing: PMOS1 -> CLK
+  Missing: Poly2 -> CLK
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS2 -> Internal2
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dfrbpq_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> CLK
+  Missing: PMOS1 -> CLK
+  Missing: Poly2 -> CLK
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dfrbpq_2 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> CLK
+  Missing: NMOS2 -> VSS
+  Missing: PMOS1 -> CLK
+  Missing: Poly2 -> CLK
+  Extra: NMOS1 -> Q
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dlhq_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly2 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dlhr_1 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: Poly2 -> Q_N
+  Extra: NMOS1 -> D
+  Extra: NMOS2 -> D
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS2 -> Internal2
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dlhrq_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly3 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly2 -> VDD
+  Extra: Poly3 -> Internal1
+  Extra: Poly3 -> VDD
+  Extra: Poly3 -> VSS
+FAIL: sg13g2_dllr_1 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS2 -> VSS3
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> GATE_N
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS1 -> VSS3
+  Missing: Poly1 -> GATE_N
+  Missing: Poly2 -> VSS2
+  Extra: NMOS1 -> D
+  Extra: NMOS2 -> D
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS2 -> Internal2
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> D
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dllrq_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly2 -> VSS2
+  Extra: NMOS2 -> GATE_N
+  Extra: PMOS1 -> GATE_N
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> GATE_N
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_dlygate4sd1_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+FAIL: sg13g2_dlygate4sd2_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_dlygate4sd3_1 - Connectivity Matrix mismatch
+  Missing: PMOS1 -> A
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_ebufn_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VSS
+FAIL: sg13g2_ebufn_4 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> TE_B
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> A
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_ebufn_8 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> TE_B
+  Missing: Poly2 -> TE_B
+  Missing: Poly2 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> A
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> A
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_einvn_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: NMOS2 -> VDD
+  Extra: PMOS1 -> VDD2
+  Extra: PMOS2 -> VDD2
+  Extra: Poly1 -> VDD2
+FAIL: sg13g2_einvn_4 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> Z
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS1 -> Z
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> Z
+FAIL: sg13g2_einvn_8 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: NMOS2 -> VDD
+  Extra: PMOS1 -> VDD2
+  Extra: PMOS2 -> VDD2
+  Extra: Poly1 -> VDD2
+  Extra: Poly2 -> VDD
+  Extra: Poly2 -> Z
+PASS: sg13g2_fill_1
+PASS: sg13g2_fill_2
+PASS: sg13g2_fill_4
+PASS: sg13g2_fill_8
+FAIL: sg13g2_inv_1 - Connectivity Matrix mismatch
+  Missing: NMOS3 -> Y
+  Extra: Poly1 -> A
+FAIL: sg13g2_inv_16 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Extra: NMOS1 -> Y
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Y
+FAIL: sg13g2_inv_2 - Connectivity Matrix mismatch
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Y
+FAIL: sg13g2_inv_4 - Connectivity Matrix mismatch
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Y
+FAIL: sg13g2_inv_8 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Extra: NMOS1 -> Y
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Y
+FAIL: sg13g2_lgcp_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS2 -> VSS3
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS1 -> VSS3
+  Missing: Poly1 -> VSS2
+  Missing: Poly2 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS2 -> Internal2
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VDD
+FAIL: sg13g2_mux2_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly2 -> A1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> A0
+  Extra: Poly2 -> X
+FAIL: sg13g2_mux2_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly2 -> A1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> A0
+  Extra: Poly2 -> X
+FAIL: sg13g2_mux4_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly2 -> A1
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> A2
+  Extra: Poly2 -> VSS
+  Extra: Poly3 -> VSS
+  Extra: Poly4 -> VSS
+FAIL: sg13g2_nand2_1 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Extra: NMOS1 -> B
+  Extra: NMOS2 -> B
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Y
+FAIL: sg13g2_nand2_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS4 -> A
+  Missing: NMOS4 -> Y
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Y
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> Y
+FAIL: sg13g2_nand2b_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_nand2b_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS
+  Missing: NMOS2 -> Y
+  Missing: PMOS1 -> Y
+  Missing: Poly2 -> B
+  Extra: NMOS3 -> Internal1
+  Extra: NMOS3 -> VSS
+  Extra: PMOS2 -> Y
+  Extra: PMOS3 -> VDD
+  Extra: Poly1 -> A_N
+  Extra: Poly2 -> Y
+  Extra: Poly3 -> A_N
+FAIL: sg13g2_nand3_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> Y
+  Missing: NMOS3 -> Y
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Y
+FAIL: sg13g2_nand3b_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A_N
+  Missing: NMOS3 -> A_N
+  Missing: PMOS1 -> A_N
+  Missing: PMOS1 -> VDD
+  Missing: Poly1 -> A_N
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly1 -> Y
+FAIL: sg13g2_nand4_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> Y
+  Missing: NMOS3 -> C
+  Missing: NMOS3 -> Y
+  Missing: PMOS1 -> VDD
+  Missing: PMOS2 -> VDD
+  Missing: Poly1 -> C
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> A
+  Extra: Poly1 -> Y
+FAIL: sg13g2_nor2_1 - Connectivity Matrix mismatch
+  Missing: PMOS1 -> VDD
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_nor2_2 - Connectivity Matrix mismatch
+  Missing: NMOS3 -> Y
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: PMOS2 -> VDD2
+  Extra: Poly1 -> VDD2
+  Extra: Poly2 -> VDD
+  Extra: Poly2 -> Y
+FAIL: sg13g2_nor2b_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+FAIL: sg13g2_nor2b_2 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> B_N
+  Missing: NMOS2 -> VSS
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS1 -> VSS3
+  Extra: NMOS1 -> Y
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> Internal2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal2
+  Extra: Poly2 -> VDD
+  Extra: Poly2 -> Y
+FAIL: sg13g2_nor3_1 - Connectivity Matrix mismatch
+  Missing: PMOS1 -> VDD
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Y
+FAIL: sg13g2_nor3_2 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: NMOS3 -> Y
+  Missing: PMOS1 -> VSS2
+  Extra: NMOS1 -> Y
+  Extra: PMOS1 -> VDD2
+  Extra: Poly1 -> VDD
+  Extra: Poly1 -> VDD2
+  Extra: Poly1 -> Y
+  Extra: Poly2 -> Y
+FAIL: sg13g2_nor4_1 - Connectivity Matrix mismatch
+  Missing: PMOS1 -> VDD
+  Missing: Poly1 -> C
+  Extra: Poly1 -> A
+  Extra: Poly1 -> VDD
+  Extra: Poly1 -> VSS
+  Extra: Poly1 -> Y
+FAIL: sg13g2_nor4_2 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS
+  Missing: PMOS1 -> D
+  Missing: Poly2 -> C
+  Extra: NMOS1 -> Y
+  Extra: PMOS1 -> VDD2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> D
+  Extra: Poly2 -> VDD2
+  Extra: Poly2 -> Y
+FAIL: sg13g2_o21ai_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A2
+  Missing: NMOS2 -> Y
+  Missing: NMOS3 -> Y
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> Y
+  Extra: NMOS2 -> B1
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS3 -> B1
+  Extra: PMOS1 -> B1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_or2_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A
+  Missing: PMOS1 -> A
+  Missing: PMOS1 -> VDD
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_or2_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> A
+  Missing: PMOS1 -> A
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_or3_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> C
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> A
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_or3_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> C
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> A
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VDD
+FAIL: sg13g2_or4_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> C
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> A
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VSS
+FAIL: sg13g2_or4_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> C
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> A
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> VSS
+FAIL: sg13g2_sdfbbp_1 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> CLK
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS2 -> VSS3
+  Missing: PMOS1 -> SCD
+  Missing: PMOS1 -> SET_B
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS1 -> VSS3
+  Missing: Poly1 -> VSS2
+  Missing: Poly2 -> VSS2
+  Missing: Poly3 -> VSS2
+  Missing: Poly4 -> VSS2
+  Missing: Poly5 -> VSS2
+  Extra: NMOS1 -> Q
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> VSS
+  Extra: Poly1 -> Q
+  Extra: Poly1 -> VSS
+  Extra: Poly10 -> SET_B
+  Extra: Poly2 -> Q
+  Extra: Poly3 -> Q
+  Extra: Poly4 -> VDD
+  Extra: Poly4 -> VSS
+  Extra: Poly6 -> SET_B
+  Extra: Poly7 -> SET_B
+FAIL: sg13g2_sdfrbp_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> SCE
+  Missing: PMOS1 -> SCE
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS2 -> VSS2
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> VSS2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> VSS2
+  Extra: Poly3 -> VSS
+FAIL: sg13g2_sdfrbp_2 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> D
+  Missing: PMOS1 -> D
+  Extra: NMOS2 -> Internal1
+  Extra: NMOS2 -> VSS2
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS1 -> VSS2
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> VSS2
+  Extra: Poly3 -> VSS
+FAIL: sg13g2_sdfrbpq_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VDD
+  Missing: PMOS1 -> VDD2
+  Missing: PMOS2 -> VDD2
+  Extra: NMOS2 -> VSS2
+  Extra: PMOS1 -> VSS2
+  Extra: PMOS2 -> VDD
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> VSS2
+  Extra: Poly3 -> VSS
+FAIL: sg13g2_sdfrbpq_2 - Connectivity Matrix mismatch
+  Missing: NMOS1 -> VSS
+  Missing: NMOS2 -> VSS2
+  Missing: NMOS3 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Extra: NMOS1 -> Q
+  Extra: PMOS1 -> VSS
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> VSS
+  Extra: Poly3 -> Q
+PASS: sg13g2_sighold
+FAIL: sg13g2_slgcp_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly2 -> VSS2
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly2 -> Internal1
+  Extra: Poly2 -> VSS
+FAIL: sg13g2_tiehi - Connectivity Matrix mismatch
+  Missing: NMOS2 -> L_HI
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+FAIL: sg13g2_tielo - Connectivity Matrix mismatch
+  Missing: PMOS1 -> L_LO
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+FAIL: sg13g2_xnor2_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VDD
+  Missing: PMOS1 -> VSS2
+  Missing: PMOS2 -> VDD
+  Extra: NMOS2 -> Internal1
+  Extra: PMOS1 -> Internal1
+  Extra: PMOS2 -> Y
+  Extra: Poly1 -> Internal1
+  Extra: Poly1 -> Y
+FAIL: sg13g2_xor2_1 - Connectivity Matrix mismatch
+  Missing: NMOS2 -> VSS2
+  Missing: PMOS1 -> VSS2
+  Missing: Poly1 -> A
+  Missing: Poly1 -> VSS2
+  Missing: Poly2 -> B
+  Missing: Poly3 -> B
+  Extra: NMOS2 -> Internal1
+  Extra: Poly1 -> VDD
+  Extra: Poly3 -> X
