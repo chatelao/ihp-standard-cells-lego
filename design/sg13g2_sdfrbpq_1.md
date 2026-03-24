@@ -67,35 +67,35 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901234567890123456789012345678901
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3     +        +     +         +                          + +
-2     &cCccCcCc+&   &+ CcCcCcC&+ CcCC cCcCcCcCcCcCcCcCcCcC& &
-1     + C     C+ CC  + C     C + C  C                     + + O
-0  cCcCcC cC  c+ Cc  +cCcCc cCcCcCc c   cCcCcCcCcCC       & & o
-9  C     CCC  C+ CC  +CCC   C     C C   C       C CC    C   + O
-8  c   cCcc   c+ Cc   cCc cCcCcCcCc c cCc cCcCcCc cCc cCcCcC& o
-7  C   C  I I C   C    CC C II C  C C  C  CIII  C C C C    C  O
-6  cII cIiI I cCcCcCcC Cc   IIcCc c cCcC CcIIIcCc cCc c  CcCc o
-5  C   CI   I    CC    CCCCCCCCCCCCCCC C  CIIIC  CCCCCCCCC C OO
-4  c _ CIiiIi cCcCc    C  c c c   c cC    CCcCc cCcCCC     C Oo
-3  C - CCCCCCCC-  C  CCC-   - C CCCCCC        C      C -  CC- O
-2    _    c    _      c_-   -_cCcCcCcCcCcCcCcCcCcCcCc c_  c -_
-1    -         -        -   -                          -    -
+3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2    +&cCccCcCc+&Cc &+cCcCcCcC&+cCcCcCcCcCcCcCcCcCcCcCcCcC&+&+
+1  CC++CC CC  C++CC ++CCCCCCCC++CCCCCCCCCCCCCCCCCCCCCCCCCC++++OO
+0  cC&&cC cC  c+&Cc &+cCcCc cCcCcCcCc  CcCcCcCcCcCc       &+&+oO
+9  CCCCCCCCC  C++CC ++CCCCCCCCCCCCCCC CCCCCCCCCCCCCC    CC++++OO
+8  cC CcCcc   c+&Cc &+cCcCcCcCcCcCcCc cCcCcCcCcCcCcCcCcCcCcC&+oO
+7  CIIIC IIIIICCCCC   CCCCCIIICC  CCC CCCCCIII  CCCCCCC   CCC OO
+6  cIIIcIiIIIIcCcCcCcCcCcCcIIIcCcCcCcCcCcCcIIIcCcCcCcCc  CcCc oO
+5  C  CCIIIIII  CCCCCCCCCCCCCCCCCCCCCCCC CCIIICCCCCCCCCCCCCC OOO
+4  cC_-cIiiIiIcCcCc   cCcCcCcCcCcCcCcCcC CcCcCcCcCcCcCc   cC OoO
+3  CC--CCCCCCCC-- C CCCC- CC-CCCCCCCCC   CCCCCCCCCCCCCC-- CC--OO
+2    _-cCccCcCc_- c cCc_-   -_cCcCcCcCcCcCcCcCcCcCcCcCc_- cC-_oO
+1 --------------------------------------------------------------
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | SCD | Internal1 | Internal2 | Internal3 | Internal4 | Q | VDD | VSS |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   |   |   | X |
-| NMOS2 | X | X | X | X |   | X |   | X |
-| PMOS1 |   | X | X |   | X | X | X |   |
-| PMOS2 |   |   |   |   |   |   | X |   |
-| Poly1 |   |   |   |   |   |   | X |   |
-| Poly2 | X | X |   |   |   |   |   |   |
-| Poly3 |   |   |   |   |   |   |   | X |
-| Poly5 |   |   |   |   |   | X |   |   |
+| Silicon | SCD | VDD2 | Q | VDD | VSS |
+| --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   | X |
+| NMOS2 | X | X | X |   | X |
+| PMOS1 |   | X | X | X |   |
+| PMOS2 |   |   |   | X |   |
+| Poly1 |   | X |   | X |   |
+| Poly2 | X | X |   |   |   |
+| Poly3 |   | X |   |   | X |
+| Poly5 |   |   | X |   |   |
 
 ## Silicon Neighbourhood
 

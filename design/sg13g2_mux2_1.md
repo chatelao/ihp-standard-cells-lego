@@ -67,32 +67,32 @@ Legend: G=Polysilicon
 ```
   012345678901234567
 4 &+&+&+&+&+&+&+&+&+
-3     +        +
-2     &cCccCcCc+&
-1     + C     C+ OO
-0  cCcCcC cC  c+ Oo
-9  C     CCC  C+ OO
-8  c   cCcc   c+ Oo
-7  C   C  I I C   O
-6  cII cIiI I cCcCo
-5  C   CI   I    CO
-4  c _ CIiiIi cCcCo
-3  C - CCCCCCCC-  O
-2    _    c    _
-1    -         -
+3 ++++++++++++++++++
+2    +&cCccCcCc+&Oo
+1  CC++CC CC  C++OO
+0  cC&&cC cC  c+&Oo
+9  CCCCCCCCC  C++OO
+8  cC CcCcc   c+&Oo
+7  CIIIC IIIIICCCCO
+6  cIIIcIiIIIIcCcCo
+5  C  CCIIIIII  CCO
+4  cC_-cIiiIiIcCcCo
+3  CC--CCCCCCCC-- O
+2    _-cCccCcCc_- o
+1 ------------------
 0 -_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | A1 | Internal1 | X | VDD | VSS |
+| Silicon | A0 | VSS2 | X | VDD | VSS |
 | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   |   |   |   | X |
 | NMOS2 | X | X | X |   | X |
 | PMOS1 |   | X | X | X |   |
 | PMOS2 |   |   |   | X |   |
-| Poly1 |   |   |   | X |   |
+| Poly1 |   | X |   | X |   |
 | Poly2 | X | X |   |   |   |
 | Poly3 |   |   | X |   |   |
 

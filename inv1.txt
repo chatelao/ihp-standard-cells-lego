@@ -1,0 +1,19 @@
+FAIL: sg13g2_inv_1.ldr
+  - VSS contact at Stud X=0 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=0 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VSS contact at Stud X=2 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=2 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=4 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=4 has incorrect parity (expected ODD)
+  - Silicon NMOS3 has extra connections to: VDD, Y
+  - Silicon Poly1 missing connections to: VDD, Y
+  - Silicon Poly1 has extra connections to: A
+  - Silicon PMOS1 missing connections to: VDD, Y
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD

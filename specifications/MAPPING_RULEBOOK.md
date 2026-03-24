@@ -69,12 +69,17 @@ Contacts bridge the gap between Metal 1 and underlying layers (Active or Polysil
   - **Big models (> 7 studs)**: Symmetric parity (ODD if X < 8, EVEN if X >= 8).
 
 ### 4.3 Generation Logic
-1. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) MUST have at least one contact.
-2. **Prioritization (Scoring)**:
+1. **Exact Connectivity Matching**: The generated LDR model MUST exactly match the `Connectivity Matrix` defined in its corresponding `/design/*.md` documentation. No additional interconnections are allowed, and no required interconnections may be missing.
+2. **At Least One Contact Per Strip**: Every `RECT` on `Metal1` (for both `PIN`s and `OBS`tructions) MUST have at least one contact.
+3. **Prioritization (Scoring)**:
    - Preferred on EVEN tracks (0, 2, 4, 6, 8, 10, 12, 14).
    - Higher score for studs matching the **Stud Parity** rules.
-3. **Connectivity Guarantee**: The generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at `Y=-24` and `Y=-16` layers to complete the connection.
-4. **Fallback**: If no studs satisfy strict parity/track rules, the highest-scoring available stud is selected to ensure connectivity.
+   - **Track Preference**: `INPUT` pins and `GATE` pins prioritize Track 6. `OUTPUT` pins and `DIFFUSION` pins prioritize Tracks 2, 4, 8, 10, 12.
+4. **Connectivity Guarantee**: The generator automatically ensures the appropriate material (Polysilicon for gates, Active for diffusions) is present at `Y=-24` and `Y=-16` layers to complete the connection.
+5. **Contact Stacking**:
+   - **Polysilicon Connection**: 1x1 round brick (3062b.dat) at Y=-48.
+   - **Active Connection**: 1x1 round brick (3062b.dat) at Y=-48 AND 1x1 round plate (6141.dat) at Y=-24.
+6. **Fallback**: If no studs satisfy strict parity/track rules, the highest-scoring available stud is selected to ensure connectivity.
 
 ## 5. Modeling Principles
 - **Header Comment**: Every LDR file must start with the comment `0 // Substrate low (V3)`.
