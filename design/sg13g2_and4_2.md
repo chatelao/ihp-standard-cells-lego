@@ -34,7 +34,7 @@ Legend: N=N-Well, S=Substrate
 7 SSSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSSS
-4 SnnnnnnnnnnnnnnS
+4 Snnnnnnnnnnnnnnn
 3 SnnnnnnnnnnnnnnS
 2 Snnnnnnnnnnnnnnn
 1 SSSSSSSSSSSSSSSS
@@ -67,26 +67,26 @@ Legend: G=Polysilicon
 ```
   0123456789012345
 4 &+&+&+&+&+&+&+&+
-3   +  +   +    +
-2   &  +&  +&   &
-1   +C + C +  OO+
-0   &c + c +  oO&
-9  CCCCCCCCCC OO+
-8  c   c    cCoO
-7  C I I III C O
-6  c I I IIIcC O
-5  C           O
-4  cC      _  oO-
-3  CC      -  OO-
-2          _    -_
-1          -    -
+3 ++++++++++++++++
+2  +&cC+&cc+&OoO&+
+1  ++CC++CC++OOO++
+0  +&cC+&cc+&OoO&+
+9  CCCCCCCCCCOOO++
+8  cCcCcCccCcOoO&+
+7  CIIIIIIIICC O
+6  cIIIIIIIIcC O
+5  CIIIIIIII OOO
+4  cC      _-OoO-_
+3  CC      --OOO--
+2  cC      _-OoO-_
+1 ----------------
 0 -_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | Internal1 | X | VDD | VSS |
+| Silicon | VSS2 | X | VDD | VSS |
 | --- | --- | --- | --- | --- |
 | NMOS1 |   |   |   | X |
 | NMOS2 | X | X |   | X |

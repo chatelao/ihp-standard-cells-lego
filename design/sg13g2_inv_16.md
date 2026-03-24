@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   0123456789012345678901234567890123
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3  +   +   +   +  +   +   +   +   +
-2  +& &+  &+  &+  &   &   &   &   &
-1  + O + O + O +O + O + O + O + O +
-0  + o + o + O +o & o & o & o & o &
-9  + O   O   O  O   O   O   O   O +
-8    oOoOooOoOoOoOoOoOoOoOoOoOoOo
-7    O   O   O  O   O   O   O
-6    o   o  oO  o   o   o   o   iIi
-5    O   O   O  O   O   O   O
-4  _ o _ o _ O _o - o - o - oOoOo_
-3  - O - O - O -O - O - O - O - O-
-2  _   _   _   _  -_  -_ _-  _-  _
-1  -   -   -   -  -   -   -   -  -
+3 ++++++++++++++++++++++++++++++++++
+2  +&o&+Oo&+oO&+oO&+oO&+o+&Oo+&Oo+&
+1  ++OO+OO++OO++OO++OO++O++OO++OO++
+0  +&oO+Oo&+oO&+oO&+oO&+o+&Oo+&Oo+&
+9  ++OOOOOOOOOOOOOOOOOOOOOOOOOOOO++
+8  +&oOoOooOoOoOoOoOoOoOoOoOoOoOo+&
+7    OOOOOOOOOOOOOOOOOOOOOOOO  IIII
+6    oO Oo  oO  oO  oO  o  Oo  IiIi
+5    OO OO  OO  OO  OO  O  OO
+4  _-oO_Oo-_oO-_oO-_oO-_o_-OoOoOo_-
+3  --OO-OO--OO--OO--OO--O--OO--OO--
+2  _-oO_Oo-_oO-_oO-_oO-_o_-Oo_-Oo_-
+1 ----------------------------------
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)

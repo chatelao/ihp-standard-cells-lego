@@ -1,0 +1,869 @@
+FAIL: sg13g2_a21o_1.ldr
+  - Signal contact at Stud X=2 has incorrect parity
+  - Contact at Stud Z=3 is on an ODD track (expected EVEN)
+  - Contact at Stud Z=3 is on an ODD track (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - Signal contact at Stud X=6 has incorrect parity
+  - Contact at Stud Z=3 is on an ODD track (expected EVEN)
+  - Contact at Stud Z=3 is on an ODD track (expected EVEN)
+  - VDD contact at Stud X=9 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=9 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=9 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=9 has incorrect parity (expected EVEN)
+  - Signal contact at Stud X=11 has incorrect parity
+  - Signal contact at Stud X=11 has incorrect parity
+  - Contact at Stud Z=5 is on an ODD track (expected EVEN)
+  - Contact at Stud Z=5 is on an ODD track (expected EVEN)
+  - Signal contact at Stud X=11 has incorrect parity
+  - Signal contact at Stud X=11 has incorrect parity
+  - Signal contact at Stud X=11 has incorrect parity
+  - Signal contact at Stud X=11 has incorrect parity
+  - Signal contact at Stud X=11 has incorrect parity
+  - Signal contact at Stud X=11 has incorrect parity
+  - Silicon Poly3 has extra connections to: A1
+  - Silicon NMOS2 missing connections to: VSS2, A2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: X
+  - Silicon Poly2 has extra connections to: B1
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, VDD, A2, VSS
+  - Silicon Poly1 has extra connections to: Internal / Obstructions
+FAIL: sg13g2_a21o_2.ldr
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+  - Silicon Poly1 has extra connections to: Internal / Obstructions
+FAIL: sg13g2_a21oi_1.ldr
+  - Silicon NMOS3 has extra connections to: Y, VDD
+  - Silicon PMOS1 missing connections to: Y, B1, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: B1
+FAIL: sg13g2_a21oi_2.ldr
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: A1
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Y, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Y, B1, A1, A2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: A2
+  - Silicon Poly1 has extra connections to: A1
+FAIL: sg13g2_a221oi_1.ldr
+  - VSS contact at Stud X=12 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=12 has incorrect parity (expected ODD)
+  - Silicon NMOS3 has extra connections to: Y, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Y, VDD, A2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: B1, A2
+  - Silicon Poly1 has extra connections to: C1, Internal / Obstructions
+FAIL: sg13g2_a22oi_1.ldr
+  - Silicon NMOS2 missing connections to: A2, VSS
+  - Silicon NMOS3 has extra connections to: Y, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Y, VSS2, VDD, A2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, A2
+  - Silicon Poly1 has extra connections to: Internal / Obstructions, B2
+FAIL: sg13g2_and2_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2, B
+  - Silicon NMOS3 has extra connections to: X, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_and2_2.ldr
+  - Silicon NMOS2 missing connections to: VSS2, B
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_and3_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2, B
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2, B
+  - Silicon Poly2 has extra connections to: A, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_and3_1_from_lef.ldr
+  - VSS contact at Stud X=0 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=0 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VSS contact at Stud X=2 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=2 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VSS contact at Stud X=4 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=4 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=5 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=5 has incorrect parity (expected EVEN)
+  - VSS contact at Stud X=6 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=6 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=9 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=9 has incorrect parity (expected EVEN)
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=11 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=11 has incorrect parity (expected EVEN)
+  - Silicon NMOS2 missing connections to: Input1, VSS
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Output1, VDD, Internal1
+  - Silicon NMOS4 has extra connections to: Internal / Obstructions
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Internal / Obstructions
+  - Silicon Poly1 missing connections to: Input2, Input1, Internal1, Input3, VDD
+  - Silicon Poly1 has extra connections to: Internal / Obstructions
+FAIL: sg13g2_and3_2.ldr
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: X, VSS2, B
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2, VDD, B
+  - Silicon Poly2 has extra connections to: X, A, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: X
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_and4_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: VDD
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_and4_2.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: VDD
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_antennanp.ldr
+  - Silicon NMOS3 has extra connections to: A
+  - Silicon PMOS1 missing connections to: A
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_buf_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS3 has extra connections to: X
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_buf_16.ldr
+  - VSS contact at Stud X=34 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=34 has incorrect parity (expected ODD)
+  - Silicon NMOS3 has extra connections to: X, Internal / Obstructions
+  - Silicon NMOS4 has extra connections to: X
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: X
+  - Silicon Poly1 missing connections to: VSS2, VDD
+  - Silicon Poly1 has extra connections to: X, Internal / Obstructions
+  - Silicon NMOS2 missing connections to: VSS2, VSS
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+FAIL: sg13g2_buf_2.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: VDD
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_buf_4.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+  - Silicon Poly1 has extra connections to: Internal / Obstructions
+FAIL: sg13g2_buf_8.ldr
+  - Silicon NMOS2 missing connections to: VSS2, VSS
+  - Silicon NMOS2 has extra connections to: VDD
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: X
+FAIL: sg13g2_decap_4.ldr
+  - NMOS Active at Stud Z=6 outside standard Studs 2-4/0
+  - NMOS Active at Stud Z=6 outside standard Studs 2-4/0
+  - Silicon NMOS3 missing connections to: VSS
+  - Silicon PMOS1 missing connections to: VDD
+  - Silicon NMOS4 missing connections to: VDD, VSS
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS6 has extra connections to: VDD
+FAIL: sg13g2_decap_8.ldr
+  - NMOS Active at Stud Z=6 outside standard Studs 2-4/0
+  - NMOS Active at Stud Z=6 outside standard Studs 2-4/0
+  - Silicon NMOS3 missing connections to: VSS
+  - Silicon PMOS1 missing connections to: VDD
+  - Silicon NMOS4 missing connections to: VSS
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS6 has extra connections to: VDD
+FAIL: sg13g2_dfrbp_1.ldr
+  - Silicon NMOS2 missing connections to: D, CLK
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Q_N, VDD, Internal / Obstructions, Q
+  - Silicon Poly2 missing connections to: CLK
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: VDD, Q, Q_N, CLK
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_dfrbp_2.ldr
+  - Silicon NMOS3 has extra connections to: Q_N, VDD, Internal / Obstructions, Q
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS2 missing connections to: CLK
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon Poly2 missing connections to: CLK
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon Poly6 missing connections to: CLK
+  - Silicon PMOS1 missing connections to: VDD, Q, Q_N, CLK
+FAIL: sg13g2_dfrbpq_1.ldr
+  - Silicon NMOS2 missing connections to: D, CLK
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Q, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: CLK
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Q, VDD, CLK
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_dfrbpq_2.ldr
+  - Silicon NMOS2 missing connections to: CLK, VSS
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Q, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: CLK
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Q, VDD, CLK
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Q
+FAIL: sg13g2_dlhq_1.ldr
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=8 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=20 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=20 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Q, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Q, VSS2, VDD, D
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_dlhr_1.ldr
+  - Silicon NMOS2 missing connections to: VSS
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Q_N, Q, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: Q_N
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Q_N, Q, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Q
+FAIL: sg13g2_dlhrq_1.ldr
+  - VSS contact at Stud X=22 has incorrect parity (expected ODD)
+  - Silicon Poly3 missing connections to: VSS2
+  - Silicon Poly3 has extra connections to: Internal / Obstructions
+  - Silicon Poly4 missing connections to: VSS2
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Q, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Q, VSS2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_dllr_1.ldr
+  - VSS contact at Stud X=18 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=18 has incorrect parity (expected ODD)
+  - Silicon Poly3 missing connections to: VSS2
+  - Silicon NMOS2 missing connections to: VSS2, VSS, VSS3
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions, D
+  - Silicon NMOS3 has extra connections to: Q_N, Q, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Q, VSS2, Q_N, VSS3, VDD, GATE_N
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: D
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_dllrq_1.ldr
+  - Silicon Poly3 missing connections to: VSS2
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: GATE_N
+  - Silicon NMOS3 has extra connections to: Q, VDD, GATE_N
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: GATE_N
+  - Silicon PMOS1 missing connections to: Q, VSS2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_dlygate4sd1_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_dlygate4sd2_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_dlygate4sd3_1.ldr
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, A
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: X
+FAIL: sg13g2_ebufn_2.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Internal / Obstructions, VDD, Z
+  - Silicon PMOS1 missing connections to: VSS2, VDD, Z
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_ebufn_4.ldr
+  - VSS contact at Stud X=16 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=16 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS2, TE_B
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Internal / Obstructions, VDD, Z
+  - Silicon PMOS1 missing connections to: VSS2, VDD, Z
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: TE_B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_ebufn_8.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Internal / Obstructions, VDD, Z
+  - Silicon Poly2 missing connections to: VSS2, TE_B
+  - Silicon Poly2 has extra connections to: A, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: VSS2, VDD, Z
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, TE_B
+  - Silicon Poly1 has extra connections to: A, Internal / Obstructions
+FAIL: sg13g2_einvn_2.ldr
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - Silicon NMOS2 missing connections to: VSS2, A
+  - Silicon NMOS2 has extra connections to: VDD
+  - Silicon NMOS3 has extra connections to: VDD, Z
+  - Silicon PMOS1 missing connections to: VSS2, VDD, TE_B, Z
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_einvn_4.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: VSS2, VDD, Z
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_einvn_8.ldr
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=7 has incorrect parity (expected EVEN)
+  - Silicon NMOS3 has extra connections to: VDD, Z
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: VDD
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: VDD
+  - Silicon PMOS1 missing connections to: VSS2, VDD, Z
+FAIL: sg13g2_fill_1.ldr
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_fill_2.ldr
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_fill_4.ldr
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_fill_8.ldr
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_inv_1.ldr
+  - VSS contact at Stud X=0 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=0 has incorrect parity (expected ODD)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=1 has incorrect parity (expected EVEN)
+  - VSS contact at Stud X=2 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=2 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=4 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=4 has incorrect parity (expected ODD)
+  - Silicon NMOS3 has extra connections to: Y, VDD
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: Y, VDD
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_inv_16.ldr
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Y
+  - Silicon Poly1 missing connections to: VDD
+  - Silicon NMOS2 missing connections to: VSS
+  - Silicon PMOS1 missing connections to: Y, VDD
+FAIL: sg13g2_inv_2.ldr
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VDD
+FAIL: sg13g2_inv_4.ldr
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VDD
+  - Silicon Poly1 has extra connections to: Y
+FAIL: sg13g2_inv_8.ldr
+  - Silicon NMOS2 missing connections to: VSS
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Y
+  - Silicon Poly1 missing connections to: VDD
+  - Silicon Poly1 has extra connections to: Y
+FAIL: sg13g2_lgcp_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2, VSS3
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: GCLK, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: GATE, GCLK, VSS2, VSS3, VDD, CLK
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_mux2_1.ldr
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - Silicon NMOS2 missing connections to: A0, VSS2
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon Poly2 missing connections to: A0, VSS2
+  - Silicon Poly2 has extra connections to: X, A1
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_mux2_2.ldr
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - Silicon NMOS2 missing connections to: A0, VSS2
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon Poly2 missing connections to: A0, VSS2
+  - Silicon Poly2 has extra connections to: X, A1
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_mux4_1.ldr
+  - VSS contact at Stud X=20 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=20 has incorrect parity (expected ODD)
+  - Silicon Poly3 missing connections to: VSS2
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: A2
+  - Silicon Poly2 has extra connections to: A1
+  - Silicon PMOS1 missing connections to: X, VSS2, VDD, A2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_nand2_1.ldr
+  - Silicon NMOS2 missing connections to: VSS
+  - Silicon NMOS2 has extra connections to: B
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: B
+  - Silicon Poly1 missing connections to: VDD
+FAIL: sg13g2_nand2_2.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD, A
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, VDD
+  - Silicon Poly1 has extra connections to: Internal / Obstructions
+FAIL: sg13g2_nand2b_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Y, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Y, VSS2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_nand2b_2.ldr
+  - Silicon Poly3 has extra connections to: A_N
+  - Silicon NMOS5 has extra connections to: Y, VDD
+  - Silicon NMOS2 missing connections to: Y, VSS
+  - Silicon NMOS3 has extra connections to: Y, Internal / Obstructions, VSS
+  - Silicon Poly2 missing connections to: VDD, B, A_N
+  - Silicon PMOS1 missing connections to: Y, VDD, A_N
+  - Silicon NMOS4 has extra connections to: VDD, A_N
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS6 has extra connections to: VDD
+  - Silicon Poly1 missing connections to: VDD
+  - Silicon Poly1 has extra connections to: A_N
+FAIL: sg13g2_nand3_1.ldr
+  - Silicon NMOS2 missing connections to: Y
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VDD
+FAIL: sg13g2_nand3b_1.ldr
+  - Silicon NMOS2 missing connections to: A_N
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Y, Internal / Obstructions
+  - Silicon Poly2 missing connections to: A_N
+  - Silicon PMOS1 missing connections to: Y, VDD, A_N
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: A_N
+  - Silicon Poly1 has extra connections to: Internal / Obstructions
+FAIL: sg13g2_nand4_1.ldr
+  - Silicon NMOS2 missing connections to: Y, B
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VDD, B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_nor2_1.ldr
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_nor2_2.ldr
+  - Silicon NMOS3 has extra connections to: Y, VDD
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: VDD
+  - Silicon PMOS1 missing connections to: Y, VSS2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_nor2b_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Y, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Y, VSS2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_nor2b_2.ldr
+  - Silicon NMOS2 missing connections to: VSS2, VSS
+  - Silicon NMOS3 has extra connections to: Y, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS3
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Y, VSS2, VDD, VSS3
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: B_N
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_nor3_1.ldr
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_nor3_2.ldr
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS
+  - Silicon NMOS3 has extra connections to: Y, VDD
+  - Silicon Poly2 missing connections to: VSS
+  - Silicon PMOS1 missing connections to: Y, VSS2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Y
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_nor4_1.ldr
+  - Silicon NMOS3 has extra connections to: Y
+  - Silicon PMOS1 missing connections to: Y, VDD, B
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_nor4_2.ldr
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=14 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=14 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=16 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=16 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS
+  - Silicon NMOS3 has extra connections to: Y, VDD
+  - Silicon Poly2 missing connections to: D, B, VSS
+  - Silicon Poly2 has extra connections to: VDD, C
+  - Silicon PMOS1 missing connections to: Y, VDD, D
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Y
+FAIL: sg13g2_o21ai_1.ldr
+  - Silicon NMOS2 missing connections to: Y, A2
+  - Silicon NMOS2 has extra connections to: B1, Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: B1
+  - Silicon PMOS1 missing connections to: Y, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: Y
+  - Silicon Poly1 has extra connections to: B1
+FAIL: sg13g2_or2_1.ldr
+  - Silicon NMOS2 missing connections to: A
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: VDD, X, A, B
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_or2_2.ldr
+  - Silicon NMOS2 missing connections to: A
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon PMOS1 missing connections to: VDD, X, A, B
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: B
+  - Silicon Poly1 has extra connections to: A
+FAIL: sg13g2_or3_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A, Internal / Obstructions
+FAIL: sg13g2_or3_2.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A, Internal / Obstructions
+FAIL: sg13g2_or4_1.ldr
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A, Internal / Obstructions
+FAIL: sg13g2_or4_2.ldr
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=10 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, B
+  - Silicon Poly1 has extra connections to: A, Internal / Obstructions
+FAIL: sg13g2_sdfbbp_1.ldr
+  - Contact at Stud Z=7 is on an ODD track (expected EVEN)
+  - VSS contact at Stud X=34 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=34 has incorrect parity (expected ODD)
+  - Silicon Poly9 missing connections to: VSS2
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly12 missing connections to: VSS2
+  - Silicon Poly4 missing connections to: VSS2
+  - Silicon Poly4 has extra connections to: VSS
+  - Silicon Poly2 missing connections to: VSS2, VSS
+  - Silicon Poly2 has extra connections to: Q
+  - Silicon Poly5 missing connections to: VSS2
+  - Silicon Poly3 missing connections to: VSS2, VSS
+  - Silicon Poly3 has extra connections to: Q
+  - Silicon NMOS3 has extra connections to: Q, Q_N, VSS, VDD, Internal / Obstructions
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2
+  - Silicon Poly1 has extra connections to: Q
+  - Silicon NMOS2 missing connections to: VSS2, CLK, VSS3
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: VDD, Q, SET_B, VSS2, Q_N, VSS3, SCE
+  - Silicon Poly8 missing connections to: VSS2
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Q
+FAIL: sg13g2_sdfrbp_1.ldr
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - Silicon Poly3 missing connections to: SCE
+  - Silicon NMOS3 has extra connections to: Q, Q_N, VSS, VDD, Internal / Obstructions
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: SCE
+  - Silicon NMOS2 missing connections to: SCE, SCD
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon Poly2 missing connections to: SCE, SCD
+  - Silicon Poly2 has extra connections to: D, VSS
+  - Silicon PMOS1 missing connections to: Q_N, Q, SCE, VDD
+FAIL: sg13g2_sdfrbp_2.ldr
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - Silicon Poly3 missing connections to: D
+  - Silicon NMOS3 has extra connections to: Q, Q_N, VSS, VDD, Internal / Obstructions
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: D
+  - Silicon NMOS2 missing connections to: D, SCD
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon Poly2 missing connections to: SCD
+  - Silicon Poly2 has extra connections to: VSS
+  - Silicon PMOS1 missing connections to: VDD, Q, Q_N, D
+FAIL: sg13g2_sdfrbpq_1.ldr
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - Silicon Poly3 missing connections to: VDD2
+  - Silicon NMOS2 missing connections to: SCD, VDD2
+  - Silicon NMOS3 has extra connections to: Q, VDD, VSS
+  - Silicon Poly2 missing connections to: SCD, VDD2
+  - Silicon Poly2 has extra connections to: D, VSS
+  - Silicon PMOS1 missing connections to: Q, VDD, VDD2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VDD2
+FAIL: sg13g2_sdfrbpq_2.ldr
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - VDD contact at Stud X=3 has incorrect parity (expected EVEN)
+  - Silicon Poly3 missing connections to: VSS2, VSS
+  - Silicon Poly3 has extra connections to: Q
+  - Silicon Poly5 missing connections to: VSS2
+  - Silicon NMOS2 missing connections to: VSS2, SCD
+  - Silicon NMOS3 has extra connections to: Q, VDD, VSS
+  - Silicon Poly2 missing connections to: VSS2, SCD
+  - Silicon Poly2 has extra connections to: D, VSS
+  - Silicon PMOS1 missing connections to: Q, VSS2, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon NMOS1 missing connections to: VSS
+  - Silicon NMOS1 has extra connections to: Q
+  - Silicon Poly1 missing connections to: VSS2
+FAIL: sg13g2_sighold.ldr
+  - Silicon NMOS3 has extra connections to: SH, VDD
+  - Silicon PMOS1 missing connections to: SH, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_slgcp_1.ldr
+  - VSS contact at Stud X=14 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=14 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=20 has incorrect parity (expected ODD)
+  - VSS contact at Stud X=20 has incorrect parity (expected ODD)
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: GCLK, VDD, Internal / Obstructions
+  - Silicon Poly2 missing connections to: VSS2
+  - Silicon Poly2 has extra connections to: Internal / Obstructions
+  - Silicon PMOS1 missing connections to: GATE, VSS2, VDD, GCLK
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_tiehi.ldr
+  - Silicon NMOS2 missing connections to: L_HI
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Internal / Obstructions, VDD, L_HI
+  - Silicon PMOS1 missing connections to: VDD, L_HI
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_tielo.ldr
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: VDD, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: L_LO, VDD
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+FAIL: sg13g2_xnor2_1.ldr
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: Y, Internal / Obstructions
+  - Silicon PMOS1 missing connections to: Y, VSS2, VDD, B
+  - Silicon NMOS4 has extra connections to: Y
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, VDD, B
+  - Silicon Poly1 has extra connections to: Y, A, Internal / Obstructions
+FAIL: sg13g2_xor2_1.ldr
+  - Silicon Poly3 missing connections to: B
+  - Silicon Poly3 has extra connections to: X
+  - Silicon NMOS2 missing connections to: VSS2
+  - Silicon NMOS2 has extra connections to: Internal / Obstructions
+  - Silicon NMOS3 has extra connections to: X, VDD
+  - Silicon Poly2 missing connections to: VSS2, VDD, B
+  - Silicon PMOS1 missing connections to: X, VDD, VSS2
+  - Silicon NMOS4 has extra connections to: VDD
+  - Silicon PMOS2 missing connections to: VDD
+  - Silicon Poly1 missing connections to: VSS2, A

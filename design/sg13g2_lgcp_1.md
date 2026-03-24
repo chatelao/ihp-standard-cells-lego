@@ -53,7 +53,7 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 9     G G         G G
 8     GGG         G G
 7     GGG         GGG
-6     G G         G G     G
+6     GGG         G G     G
 5     G G         G G
 4     G G         G G
 3     G G         G G
@@ -67,34 +67,34 @@ Legend: G=Polysilicon
 ```
   012345678901234567890123456
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&
-3    +        +     +   +
-2    +&       &     &   &
-1  C +  CCC       C +C  + O
-0  c   cCc  c cCcCc  Cc & o
-9  C CCCCCCCCCC C C  CC + O
-8  c c i c    c c cI  cC  o
-7  C C I C C  CCC CII  C  O
-6  cCc c c CcCcCc C   cCc o
-5  C CCCC       C C-  CC  O
-4  cCcCcCcc  _- c  _  cC _o
-3  C   C      -    -     -O
-2    _ cCccCcC-_   _     _
-1    -        -    -     -
+3 +++++++++++++++++++++++++++
+2  cC+&      +&    +&   &+oO
+1  CC++ CCC  ++CCCC++CC ++OO
+0  cCcCcCcc cCcCcCc+&Cc &+oO
+9  CCCCCCCCCCCCCCCCIICCC++OO
+8  cCcIiIccCcCcCcCcIiCcC&+oO
+7  CCCIIICCCCCCCCCCII CCCCOO
+6  cCcIiIccCcCcCcCcIi cCcCoO
+5  CCCCCCCCCCCCCCCC-- CC--OO
+4  cCcCcCcc  _-_c  _- cC-_oO
+3  CC--CCCC C---C  -- CC--OO
+2  cC_-cCccCcC-_   _-   -_oO
+1 ---------------------------
 0 -_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | GATE | Internal1 | Internal2 | GCLK | VDD | VSS |
-| --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   | X |
-| NMOS2 |   | X | X | X |   | X |
-| PMOS1 | X | X | X | X | X |   |
-| PMOS2 |   |   |   |   | X |   |
-| Poly1 | X |   |   |   | X |   |
-| Poly2 |   | X |   |   | X |   |
-| Poly3 |   |   |   | X |   |   |
+| Silicon | CLK | GATE | VSS2 | VSS3 | GCLK | VDD | VSS |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |   | X |
+| NMOS2 |   |   | X | X | X |   | X |
+| PMOS1 | X | X | X | X | X | X |   |
+| PMOS2 |   |   |   |   |   | X |   |
+| Poly1 |   | X | X |   |   | X |   |
+| Poly2 | X |   | X |   |   | X |   |
+| Poly3 |   |   |   |   | X |   |   |
 
 ## Silicon Neighbourhood
 
