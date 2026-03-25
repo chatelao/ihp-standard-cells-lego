@@ -370,7 +370,7 @@ def generate_design_doc(cell_name, parts, golden_sections):
                 char = get_char_for_stud(parts, min_x+x_idx*20+10, min_z+z_idx*20+10, y_list, COLOR_MAP, {})
                 line += char
                 if char != ' ': used_chars.add(char)
-            layer_lines.append(line)
+            layer_lines.append(line.rstrip())
         doc += "\n".join(layer_lines) + "\n```\n"
         if layer_name == "Substrate": doc += "Legend: N=N-Well, S=Substrate\n"
         elif layer_name == "Active":
