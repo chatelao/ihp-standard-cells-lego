@@ -409,8 +409,9 @@ def generate_ldr(macro_data):
 
         def is_compliant(stud_x, stud_z):
             if stud_z % 2 != 0: return False
-            if pin_name == 'VDD': return stud_x % 2 == 0
-            if pin_name == 'VSS': return stud_x % 2 == 1
+            # Rail Parity is strict: MUST be EVEN for Track 0 and 14
+            if stud_z in [0, 14]: return stud_x % 2 == 0
+            # Internal tracks follow unified parity
             return stud_x % 2 == get_unified_parity(stud_x, is_big)
 
         possible_studs = []
@@ -457,6 +458,10 @@ def generate_ldr(macro_data):
             elif pin_name == 'VDD' and stud_z == 14: score += 5000
             elif (is_gate or pin_name not in ['VDD', 'VSS']) and stud_z == 6: score += 5000
             elif is_diff and stud_z in [2, 4, 8, 10, 12]: score += 5000
+
+            # Prefer EVEN X for Rails, ODD for Small internal, or symmetric for Big
+            target_parity = 0 if stud_z in [0, 14] else get_unified_parity(stud_x, is_big)
+            if stud_x % 2 == target_parity: score += 1000
             return score
 
         best_studs = sorted(compliant_studs, key=lambda s: score_stud(*s), reverse=True)

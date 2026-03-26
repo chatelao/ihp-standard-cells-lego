@@ -29,6 +29,11 @@ def get_part_studs(p):
     return studs
 
 def get_unified_parity(stud_x, is_big):
+    """
+    Unified parity rule for active and gate tracks (Z=2..12):
+    - Small models (width <= 7): Always ODD (1).
+    - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
+    """
     if not is_big:
         return 1 # ODD
     return 1 if stud_x < 8 else 0 # ODD if < 8, EVEN if >= 8
@@ -196,18 +201,21 @@ def verify_ldr(filepath):
             found_y_levels.add(y)
             if "3062b.dat" in line: found_round_bricks = True
             if (y == -48 and color == 15) or (y == -24 and color == 15):
+                # Using color from Y=-64 tiles to distinguish pin types
                 pin_color = pin_map.get((stud_x, stud_z))
                 if not is_nand2b_2_exception:
                     if stud_z % 2 != 0:
                         errors.append(f"Contact at Stud Z={stud_z} is on an ODD track (expected EVEN)")
-                    if pin_color == 14: # VDD
-                        if stud_x % 2 != 0: errors.append(f"VDD contact at Stud X={stud_x} has incorrect parity (expected EVEN)")
-                    elif pin_color == 0: # VSS
-                        if stud_x % 2 != 1: errors.append(f"VSS contact at Stud X={stud_x} has incorrect parity (expected ODD)")
-                    elif pin_color in [1, 9, 272]: # Signal
+
+                    # Rail Parity is strict: MUST be EVEN for Track 0 and 14
+                    if stud_z in [0, 14]:
+                        if stud_x % 2 != 0:
+                            errors.append(f"{'VDD' if stud_z == 14 else 'VSS'} contact at Stud X={stud_x} on Track {stud_z} has incorrect parity (expected EVEN)")
+                    else:
+                        # Internal tracks follow unified parity
                         expected_parity = get_unified_parity(stud_x, is_big)
                         if stud_x % 2 != expected_parity:
-                            errors.append(f"Signal contact at Stud X={stud_x} has incorrect parity")
+                            errors.append(f"Signal contact at Stud X={stud_x} on Track {stud_z} has incorrect parity")
             if y == -8 and color == 7:
                 if stud_z < 8: errors.append(f"N-Well at Stud Z={stud_z} extends below Stud 8")
             elif y == -16:

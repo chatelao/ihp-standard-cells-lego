@@ -80,7 +80,7 @@ Legend: G=Polysilicon
 3
 2
 1
-0  c c
+0 c c
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 

@@ -68,7 +68,7 @@ Legend: G=Polysilicon
   0123456789012345678901234567890123
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3 ++++++++++++++++++++++++++++++++++
-2    +&  c  &+cCcCc &+&   &     &
+2    &+  c  &+cCcCc &+&   &     &
 1  CC++CCCCCCCCCC C +++ C + O C +OO
 0  cC  cCcc cCcCc c     c & o c &Oo
 9  CCCCCCCCCCCCCC C CCCCC + O C +OO
@@ -76,26 +76,26 @@ Legend: G=Polysilicon
 7  CII IC C CCCCCCCCC CC  C  OCCCCO
 6  cIi iCccCcCcCcCcCcCcCiicCoOcCcCo
 5  C   CC CCCCCCCCCC  CCII   OC   O
-4  cCc cC cCcCcCcCcCcccC c OoOc   o
+4  cCc cC cCcCcCcCcCc cC  cOoOc c o
 3  CC  CC C     CCCC  CC   OOOC   O
-2    c cC c  c  cCcC ccC c OoO c  o
+2    c cC c c   cCcCc cC  cOoO  c o
 1
-0  c c c c c c c c c c c c c c c c c
+0 c c c c c c c c c c c c c c c c c
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VDD2 | VDD3 | VSS | VSS10 | VSS11 | VSS12 | VSS13 | VSS14 | VSS15 | VSS16 | VSS17 | VSS18 | VSS19 | VSS2 | VSS20 | VSS21 | VSS22 | VSS23 | VSS24 | VSS25 | VSS3 | VSS4 | VSS5 | VSS6 | VSS7 | VSS8 | VSS9 | D | GATE_N | RESET_B | Q | Q_N |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   | X | X | X | X | X | X | X | X | X |   |   | X |   |   |   |   |   |   | X | X | X | X | X | X | X |   |   |   |   |   |
-| NMOS2 |   | X | X |   |   |   |   |   |   |   |   |   | X | X |   | X | X | X | X | X | X |   |   |   |   |   |   |   |   |   |   | X | X |
-| PMOS1 | X | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X | X |   | X | X |
-| PMOS2 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly1 | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X | X |   |   |   |
-| Poly2 | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
-| Poly3 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
-| Poly4 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
+| Silicon | VDD | VDD2 | VDD3 | VSS | VSS10 | VSS11 | VSS12 | VSS13 | VSS14 | VSS15 | VSS16 | VSS17 | VSS18 | VSS19 | VSS2 | VSS20 | VSS21 | VSS22 | VSS23 | VSS24 | VSS25 | VSS26 | VSS3 | VSS4 | VSS5 | VSS6 | VSS7 | VSS8 | VSS9 | D | GATE_N | RESET_B | Q | Q_N |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   | X | X | X | X | X | X | X | X | X |   |   | X |   |   |   |   |   |   |   | X | X | X | X | X | X | X |   |   |   |   |   |
+| NMOS2 |   | X | X |   |   |   |   |   |   |   |   |   | X | X |   | X | X | X | X | X | X | X |   |   |   |   |   |   |   |   |   |   | X | X |
+| PMOS1 | X | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X | X |   | X | X |
+| PMOS2 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly1 |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X | X |   |   |   |
+| Poly2 | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
+| Poly3 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
+| Poly4 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
 
 ## Silicon Neighbourhood
 

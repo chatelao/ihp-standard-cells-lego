@@ -100,7 +100,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conne
 | NMOS2 |   | X |   |   | X | X | X |   |   |   |   |   |   | X | X |   |   | X |
 | PMOS1 | X | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
 | PMOS2 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly1 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
+| Poly1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
 | Poly2 | X | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
 | Poly3 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
 
