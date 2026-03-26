@@ -289,7 +289,12 @@ def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, meta
     m_info = {name: color for _, name, color in connections}
     def metal_sort_key(name):
         color = m_info[name]
-        return ({9: 0, 1: 1, 272: 2, 14: 3, 0: 4}.get(color, 5), name)
+        # Order: VDD (14), VSS (0), Input (9), Internal (1), Output (272)
+        priority = {14: 0, 0: 1, 9: 2, 1: 3, 272: 4}.get(color, 5)
+        # Force any blob named VDD/VSS to the leftmost even if it has different color
+        if name.startswith("VDD"): priority = 0
+        elif name.startswith("VSS"): priority = 1
+        return (priority, name)
     m_names = sorted(list(set(c[1] for c in connections)), key=metal_sort_key)
     header = "| Silicon | " + " | ".join(m_names) + " |"
     sep = "| --- | " + " | ".join(["---"] * len(m_names)) + " |"
@@ -370,7 +375,7 @@ def generate_design_doc(cell_name, parts, golden_sections):
                 char = get_char_for_stud(parts, min_x+x_idx*20+10, min_z+z_idx*20+10, y_list, COLOR_MAP, {})
                 line += char
                 if char != ' ': used_chars.add(char)
-            layer_lines.append(line)
+            layer_lines.append(line.rstrip())
         doc += "\n".join(layer_lines) + "\n```\n"
         if layer_name == "Substrate": doc += "Legend: N=N-Well, S=Substrate\n"
         elif layer_name == "Active":

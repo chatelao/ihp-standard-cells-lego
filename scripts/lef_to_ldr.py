@@ -48,6 +48,9 @@ ROUND_BRICK = "3062b.dat" # 1x1 round brick
 ROUND_PLATE = "6141.dat"  # 1x1 round plate
 TILE_1X1 = "3070.dat"     # 1x1 flat tile
 
+# Snapping tolerance (LDU)
+SNAPPING_TOLERANCE = 5.0
+
 # LDraw Colors (V3)
 COLOR_SUBSTRATE = 8      # Dark Gray
 COLOR_NWELL = 7         # Light Gray
@@ -397,10 +400,9 @@ def generate_ldr(macro_data):
     contact_lines = []
     metal1_lines = []
     metal2_plate_lines = []
-    added_coords = set() # (sx, sz) to prevent duplicates per pin/macro
 
-    def add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin_data, current_pin_contacts, current_pin_upward_plates, color, pin_metal1_grid):
-        nonlocal poly_grid, active_grid, added_coords
+    def add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin_data, current_pin_contacts, current_pin_upward_plates, color, pin_metal1_grid, added_coords):
+        nonlocal poly_grid, active_grid
         pin_name = pin_data['name'] if isinstance(pin_data, dict) else pin_data
         is_gate = pin_data.get('is_gate', False) if isinstance(pin_data, dict) else False
         is_diff = pin_data.get('is_diff', False) if isinstance(pin_data, dict) else False
@@ -414,15 +416,19 @@ def generate_ldr(macro_data):
         possible_studs = []
         compliant_studs = []
         for sx in range(10, width_ldu, 20):
-            # Inclusive snapping: check for overlap with the stud's 20x20 footprint [sx-10, sx+10]
-            if max(xmin_raw, sx - 10) < min(xmax_raw, sx + 10):
+            # Snapping with tolerance for contacts
+            gx = sx - 10
+            overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
+            if overlap_x >= SNAPPING_TOLERANCE or (xmax_raw - xmin_raw < 20 and gx <= (xmin_raw + xmax_raw)/2 < gx + 20):
                 for sz in range(10, height_ldu, 20):
-                    if max(zmin_raw, sz - 10) < min(zmax_raw, sz + 10):
+                    gz = sz - 10
+                    overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
+                    if overlap_z >= SNAPPING_TOLERANCE or (zmax_raw - zmin_raw < 20 and gz <= (zmin_raw + zmax_raw)/2 < gz + 20):
                         possible_studs.append((sx, sz))
                         if is_compliant(sx // 20, sz // 20):
                             compliant_studs.append((sx, sz))
 
-        already_covered = any(xmin_raw <= ax <= xmax_raw and zmin_raw <= az <= zmax_raw for ax, az in added_coords)
+        already_covered = any(xmin_raw - SNAPPING_TOLERANCE <= ax <= xmax_raw + SNAPPING_TOLERANCE and zmin_raw - SNAPPING_TOLERANCE <= az <= zmax_raw + SNAPPING_TOLERANCE for ax, az in added_coords)
 
         if not compliant_studs:
             if already_covered:
@@ -455,8 +461,6 @@ def generate_ldr(macro_data):
 
         best_studs = sorted(compliant_studs, key=lambda s: score_stud(*s), reverse=True)
 
-        # For small metal pieces, ensure at least one contact.
-        # For large/vertical metal pieces, we want multiple contacts on different tracks.
         for sx, sz in best_studs:
             if (sx, sz) not in added_coords:
                 added_coords.add((sx, sz))
@@ -473,34 +477,21 @@ def generate_ldr(macro_data):
                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
                 # 3. Connectivity to underlying layers (Active or Poly)
-                # Power pins (except DECAP VDD) never connect to Poly
                 is_to_poly = ((stud_z == 6) or is_gate) and (pin_name not in ['VDD', 'VSS'])
-                # Special case: VDD fingers in DECAP cells connect to Poly
                 if pin_name == 'VDD' and is_decap and stud_z != 14:
                     is_to_poly = True
 
                 if is_to_poly:
-                    # Poly connection: Brick at Y=-48 hits Poly at Y=-24 directly.
                     poly_grid[stud_x][stud_z] = COLOR_POLY
                 else:
-                    # Active connection: Need 1x1 plate at Y=-24 to bridge brick to Active.
                     current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
-                    if is_decap:
-                        # Punch hole in Poly for VSS/Active contacts
-                        poly_grid[stud_x][stud_z] = None
-
-                    if pin_name == 'VSS':
-                        active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS
-                    elif pin_name == 'VDD':
-                        active_grid[stud_x][stud_z] = COLOR_ACTIVE_PMOS
-                    else:
-                        active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS if stud_z < 8 else COLOR_ACTIVE_PMOS
+                    if is_decap: poly_grid[stud_x][stud_z] = None
+                    if pin_name == 'VSS': active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS
+                    elif pin_name == 'VDD': active_grid[stud_x][stud_z] = COLOR_ACTIVE_PMOS
+                    else: active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS if stud_z < 8 else COLOR_ACTIVE_PMOS
 
     for pin in macro_data['pins']:
-        added_coords = set() # (sx, sz) to prevent duplicates per pin/macro
-        if pin['name'] in pin_assignments:
-            config = pin_assignments[pin['name']]
-            added_coords.add((config['contact'] * 20 + 10, config['contact_z'] * 20 + 10))
+        added_coords = set() # (sx, sz) to prevent duplicates per pin
         current_pin_contacts = []
         current_pin_upward_plates = []
         pin_comment = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
@@ -508,9 +499,18 @@ def generate_ldr(macro_data):
 
         # Metal 1 Grid Aggregation
         pin_metal1_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
-        has_metal1 = False
 
-        # First, check for explicit Via1 rects for upward plates
+        if pin['name'] in pin_assignments:
+            config = pin_assignments[pin['name']]
+            cx, cz = config['contact'], config['contact_z']
+            sx, sz = cx * 20 + 10, cz * 20 + 10
+            added_coords.add((sx, sz))
+            current_pin_contacts.append(pin_comment)
+            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+            poly_grid[cx][cz] = COLOR_POLY
+            pin_metal1_grid[cx][cz] = color
+
         has_via1 = False
         for rect in pin['rects']:
             if rect['layer'] == 'Via1':
@@ -527,48 +527,47 @@ def generate_ldr(macro_data):
 
         for rect in pin['rects']:
             if rect['layer'] == 'Metal1':
-                # Convert LEF um to LDU with origin offset
                 lx1 = um_to_ldu_coord(rect['coords'][0])
                 lz1 = um_to_ldu_coord(rect['coords'][1]) + 10
                 lx2 = um_to_ldu_coord(rect['coords'][2])
                 lz2 = um_to_ldu_coord(rect['coords'][3]) + 10
-
                 xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
                 zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
 
-                # Inclusive snapping for the Metal 1 plate grid
-                xmin = math.floor(xmin_raw / 20) * 20
-                xmax = math.ceil(xmax_raw / 20) * 20
-                zmin = math.floor(zmin_raw / 20) * 20
-                zmax = math.ceil(zmax_raw / 20) * 20
+                for gsx in range(w_studs):
+                    for gsz in range(d_studs):
+                        gx, gz = gsx * 20, gsz * 20
+                        overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
+                        overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
+                        if overlap_x > 0 and overlap_z > 0:
+                            is_occupied = False
+                            if overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE:
+                                is_occupied = True
+                            else:
+                                only_x = (xmax_raw - xmin_raw < 20) and (gx <= (xmin_raw + xmax_raw)/2 < gx + 20)
+                                only_z = (zmax_raw - zmin_raw < 20) and (gz <= (zmin_raw + zmax_raw)/2 < gz + 20)
+                                if (only_x or overlap_x >= SNAPPING_TOLERANCE) and (only_z or overlap_z >= SNAPPING_TOLERANCE):
+                                    is_occupied = True
+                            if is_occupied:
+                                pin_metal1_grid[gsx][gsz] = color
 
-                if xmax <= xmin: xmax = xmin + 20
-                if zmax <= zmin: zmax = zmin + 20
+                add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin, current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color, pin_metal1_grid, added_coords)
 
-                for gx in range(xmin + 10, xmax, 20):
-                    for gz in range(zmin + 10, zmax, 20):
-                        gsx, gsz = gx // 20, gz // 20
-                        if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
-                            pin_metal1_grid[gsx][gsz] = color
-                            has_metal1 = True
-
-                add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin, current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color, pin_metal1_grid)
-
+        has_metal1 = any(any(row) for row in pin_metal1_grid)
         if has_metal1:
             metal1_lines.append(pin_comment)
             rect_tiles = get_best_plates_multi(pin_metal1_grid)
             for plate, tx_off, tz_off, c, rotated in rect_tiles:
                 metal1_lines.append(f"1 {c} {tx_off} {Y_METAL1} {tz_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
-        if current_pin_contacts: contact_lines.extend(current_pin_contacts)
+        if current_pin_contacts:
+            if pin_comment not in current_pin_contacts:
+                contact_lines.append(pin_comment)
+            contact_lines.extend([l for l in current_pin_contacts if l != pin_comment])
         if current_pin_upward_plates: metal2_plate_lines.extend(current_pin_upward_plates)
 
-    # 6. Polysilicon Tiles (Finalized after contacts)
     poly_tiles = get_best_plates_multi(poly_grid)
-    for plate, x_off, z_off, color, rotated in poly_tiles:
-        ldr_lines.append(f"1 {color} {x_off} {Y_POLY} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
-    # 7. Obstructions
     if macro_data['obs']:
         added_coords = set()
         obs_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
@@ -579,32 +578,25 @@ def generate_ldr(macro_data):
                 lz1 = um_to_ldu_coord(rect['coords'][1]) + 10
                 lx2 = um_to_ldu_coord(rect['coords'][2])
                 lz2 = um_to_ldu_coord(rect['coords'][3]) + 10
-
                 xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
                 zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
 
-                # Inclusive snapping for the obstruction grid
-                xmin = math.floor(xmin_raw / 20) * 20
-                xmax = math.ceil(xmax_raw / 20) * 20
-                zmin = math.floor(zmin_raw / 20) * 20
-                zmax = math.ceil(zmax_raw / 20) * 20
-
-                if xmax <= xmin: xmax = xmin + 20
-                if zmax <= zmin: zmax = zmin + 20
-
-                for gx in range(xmin + 10, xmax, 20):
-                    for gz in range(zmin + 10, zmax, 20):
-                        gsx, gsz = gx // 20, gz // 20
-                        if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
+                for gsx in range(w_studs):
+                    for gsz in range(d_studs):
+                        gx, gz = gsx * 20, gsz * 20
+                        overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
+                        overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
+                        if (overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE) or \
+                           ((xmax_raw - xmin_raw < 20 and gx <= (xmin_raw+xmax_raw)/2 < gx+20) and (zmax_raw - zmin_raw < 20 and gz <= (zmin_raw+zmax_raw)/2 < gz+20)):
                             obs_grid[gsx][gsz] = COLOR_METAL1_INTERNAL
                             has_obs = True
 
-                # Add Contacts for Obstructions
                 obs_contacts = []
                 obs_upward = []
-                # Use a dummy pin_metal1_grid for obstructions
-                add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, {'name': 'OBS'}, obs_contacts, obs_upward, COLOR_METAL1_INTERNAL, obs_grid)
-                contact_lines.extend(obs_contacts)
+                add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, {'name': 'OBS'}, obs_contacts, obs_upward, COLOR_METAL1_INTERNAL, obs_grid, added_coords)
+                if obs_contacts:
+                    contact_lines.append("0 // Obstructions")
+                    contact_lines.extend(obs_contacts)
                 metal2_plate_lines.extend(obs_upward)
 
         if has_obs:
@@ -613,110 +605,52 @@ def generate_ldr(macro_data):
             for plate, tx_off, tz_off, c, rotated in rect_tiles:
                 metal1_lines.append(f"1 {c} {tx_off} {Y_METAL1} {tz_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
-    # Remove Poly under VDD/VSS fingers/rails (except for DECAP)
     if not is_decap:
         for pin in macro_data['pins']:
             if pin['name'] in ['VDD', 'VSS']:
                 for rect in pin['rects']:
                     if rect['layer'] == 'Metal1':
-                        lx1 = um_to_ldu_coord(rect['coords'][0])
-                        lz1 = um_to_ldu_coord(rect['coords'][1]) + 10
-                        lx2 = um_to_ldu_coord(rect['coords'][2])
-                        lz2 = um_to_ldu_coord(rect['coords'][3]) + 10
-                        # Inclusive snapping for Poly removal
-                        xmin = math.floor(min(lx1, lx2) / 20) * 20
-                        xmax = math.ceil(max(lx1, lx2) / 20) * 20
-                        zmin = math.floor(min(lz1, lz2) / 20) * 20
-                        zmax = math.ceil(max(lz1, lz2) / 20) * 20
-                        if xmax <= xmin: xmax = xmin + 20
-                        if zmax <= zmin: zmax = zmin + 20
-                        for gx in range(xmin + 10, xmax, 20):
-                            for gz in range(zmin + 10, zmax, 20):
-                                gsx, gsz = gx // 20, gz // 20
-                                if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
+                        lx1, lz1 = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][1]) + 10
+                        lx2, lz2 = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
+                        xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
+                        zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
+                        for gsx in range(w_studs):
+                            for gsz in range(d_studs):
+                                gx, gz = gsx * 20, gsz * 20
+                                if min(xmax_raw, gx+20) - max(xmin_raw, gx) >= SNAPPING_TOLERANCE and \
+                                   min(zmax_raw, gz+20) - max(zmin_raw, gz) >= SNAPPING_TOLERANCE:
                                     poly_grid[gsx][gsz] = None
 
-    # 3. Active Regions (Tiling deferred to now)
     tiles3 = get_best_plates_multi(active_grid)
-    for plate, x_off, z_off, color, rotated in tiles3:
-        # We need to find where to insert these lines in ldr_lines...
-        # Actually it's easier to just rebuild the final output or use a more modular approach.
-        pass
-
-    # Final assembly of ldr_lines
-    # Use Author: design_to_ldr.py so verification passes if it expects it
-    final_ldr = [
-        f"0 {macro_data['name']}.ldr",
-        f"0 Name: {macro_data['name']}.ldr",
-        "0 Author: lef_to_ldr.py",
-        "0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt",
-        "0 !LPUB PLI GLOBAL ON",
-        ""
-    ]
-    # Substrate Low
+    final_ldr = [f"0 {macro_data['name']}.ldr", f"0 Name: {macro_data['name']}.ldr", "0 Author: lef_to_ldr.py", "0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt", "0 !LPUB PLI GLOBAL ON", ""]
     final_ldr.append("0 // Substrate low (V3)")
-    for plate, x_off, z_off, color, rotated in tiles1:
-        final_ldr.append(f"1 {color} {x_off} {Y_SUBSTRATE_LOW} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
-
-    # Substrate High
-    final_ldr.append("0 STEP")
-    final_ldr.append("0 // Substrate high / N-Well")
-    for plate, x_off, z_off, color, rotated in tiles2:
-        final_ldr.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
-
-    # Active
-    final_ldr.append("0 STEP")
-    final_ldr.append("0 // Active Regions")
-    for plate, x_off, z_off, color, rotated in tiles3:
-        final_ldr.append(f"1 {color} {x_off} {Y_ACTIVE} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
-
-    # Poly
-    final_ldr.append("0 STEP")
-    final_ldr.append("0 // Polysilicon Gates")
-    for plate, x_off, z_off, color, rotated in poly_tiles:
-        final_ldr.append(f"1 {color} {x_off} {Y_POLY} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
-
-    # Contacts
-    if contact_lines:
-        final_ldr.append("0 STEP")
-        final_ldr.append("0 // Contacts")
-        final_ldr.extend(contact_lines)
-
-    # Metal 1
-    if metal1_lines:
-        final_ldr.append("0 STEP")
-        final_ldr.append("0 // Metal 1")
-        final_ldr.extend(metal1_lines)
-
-    # Metal 2 Connections
-    if metal2_plate_lines:
-        final_ldr.append("0 STEP")
-        final_ldr.append("0 // Metal 2 Connections")
-        final_ldr.extend(metal2_plate_lines)
-
+    for plate, x_off, z_off, color, rotated in tiles1: final_ldr.append(f"1 {color} {x_off} {Y_SUBSTRATE_LOW} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+    final_ldr.append("0 STEP\n0 // Substrate high / N-Well")
+    for plate, x_off, z_off, color, rotated in tiles2: final_ldr.append(f"1 {color} {x_off} {Y_SUBSTRATE_HIGH} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+    final_ldr.append("0 STEP\n0 // Active Regions")
+    for plate, x_off, z_off, color, rotated in tiles3: final_ldr.append(f"1 {color} {x_off} {Y_ACTIVE} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+    final_ldr.append("0 STEP\n0 // Polysilicon Gates")
+    for plate, x_off, z_off, color, rotated in poly_tiles: final_ldr.append(f"1 {color} {x_off} {Y_POLY} {z_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
+    if contact_lines: final_ldr.append("0 STEP\n0 // Contacts")
+    final_ldr.extend(contact_lines)
+    if metal1_lines: final_ldr.append("0 STEP\n0 // Metal 1")
+    final_ldr.extend(metal1_lines)
+    if metal2_plate_lines: final_ldr.append("0 STEP\n0 // Metal 2 Connections")
+    final_ldr.extend(metal2_plate_lines)
     return "\n".join(final_ldr)
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Usage: python lef_to_ldr.py <lef_file> <macro_name>")
         sys.exit(1)
-
-    lef_file = sys.argv[1]
-    macro_name = sys.argv[2]
-
-    with open(lef_file, 'r') as f:
-        lef_content = f.read()
-
+    lef_file, macro_name = sys.argv[1], sys.argv[2]
+    with open(lef_file, 'r') as f: lef_content = f.read()
     macro_data = parse_lef_macro(lef_content, macro_name)
     if not macro_data:
         print(f"Error: Macro {macro_name} not found.")
         sys.exit(1)
-
     ldr_content = generate_ldr(macro_data)
-
     os.makedirs("models", exist_ok=True)
     output_file = f"models/{macro_name}.ldr"
-    with open(output_file, 'w') as f:
-        f.write(ldr_content)
-
+    with open(output_file, 'w') as f: f.write(ldr_content)
     print(f"Generated {output_file}")
