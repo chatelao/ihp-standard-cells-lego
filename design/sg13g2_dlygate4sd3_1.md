@@ -68,9 +68,9 @@ Legend: G=Polysilicon
   0123456789012345
 4 &+&+&+&+&+&+&+&+
 3 ++++++++++++++++
-2   &+       +&Oo
+2    &       +&Oo
 1    +  CCC  ++OO
-0  c +  Ccc  +&Oo
+0  c &  Ccc  +&Oo
 9  CCCCCCCC    OO
 8    cCcCccCcCcOo
 7  IIICCCC   CC O
@@ -78,9 +78,9 @@ Legend: G=Polysilicon
 5  IIICCCC   CCOO
 4  cCcCcCccCcCcOo
 3  C    CC     OO
-2    c       c Oo
+2    c        cOo
 1
-0  c c c c c c c c
+0 c c c c c c c c
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
@@ -92,7 +92,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | NMOS2 |   |   | X |   |   |   |   |   |   |   | X |   | X |
 | PMOS1 | X |   |   |   |   |   |   |   |   |   |   |   | X |
 | PMOS2 | X |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly1 | X |   |   |   |   |   |   |   |   |   |   | X |   |
+| Poly1 |   |   |   |   |   |   |   |   |   |   |   | X |   |
 | Poly2 |   |   |   |   |   |   |   |   |   |   |   |   | X |
 
 ## Silicon Neighbourhood

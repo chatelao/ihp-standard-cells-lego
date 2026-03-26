@@ -80,19 +80,19 @@ Legend: G=Polysilicon
 3  III
 2  iIi
 1
-0  c c
+0 c c c
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | A |
-| --- | --- | --- | --- | --- |
-| NMOS1 |   | X | X |   |
-| NMOS2 |   |   |   | X |
-| PMOS1 |   |   |   | X |
-| PMOS2 | X |   |   |   |
-| Poly1 |   |   |   | X |
+| Silicon | VDD | VSS | VSS2 | VSS3 | A |
+| --- | --- | --- | --- | --- | --- |
+| NMOS1 |   | X | X | X |   |
+| NMOS2 |   |   |   |   | X |
+| PMOS1 |   |   |   |   | X |
+| PMOS2 | X |   |   |   |   |
+| Poly1 |   |   |   |   | X |
 
 ## Silicon Neighbourhood
 

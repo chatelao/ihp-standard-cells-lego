@@ -68,7 +68,7 @@ Legend: G=Polysilicon
   012345678901234567
 4 &+&+&+&+&+&+&+&+&+
 3 ++++++++++++++++++
-2    +&cCccCcCc+&Oo
+2    &+cCccCcCc+&Oo
 1    ++C  CC  C+ OO
 0  c c c  cC  c+ Oo
 9  CCCCC CCC  C+ OO
@@ -78,9 +78,9 @@ Legend: G=Polysilicon
 5  C  CCI III   CCO
 4  c cCcIiiIi cCcCo
 3  C  CCCCCCCCC   O
-2    cCcCccCcCcc  o
+2    cCcCccCcCc c o
 1
-0  c c c c c c c c c
+0 c c c c c c c c c
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
@@ -92,7 +92,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | NMOS2 |   | X |   | X | X | X |   |   |   |   |   |   |   |   | X |   | X |
 | PMOS1 | X | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
 | PMOS2 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly1 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
+| Poly1 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
 | Poly2 |   | X |   |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
 | Poly3 |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
 

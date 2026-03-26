@@ -247,6 +247,10 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                             if poly_grid[x][z] == 'G': is_to_poly = True
                     if z == 6: is_to_poly = True # Track 6 is Polysilicon track
 
+                    # DECAP exception: VDD fingers connect to Poly
+                    if cell_name.startswith('sg13g2_decap_') and char == '&' and z != 14:
+                        is_to_poly = True
+
                     if not is_to_poly:
                          # Active connection: Need 1x1 plate at Y=-24 to bridge brick to Active.
                          contacts.append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
