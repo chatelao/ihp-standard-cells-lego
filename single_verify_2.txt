@@ -1,6 +1,0 @@
-FAIL: sg13g2_a21oi_1.ldr
-  - Silicon Poly1 missing connections to: B1
-  - Silicon PMOS2 missing connections to: VDD
-  - Silicon NMOS3 has extra connections to: VDD, Y
-  - Silicon NMOS4 has extra connections to: VDD
-  - Silicon PMOS1 missing connections to: B1, VDD, Y
