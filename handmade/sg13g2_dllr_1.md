@@ -92,6 +92,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | PMOS2 | X |   |   |   |   |   |   |   |   |
 | NMOS1 |   | X |   |   |   |   |   |   |   |
 | NMOS2 |   | X | X | X |   |   |   | X | X |
+| NMOS3 |   | X | X | X |   |   |   | X | X |
 | Poly1 |   |   | X |   | X | X | X |   |   |
 | Poly2 |   |   |   |   |   |   | X |   |   |
 | Poly3 |   |   |   |   |   |   |   | X |   |
