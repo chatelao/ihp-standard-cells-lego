@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901234567890123456789012345678901234567
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-2    &+cCccCcCc+&Cc &+cCcCcCcC&+  c  CcCcCcCcCcCcCcCcCcCcC&+  &   & o
-1    ++C  CC  C+ CC ++CCCCC CC++CCCCCCC                 CC++OO+ C + O
+3    ++        +    ++         +                          ++  +   +
+2    &+cCccCcCc+ Cc &+ CcCcCcC +  c   cCcCcCcCcCcCcCcCcCcC&+  &   &
+1    ++C  CC  C+ CC ++ C     C +CCCCC                     ++OO+   + O
 0  c c c  cC  c+ Cc &+cCcCc cCcCc cCc   cCcCcCcCcCc       &+oO& c & o
-9  CCCCC CCC  C+ CC ++CCC   C     CCC CCC CCCCCCC CC    CC++OO+ C + O
-8  c  CcCcc   c+ Cc &+cCcCcCcCcCcCcCc cCc cCcCcCc cCcCcCcCcCoO& c   o
-7  CIICC  III CCCCC   CCCCC IICC  CCC  CCCCIII  C C CCC    COO  C  OO
-6  cIiCcIiiIi cCcCcCcCcCc   iIcCcCcCcCcCcCcIiIcCc cCcCc  CcCoO  cC Oo
-5  C  CCI III   CCC   CCCCCCCCCCCCCCCC C  CIIICC CCCCCCCCCCCOOO C   O
-4  c _CcIiiIi cCcCc   cC  c c c   c cC C  cCcCcCcCcCc      CoOo c _ o
-3  C -CCCCCCCCC-- C CCCC- C - CCCCCCCC    CCCCCCCCCCCCC-  CCOO- C - O
-2    _CcCccCcCc-_ c   c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-_ c oO_ c _ o
-1 --------------------------------------------------------------------
+9  CCCCC CCC  C+ CC ++CCC   C     CC  CCC       C CC    CC++OO+ C + O
+8  c   cCcc   c+ Cc   c cCcCcCcCcCcC  cCc cCcCcCc cCcCcCcCcCoO& c   o
+7  CII C  III CCCCC     CCC IICC  CC   C CCIII  C C CCC    COO  C  OO
+6  cIi cIiiIi cCcCcCcC  c   iIc c cCcCcC CcIiIcCc cCcCc  CcCoO  cC Oo
+5  C   CI   I   C C     CCCCCCC CCCC C C  CIIICC CCCCCCCCC COOO C   O
+4  c _ cIiiIi cCc c       c c c   c cC    c cCcCc c        CoOo c _ o
+3  C - CCCCCCCC-  C CCC - C - CCCCCCCC    CCCCCCCCCCCC -  CCOO- C - O
+2    _    c    -  c   c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-_ c   _   _
+1    -         -        -   -                          -      -   -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
