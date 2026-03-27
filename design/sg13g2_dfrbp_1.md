@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   0123456789012345678901234567890123456789012345678901
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3 ++++++++++++++++++++++++++++++++++++++++++++++++++++
-2  & cCcCccC&+cCcCc cCcCcCcCcCcCcCcCcCcC  &+    &+
-1  + C    CCC+C   CCC                 CC  ++O  C +OO
-0  & cCcC cCcCc cCcC  cCcCcCcCcCc         &+o  C +oO
-9  +CCCCC C     CCC CCCC      CCCCC    CC ++O  C +OO
-8    cCcCccCcCcCcCc cCcCcCcCcCcCcCc cCcCcCc o  C +oO
-7  I CC C II C  CCC  C CC II  CCC C C     C O  C   O
-6  i cC   iIcCcCcCcCcCcCc iIcCcCcCc c cCc c o cCcCcOo
-5  I CCCCCCCCCCCCCCC C  C   C CCCCCCCCCCC C OO C   O
-4  i cCcCccCcC  c  CcCcCcCcCc cCcCc     cCc oO C -oO
-3  CCC- CC--CCCCCCCC        C CCCCCCC-- CC--O  C -OO
-2  cCc-   _-cCcCcCcCcCcCcCcCcCcCcCcCc-_ c _-o  C_-oO
-1 ----------------------------------------------------
+3  +         +                            +      +
+2  & cCcCccC +cCcCc cCcCcCcCcCcCcCcCcCcC  &      +
+1  + C       +C   C                       + O  C + O
+0  & cCcC c c c c c    CcCcCcCcCc         & o  C +oO
+9  + CC   C     C C    C        CCC    C    O  C + O
+8    cCcCccCcCcCc c cCcCcCcCcCc c c cCcCcCc o  C + O
+7  I CC C II C  C C  C  C       C   C     C O  C   O
+6  i cC   iIcCcCc cCcC Cc iIcCc cCc     c c o cCcCcOo
+5  I CC      C C  CC C  C          CCCCCC C O  C   O
+4  i c  Cc  c   c  C CcCcCcCc c c       cCc o  C -oO
+3  CCC- C - C CCCCCC          CCCCCCC-  CC- O  C - O
+2  c  -   _ cCcCcCcCcCcCcCcCcCcCcCc c-  c _      -
+1     -   -                          -    -      -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)

@@ -53,7 +53,7 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 9 G G    G G             G G
 8 G G    G G             G G
 7 G G    G G             G G
-6 GGG    GGG             GGG              G G       G
+6 GGG    GGG             GGG                G       G
 5 G G    G G             G G
 4 G G    G G             G G
 3 G G    G G             G G
@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901234567890123456789012
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
-3 +++++++++++++++++++++++++++++++++++++++++++++++++++++
-2  & cCcCccC&+  c   cCcCcCcCcCcCcCcCcCcC&+  &+  &+oO&+
-1  + CCCC CCC+ CCCC C                 CC++OO++CC++OO++
-0  & cCcC cCcCcCc c   cCcCcCcCcCc       &+oO&+cC&+oO&+
-9  +CCC   C     C C CCCCCCCCCCCCCC    CC++OO++CC++OO++
-8  & cCcCccCcCcCc c cCcCcCcCcCcCcCc cCcCcCoO&+cC&+oO&+
-7  IICC C II C  C C  C CCIII  CCC C C    COO   C   O
-6  iIcC   iIcCcCc cCcCcCcIiIcCcCcCc c cCcCoOoO CcC Oo
-5  IICCCCCCCCCCCCCCC C  CIIIC CCCCCCCCCCCC  OO  C   OOO
-4    c  Cc  c   c  CcC  cCcCc cCcCc      C  oO  c _ oOo
-3  CCC- CC--CCCCCCCC    CCCCC CCCCCCC-- CC--O - C - O--
-2  c  -   _-cCcCcCcCcCcCcCcCcCcCcCc c-_ c _-o _ c _ o-_
-1 -----------------------------------------------------
+3  +         +                           +  +   +   +
+2  & cCcCccC +  c   cCcCcCcCcCcCcCcCcCcC +  &   &   &
+1  + C       +    C                      + O+   + OO+
+0  & cCcC c c c c c   cCcCcCcCcCc        + O& cC& oO&
+9  + CC   C     C C   C         CC     C   O+ CC+ OO+
+8    cCcCccCcCcCc c  Cc cCcCcCc cCc cCcCcCoO& cC& oO&
+7    CC C II C  C C  C  C II    C   C    C O   C   O
+6  i cC   iIc cCc cCcC Cc iIcCc cCc   c cC Oo  CcC Oo
+5    CC        C  CC C  C II       CCCCCCC  O   C   OOO
+4    c  Cc  c   c  C    c c c c c        C  o   c _ oOo
+3  CCC- C - C CCCCCC       C  CCCCCCC-  CC- O - C - O -
+2  c  -   _ cCcCcCcCcCcCcCcCcCcCcCc c-  c _   _   _   _
+1     -   -                          -    -   -   -   -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
@@ -96,14 +96,13 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | Poly2 |   |   |   | X | X |   |   |
 | Poly3 |   |   |   |   | X |   |   |
 | Poly4 |   |   |   |   |   |   | X |
-| Poly5 |   |   |   |   |   |   | X |
-| Poly6 |   |   |   |   |   | X |   |
+| Poly5 |   |   |   |   |   | X |   |
 
 ## Silicon Neighbourhood
 
-| Silicon | Poly1 | Poly2 | Poly3 | Poly4 | Poly5 | Poly6 |
-| --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   |   |
-| NMOS2 | O | O | O |   |   |   |
-| PMOS1 | O | O | O |   |   |   |
-| PMOS2 |   |   |   |   |   |   |
+| Silicon | Poly1 | Poly2 | Poly3 | Poly4 | Poly5 |
+| --- | --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |   |
+| NMOS2 | O | O | O |   |   |
+| PMOS1 | O | O | O |   |   |
+| PMOS2 |   |   |   |   |   |

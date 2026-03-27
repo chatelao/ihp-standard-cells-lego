@@ -8,6 +8,7 @@ UM_TO_LDU = 20 / 0.27
 LDU_PER_STUD = 20
 LDR_Z_OFFSET = 10
 CELL_HEIGHT_STUDS = 15
+SNAPPING_TOLERANCE = 10.0
 
 # LDraw Part dimensions for Metal 1 (plates and tiles)
 PLATE_DIMENSIONS = {
@@ -109,20 +110,23 @@ def get_lef_grid(macro):
         xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
         zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
 
-        # Inclusive snapping logic from lef_to_ldr.py
-        xmin = math.floor(xmin_raw / 20) * 20
-        xmax = math.ceil(xmax_raw / 20) * 20
-        zmin = math.floor(zmin_raw / 20) * 20
-        zmax = math.ceil(zmax_raw / 20) * 20
-
-        if xmax <= xmin: xmax = xmin + 20
-        if zmax <= zmin: zmax = zmin + 20
-
-        for gx in range(xmin + 10, xmax, 20):
-            for gz in range(zmin + 10, zmax, 20):
-                gsx, gsz = gx // 20, gz // 20
-                if 0 <= gsx < w_studs and 0 <= gsz < d_studs:
-                    grid[gsx][gsz] = True
+        # Implementation matching lef_to_ldr.py
+        for gsx in range(w_studs):
+            for gsz in range(d_studs):
+                gx, gz = gsx * 20, gsz * 20
+                overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
+                overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
+                if overlap_x > 0 and overlap_z > 0:
+                    is_occupied = False
+                    if overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE:
+                        is_occupied = True
+                    else:
+                        only_x = (xmax_raw - xmin_raw < 20) and (gx <= (xmin_raw + xmax_raw)/2 < gx + 20)
+                        only_z = (zmax_raw - zmin_raw < 20) and (gz <= (zmin_raw + zmax_raw)/2 < gz + 20)
+                        if (only_x or overlap_x >= SNAPPING_TOLERANCE) and (only_z or overlap_z >= SNAPPING_TOLERANCE):
+                            is_occupied = True
+                    if is_occupied:
+                        grid[gsx][gsz] = True
     return grid
 
 def get_ldr_grid(ldr_filepath):

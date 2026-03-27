@@ -49,7 +49,7 @@ ROUND_PLATE = "6141.dat"  # 1x1 round plate
 TILE_1X1 = "3070.dat"     # 1x1 flat tile
 
 # Snapping tolerance (LDU)
-SNAPPING_TOLERANCE = 5.0
+SNAPPING_TOLERANCE = 10.0
 
 # LDraw Colors (V3)
 COLOR_SUBSTRATE = 8      # Dark Gray

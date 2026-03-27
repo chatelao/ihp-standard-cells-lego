@@ -67,34 +67,34 @@ Legend: G=Polysilicon
 ```
   012345678901234567890123456789
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3 ++++++++++++++++++++++++++++++
-2  &     &cCcCcCcC  &+      &
-1  + C CCCCCCCC             +OO
-0  & c c ccCcCc cCcCcCcCcCc &Oo
-9  + C C  CCCCCCCCCCCCCCCCC +OO
-8    c c  cCcCcCcCcCc cCcCc &Oo
-7  IICC     CCCCCCCCC CCCCIICCO
-6  iIcCcCccCcCc cC Cc cCcCiIcCo
-5  IICCCC CCCCCCCCCCC CC CC COO
-4  _ c cC_cCc c cCcCc cCcCc cOo
-3  - C CC- CCCCCC  CCCCCCCCCCOO
-2  _     _cCcCcCcCcCc c   c-_
-1 ------------------------------
+3  +     +           +      +
+2  &     &  c cCc    +      &
+1  + C CCCC   C             + O
+0  & c c  c cCc c c c c cCc & o
+9  + C C  C  CC CCCCCCCCCCC + O
+8    c      cCc cCcCc  CcC    o
+7  II C     CCC  C  C  CCCII  O
+6  iIcC Ccc c c cC  c cCcCiIcCo
+5     C     CCC     C  C C  C O
+4    c c _ Cc     c c  Cc c c o
+3  - C C -   CCCC   C    CCCC O
+2  _     _cCcCcCcCcCc     c
+1  -     -           --    -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | D | GATE | Q |
-| --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |   |
-| NMOS2 |   | X | X |   |   | X |
-| PMOS1 | X |   | X |   |   | X |
-| PMOS2 | X |   |   |   |   |   |
-| Poly1 |   |   |   | X |   |   |
-| Poly2 |   |   |   |   | X |   |
-| Poly3 |   |   |   |   |   | X |
+| Silicon | VDD | VSS | VSS10 | VSS11 | VSS12 | VSS2 | VSS3 | VSS4 | VSS5 | VSS6 | VSS7 | D | GATE | Q |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |   |   |   |   |   |   |   |   |   |   |
+| NMOS2 |   | X |   |   |   | X | X | X | X | X | X |   |   | X |
+| PMOS1 | X |   | X | X | X | X |   |   |   | X |   |   |   | X |
+| PMOS2 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Poly1 |   |   |   |   |   |   |   |   |   |   |   | X |   |   |
+| Poly2 |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
+| Poly3 |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
 
 ## Silicon Neighbourhood
 

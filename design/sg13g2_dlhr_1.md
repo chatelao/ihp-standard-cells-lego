@@ -67,34 +67,34 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3 ++++++++++++++++++++++++++++++++
-2    &+     &CcCcC +&+  &+oO  &
-1  CC++     +CCCCC +++CC++OOC +OO
-0  cCcCcCccCcCcCcC    cC&+oOc &Oo
-9  CC     CCCCCC CCCCCCC++OOC +OO
-8  c   cC cCcCcCcCcCcCcCcCoOc  Oo
-7  C I ICCCCCCCCCCCCCC IICCOC   O
-6  c i iCciCcCcCc c cCcIiCcOcCcCo
-5  C    C CCCCCCC    C II  OC   O
-4  cC_-cC cCc  Cc  - Cc _ oOc _Oo
-3    --CCCCCCC CC  - C  - O C -OO
-2    _-   c _CcCcC_- C  _ o c _Oo
-1 --------------------------------
+3     +     +      +++  +     +
+2     +     & c c  +&+  &     &
+1     +     +    C +++  + OOC + O
+0  cCcCcCccCc cC C    c & oOc & o
+9  C        C  C C CCCC   OOC + O
+8  c   cC c c cCc  CcCcCcCoOc   o
+7  C I I    CCCCCCCCC    C OC   O
+6  c i i ci cCc c c c  IiCcOcCcCo
+5  C      CCCCCCC      I   OC   O
+4  c _-cC c c  Cc  - Cc _ oOc _ o
+3    --CCCCCCC     - C  - O C - O
+2    _-   c _CcCcC - C  _ o c _ o
+1    --     -      -    -     -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | D | GATE | RESET_B | Q | Q_N |
+| Silicon | VDD | VSS | D | GATE | RESET_B | Q_N | Q |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |
 | NMOS2 |   | X |   |   |   | X | X |
 | PMOS1 | X |   |   |   |   | X | X |
 | PMOS2 | X |   |   |   |   |   |   |
-| Poly1 |   |   | X | X | X |   | X |
+| Poly1 |   |   | X | X | X | X |   |
 | Poly2 |   |   |   |   | X |   |   |
-| Poly3 |   |   |   |   |   |   | X |
+| Poly3 |   |   |   |   |   | X |   |
 
 ## Silicon Neighbourhood
 
