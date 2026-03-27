@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   0123456789012345678901234567890123456789012345678901
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3 ++++++++++++++++++++++++++++++++++++++++++++++++++++
-2  & cCcCccC&+cCcCc cCcCcCcCcCcCcCcCcCcC  &+    &+
-1  + C    CCC+C   CCC                 CC  ++O  C +OO
-0  & cCcC cCcCc cCcC  cCcCcCcCcCc         &+o  C +oO
-9  +CCCCC C     CCC CCCC      CCCCC    CC ++O  C +OO
-8    cCcCccCcCcCcCc cCcCcCcCcCcCcCc cCcCcCc o  C +oO
+2  &        &+                            &+    &+
+1  + C    CC +    CCC                 CC  ++   C + O
+0  & cCcC cCc c cCcC  cCcCcCcCcCc         &+   C + O
+9  + CCCC C     CCC CCCC      CCCCC    CC ++   C + O
+8    cCcCc  cCcCcCc cCcCcC  cCcCcCc cCcCcC  o  C + O
 7  I CC C II C  CCC  C CC II  CCC C C     C O  C   O
-6  i cC   iIcCcCcCcCcCcCc iIcCcCcCc c cCc c o cCcCcOo
-5  I CCCCCCCCCCCCCCC C  C   C CCCCCCCCCCC C OO C   O
-4  i cCcCccCcC  c  CcCcCcCcCc cCcCc     cCc oO C -oO
-3  CCC- CC--CCCCCCCC        C CCCCCCC-- CC--O  C -OO
-2  cCc-   _-cCcCcCcCcCcCcCcCcCcCcCcCc-_ c _-o  C_-oO
+6  i cC   iI CcCcCcCcCcCc iI CcCcCc c cCc c o cCcC Oo
+5  I CCCCC  CCCCCCCC C  C   C CCCCCCCCCCC C OO C   O
+4  i c cCc  cC  c  CcCcCcCcCc cCcCc     cC  oO C - O
+3   C - C -- CCCCCCC        C CCCCCC -- C --   C - O
+2     -   _-                         -_   _-    _-
 1 ----------------------------------------------------
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
@@ -89,8 +89,8 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | Silicon | VDD | VSS | D | RESET_B | CLK | Q | Q_N |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |
-| NMOS2 |   | X | X |   | X | X | X |
-| PMOS1 | X |   |   |   | X | X | X |
+| NMOS2 |   | X | X |   | X |   | X |
+| PMOS1 | X |   |   |   | X |   | X |
 | PMOS2 | X |   |   |   |   |   |   |
 | Poly1 |   |   | X |   |   |   |   |
 | Poly2 |   |   |   | X | X |   |   |

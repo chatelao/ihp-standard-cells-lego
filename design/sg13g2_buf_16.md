@@ -69,16 +69,16 @@ Legend: G=Polysilicon
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3 ++++++++++++++++++++++++++++++++++++++++++++
 2  &  +&  &+  &+  &   &  +&  +&  +& &+  &+  &+
-1  + O++OO++OO++O + O +OO++OO++OO+ C + C++CC++
-0  & o+&Oo&+oO&+o & o &Oo+&Oo+&Oo+ Cc+cC&+cC&+
-9  + OOOOO++OOOOOOOOOOOOOOOOOOOOOCCCCCCCCCCC++
-8  & oOoOo&+oOoOoOoOoOoOoOoOoOoOoCcCcCcCcCcC&+
-7    O  OOOOOO  O   O  OOCCCCCCCCC      IIIII
-6    o  OooOoO  o   o  OoCcCcCcCcC      iIiIi
+1  +  ++  ++  ++  + O +  ++  ++  + C +  ++  ++
+0  &  +&  &+  &+  & o &  +&  +&  + C +  &+  &+
+9  + O  O ++ O  OO OOO OO  OO  OO CCC CC  C ++
+8  & oOoO &+ OoOoOoOoOoOoOoOoOoOo cCcCcC    &+
+7    O  OO  OO  O   O  OO        C      IIII
+6    o  OooOoO  o   o  Oo cCcCcCcC      iIiIi
 5    O  OO  OO  O   O  OO        C
-4  _ o-_Oo_-oO_-o _ o _OoOoOoOoOoCcCcCcCcCcC_-
-3  - O--OO--OO--O - O -OO--OO--OO- C - C--CC--
-2  _ o-_Oo_-oO_-o _ o _Oo-_Oo-_Oo-_C_- C_-cC_-
+4  _  -_  _-  _-  _ o _ o  Oo  Oo cCc cC  c _-
+3  -  --  --  --  - O -  --  --  - C -  --  --
+2  _  -_  _-  _-  _   _  -_  -_  -_ _-  _-  _-
 1 --------------------------------------------
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
@@ -86,20 +86,20 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | A | X |
-| --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |
-| NMOS2 |   | X | X |   | X |
-| PMOS1 | X |   | X |   | X |
-| PMOS2 | X |   |   |   |   |
-| Poly1 |   |   |   | X |   |
-| Poly2 |   |   |   |   | X |
-| Poly3 |   |   |   |   | X |
-| Poly4 |   |   |   |   | X |
-| Poly5 |   |   |   |   | X |
-| Poly6 |   |   |   |   | X |
-| Poly7 |   |   |   |   | X |
-| Poly8 |   |   |   | X |   |
+| Silicon | VDD | VSS | A | X |
+| --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |
+| NMOS2 |   | X | X | X |
+| PMOS1 | X |   | X | X |
+| PMOS2 | X |   |   |   |
+| Poly1 |   |   | X |   |
+| Poly2 |   |   |   | X |
+| Poly3 |   |   |   | X |
+| Poly4 |   |   |   | X |
+| Poly5 |   |   |   | X |
+| Poly6 |   |   |   | X |
+| Poly7 |   |   |   | X |
+| Poly8 |   |   | X |   |
 
 ## Silicon Neighbourhood
 

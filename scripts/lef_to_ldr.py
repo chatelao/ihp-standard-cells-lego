@@ -398,8 +398,19 @@ def generate_ldr(macro_data):
     metal1_lines = []
     metal2_plate_lines = []
 
+    # Global Metal 1 Net Grid for gap enforcement
+    global_m1_net_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
+
+    def is_m1_safe(gsx, gsz, net_name):
+        for dx, dz in [(0, 0), (0, 1), (0, -1), (1, 0), (-1, 0)]:
+            nx, nz = gsx + dx, gsz + dz
+            if 0 <= nx < w_studs and 0 <= nz < d_studs:
+                if global_m1_net_grid[nx][nz] is not None and global_m1_net_grid[nx][nz] != net_name:
+                    return False
+        return True
+
     def add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin_data, current_pin_contacts, current_pin_upward_plates, color, pin_metal1_grid, added_coords):
-        nonlocal poly_grid, active_grid
+        nonlocal poly_grid, active_grid, global_m1_net_grid
         pin_name = pin_data['name'] if isinstance(pin_data, dict) else pin_data
         is_gate = pin_data.get('is_gate', False) if isinstance(pin_data, dict) else False
         is_diff = pin_data.get('is_diff', False) if isinstance(pin_data, dict) else False
@@ -465,12 +476,14 @@ def generate_ldr(macro_data):
 
         for sx, sz in best_studs:
             if (sx, sz) not in added_coords:
-                added_coords.add((sx, sz))
                 stud_x, stud_z = sx // 20, sz // 20
+                if not is_m1_safe(stud_x, stud_z, pin_name):
+                    continue
 
+                added_coords.add((sx, sz))
                 # Ensure Metal 1 coverage for the contact
-                if 0 <= stud_x < w_studs and 0 <= stud_z < d_studs:
-                    pin_metal1_grid[stud_x][stud_z] = color
+                pin_metal1_grid[stud_x][stud_z] = color
+                global_m1_net_grid[stud_x][stud_z] = pin_name
 
                 # 1. Metal 1 to Metal 2 connection (Y=-64)
                 current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
@@ -492,7 +505,10 @@ def generate_ldr(macro_data):
                     elif pin_name == 'VDD': active_grid[stud_x][stud_z] = COLOR_ACTIVE_PMOS
                     else: active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS if stud_z < 8 else COLOR_ACTIVE_PMOS
 
-    for pin in macro_data['pins']:
+    # Sort pins: Power rails first for priority in gap enforcement
+    pins_to_process = sorted(macro_data['pins'], key=lambda p: 0 if p['name'] in ['VDD', 'VSS'] else 1)
+
+    for pin in pins_to_process:
         added_coords = set() # (sx, sz) to prevent duplicates per pin
         current_pin_contacts = []
         current_pin_upward_plates = []
@@ -505,13 +521,15 @@ def generate_ldr(macro_data):
         if pin['name'] in pin_assignments:
             config = pin_assignments[pin['name']]
             cx, cz = config['contact'], config['contact_z']
-            sx, sz = cx * 20 + 10, cz * 20 + 10
-            added_coords.add((sx, sz))
-            current_pin_contacts.append(pin_comment)
-            current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
-            current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
-            poly_grid[cx][cz] = COLOR_POLY
-            pin_metal1_grid[cx][cz] = color
+            if is_m1_safe(cx, cz, pin['name']):
+                sx, sz = cx * 20 + 10, cz * 20 + 10
+                added_coords.add((sx, sz))
+                current_pin_contacts.append(pin_comment)
+                current_pin_upward_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                poly_grid[cx][cz] = COLOR_POLY
+                pin_metal1_grid[cx][cz] = color
+                global_m1_net_grid[cx][cz] = pin['name']
 
         has_via1 = False
         for rect in pin['rects']:
@@ -551,7 +569,9 @@ def generate_ldr(macro_data):
                                 if (only_x or overlap_x >= SNAPPING_TOLERANCE) and (only_z or overlap_z >= SNAPPING_TOLERANCE):
                                     is_occupied = True
                             if is_occupied:
-                                pin_metal1_grid[gsx][gsz] = color
+                                if is_m1_safe(gsx, gsz, pin['name']):
+                                    pin_metal1_grid[gsx][gsz] = color
+                                    global_m1_net_grid[gsx][gsz] = pin['name']
 
                 add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin, current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color, pin_metal1_grid, added_coords)
 
@@ -590,8 +610,10 @@ def generate_ldr(macro_data):
                         overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
                         if (overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE) or \
                            ((xmax_raw - xmin_raw < 20 and gx <= (xmin_raw+xmax_raw)/2 < gx+20) and (zmax_raw - zmin_raw < 20 and gz <= (zmin_raw+zmax_raw)/2 < gz+20)):
-                            obs_grid[gsx][gsz] = COLOR_METAL1_INTERNAL
-                            has_obs = True
+                            if is_m1_safe(gsx, gsz, "OBS"):
+                                obs_grid[gsx][gsz] = COLOR_METAL1_INTERNAL
+                                global_m1_net_grid[gsx][gsz] = "OBS"
+                                has_obs = True
 
                 obs_contacts = []
                 obs_upward = []

@@ -70,13 +70,13 @@ Legend: G=Polysilicon
 3 ++++++++++++
 2     +   &
 1     + O + OO
-0  cC + Oo& oO
-9  CC + OOOOOO
-8  cC + OooOoO
-7  CCI III C O
-6  cCi iIicCcO
+0  cC + O & oO
+9  CC + OO OOO
+8  cC +   oOoO
+7  C I  II   O
+6  c i  Ii C O
 5  CC      C O
-4  cCcCcCccCoO
+4  cCc cCcc oO
 3     -     OO
 2     -
 1 ------------
@@ -86,7 +86,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | C | A_N | Y |
+| Silicon | VDD | VSS | B | A_N | Y |
 | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |
 | NMOS2 |   |   |   | X | X |

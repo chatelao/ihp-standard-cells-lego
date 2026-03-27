@@ -56,3 +56,4 @@ This document defines the transformation rules from LEF (Library Exchange Format
   - **Big models (width > 7 studs):** Internal contacts follow a symmetric parity rule: **ODD** if X < 8, and **EVEN** if X >= 8.
 - **Connectivity:** Every Metal 1 rectangle must have at least one contact stack connecting to the underlying Polysilicon or Active layer.
 - **Snapping:** A stud is occupied if it has at least 5.0 LDU overlap with a LEF geometry.
+- **Metal 1 Separation:** A mandatory one-stud gap must be maintained between different Metal 1 nets (e.g., VDD, VSS, Pin A, Pin B, Obstructions). Two different nets cannot occupy adjacent studs in cardinal directions (horizontally or vertically). Corner (diagonal) contact between different nets is permitted.

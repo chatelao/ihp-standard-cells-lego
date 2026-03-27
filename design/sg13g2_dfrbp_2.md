@@ -34,7 +34,7 @@ Legend: N=N-Well, S=Substrate
 7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-4 Snnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
 3 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
 2 Snnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   01234567890123456789012345678901234567890123456789012
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
 3 +++++++++++++++++++++++++++++++++++++++++++++++++++++
-2  & cCcCccC&+  c   cCcCcCcCcCcCcCcCcCcC&+  &+  &+oO&+
-1  + CCCC CCC+ CCCC C                 CC++OO++CC++OO++
-0  & cCcC cCcCcCc c   cCcCcCcCcCc       &+oO&+cC&+oO&+
-9  +CCC   C     C C CCCCCCCCCCCCCC    CC++OO++CC++OO++
-8  & cCcCccCcCcCc c cCcCcCcCcCcCcCc cCcCcCoO&+cC&+oO&+
-7  IICC C II C  C C  C CCIII  CCC C C    COO   C   O
-6  iIcC   iIcCcCc cCcCcCcIiIcCcCcCc c cCcCoOoO CcC Oo
-5  IICCCCCCCCCCCCCCC C  CIIIC CCCCCCCCCCCC  OO  C   OOO
-4    c  Cc  c   c  CcC  cCcCc cCcCc      C  oO  c _ oOo
-3  CCC- CC--CCCCCCCC    CCCCC CCCCCCC-- CC--O - C - O--
-2  c  -   _-cCcCcCcCcCcCcCcCcCcCcCc c-_ c _-o _ c _ o-_
+2  &        &+                          &+  &+  &+  &+
+1  + CCCC CC + CCCC C                 C ++  ++  ++  ++
+0  & cCcC cCc cCc c   cCcCcCcCcCc       &+  &+  &+  &+
+9  + CC   C     C C CCCCCCCCCCCCCC    C ++  ++  ++  ++
+8  & cCcCc  cCcCc c cCcCc   cCcCcCc cCcC  o &+  &+  &+
+7   I C C II C  C C  C C III  CCC C C     OO   C   O
+6  iI C   iI CcCc cCcCcC IiI CcCcCc c cCc oOoO CcC Oo
+5  II CCCC  CCCCCCCC C   III  CCCCCCCCCCCC  OO  C   OOO
+4    c  Cc  c   c  CcC  c   c cCcCc      C  oO  c _ o
+3  CC - C -- CCCCCCC    CCCCC CCCCCC -- C --  - C -  --
+2     -   _-                         -_   _-  _   _  -_
 1 -----------------------------------------------------
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
@@ -90,7 +90,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |
 | NMOS2 |   | X |   |   | X | X | X |
-| PMOS1 | X |   |   |   | X | X | X |
+| PMOS1 | X |   |   |   | X |   | X |
 | PMOS2 | X |   |   |   |   |   |   |
 | Poly1 |   |   | X |   |   |   |   |
 | Poly2 |   |   |   | X | X |   |   |

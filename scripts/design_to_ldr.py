@@ -225,19 +225,73 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
         w, h = len(grid), len(grid[0])
         contacts = []
         metal2_plates = []
+
+        # Global assignment grid to track net labels
+        global_m1_net_grid = [[None for _ in range(h)] for _ in range(w)]
+
+        def is_m1_safe(gsx, gsz, net_name):
+            for dx, dz in [(0, 0), (0, 1), (0, -1), (1, 0), (-1, 0)]:
+                nx, nz = gsx + dx, gsz + dz
+                if 0 <= nx < w and 0 <= nz < h:
+                    if global_m1_net_grid[nx][nz] is not None and global_m1_net_grid[nx][nz] != net_name:
+                        return False
+            return True
+
+        # Sort pins: Power rails first for priority
+        pins_to_process = []
+        if macro_data:
+            pins_to_process = sorted(macro_data['pins'], key=lambda p: 0 if p['name'] in ['VDD', 'VSS'] else 1)
+        # Pre-populate global grid based on pins
+        # This is a bit tricky because design_to_ldr uses both macro_data RECTs and grid characters.
+        # We'll follow the same order as the LDR generation.
+
+        # Collections for each net
+        net_to_contacts = {}
+        net_to_upward = {}
+
         for x in range(w):
             for z in range(h):
                 char = grid[x][z]
                 if char in CONTACT_MAP or char == 'c':
+                    # Determine net name for this contact
+                    net_name = "Internal"
+                    if char in CONTACT_MAP:
+                        mapped_char = CONTACT_MAP[char]
+                        if mapped_char == '+': net_name = "VDD"
+                        elif mapped_char == '-': net_name = "VSS"
+                        elif mapped_char == 'I': net_name = "Input"
+                        elif mapped_char == 'O': net_name = "Output"
+                    elif char == 'c':
+                        # Find if any pin covers this stud
+                        if macro_data:
+                            for pin in macro_data['pins']:
+                                for rect in pin['rects']:
+                                    if rect['layer'] == 'Metal1':
+                                        x1 = int(math.floor(rect['coords'][0] * 20 / 0.27 / 20))
+                                        z1 = int(math.floor((rect['coords'][1] * 20 / 0.27 + 10) / 20))
+                                        x2 = int(math.ceil(rect['coords'][2] * 20 / 0.27 / 20))
+                                        z2 = int(math.ceil((rect['coords'][3] * 20 / 0.27 + 10) / 20))
+                                        if min(x1, x2) <= x < max(x1, x2) and min(z1, z2) <= z < max(z1, z2):
+                                            net_name = pin['name']
+                                            break
+                                if net_name != "Internal": break
+
+                    if not is_m1_safe(x, z, net_name):
+                        continue
+                    global_m1_net_grid[x][z] = net_name
+
+                    if net_name not in net_to_contacts: net_to_contacts[net_name] = []
+                    if net_name not in net_to_upward: net_to_upward[net_name] = []
+
                     sx, sz = x * 20 + 10, z * 20 + 10
                     # 1. Metal 1 to Metal 2 connection (Y=-64)
                     real_char = CONTACT_MAP.get(char, char)
                     color = COLOR_MAP_REV.get(real_char)
                     if color is not None:
-                        metal2_plates.append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
+                        net_to_upward[net_name].append(f"1 {color} {sx} {Y_METAL2_PLATE} {sz} 1 0 0 0 1 0 0 0 1 {TILE_1X1}")
 
                     # 2. Contact Stack (Y=-48 Brick)
-                    contacts.append(f"1 15 {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
+                    net_to_contacts[net_name].append(f"1 15 {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
                     # 3. Connectivity to underlying layers (Active or Poly)
                     is_to_poly = False
@@ -253,39 +307,43 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
 
                     if not is_to_poly:
                          # Active connection: Need 1x1 plate at Y=-24 to bridge brick to Active.
-                         contacts.append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
+                         net_to_contacts[net_name].append(f"1 15 {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
 
-        if contacts:
+        if net_to_contacts:
             ldr_lines.append("0 STEP")
             ldr_lines.append("0 // Contacts")
-            ldr_lines.extend(contacts)
+            for net in sorted(net_to_contacts.keys(), key=lambda n: 0 if n in ['VDD', 'VSS'] else 1):
+                label = f"0 // {net} Rail" if net in ['VDD', 'VSS'] else f"0 // Pin {net}" if net != "Internal" else "0 // Internal / Obstructions"
+                ldr_lines.append(label)
+                ldr_lines.extend(net_to_contacts[net])
 
         ldr_lines.append("0 STEP")
         ldr_lines.append("0 // Metal 1")
 
         # Tile by pin
         assigned = [[False for _ in range(h)] for _ in range(w)]
-        if macro_data:
-            for pin in macro_data['pins']:
-                pin_grid = [[None for _ in range(h)] for _ in range(w)]
-                has_pin_parts = False
-                color = None
-                for rect in pin['rects']:
-                    if rect['layer'] == 'Metal1':
-                        # Inclusive snapping for pin tiling
-                        x1 = int(math.floor(rect['coords'][0] * 20 / 0.27 / 20))
-                        z1 = int(math.floor((rect['coords'][1] * 20 / 0.27 + 10) / 20))
-                        x2 = int(math.ceil(rect['coords'][2] * 20 / 0.27 / 20))
-                        z2 = int(math.ceil((rect['coords'][3] * 20 / 0.27 + 10) / 20))
-                        for ix in range(min(x1, x2), max(x1, x2)):
-                            for iz in range(min(z1, z2), max(z1, z2)):
-                                if 0 <= ix < w and 0 <= iz < h and not assigned[ix][iz]:
-                                    char = grid[ix][iz]
-                                    if char:
+        for pin in pins_to_process:
+            pin_grid = [[None for _ in range(h)] for _ in range(w)]
+            has_pin_parts = False
+            color = None
+            for rect in pin['rects']:
+                if rect['layer'] == 'Metal1':
+                    # Inclusive snapping for pin tiling
+                    x1 = int(math.floor(rect['coords'][0] * 20 / 0.27 / 20))
+                    z1 = int(math.floor((rect['coords'][1] * 20 / 0.27 + 10) / 20))
+                    x2 = int(math.ceil(rect['coords'][2] * 20 / 0.27 / 20))
+                    z2 = int(math.ceil((rect['coords'][3] * 20 / 0.27 + 10) / 20))
+                    for ix in range(min(x1, x2), max(x1, x2)):
+                        for iz in range(min(z1, z2), max(z1, z2)):
+                            if 0 <= ix < w and 0 <= iz < h and not assigned[ix][iz]:
+                                char = grid[ix][iz]
+                                if char:
+                                    if is_m1_safe(ix, iz, pin['name']):
                                         real_char = CONTACT_MAP.get(char, char)
                                         color = COLOR_MAP_REV.get(real_char)
                                         pin_grid[ix][iz] = color
                                         assigned[ix][iz] = True
+                                        global_m1_net_grid[ix][iz] = pin['name']
                                         has_pin_parts = True
                 if has_pin_parts:
                     pin_label = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
@@ -299,19 +357,24 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
         for x in range(w):
             for z in range(h):
                 if not assigned[x][z] and grid[x][z]:
-                    char = grid[x][z]
-                    real_char = CONTACT_MAP.get(char, char)
-                    rem_grid[x][z] = COLOR_MAP_REV.get(real_char)
-                    has_rem = True
+                    if is_m1_safe(x, z, "Internal"):
+                        char = grid[x][z]
+                        real_char = CONTACT_MAP.get(char, char)
+                        rem_grid[x][z] = COLOR_MAP_REV.get(real_char)
+                        global_m1_net_grid[x][z] = "Internal"
+                        has_rem = True
         if has_rem:
             ldr_lines.append("0 // Internal / Obstructions")
             for plate, x, z, c, rot in get_best_plates_multi(rem_grid):
                 ldr_lines.append(f"1 {c} {x} {Y_METAL1} {z} {'0 0 1 0 1 0 -1 0 0' if rot else '1 0 0 0 1 0 0 0 1'} {plate}")
 
-        if metal2_plates:
+        if net_to_upward:
             ldr_lines.append("0 STEP")
             ldr_lines.append("0 // Metal 2 Connections")
-            ldr_lines.extend(metal2_plates)
+            for net in sorted(net_to_upward.keys(), key=lambda n: 0 if n in ['VDD', 'VSS'] else 1):
+                label = f"0 // {net} Rail" if net in ['VDD', 'VSS'] else f"0 // Pin {net}" if net != "Internal" else "0 // Internal / Obstructions"
+                ldr_lines.append(label)
+                ldr_lines.extend(net_to_upward[net])
 
     return "\n".join(ldr_lines)
 

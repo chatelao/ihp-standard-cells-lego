@@ -69,15 +69,15 @@ Legend: G=Polysilicon
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3 ++++++++++++++++++++++++++++++++++
 2  &   &  &+  &+  &+  &   &  +&  +&
-1  + O + O++OO++OO++O + O +OO++OO++
-0  & o & o&+oO&+oO&+o & o &Oo+&Oo+&
-9  + O   O  OO  OO  O   O  OO  OO++
-8  & oOoOooOoOoOoOoOoOoOoOoOoOoOo+&
-7    OOOOOOOOOOOOOOOOOOOOOOOO  IIII
+1  + O +  ++  ++  ++  + O +  ++  ++
+0  & o &  &+  &+  &+  & o &  +&  +&
+9  + O   O  OO  OO  O   O  OO  O ++
+8  & oOoOooOoOoOoOoOoOoOoOoOoOo  +&
+7    OOOOOOOOOOOOOOOOOOOOOOOO  II
 6    o   o  oO  oO  o   o  Oo  IiIi
 5    O   O  OO  OO  O   O  OO
-4  _ o _ o_-oO_-oO_-o _ o _OoOoOo-_
-3  - O - O--OO--OO--O - O -OO--OO--
+4  _ o _  _-  _-  _-  _ o _ o  O -_
+3  - O -  --  --  --  - O -  --  --
 2  _   _  _-  _-  _-  _   _  -_  -_
 1 ----------------------------------
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-

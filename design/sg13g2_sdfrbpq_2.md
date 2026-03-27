@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   0123456789012345678901234567890123456789012345678901234567890123
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-2    &+cCccCcCc+&Cc &+cCcCcCcC&+  c  CcCcCcCcCcCcCcCcCcCcC&+  &
-1    ++C  CC  C+ CC ++CCCCC CC++CCCCCCC                 CC++OO+
-0  c c c  cC  c+ Cc &+cCcCc cCcCc cCc   cCcCcCcCcCc       &+oO&
-9  CCCCC CCC  C+ CC ++CCC   C     CCC CCC CCCCCCC CC    CC++OO+
-8  c  CcCcc   c+ Cc &+cCcCcCcCcCcCcCc cCc cCcCcCc cCcCcCcCcCoO&
-7  CIICC  III CCCCC   CCCCC IICC  CCC  CCCCIII  C C CCC    COO
-6  cIiCcIiiIi cCcCcCcCcCc   iIcCcCcCcCcCcCcIiIcCc cCcCc  CcCoOo
-5  C  CCI III   CCC   CCCCCCCCCCCCCCCC C  CIIICC CCCCCCCCC C  O
-4  c _CcIiiIi cCcCc   cC  c c c   c cC C  cCcCcCcCcCc      C_ o _
-3  C -CCCCCCCCC-- C CCCC- C - CCCCCCCC    CCCCCCCCCCCCC-  CC- O -
-2    _CcCccCcCc-_ c   c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-_ c _ o _
+2    &+        +&   &+        &+                          &+  &
+1    ++   CC   + CC ++ CCCC C ++ CCCCCC                 C ++  +
+0  c   c  cC   + Cc &+ CcCc cC  c cCc   cCcCcCcCcCc       &+  &
+9  CCCCC CCC   + CC ++ CC   C     CCC CCC CCCCCCC CC    C ++  +
+8  c  CcCc     + Cc &+ CcCcC  cCcCcCc cCc c   cCc cCcCcCcC  o &
+7   II C  I I C CCC   CCCCC II C  CCC  CCC III  C C CCC     OO
+6   Ii  Ii  i cCcCcCcCcCc   iI CcCcCcCcCcC IiI Cc cCcCc  Cc oOo
+5  C  C I   I   CCC   CCCCCC  CCCCCCCC C   III C CCCCCCCCC C  O
+4  c _  IiiIi c  Cc   cC  c   c   c cC C  c   cCcCcCc       _ o _
+3  C - C     C -- C CCC - C - CCCCCCCC    CCCCCCCCCCCC -  C - O -
+2    _         -_       _   _                          -_   _   _
 1 ----------------------------------------------------------------
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
@@ -86,18 +86,18 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | CLK | RESET_B | SCD | SCE | Q |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |   |   |   |
-| NMOS2 |   | X | X |   |   | X |   | X |
-| PMOS1 | X |   | X |   |   |   |   | X |
-| PMOS2 | X |   |   |   |   |   |   |   |
-| Poly1 |   |   |   |   |   |   | X |   |
-| Poly2 |   |   | X |   |   | X |   |   |
-| Poly3 |   |   |   |   | X |   |   |   |
-| Poly4 |   |   |   | X |   |   |   |   |
-| Poly5 |   |   |   |   |   |   |   | X |
-| Poly6 |   |   |   |   |   |   |   | X |
+| Silicon | VDD | VSS | CLK | RESET_B | SCD | SCE | Q |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |   |   |   |
+| NMOS2 |   | X |   |   | X | X | X |
+| PMOS1 | X |   |   |   |   | X | X |
+| PMOS2 | X |   |   |   |   |   |   |
+| Poly1 |   |   |   |   |   | X |   |
+| Poly2 |   |   |   |   | X | X |   |
+| Poly3 |   |   |   | X |   |   |   |
+| Poly4 |   |   | X |   |   |   |   |
+| Poly5 |   |   |   |   |   |   | X |
+| Poly6 |   |   |   |   |   |   | X |
 
 ## Silicon Neighbourhood
 

@@ -34,7 +34,7 @@ Legend: N=N-Well, S=Substrate
 7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-4 Snnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
 3 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
 2 Snnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   01234567890123456789012345678901234567890123456789012345678901234567890
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
 3 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-2    &+cCccCcCc+&Cc &+cCcCcCcC&+  c  CcCcCcCcCcCcCcCcCcCcC&+  &   &+oO&
-1    ++C  CC  C+ CC ++CCCCC CC++CCCCCCC                 CC++OO+ CC++OO+
-0  c c c  cC  c+ Cc &+cCcCc cCcCc cCc   cCcCcCcCcCc       &+oO& cC&+oO&
-9  CCCCC CCC  C+ CC ++CCC   C     CCC CCC CCCCCCC CC    CC++OO+ CC++OO+
-8  c  CcCcc   c+ Cc &+cCcCcCcCcCcCcCc cCc cCcCcCc cCcCcCcCcCoO& cC&+oO&
-7  CIICC  III CCCCC   CCCCC IICC  CCC  CCCCIII  C C CCC    COO   C  OO
-6  cIiCcIiiIi cCcCcCcCcCc   iIcCcCcCcCcCcCcIiIcCc cCcCc  CcCoOo  CcCoOo
-5  C  CCI III   CCC   CCCCCCCCCCCCCCCC C  CIIICC CCCCCCCCCCC  O  CC  OOOO
-4  c _CcIiiIi cCcCc   cC  c c c   c cC C  cCcCcCcCcCc      C  o  Cc-_OoOo
-3  C -CCCCCCCCC-- C CCCC- C - CCCCCCCC    CCCCCCCCCCCCC-  CC- O -CC--OO--
-2    _CcCccCcCc-_ c   c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-_ c _ o _Cc-_Oo-_
+2    &+        +&   &+        &+                          &+  &   &+  &
+1    ++   CC   + CC ++ CCCC C ++ CCCCCC                 C ++  + C ++  +
+0  c   c  cC   + Cc &+ CcCc cC  c cCc   cCcCcCcCcCc       &+  & c &+  &
+9  CCCCC CCC   + CC ++ CC   C     CCC CCC CCCCCCC CC    C ++  + C ++  +
+8  c  CcCc     + Cc &+ CcCcC  cCcCcCc cCc c   cCc cCcCcCcC  o & c &+  &
+7   II C  I I C CCC   CCCCC II C  CCC  CCC III  C C CCC     OO   C  OO
+6   Ii  Ii  i cCcCcCcCcCc   iI CcCcCcCcCcC IiI Cc cCcCc  Cc oOo  Cc oOo
+5  C  C I   I   CCC   CCCCCC  CCCCCCCC C   III C CCCCCCCCCCC  O  CC  OOOO
+4  c _  IiiIi c  Cc   cC  c   c   c cC C  c   cCcCcCc      C  o  C -_ o
+3  C - C     C -- C CCC - C - CCCCCCCC    CCCCCCCCCCCC -  C - O -  --  --
+2    _         -_       _   _                          -_   _   _  -_  -_
 1 -----------------------------------------------------------------------
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
@@ -90,7 +90,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |   |   |
 | NMOS2 |   | X |   |   | X |   | X | X | X |
-| PMOS1 | X |   |   |   |   |   | X | X | X |
+| PMOS1 | X |   |   |   |   |   | X |   | X |
 | PMOS2 | X |   |   |   |   |   |   |   |   |
 | Poly1 |   |   |   |   |   | X |   |   |   |
 | Poly2 |   |   |   |   | X |   | X |   |   |

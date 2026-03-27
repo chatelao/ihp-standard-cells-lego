@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   0123456789012345678901234567890123456
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
 3 +++++++++++++++++++++++++++++++++++++
-2    &+        +&CcCcCcC&+  cCcCcCc+&
-1  CC++   CCC  + CCCCCCC++C C     C++OO
-0  cC&+   cCc c cCcCcCcCcCc c c cCc+& o
-9  CC++   CCCCCCCCCCCCCC  C C C CCCCC O
-8  cC&+   cCc i i cCcCcC  c c c cCcCc o
-7  CIIII  CCC I I   CCCCIIC C CCCII C O
-6  cIiIiCcc c i i c cCcCiIc c cCcIi c o
-5  C    CCC C     C CCCCCCC C CCCCC--OO
-4  cCcCcCcc cCcCcCcCcCcCcCc cCcCcCc-_Oo
-3  CC-- CCC C  -   CCC--CCCCCCCCCCC--OO
-2  cC_- CccCc _-   CcC_-cCcCcCcC   -_
+2    &+        +&       &+         +&
+1  C ++   CCC  + CCCCCC ++  C      ++ O
+0  c &+   cCc c cCcCcCcC  c c c cC +& o
+9  C ++   CCCC C CCCCCCC  C C C CCC   O
+8  c &+   cCc i i cCcCcC  c c c c  Cc o
+7   I  I  CCC I I   CCC II  C CC II C O
+6   Ii i cc c i i c cCc iI  c cC Ii   o
+5  C    CCC C     C CCCC  C C CCC  -- O
+4  cC  cCcc cCc cCcCcC  cCc cCcCcC -_ o
+3  C -- CCC C  -   CC -- CCCCCCCCC -- O
+2    _-       _-      _-           -_
 1 -------------------------------------
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
@@ -86,15 +86,15 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | A0 | A1 | A2 | A3 | S1 | X |
+| Silicon | VDD | VSS | A0 | A1 | A2 | A3 | S0 | S1 | X |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |   |   |
-| NMOS2 |   | X | X |   |   |   |   |   | X |
-| PMOS1 | X |   | X |   | X | X |   |   | X |
+| NMOS2 |   | X |   |   |   |   |   |   | X |
+| PMOS1 | X |   |   | X | X |   |   |   | X |
 | PMOS2 | X |   |   |   |   |   |   |   |   |
-| Poly1 |   |   |   | X |   |   |   |   |   |
-| Poly2 |   |   |   |   | X | X |   |   |   |
-| Poly3 |   |   |   |   |   |   | X |   |   |
+| Poly1 |   |   | X |   |   |   | X |   |   |
+| Poly2 |   |   |   | X | X |   |   |   |   |
+| Poly3 |   |   |   |   |   | X |   |   |   |
 | Poly4 |   |   |   |   |   |   |   | X |   |
 | Poly5 |   |   |   |   |   |   |   |   | X |
 
