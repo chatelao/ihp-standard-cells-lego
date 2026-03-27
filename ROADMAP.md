@@ -20,10 +20,10 @@
   - Successfully preserved pin metadata and contact stacks during back-propagation.
 
 ## Current Focus
-- [ ] **Phase 0: Repository Housekeeping (Highest Priority)**
-  - [ ] Clean up transient log files and verification results from the root directory.
-  - [ ] Update `.gitignore` to include all transient logs and result files.
-  - [ ] Centralize verification outputs into a dedicated `logs/` directory.
+- [x] **Phase 0: Repository Housekeeping (Highest Priority)**
+  - [x] Clean up transient log files and verification results from the root directory.
+  - [x] Update `.gitignore` to include all transient logs and result files.
+  - [x] Centralize verification outputs into a dedicated `logs/` directory.
   - [ ] Deprecate and remove obsolete V2 scripts (`scripts/migrate_models_v2.py`, `scripts/verify_models_v2.py`).
 
 - [ ] **Phase 6: V3 Gold Standard Migration & Validation**

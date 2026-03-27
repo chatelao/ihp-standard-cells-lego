@@ -3,6 +3,7 @@ images/*.jpg
 index.html
 logs/
 *.log
+*.txt
 *_fails.txt
 *_results.txt
 *_final.txt
