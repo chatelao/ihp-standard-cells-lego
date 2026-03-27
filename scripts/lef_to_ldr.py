@@ -319,37 +319,34 @@ def generate_ldr(macro_data):
         # Distribution: 2 pins -> 1, 5. 3 pins -> 1, 5, 9. 4 pins -> 1, 5, 9, 13
         ideal_c_x = 4 * j + 1
 
-        if not possible_studs:
-            # Fallback to nearest stud center if none strictly inside
-            best_c = (ideal_c_x, 6) # Default
-            # Ensure it's on an even track and satisfies parity
-            target_parity = get_unified_parity(ideal_c_x, is_big)
-            if best_c[0] % 2 != target_parity:
-                best_c = (best_c[0] + 1 if best_c[0] < w_studs - 1 else best_c[0] - 1, 6)
-            min_dist = float('inf')
-            for rect in pin['rects']:
-                if rect['layer'] == 'Metal1':
-                    mid_x = (rect['coords'][0] + rect['coords'][2]) / 2
-                    mid_y = (rect['coords'][1] + rect['coords'][3]) / 2
-                    mid_x_ldu = um_to_ldu_coord(mid_x)
-                    mid_z_ldu = um_to_ldu_coord(mid_y) + 10
-                    si, sk = mid_x_ldu // 20, mid_z_ldu // 20
-                    dist = abs(sk - 6) * 10 + abs(si - ideal_c_x)
-                    if dist < min_dist:
-                        min_dist = dist
-                        best_c = (si, sk)
-        else:
-            # Filter by parity
-            target_parity = get_unified_parity(ideal_c_x, is_big)
-            parity_studs = [s for s in possible_studs if s[0] % 2 == target_parity]
-            if not parity_studs:
-                parity_studs = possible_studs # Relax if no matches
+        def is_compliant_local(stud_x, stud_z):
+            if stud_z % 2 != 0: return False
+            # Rail Parity is strict: MUST be EVEN for Track 0 and 14
+            if stud_z in [0, 14]: return stud_x % 2 == 0
+            # Internal tracks follow unified parity
+            return stud_x % 2 == get_unified_parity(stud_x, is_big)
 
-            at_6 = [s for s in parity_studs if s[1] == 6]
+        target_parity = get_unified_parity(ideal_c_x, is_big)
+        compliant_studs = [s for s in possible_studs if is_compliant_local(s[0], s[1])]
+
+        if not compliant_studs:
+            # Fallback: Find nearest compliant stud (even Z, correct X-parity)
+            best_c = None
+            min_dist = float('inf')
+            for i in range(w_studs):
+                for k in range(0, d_studs, 2): # Even Z only
+                    if i % 2 == get_unified_parity(i, is_big):
+                        dist = abs(k - 6) * 10 + abs(i - ideal_c_x)
+                        if dist < min_dist:
+                            min_dist = dist
+                            best_c = (i, k)
+        else:
+            # Prefer Track 6
+            at_6 = [s for s in compliant_studs if s[1] == 6]
             if at_6:
                 best_c = min(at_6, key=lambda s: abs(s[0] - ideal_c_x))
             else:
-                best_c = min(parity_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
+                best_c = min(compliant_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
 
         # Determine gate stud(s)
         # Gold standard: gates at C-1 and C+1 for Big/Drive-2, or C+1 for Drive-1 Small
@@ -558,7 +555,7 @@ def generate_ldr(macro_data):
 
                 add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin, current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color, pin_metal1_grid, added_coords)
 
-        has_metal1 = any(any(row) for row in pin_metal1_grid)
+        has_metal1 = any(any(cell is not None for cell in row) for row in pin_metal1_grid)
         if has_metal1:
             metal1_lines.append(pin_comment)
             rect_tiles = get_best_plates_multi(pin_metal1_grid)
