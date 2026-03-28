@@ -67,17 +67,17 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901234567890123456789012
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
-3  +         +                           +  ++  ++  +
-2  & cCcCccC +  c   cCcCcCcCcCcCcCcCcCcC +  &+  &+  &
-1  + C       + CCCC                      + O++  ++OO+
-0  & cCcC c cCc c c   cCcCcCcCcCc        + O&+cC&+oO&
-9  + CC   C     C C  CCC        CC     C   O++CC++OO+
-8    cCcCccCcCcCc c  CcCcCcCcCc cCc cCcCcCoO&+cC&+oO&
-7    CC C II C  C C  C CCIII    C C C    C O   C   O
-6  i cC   iIcCcCc cCcC CcIiIcCc cCc   c cC Oo  CcC Oo
-5    CCCCCCCCCCCCCCC C  CIIIC     CCCCCCCC  O   C   OOO
-4    c  Cc  c   c  Cc   c cCc c c        C  o   c _ oOo
-3  CCC- C - C CCCCCC       CC CCCCCCC-  CC- O - C - O -
+3  +         +                           +  +   +   +
+2  & cCcCccC +  c   cCcCcCcCcCcCcCcCcCcC +  &   &   &
+1  + C     C + CCCC                      + O+   + OO+
+0  & cCcC cCcCcCc c   cCcCcCcCcCc        + O& cC& oO&
+9  + CC   C     C C  CCC       CCC     C   O+ CC+ OO+
+8    cCcCccCcCcCc c  CcCcCcCcCcCcCc cCcCcCoO& cC& oO&
+7    CC C II C  C C  C CCIII   CC C C    C O   C   O
+6  i cC   iIcCcCc cCcC CcIiIcCcCcCc   c cC Oo  CcC Oo
+5    CCCCCCCCC CCCCC C  CIIIC  CCCCCCCCCCC  O   C   OOO
+4    c  Cc  c   c  Cc   c c c c c        C  o   c _ oOo
+3  CCC- C - C CCCCCC    CCCCC CCCCCCC-  CC- O - C - O -
 2  c  -   _ cCcCcCcCcCcCcCcCcCcCcCc c-  c _   _   _   _
 1     -   -                          -    -   -   -   -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
@@ -86,15 +86,15 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | CLK | D | RESET_B | Q | Q_N |
+| Silicon | VDD | VSS | D | RESET_B | CLK | Q | Q_N |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |
-| NMOS2 |   | X | X |   |   | X | X |
-| PMOS1 | X |   | X |   |   | X | X |
+| NMOS2 |   | X |   |   | X | X | X |
+| PMOS1 | X |   |   |   | X | X | X |
 | PMOS2 | X |   |   |   |   |   |   |
-| Poly1 |   |   |   | X |   |   |   |
-| Poly2 |   |   | X |   | X |   |   |
-| Poly3 |   |   | X |   |   |   |   |
+| Poly1 |   |   | X |   |   |   |   |
+| Poly2 |   |   |   | X | X |   |   |
+| Poly3 |   |   |   |   | X |   |   |
 | Poly4 |   |   |   |   |   |   | X |
 | Poly5 |   |   |   |   |   | X |   |
 

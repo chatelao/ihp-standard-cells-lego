@@ -417,11 +417,17 @@ def generate_ldr(macro_data):
             # Snapping with tolerance for contacts
             gx = sx - 10
             overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
-            if overlap_x >= SNAPPING_TOLERANCE or (xmax_raw - xmin_raw < 20 and gx <= (xmin_raw + xmax_raw)/2 < gx + 20):
+            is_narrow_x = (xmax_raw - xmin_raw) <= 20.1
+            fits_x = (gx <= (xmin_raw + xmax_raw)/2 < gx + 20) if is_narrow_x else (overlap_x >= SNAPPING_TOLERANCE)
+
+            if fits_x:
                 for sz in range(10, height_ldu, 20):
                     gz = sz - 10
                     overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
-                    if overlap_z >= SNAPPING_TOLERANCE or (zmax_raw - zmin_raw < 20 and gz <= (zmin_raw + zmax_raw)/2 < gz + 20):
+                    is_narrow_z = (zmax_raw - zmin_raw) <= 20.1
+                    fits_z = (gz <= (zmin_raw + zmax_raw)/2 < gz + 20) if is_narrow_z else (overlap_z >= SNAPPING_TOLERANCE)
+
+                    if fits_z:
                         possible_studs.append((sx, sz))
                         if is_compliant(sx // 20, sz // 20):
                             compliant_studs.append((sx, sz))
@@ -541,17 +547,15 @@ def generate_ldr(macro_data):
                         gx, gz = gsx * 20, gsz * 20
                         overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
                         overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
-                        if overlap_x > 0 and overlap_z > 0:
-                            is_occupied = False
-                            if overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE:
-                                is_occupied = True
-                            else:
-                                only_x = (xmax_raw - xmin_raw < 20) and (gx <= (xmin_raw + xmax_raw)/2 < gx + 20)
-                                only_z = (zmax_raw - zmin_raw < 20) and (gz <= (zmin_raw + zmax_raw)/2 < gz + 20)
-                                if (only_x or overlap_x >= SNAPPING_TOLERANCE) and (only_z or overlap_z >= SNAPPING_TOLERANCE):
-                                    is_occupied = True
-                            if is_occupied:
-                                pin_metal1_grid[gsx][gsz] = color
+
+                        is_narrow_x = (xmax_raw - xmin_raw) <= 20.1
+                        is_narrow_z = (zmax_raw - zmin_raw) <= 20.1
+
+                        fits_x = (gx <= (xmin_raw + xmax_raw)/2 < gx + 20) if is_narrow_x else (overlap_x >= SNAPPING_TOLERANCE)
+                        fits_z = (gz <= (zmin_raw + zmax_raw)/2 < gz + 20) if is_narrow_z else (overlap_z >= SNAPPING_TOLERANCE)
+
+                        if fits_x and fits_z:
+                            pin_metal1_grid[gsx][gsz] = color
 
                 add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin, current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color, pin_metal1_grid, added_coords)
 
@@ -588,8 +592,14 @@ def generate_ldr(macro_data):
                         gx, gz = gsx * 20, gsz * 20
                         overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
                         overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
-                        if (overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE) or \
-                           ((xmax_raw - xmin_raw < 20 and gx <= (xmin_raw+xmax_raw)/2 < gx+20) and (zmax_raw - zmin_raw < 20 and gz <= (zmin_raw+zmax_raw)/2 < gz+20)):
+
+                        is_narrow_x = (xmax_raw - xmin_raw) <= 20.1
+                        is_narrow_z = (zmax_raw - zmin_raw) <= 20.1
+
+                        fits_x = (gx <= (xmin_raw + xmax_raw)/2 < gx + 20) if is_narrow_x else (overlap_x >= SNAPPING_TOLERANCE)
+                        fits_z = (gz <= (zmin_raw + zmax_raw)/2 < gz + 20) if is_narrow_z else (overlap_z >= SNAPPING_TOLERANCE)
+
+                        if fits_x and fits_z:
                             obs_grid[gsx][gsz] = COLOR_METAL1_INTERNAL
                             has_obs = True
 

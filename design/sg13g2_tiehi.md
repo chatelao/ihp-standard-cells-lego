@@ -67,15 +67,15 @@ Legend: G=Polysilicon
 ```
   0123456
 4 &+&+&+&
-3 ++
-2 +&
+3 +
+2 +
 1
 0      o
 9 CC   O
 8  c   o
 7  CCC C
-6 Cc c c
-5 CC C C
+6 C  c c
+5 C  C C
 4 Cc   c
 3
 2    _
@@ -90,5 +90,5 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | --- | --- | --- | --- |
 | NMOS1 |   | X |   |
 | NMOS2 |   | X | X |
-| PMOS1 | X |   | X |
+| PMOS1 |   |   | X |
 | PMOS2 | X |   |   |

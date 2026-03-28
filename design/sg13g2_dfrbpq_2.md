@@ -69,15 +69,15 @@ Legend: G=Polysilicon
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +         +                           +    +   +
 2  & cCcCccC +  c   cCcCcCcCcCcCcCcCcCcC +    &   &
-1  + C       + CCCC                      + C  + O +
-0  & cCcC c cCc c c   cCcCcCcCcCc        + C  & o &
-9  + CC   C     C C  CCC        CC     C   C  + O +
-8    cCcCccCcCcCc c  CcCcCcCcCc cCc cCcCcCcC    o
-7    CC C II C  C C  C CCIII    C C C    C C    O
-6  i cC   iIcCcCc cCcC CcIiIcCc cCc   c cC CcC  oOo
-5    CCCCCCCCCCCCCCC C  CIIIC     CCCCCCCC  C   O
-4    c  Cc  c   c  Cc   c cCc c c        C_ c _ o _
-3  CCC- C - C CCCCCC       CC CCCCCCC-  CC- C - O -
+1  + C     C + CCCC                      + C  + O +
+0  & cCcC cCcCcCc c   cCcCcCcCcCc        + C  & o &
+9  + CC   C     C C  CCC       CCC     C   C  + O +
+8    cCcCccCcCcCc c  CcCcCcCcCcCcCc cCcCcCcC    o
+7    CC C II C  C C  C CCIII   CC C C    C C    O
+6  i cC   iIcCcCc cCcC CcIiIcCcCcCc   c cC CcC  oOo
+5    CCCCCCCCC CCCCC C  CIIIC  CCCCCCCCCCC  C   O
+4    c  Cc  c   c  Cc   c c c c c        C_ c _ o _
+3  CCC- C - C CCCCCC    CCCCC CCCCCCC-  CC- C - O -
 2  c  -   _ cCcCcCcCcCcCcCcCcCcCcCc c-  c _   _   _
 1     -   -                          -    -   -   -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -86,15 +86,15 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | CLK | D | RESET_B | Q |
+| Silicon | VDD | VSS | D | RESET_B | CLK | Q |
 | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |
-| NMOS2 |   | X | X |   |   | X |
-| PMOS1 | X |   | X |   |   | X |
+| NMOS2 |   | X |   |   | X | X |
+| PMOS1 | X |   |   |   | X | X |
 | PMOS2 | X |   |   |   |   |   |
-| Poly1 |   |   |   | X |   |   |
-| Poly2 |   |   | X |   | X |   |
-| Poly3 |   |   | X |   |   |   |
+| Poly1 |   |   | X |   |   |   |
+| Poly2 |   |   |   | X | X |   |
+| Poly3 |   |   |   |   | X |   |
 | Poly4 |   |   |   |   |   | X |
 | Poly5 |   |   |   |   |   | X |
 

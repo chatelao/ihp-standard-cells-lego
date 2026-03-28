@@ -68,33 +68,33 @@ Legend: G=Polysilicon
   012345678901234567890123456789
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
 3  +     +           +      +
-2  &     &c c cCcC   +      &
-1  + C CCCC   C             + O
-0  & c c cc cCc c c c c cCc & o
+2  &     &cCc cCcC   +      &
+1  + C CCCCC  C             + O
+0  & c c ccCcCc cCcCcCcCcCc & o
 9  + C C  C  CC CCCCCCCCCCC + O
 8    c      cCc cCcCc  CcC    o
-7  IICC     CCC  C  C  CCCIICCO
-6  iIcC Ccc c c cC  c cCcCiIcCo
-5    CC     CCC     C  C CC COO
-4    c c _ Cc     c c  Cc c cOo
-3  - C C -  CCCCC   C    CCCCOO
+7  IICC     CCCCCC  C  CCCIICCO
+6  iIcC CccCc c cC  c cCcCiIcCo
+5    CC C  CCCCCCCC C  C CC COO
+4    c cC_ Cc     c c  Cc c cOo
+3  - C CC-  CCCCC   CCCCCCCCCOO
 2  _     _cCcCcCcCcCc     c
-1  -     -           --    --
+1  -     -           --    -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | VSS3 | VSS4 | VSS5 | VSS7 | VSS8 | D | GATE | Q |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |   |   |   |   |   |   |
-| NMOS2 |   | X | X | X | X | X |   |   |   |   | X |
-| PMOS1 | X |   | X | X |   |   | X | X |   |   | X |
-| PMOS2 | X |   |   |   |   |   |   |   |   |   |   |
-| Poly1 |   |   |   |   |   |   |   |   | X |   |   |
-| Poly2 |   |   |   |   |   |   |   |   |   | X |   |
-| Poly3 |   |   |   |   |   |   |   |   |   |   | X |
+| Silicon | VDD | VSS | VSS2 | VSS3 | D | GATE | Q |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |   |   |   |
+| NMOS2 |   | X | X | X |   |   | X |
+| PMOS1 | X |   | X | X |   |   | X |
+| PMOS2 | X |   |   |   |   |   |   |
+| Poly1 |   |   |   |   | X |   |   |
+| Poly2 |   |   |   |   |   | X |   |
+| Poly3 |   |   |   |   |   |   | X |
 
 ## Silicon Neighbourhood
 
