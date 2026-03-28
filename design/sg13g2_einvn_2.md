@@ -69,16 +69,16 @@ Legend: G=Polysilicon
 4 &+&+&+&+&+&+&+&+
 3   +     +
 2   +     & cCcCc
-1   + C C + C  CC
-0   + CcCc& c oCc
-9     C C   C OCC
-8  iIiCc  c   o
-7  IIICC      O
+1   + C C + C   C
+0   + CcCc& c o c
+9     C C   C O C
+8  iIiC   c   o
+7  IIIC       O
 6  iIiCc      o i
 5  IIIC       O I
 4     C CccCc o i
 3   - C C - CCCCC
-2   -  cC _   c
+2   -  c  _   c
 1   -     -
 0 _-_-_-_-_-_-_-_-
 ```
@@ -86,14 +86,14 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | VSS3 | VSS4 | VSS5 | A | TE_B | Z |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |   |   |   |   |
-| NMOS2 |   | X | X |   |   |   | X |   | X |
-| PMOS1 | X |   |   | X | X | X |   | X | X |
-| PMOS2 | X |   |   |   |   |   |   |   |   |
-| Poly1 |   |   |   |   |   |   |   | X |   |
-| Poly2 |   |   |   |   |   |   | X |   | X |
+| Silicon | VDD | VSS | VSS2 | VSS3 | VSS4 | VSS5 | VSS6 | A | TE_B | Z |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |   |   |   |   |   |   |
+| NMOS2 |   | X | X | X |   |   |   | X |   | X |
+| PMOS1 | X |   |   |   | X | X | X |   | X | X |
+| PMOS2 | X |   |   |   |   |   |   |   |   |   |
+| Poly1 |   |   |   |   |   |   |   |   | X |   |
+| Poly2 |   |   |   |   |   |   |   | X |   | X |
 
 ## Silicon Neighbourhood
 

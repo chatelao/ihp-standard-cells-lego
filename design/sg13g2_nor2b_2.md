@@ -71,14 +71,14 @@ Legend: G=Polysilicon
 2    &   c  &+
 1  C + CCCCC++
 0  c & c ocC&+
-9  C +   OCC++
+9  C +   O C++
 8  c   oOo
-7  CCCCO  III
-6  cCcCo  iIi
+7  CCC O  III
+6  c   o  iIi
 5  C - OOOOO--
 4    _ o ooO_-
-3  II- O -OO--
-2  iI_   _  _-
+3  I - O - O--
+2  i _   _  _-
 1    -   -  --
 0 _-_-_-_-_-_-
 ```

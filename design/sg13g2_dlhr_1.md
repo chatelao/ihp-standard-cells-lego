@@ -67,18 +67,18 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3    ++     +      +++  +     +
-2    &+     &CcCcC +&+  &     &
-1  CC++     +C   C +++CC+ OOC +OO
-0  cCcCcCccCcCcC C    cC& oOc &Oo
-9  CC     C CC C C CCCCC+ OOC +OO
-8  c   cC c cCcCcC CcCcCcCoOc  Oo
-7  C I ICCC CCCCCCCCCC IICCOC   O
-6  c i iCci cCcCc c cC IiCcOcCcCo
-5  C    C CCCCCCC    C II  OC   O
+3     +     +      +++  +     +
+2     +     & c c  +&+  &     &
+1     +     +    C +++  + OOC + O
+0  cCcCcCccCc cC C    c & oOc & o
+9  CC     C C  C C CCCC   OOC + O
+8  c   cC c c cCcC CcCcCcCoOc   o
+7  C I ICC  CCCCCCCCC  I CCOC   O
+6  c i iCci cCc c c c  IiCcOcCcCo
+5  C    C CCCCCCC      I   OC   O
 4  cC_-cC c c  Cc  - Cc _ oOc _ o
-3    --CCCCCCC CC  - C  - O C - O
-2    _-   c _CcCcC_- C  _ o c _ o
+3    --CCCCCCC     - C  - O C - O
+2    _-   c _CcCcC - C  _ o c _ o
 1    --     -      -    -     -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 ```
@@ -86,15 +86,15 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | D | GATE | RESET_B | Q_N | Q |
+| Silicon | VDD | VSS | D | GATE | RESET_B | Q | Q_N |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |
 | NMOS2 |   | X |   |   |   | X | X |
 | PMOS1 | X |   |   |   |   | X | X |
 | PMOS2 | X |   |   |   |   |   |   |
-| Poly1 |   |   | X | X | X | X |   |
+| Poly1 |   |   | X | X | X |   | X |
 | Poly2 |   |   |   |   | X |   |   |
-| Poly3 |   |   |   |   |   | X |   |
+| Poly3 |   |   |   |   |   |   | X |
 
 ## Silicon Neighbourhood
 

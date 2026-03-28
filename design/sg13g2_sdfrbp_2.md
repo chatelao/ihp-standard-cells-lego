@@ -34,9 +34,9 @@ Legend: N=N-Well, S=Substrate
 7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-4 Snnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+4 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
 3 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
-2 Snnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+2 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
 1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 0 nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 ```
@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901234567890123456789012345678901234567890
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
-3    ++        +    ++         +                          ++  +   +   +
-2    &+cCccCcCc+ Cc &+ CcCcCcC +  c   cCcCcCcCcCcCcCcCcCcC&+  &   &   &
-1    ++C  CC  C+ CC ++ C     C +CCCCC                     ++OO+   + O +
-0  c c c  cC  c+ Cc &+cCcCc cCcCc cCc   cCcCcCcCcCc       &+oO& cC& o &
-9  CCCCC CCC  C+ CC ++CCC   C     CC  CCC       C CC    CC++OO+ CC+ O +
-8  c   cCcc   c+ Cc   c cCcCcCcCcCcC  cCc cCcCcCc cCcCcCcCcCoO& cC& o &
-7  CII C  III CCCCC     CCC IICC  CC   C CCIII  C C CCC    COO   C  O
-6  cIi cIiiIi cCcCcCcC  c   iIc c cCcCcC CcIiIcCc cCcCc  CcCoOo  CcCoOo
-5  C   CI   I   C C     CCCCCCC CCCC C C  CIIICC CCCCCCCCC C  O   C  OOOO
-4  c _ cIiiIi cCc c       c c c   c cC    c cCcCc c        C  o   c-_OoOo
-3  C - CCCCCCCC-  C CCC - C - CCCCCCCC    CCCCCCCCCCCC -  CC- O - C--OO--
-2    _    c    -  c   c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-_ c _   _  -_  -_
-1    -         -        -   -                          -    -   -  --  --
+3     +        +    ++         +                          ++  +   +   +
+2     +cCccCcCc+    &+ CcCcCcC +  c   cCcCcCcCcCcCcCcCcCcC&+  &   &   &
+1     +C      C+ CC ++       C +CCCCC                     ++O +   + O +
+0  c   c  cC  c+ Cc &+c cCc cCcCc c c   cCcCcCcCcCc       &+o & cC& o &
+9  CCCCC CCC  C+ CC ++C C   C     C   CCC       C CC    CC  O + CC+ O +
+8  c   cCcc   c+ Cc   c c cCcCcCcCc   cCc cCcCcCc cCc cCcCcCo & cC& o &
+7  CII    I I CC  C     C C II C  C    C CCIII  C C C C    CO    C  O
+6  cIi cIii i cCcCcCcC  c   iIc c c cCcC CcIiIcCc cCc c  CcCoOo  CcCoOo
+5  C    I   I     C     CCCCCCC CCCC C C  CIIIC     CCCCCC C  O   C  OOO
+4  c _ cIiiIi cCc c       c c c     cC    c cCc c c        C  o   c _OoO
+3  C - CCCCCCCC-  C CCC - C - CCCCCCCC       CC CCCCCC -  CC- O - C -OO-
+2    _    c    -      c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-  c _   _   _  -
+1    -         -        -   -                          -    -   -   -  -
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
