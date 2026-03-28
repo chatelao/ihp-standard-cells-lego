@@ -479,18 +479,22 @@ def generate_ldr(macro_data):
                 current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_CONTACT} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_BRICK}")
 
                 # 3. Connectivity to underlying layers (Active or Poly)
-                is_to_poly = ((stud_z == 6) or is_gate) and (pin_name not in ['VDD', 'VSS'])
+                # Gold Standard: Track 6 is for Polysilicon unless it is a Diffusion pin (is_diff)
+                is_to_poly = (stud_z == 6 or is_gate) and (pin_name not in ['VDD', 'VSS']) and not is_diff
                 if pin_name == 'VDD' and is_decap and stud_z != 14:
                     is_to_poly = True
 
                 if is_to_poly:
-                    poly_grid[stud_x][stud_z] = COLOR_POLY
+                    # Mark gates on grid and grow vertically (Studs 2-12)
+                    for gz in range(2, 13):
+                        poly_grid[stud_x][gz] = COLOR_POLY
                 else:
                     current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                     if is_decap: poly_grid[stud_x][stud_z] = None
-                    if pin_name == 'VSS': active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS
-                    elif pin_name == 'VDD': active_grid[stud_x][stud_z] = COLOR_ACTIVE_PMOS
-                    else: active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS if stud_z < 8 else COLOR_ACTIVE_PMOS
+                    if stud_z < 1 or stud_z > 13: # Only auto-fill Active under rails
+                        if pin_name == 'VSS': active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS
+                        elif pin_name == 'VDD': active_grid[stud_x][stud_z] = COLOR_ACTIVE_PMOS
+                        else: active_grid[stud_x][stud_z] = COLOR_ACTIVE_NMOS if stud_z < 8 else COLOR_ACTIVE_PMOS
 
     for pin in macro_data['pins']:
         added_coords = set() # (sx, sz) to prevent duplicates per pin
@@ -568,8 +572,6 @@ def generate_ldr(macro_data):
             contact_lines.extend([l for l in current_pin_contacts if l != pin_comment])
         if current_pin_upward_plates: metal2_plate_lines.extend(current_pin_upward_plates)
 
-    poly_tiles = get_best_plates_multi(poly_grid)
-
     if macro_data['obs']:
         added_coords = set()
         obs_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
@@ -623,6 +625,7 @@ def generate_ldr(macro_data):
                                    min(zmax_raw, gz+20) - max(zmin_raw, gz) >= SNAPPING_TOLERANCE:
                                     poly_grid[gsx][gsz] = None
 
+    poly_tiles = get_best_plates_multi(poly_grid)
     tiles3 = get_best_plates_multi(active_grid)
     final_ldr = [f"0 {macro_data['name']}.ldr", f"0 Name: {macro_data['name']}.ldr", "0 Author: lef_to_ldr.py", "0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt", "0 !LPUB PLI GLOBAL ON", ""]
     final_ldr.append("0 // Substrate low (V3)")

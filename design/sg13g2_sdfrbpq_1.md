@@ -86,16 +86,16 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VDD10 | VDD2 | VDD3 | VDD4 | VDD5 | VDD6 | VDD7 | VDD9 | VSS | CLK | RESET_B | SCD | SCE | Q |
+| Silicon | VDD | VSS | CLK | D | RESET_B | SCE | Internal1 | Internal2 | Internal3 | Internal4 | Internal5 | Internal6 | Internal8 | Internal9 | Q |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   |   |   |   |   | X |   |   |   |   |   |
-| NMOS2 |   |   | X | X | X | X | X |   |   | X |   |   | X |   | X |
-| PMOS1 | X | X |   |   | X |   | X | X | X |   |   |   |   |   | X |
+| NMOS1 |   | X |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| NMOS2 |   | X |   | X |   |   | X | X | X | X | X |   |   |   | X |
+| PMOS1 | X |   |   |   |   |   |   |   | X |   | X | X | X | X | X |
 | PMOS2 | X |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly1 |   |   |   |   |   |   |   |   |   |   |   |   |   | X |   |
-| Poly2 |   |   |   |   |   |   | X |   |   |   |   |   | X |   |   |
-| Poly3 |   |   |   |   |   |   |   |   |   |   |   | X |   |   |   |
-| Poly4 |   |   |   |   |   |   |   |   |   |   | X |   |   |   |   |
+| Poly1 |   |   |   |   |   | X |   |   |   |   |   |   |   |   |   |
+| Poly2 |   |   |   | X |   |   |   |   |   |   | X |   |   |   |   |
+| Poly3 |   |   |   |   | X |   |   |   |   |   |   |   |   |   |   |
+| Poly4 |   |   | X |   |   |   |   |   |   |   |   |   |   |   |   |
 | Poly5 |   |   |   |   |   |   |   |   |   |   |   |   |   |   | X |
 
 ## Silicon Neighbourhood
