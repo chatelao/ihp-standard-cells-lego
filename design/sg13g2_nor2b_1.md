@@ -50,12 +50,12 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
 2 G G   G G
 1 G G   G G
 0 G G   G G
-9 G G   G G
-8 G G   G G
-7 G G   G G
-6 GGG  GGGG
-5 G G   G G
-4 G G   G G
+9 G GG  G G
+8 G GG  G G
+7 G GG  G G
+6 GGGG  GGG
+5 G GG  G G
+4 G GG  G G
 3 G G   G G
 2 G G   G G
 1
@@ -86,14 +86,14 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | A | B_N | Internal1 | Y |
+| Silicon | VDD | VSS | VSS2 | A | B_N | Y |
 | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |
-| NMOS2 |   | X |   |   | X | X |
-| PMOS1 | X |   |   |   | X | X |
+| NMOS2 |   | X | X |   |   | X |
+| PMOS1 | X |   | X |   |   | X |
 | PMOS2 | X |   |   |   |   |   |
-| Poly1 |   |   |   | X |   |   |
-| Poly2 |   |   | X |   |   | X |
+| Poly1 |   |   | X |   | X |   |
+| Poly2 |   |   |   | X |   |   |
 
 ## Silicon Neighbourhood
 

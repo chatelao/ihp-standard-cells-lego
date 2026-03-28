@@ -8,6 +8,7 @@ UM_TO_LDU = 20 / 0.27
 LDU_PER_STUD = 20
 LDR_Z_OFFSET = 10
 CELL_HEIGHT_STUDS = 15
+SNAPPING_TOLERANCE = 9.0
 
 PLATE_DIMENSIONS = {
     "91405.dat": (16, 16), "92438.dat": (16, 8), "3027.dat": (16, 6),
@@ -23,6 +24,27 @@ PLATE_DIMENSIONS = {
 }
 
 def um_to_ldu_coord(um): return round(um * UM_TO_LDU)
+
+def is_stud_occupied(gx, gz, xmin, xmax, zmin, zmax):
+    """
+    Refined snapping rule:
+    - If a dimension (width or height) is <= 21.0 LDU, use a center-based rule.
+    - Otherwise, use the 9.0 LDU overlap rule.
+    """
+    overlap_x = min(xmax, gx + 20) - max(xmin, gx)
+    overlap_z = min(zmax, gz + 20) - max(zmin, gz)
+    if overlap_x <= 0 or overlap_z <= 0:
+        return False
+
+    center_x = (xmin + xmax) / 2
+    center_z = (zmin + zmax) / 2
+    width = xmax - xmin
+    height = zmax - zmin
+
+    is_occ_x = (gx <= center_x < gx + 20) if width <= 21.0 else (overlap_x >= SNAPPING_TOLERANCE)
+    is_occ_z = (gz <= center_z < gz + 20) if height <= 21.0 else (overlap_z >= SNAPPING_TOLERANCE)
+
+    return is_occ_x and is_occ_z
 
 def parse_lef_metal1(lef_filepath, target_macro):
     with open(lef_filepath, 'r') as f: content = f.read()
@@ -55,14 +77,13 @@ def get_lef_grid(macro):
     grid = [[False for _ in range(d_studs)] for _ in range(w_studs)]
     for r in macro['rects']:
         lx1, lz1, lx2, lz2 = um_to_ldu_coord(r[0]), um_to_ldu_coord(r[1]) + LDR_Z_OFFSET, um_to_ldu_coord(r[2]), um_to_ldu_coord(r[3]) + LDR_Z_OFFSET
-        xmin, xmax = math.floor(min(lx1, lx2)/20)*20, math.ceil(max(lx1, lx2)/20)*20
-        zmin, zmax = math.floor(min(lz1, lz2)/20)*20, math.ceil(max(lz1, lz2)/20)*20
-        if xmax <= xmin: xmax = xmin + 20
-        if zmax <= zmin: zmax = zmin + 20
-        for gx in range(xmin+10, xmax, 20):
-            for gz in range(zmin+10, zmax, 20):
-                gsx, gsz = gx//20, gz//20
-                if 0 <= gsx < w_studs and 0 <= gsz < d_studs: grid[gsx][gsz] = True
+        xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
+        zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
+        for gsx in range(w_studs):
+            for gsz in range(d_studs):
+                gx, gz = gsx * 20, gsz * 20
+                if is_stud_occupied(gx, gz, xmin_raw, xmax_raw, zmin_raw, zmax_raw):
+                    grid[gsx][gsz] = True
     return grid
 
 def get_ldr_grid(ldr_filepath):

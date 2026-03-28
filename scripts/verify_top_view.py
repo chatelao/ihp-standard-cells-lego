@@ -47,6 +47,27 @@ PLATE_DIMENSIONS = {
 def um_to_ldu_coord(um):
     return round(um * UM_TO_LDU)
 
+def is_stud_occupied(gx, gz, xmin, xmax, zmin, zmax):
+    """
+    Refined snapping rule:
+    - If a dimension (width or height) is <= 21.0 LDU, use a center-based rule.
+    - Otherwise, use the SNAPPING_TOLERANCE (9.0 LDU) overlap rule.
+    """
+    overlap_x = min(xmax, gx + 20) - max(xmin, gx)
+    overlap_z = min(zmax, gz + 20) - max(zmin, gz)
+    if overlap_x <= 0 or overlap_z <= 0:
+        return False
+
+    center_x = (xmin + xmax) / 2
+    center_z = (zmin + zmax) / 2
+    width = xmax - xmin
+    height = zmax - zmin
+
+    is_occ_x = (gx <= center_x < gx + 20) if width <= 21.0 else (overlap_x >= SNAPPING_TOLERANCE)
+    is_occ_z = (gz <= center_z < gz + 20) if height <= 21.0 else (overlap_z >= SNAPPING_TOLERANCE)
+
+    return is_occ_x and is_occ_z
+
 def parse_lef_metal1(lef_filepath):
     with open(lef_filepath, 'r') as f:
         content = f.read()
@@ -113,19 +134,8 @@ def get_lef_grid(macro):
         for gsx in range(w_studs):
             for gsz in range(d_studs):
                 gx, gz = gsx * 20, gsz * 20
-                overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
-                overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
-                if overlap_x > 0 and overlap_z > 0:
-                    is_occupied = False
-                    if overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE:
-                        is_occupied = True
-                    else:
-                        only_x = (xmax_raw - xmin_raw < 20) and (gx <= (xmin_raw + xmax_raw)/2 < gx + 20)
-                        only_z = (zmax_raw - zmin_raw < 20) and (gz <= (zmin_raw + zmax_raw)/2 < gz + 20)
-                        if (only_x or overlap_x >= SNAPPING_TOLERANCE) and (only_z or overlap_z >= SNAPPING_TOLERANCE):
-                            is_occupied = True
-                    if is_occupied:
-                        grid[gsx][gsz] = True
+                if is_stud_occupied(gx, gz, xmin_raw, xmax_raw, zmin_raw, zmax_raw):
+                    grid[gsx][gsz] = True
     return grid
 
 def get_ldr_grid(ldr_filepath):

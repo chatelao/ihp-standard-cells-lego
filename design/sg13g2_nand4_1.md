@@ -47,17 +47,17 @@ Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
   01234567890
 4
 3
-2 G G G G G
-1 G G G G G
-0 G G G G G
-9 G G G G G
-8 G G G G G
-7 G G G G G
+2 G G G GGG
+1 G G G GGG
+0 G G G GGG
+9 G G GGGGG
+8 G G GGGGG
+7 G G GGGGG
 6 GGGGGGGGG
-5 G G G G G
+5 G G GGGGG
 4 G G GGGGG
-3 G G G G G
-2 G G G G G
+3 G G GGGGG
+2 G G GGGGG
 1
 0
 ```

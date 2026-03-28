@@ -192,6 +192,27 @@ def snap_to_grid(value, grid=20):
 def um_to_ldu_coord(um):
     return round(um * UM_TO_LDU)
 
+def is_stud_occupied(gx, gz, xmin, xmax, zmin, zmax):
+    """
+    Refined snapping rule:
+    - If a dimension (width or height) is <= 21.0 LDU, use a center-based rule.
+    - Otherwise, use the SNAPPING_TOLERANCE (9.0 LDU) overlap rule.
+    """
+    overlap_x = min(xmax, gx + 20) - max(xmin, gx)
+    overlap_z = min(zmax, gz + 20) - max(zmin, gz)
+    if overlap_x <= 0 or overlap_z <= 0:
+        return False
+
+    center_x = (xmin + xmax) / 2
+    center_z = (zmin + zmax) / 2
+    width = xmax - xmin
+    height = zmax - zmin
+
+    is_occ_x = (gx <= center_x < gx + 20) if width <= 21.0 else (overlap_x >= SNAPPING_TOLERANCE)
+    is_occ_z = (gz <= center_z < gz + 20) if height <= 21.0 else (overlap_z >= SNAPPING_TOLERANCE)
+
+    return is_occ_x and is_occ_z
+
 def get_unified_parity(stud_x, is_big):
     """
     Unified parity rule for active and gate tracks (Z=2..12):
@@ -414,17 +435,13 @@ def generate_ldr(macro_data):
         possible_studs = []
         compliant_studs = []
         for sx in range(10, width_ldu, 20):
-            # Snapping with tolerance for contacts
             gx = sx - 10
-            overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
-            if overlap_x >= SNAPPING_TOLERANCE or (xmax_raw - xmin_raw < 20 and gx <= (xmin_raw + xmax_raw)/2 < gx + 20):
-                for sz in range(10, height_ldu, 20):
-                    gz = sz - 10
-                    overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
-                    if overlap_z >= SNAPPING_TOLERANCE or (zmax_raw - zmin_raw < 20 and gz <= (zmin_raw + zmax_raw)/2 < gz + 20):
-                        possible_studs.append((sx, sz))
-                        if is_compliant(sx // 20, sz // 20):
-                            compliant_studs.append((sx, sz))
+            for sz in range(10, height_ldu, 20):
+                gz = sz - 10
+                if is_stud_occupied(gx, gz, xmin_raw, xmax_raw, zmin_raw, zmax_raw):
+                    possible_studs.append((sx, sz))
+                    if is_compliant(sx // 20, sz // 20):
+                        compliant_studs.append((sx, sz))
 
         already_covered = any(xmin_raw - SNAPPING_TOLERANCE <= ax <= xmax_raw + SNAPPING_TOLERANCE and zmin_raw - SNAPPING_TOLERANCE <= az <= zmax_raw + SNAPPING_TOLERANCE for ax, az in added_coords)
 
@@ -543,19 +560,8 @@ def generate_ldr(macro_data):
                 for gsx in range(w_studs):
                     for gsz in range(d_studs):
                         gx, gz = gsx * 20, gsz * 20
-                        overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
-                        overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
-                        if overlap_x > 0 and overlap_z > 0:
-                            is_occupied = False
-                            if overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE:
-                                is_occupied = True
-                            else:
-                                only_x = (xmax_raw - xmin_raw < 20) and (gx <= (xmin_raw + xmax_raw)/2 < gx + 20)
-                                only_z = (zmax_raw - zmin_raw < 20) and (gz <= (zmin_raw + zmax_raw)/2 < gz + 20)
-                                if (only_x or overlap_x >= SNAPPING_TOLERANCE) and (only_z or overlap_z >= SNAPPING_TOLERANCE):
-                                    is_occupied = True
-                            if is_occupied:
-                                pin_metal1_grid[gsx][gsz] = color
+                        if is_stud_occupied(gx, gz, xmin_raw, xmax_raw, zmin_raw, zmax_raw):
+                            pin_metal1_grid[gsx][gsz] = color
 
                 add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, pin, current_pin_contacts, [] if has_via1 else current_pin_upward_plates, color, pin_metal1_grid, added_coords)
 
@@ -588,10 +594,7 @@ def generate_ldr(macro_data):
                 for gsx in range(w_studs):
                     for gsz in range(d_studs):
                         gx, gz = gsx * 20, gsz * 20
-                        overlap_x = min(xmax_raw, gx + 20) - max(xmin_raw, gx)
-                        overlap_z = min(zmax_raw, gz + 20) - max(zmin_raw, gz)
-                        if (overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE) or \
-                           ((xmax_raw - xmin_raw < 20 and gx <= (xmin_raw+xmax_raw)/2 < gx+20) and (zmax_raw - zmin_raw < 20 and gz <= (zmin_raw+zmax_raw)/2 < gz+20)):
+                        if is_stud_occupied(gx, gz, xmin_raw, xmax_raw, zmin_raw, zmax_raw):
                             obs_grid[gsx][gsz] = COLOR_METAL1_INTERNAL
                             has_obs = True
 
