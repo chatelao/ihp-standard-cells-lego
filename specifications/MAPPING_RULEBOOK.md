@@ -55,4 +55,4 @@ This document defines the transformation rules from LEF (Library Exchange Format
   - **Small models (width <= 7 studs):** All internal contacts MUST be on **ODD** X-studs (1, 3, 5, ...).
   - **Big models (width > 7 studs):** Internal contacts follow a symmetric parity rule: **ODD** if X < 8, and **EVEN** if X >= 8.
 - **Connectivity:** Every Metal 1 rectangle must have at least one contact stack connecting to the underlying Polysilicon or Active layer.
-- **Snapping:** A stud is occupied if it has at least 5.0 LDU overlap with a LEF geometry.
+- **Snapping:** A stud is occupied if it has at least 6.5 LDU overlap with a LEF geometry.

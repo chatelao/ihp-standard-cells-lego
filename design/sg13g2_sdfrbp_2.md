@@ -67,19 +67,19 @@ Legend: G=Polysilicon
 ```
   01234567890123456789012345678901234567890123456789012345678901234567890
 4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&
-3 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-2    &+cCccCcCc+&Cc &+cCcCcCcC&+  c  CcCcCcCcCcCcCcCcCcCcC&+  &   &+oO&
-1    ++C  CC  C+ CC ++CCCCC CC++CCCCCCC                 CC++OO+ CC++OO+
-0  c c c  cC  c+ Cc &+cCcCc cCcCc cCc   cCcCcCcCcCc       &+oO& cC&+oO&
-9  CCCCC CCC  C+ CC ++CCC   C     CCC CCC CCCCCCC CC    CC++OO+ CC++OO+
-8  c  CcCcc   c+ Cc &+cCcCcCcCcCcCcCc cCc cCcCcCc cCcCcCcCcCoO& cC&+oO&
-7  CIICC  III CCCCC   CCCCC IICC  CCC  CCCCIII  C C CCC    COO   C  OO
-6  cIiCcIiiIi cCcCcCcCcCc   iIcCcCcCcCcCcCcIiIcCc cCcCc  CcCoOo  CcCoOo
-5  C  CCI III   CCC   CCCCCCCCCCCCCCCC C  CIIICC CCCCCCCCCCC  O  CC  OOOO
-4  c _CcIiiIi cCcCc   cC  c c c   c cC C  cCcCcCcCcCc      C  o  Cc-_OoOo
-3  C -CCCCCCCCC-- C CCCC- C - CCCCCCCC    CCCCCCCCCCCCC-  CC- O -CC--OO--
-2    _CcCccCcCc-_ c   c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-_ c _ o _Cc-_Oo-_
-1 -----------------------------------------------------------------------
+3    ++        +    ++         +                          ++  +   +   +
+2    &+cCccCcCc+ Cc &+ CcCcCcC +  c   cCcCcCcCcCcCcCcCcCcC&+  &   &   &
+1    ++C  CC  C+ CC ++ C     C +CCCCC                     ++OO+   + O +
+0  c c c  cC  c+ Cc &+cCcCc cCcCc cCc   cCcCcCcCcCc       &+oO& cC& o &
+9  CCCCC CCC  C+ CC ++CCC   C     CC  CCC       C CC    CC++OO+ CC+ O +
+8  c   cCcc   c+ Cc   c cCcCcCcCcCcC  cCc cCcCcCc cCcCcCcCcCoO& cC& o &
+7  CII C  III CCCCC     CCC IICC  CC   C CCIII  C C CCC    COO   C  O
+6  cIi cIiiIi cCcCcCcC  c   iIc c cCcCcC CcIiIcCc cCcCc  CcCoOo  CcCoOo
+5  C   CI   I   C C     CCCCCCC CCCC C C  CIIICC CCCCCCCCC C  O   C  OOOO
+4  c _ cIiiIi cCc c       c c c   c cC    c cCcCc c        C  o   c-_OoOo
+3  C - CCCCCCCC-  C CCC - C - CCCCCCCC    CCCCCCCCCCCC -  CC- O - C--OO--
+2    _    c    -  c   c _   _ cCcCcCcCcCcCcCcCcCcCcCc c-_ c _   _  -_  -_
+1    -         -        -   -                          -    -   -  --  --
 0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
