@@ -73,8 +73,8 @@ Legend: G=Polysilicon
 0  & o &
 9  + O +
 8    o
-7  IIOOO
-6  iIoOo
+7    O
+6  i oOo
 5    O
 4  _ o _
 3  - O -

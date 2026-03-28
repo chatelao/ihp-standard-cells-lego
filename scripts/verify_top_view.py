@@ -8,7 +8,7 @@ UM_TO_LDU = 20 / 0.27
 LDU_PER_STUD = 20
 LDR_Z_OFFSET = 10
 CELL_HEIGHT_STUDS = 15
-SNAPPING_TOLERANCE = 6.5
+SNAPPING_TOLERANCE = 9.0
 
 # LDraw Part dimensions for Metal 1 (plates and tiles)
 PLATE_DIMENSIONS = {
