@@ -241,9 +241,43 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
         pins_to_process = []
         if macro_data:
             pins_to_process = sorted(macro_data['pins'], key=lambda p: 0 if p['name'] in ['VDD', 'VSS'] else 1)
-        # Pre-populate global grid based on pins
-        # This is a bit tricky because design_to_ldr uses both macro_data RECTs and grid characters.
-        # We'll follow the same order as the LDR generation.
+
+        def get_net_at_stud(x, z, char):
+            # 1. Character-based overrides for Power Rails
+            if char in ['+', '&']: return "VDD"
+            if char in ['-', '_']: return "VSS"
+
+            # 2. Pin identification via LEF
+            if macro_data and char in ['I', 'i', 'O', 'o', 'c']:
+                # A. Exact match via LEF Metal 1 Rectangles
+                for pin in macro_data['pins']:
+                    for rect in pin['rects']:
+                        if rect['layer'] == 'Metal1':
+                            x1 = int(math.floor(rect['coords'][0] * 20 / 0.27 / 20))
+                            z1 = int(math.floor((rect['coords'][1] * 20 / 0.27 + 10) / 20))
+                            x2 = int(math.ceil(rect['coords'][2] * 20 / 0.27 / 20))
+                            z2 = int(math.ceil((rect['coords'][3] * 20 / 0.27 + 10) / 20))
+                            if min(x1, x2) <= x < max(x1, x2) and min(z1, z2) <= z < max(z1, z2):
+                                return pin['name']
+
+                # B. Heuristic: Closest Input/Output pin by horizontal distance
+                target_pins = [p for p in macro_data['pins'] if p['direction'] == ('INPUT' if char in ['I', 'i', 'c'] else 'OUTPUT')]
+                if target_pins:
+                    def dist_to_pin(p):
+                        min_d = 999
+                        for r in p['rects']:
+                            if r['layer'] == 'Metal1':
+                                x1 = int(math.floor(r['coords'][0] * 20 / 0.27 / 20))
+                                x2 = int(math.ceil(r['coords'][2] * 20 / 0.27 / 20))
+                                mid_x = (x1 + x2 - 1) / 2
+                                min_d = min(min_d, abs(x - mid_x))
+                        return min_d
+                    return min(target_pins, key=dist_to_pin)['name']
+
+            # 3. Fallback to general categories
+            if char in ['I', 'i']: return "Input"
+            if char in ['O', 'o']: return "Output"
+            return "Internal"
 
         # Collections for each net
         net_to_contacts = {}
@@ -253,28 +287,7 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
             for z in range(h):
                 char = grid[x][z]
                 if char in CONTACT_MAP or char == 'c':
-                    # Determine net name for this contact
-                    net_name = "Internal"
-                    if char in CONTACT_MAP:
-                        mapped_char = CONTACT_MAP[char]
-                        if mapped_char == '+': net_name = "VDD"
-                        elif mapped_char == '-': net_name = "VSS"
-                        elif mapped_char == 'I': net_name = "Input"
-                        elif mapped_char == 'O': net_name = "Output"
-                    elif char == 'c':
-                        # Find if any pin covers this stud
-                        if macro_data:
-                            for pin in macro_data['pins']:
-                                for rect in pin['rects']:
-                                    if rect['layer'] == 'Metal1':
-                                        x1 = int(math.floor(rect['coords'][0] * 20 / 0.27 / 20))
-                                        z1 = int(math.floor((rect['coords'][1] * 20 / 0.27 + 10) / 20))
-                                        x2 = int(math.ceil(rect['coords'][2] * 20 / 0.27 / 20))
-                                        z2 = int(math.ceil((rect['coords'][3] * 20 / 0.27 + 10) / 20))
-                                        if min(x1, x2) <= x < max(x1, x2) and min(z1, z2) <= z < max(z1, z2):
-                                            net_name = pin['name']
-                                            break
-                                if net_name != "Internal": break
+                    net_name = get_net_at_stud(x, z, char)
 
                     if not is_m1_safe(x, z, net_name):
                         continue
@@ -345,11 +358,12 @@ def generate_ldr_from_layers(cell_name, layers, macro_data):
                                         assigned[ix][iz] = True
                                         global_m1_net_grid[ix][iz] = pin['name']
                                         has_pin_parts = True
-                if has_pin_parts:
-                    pin_label = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
-                    ldr_lines.append(pin_label)
-                    for plate, x, z, c, rot in get_best_plates_multi(pin_grid):
-                        ldr_lines.append(f"1 {c} {x} {Y_METAL1} {z} {'0 0 1 0 1 0 -1 0 0' if rot else '1 0 0 0 1 0 0 0 1'} {plate}")
+
+            if has_pin_parts:
+                pin_label = f"0 // {'VDD' if pin['name']=='VDD' else 'VSS' if pin['name']=='VSS' else 'Pin '+pin['name']} Rail" if pin['name'] in ['VDD', 'VSS'] else f"0 // Pin {pin['name']}"
+                ldr_lines.append(pin_label)
+                for plate, x, z, c, rot in get_best_plates_multi(pin_grid):
+                    ldr_lines.append(f"1 {c} {x} {Y_METAL1} {z} {'0 0 1 0 1 0 -1 0 0' if rot else '1 0 0 0 1 0 0 0 1'} {plate}")
 
         # Unassigned Metal 1 (Internal/Obstructions)
         rem_grid = [[None for _ in range(h)] for _ in range(w)]
