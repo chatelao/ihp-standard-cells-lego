@@ -28,21 +28,21 @@ for file in "$MODELS_DIR"/*.ldr; do
 
     # Top image
     echo "  Rendering top image..."
-    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=90 -Longitude=0 -BackgroundColor=0 -Autocrop=1 -SaveSnapshot="$OUTPUT_DIR/${filename}_top.jpg" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=90 -Longitude=0 -Perspective=0 -BackgroundColor=0 -Autocrop=1 -SaveSnapshot="$OUTPUT_DIR/${filename}_top.jpg" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render top image for $filename"
         [ -f "$LOG_FILE" ] && cat "$LOG_FILE"
     fi
 
     # Front image
     echo "  Rendering front image..."
-    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=0 -SaveSnapshot="$OUTPUT_DIR/${filename}_front.jpg" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=0 -Perspective=0 -SaveSnapshot="$OUTPUT_DIR/${filename}_front.jpg" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render front image for $filename"
         [ -f "$LOG_FILE" ] && cat "$LOG_FILE"
     fi
 
     # Side image
     echo "  Rendering side image..."
-    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=90 -SaveSnapshot="$OUTPUT_DIR/${filename}_side.jpg" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=0 -Longitude=90 -Perspective=0 -SaveSnapshot="$OUTPUT_DIR/${filename}_side.jpg" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render side image for $filename"
         [ -f "$LOG_FILE" ] && cat "$LOG_FILE"
     fi
