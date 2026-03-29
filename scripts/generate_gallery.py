@@ -130,22 +130,16 @@ def generate_gallery():
     for ldr_file in model_files:
         name = os.path.splitext(ldr_file)[0]
 
-        views = [
-            {'suffix': '_compare', 'label': 'Comparison'},
-            {'suffix': '', 'label': 'Perspective'}
-        ]
-
         html_content += f'        <div class="card">\n'
         html_content += f'            <div class="view-grid">\n'
 
-        for i, view in enumerate(views):
-            jpg_name = f"{name}{view['suffix']}.jpg"
-            has_jpg = os.path.exists(os.path.join(image_dir, jpg_name))
+        jpg_name = f"{name}.jpg"
+        has_jpg = os.path.exists(os.path.join(image_dir, jpg_name))
 
-            if has_jpg:
-                html_content += f'                <img src="{image_dir}/{jpg_name}" alt="{name} {view["label"]}">\n'
-            else:
-                html_content += f'                <div class="placeholder">{view["label"]}<br>pending</div>\n'
+        if has_jpg:
+            html_content += f'                <img src="{image_dir}/{jpg_name}" alt="{name} Perspective">\n'
+        else:
+            html_content += f'                <div class="placeholder">Perspective<br>pending</div>\n'
 
         html_content += f'            </div>\n'
         html_content += f'            <div class="card-content">\n'

@@ -56,10 +56,28 @@
             color: #bb86fc;
             font-weight: 600;
         }
+        .view-content {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
         img {
             max-width: 100%;
-            height: auto;
-            border-radius: 4px;
+            max-height: 100%;
+            display: block;
+        }
+        .schematic-box {
+            background-color: #ffffff;
         }
     </style>
 </head>
@@ -71,16 +89,107 @@
 
     <div class="comparison-container">
         <div class="view-box">
-            <div class="view-label">LEGO Top View</div>
-            <img id="lego-img" src="" alt="LEGO Top View">
+            <div class="view-label">3D View</div>
+            <div class="view-content">
+                <iframe id="viewer-iframe" src=""></iframe>
+            </div>
         </div>
         <div class="view-box">
-            <div class="view-label">LEF Rendering</div>
-            <img id="lef-img" src="" alt="LEF Rendering">
+            <div class="view-label">Schematic</div>
+            <div class="view-content schematic-box">
+                <img id="schematic-img" src="" alt="Schematic">
+            </div>
         </div>
     </div>
 
     <script>
+        const cellToPdk = {
+            "sg13g2_a21o_1": "a21o",
+            "sg13g2_a21o_2": "a21o",
+            "sg13g2_a21oi_1": "a21oi",
+            "sg13g2_a21oi_2": "a21oi",
+            "sg13g2_a22oi_1": "a22oi",
+            "sg13g2_a221oi_1": "a221oi",
+            "sg13g2_and2_1": "and2",
+            "sg13g2_and2_2": "and2",
+            "sg13g2_and3_1": "and3",
+            "sg13g2_and3_2": "and3",
+            "sg13g2_and4_1": "and4",
+            "sg13g2_and4_2": "and4",
+            "sg13g2_antennanp": "diode",
+            "sg13g2_buf_1": "buf",
+            "sg13g2_buf_16": "buf",
+            "sg13g2_buf_2": "buf",
+            "sg13g2_buf_4": "buf",
+            "sg13g2_buf_8": "buf",
+            "sg13g2_decap_4": "decap",
+            "sg13g2_decap_8": "decap",
+            "sg13g2_dfrbp_1": "dfrbp",
+            "sg13g2_dfrbp_2": "dfrbp",
+            "sg13g2_dlhq_1": "dlxtp",
+            "sg13g2_dlhr_1": "dlrtp",
+            "sg13g2_dlhrq_1": "dlrtp",
+            "sg13g2_dllr_1": "dlrtp",
+            "sg13g2_dllrq_1": "dlrtp",
+            "sg13g2_dlygate4sd1_1": "dlygate4sd1",
+            "sg13g2_dlygate4sd2_1": "dlygate4sd2",
+            "sg13g2_dlygate4sd3_1": "dlygate4sd3",
+            "sg13g2_ebufn_2": "ebufn",
+            "sg13g2_ebufn_4": "ebufn",
+            "sg13g2_ebufn_8": "ebufn",
+            "sg13g2_einvn_2": "einvn",
+            "sg13g2_einvn_4": "einvn",
+            "sg13g2_einvn_8": "einvn",
+            "sg13g2_fill_1": "fill",
+            "sg13g2_fill_2": "fill",
+            "sg13g2_fill_4": "fill",
+            "sg13g2_fill_8": "fill",
+            "sg13g2_inv_1": "inv",
+            "sg13g2_inv_16": "inv",
+            "sg13g2_inv_2": "inv",
+            "sg13g2_inv_4": "inv",
+            "sg13g2_inv_8": "inv",
+            "sg13g2_lgcp_1": "dlclkp",
+            "sg13g2_mux2_1": "mux2",
+            "sg13g2_mux2_2": "mux2",
+            "sg13g2_mux4_1": "mux4",
+            "sg13g2_nand2_1": "nand2",
+            "sg13g2_nand2_2": "nand2",
+            "sg13g2_nand2b_1": "nand2b",
+            "sg13g2_nand2b_2": "nand2b",
+            "sg13g2_nand3_1": "nand3",
+            "sg13g2_nand3b_1": "nand3b",
+            "sg13g2_nand4_1": "nand4",
+            "sg13g2_nor2_1": "nor2",
+            "sg13g2_nor2_2": "nor2",
+            "sg13g2_nor2b_1": "nor2b",
+            "sg13g2_nor2b_2": "nor2b",
+            "sg13g2_nor3_1": "nor3",
+            "sg13g2_nor3_2": "nor3",
+            "sg13g2_nor4_1": "nor4",
+            "sg13g2_nor4_2": "nor4",
+            "sg13g2_o21ai_1": "o21ai",
+            "sg13g2_or2_1": "or2",
+            "sg13g2_or2_2": "or2",
+            "sg13g2_or3_1": "or3",
+            "sg13g2_or3_2": "or3",
+            "sg13g2_or4_1": "or4",
+            "sg13g2_or4_2": "or4",
+            "sg13g2_sdfbbp_1": "sdfbbp",
+            "sg13g2_sighold": "lpflow_isobufsrc",
+            "sg13g2_slgcp_1": "dlclkp",
+            "sg13g2_tiehi": "conb",
+            "sg13g2_tielo": "conb",
+            "sg13g2_xnor2_1": "xnor2",
+            "sg13g2_xor2_1": "xor2",
+            "sg13g2_dfrbpq_1": "dfrbp",
+            "sg13g2_dfrbpq_2": "dfrbp",
+            "sg13g2_sdfrbp_1": "sdfrbp",
+            "sg13g2_sdfrbp_2": "sdfrbp",
+            "sg13g2_sdfrbpq_1": "sdfrbp",
+            "sg13g2_sdfrbpq_2": "sdfrbp"
+        };
+
         const urlParams = new URLSearchParams(window.location.search);
         const modelName = urlParams.get('model');
 
@@ -88,19 +197,20 @@
             document.getElementById('model-name').innerText = 'No model specified';
         } else {
             document.getElementById('model-name').innerText = modelName;
-            document.getElementById('lego-img').src = 'images/' + modelName + '_top.jpg';
-            document.getElementById('lef-img').src = 'specifications/png/' + modelName + '.png';
+            document.getElementById('viewer-iframe').src = 'viewer.html?model=' + modelName + '&embed=1';
+
+            const cellType = cellToPdk[modelName];
+            if (cellType) {
+                document.getElementById('schematic-img').src = 'https://skywater-pdk.readthedocs.io/en/main/_images/sky130_fd_sc_hd__' + cellType + '.schematic.svg';
+            } else {
+                document.getElementById('schematic-img').alt = 'No schematic mapping found';
+            }
 
             // Error handling for missing images
-            document.getElementById('lego-img').onerror = function() {
-                this.alt = 'LEGO Top View not found';
+            document.getElementById('schematic-img').onerror = function() {
+                this.alt = 'Schematic not found';
                 this.style.display = 'none';
-                this.parentElement.innerHTML += '<div style="padding: 50px; color: #555;">Image pending</div>';
-            };
-            document.getElementById('lef-img').onerror = function() {
-                this.alt = 'LEF Rendering not found';
-                this.style.display = 'none';
-                this.parentElement.innerHTML += '<div style="padding: 50px; color: #555;">Image pending</div>';
+                this.parentElement.innerHTML += '<div style="padding: 50px; color: #555;">Schematic pending</div>';
             };
         }
     </script>

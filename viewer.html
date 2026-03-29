@@ -65,6 +65,10 @@
             document.getElementById('model-name').innerText = 'No model specified';
         } else {
             document.getElementById('model-name').innerText = modelName;
+            if (urlParams.get('embed') === '1') {
+                document.getElementById('info').style.display = 'none';
+                document.getElementById('controls').style.display = 'none';
+            }
             init();
         }
 
