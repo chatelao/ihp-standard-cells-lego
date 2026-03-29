@@ -300,6 +300,21 @@ def generate_ldr(macro_data):
     is_drive_2 = macro_data['name'].endswith('_2')
     is_big = w_studs > 7
 
+    # Identify Power Finger occupancy to avoid gate/contact overlaps
+    power_occupancy = [[False for _ in range(d_studs)] for _ in range(w_studs)]
+    for pin in macro_data['pins']:
+        if pin['name'] in ['VDD', 'VSS']:
+            for rect in pin['rects']:
+                if rect['layer'] == 'Metal1':
+                    lx1, lz1 = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][1]) + 10
+                    lx2, lz2 = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
+                    xmin, xmax = min(lx1, lx2), max(lx1, lx2)
+                    zmin, zmax = min(lz1, lz2), max(lz1, lz2)
+                    for i in range(w_studs):
+                        for k in range(d_studs):
+                            if is_stud_occupied(i*20, k*20, xmin, xmax, zmin, zmax):
+                                power_occupancy[i][k] = True
+
     # Pre-calculate pin assignments for fixed columns
     input_pins = [p for p in macro_data['pins'] if p['direction'] == 'INPUT']
     def get_pin_x(p):
@@ -345,18 +360,20 @@ def generate_ldr(macro_data):
             # Rail Parity is strict: MUST be EVEN for Track 0 and 14
             if stud_z in [0, 14]: return stud_x % 2 == 0
             # Internal tracks follow unified parity
-            return stud_x % 2 == get_unified_parity(stud_x, is_big)
+            if stud_x % 2 != get_unified_parity(stud_x, is_big): return False
+            # NEVER overlap with power fingers
+            return not power_occupancy[stud_x][stud_z]
 
         target_parity = get_unified_parity(ideal_c_x, is_big)
         compliant_studs = [s for s in possible_studs if is_compliant_local(s[0], s[1])]
 
         if not compliant_studs:
-            # Fallback: Find nearest compliant stud (even Z, correct X-parity)
+            # Fallback: Find nearest compliant stud (even Z, correct X-parity, NO power)
             best_c = None
             min_dist = float('inf')
             for i in range(w_studs):
                 for k in range(0, d_studs, 2): # Even Z only
-                    if i % 2 == get_unified_parity(i, is_big):
+                    if i % 2 == get_unified_parity(i, is_big) and not power_occupancy[i][k]:
                         dist = abs(k - 6) * 10 + abs(i - ideal_c_x)
                         if dist < min_dist:
                             min_dist = dist
@@ -371,12 +388,23 @@ def generate_ldr(macro_data):
 
         # Determine gate stud(s)
         # Gold standard: gates at C-1 and C+1 for Big/Drive-2, or C+1 for Drive-1 Small
+        def get_valid_gate(target_x):
+            # Try target, then fallback to nearest stud not occupied by power
+            if 0 <= target_x < w_studs and not any(power_occupancy[target_x][z] for z in range(2, 13)):
+                return target_x
+            # Search nearby
+            for offset in [1, -1, 2, -2]:
+                nx = target_x + offset
+                if 0 <= nx < w_studs and not any(power_occupancy[nx][z] for z in range(2, 13)):
+                    return nx
+            return target_x # Fallback to target if nothing found
+
         if is_drive_2 or is_big:
-            gates = [best_c[0] - 1, best_c[0] + 1]
+            gates = [get_valid_gate(best_c[0] - 1), get_valid_gate(best_c[0] + 1)]
             pad_x = best_c[0] * 20 + 10
             pad_part = '3623.dat'
         else:
-            g = best_c[0] + 1
+            g = get_valid_gate(best_c[0] + 1)
             gates = [g]
             pad_x = ((best_c[0] + g) / 2) * 20 + 10
             pad_part = '3023.dat'
@@ -472,6 +500,10 @@ def generate_ldr(macro_data):
             elif pin_name == 'VDD' and stud_z == 14: score += 5000
             elif (is_gate or pin_name not in ['VDD', 'VSS']) and stud_z == 6: score += 5000
             elif is_diff and stud_z in [2, 4, 8, 10, 12]: score += 5000
+
+            # Penalize studs occupied by power fingers of *other* nets
+            if pin_name not in ['VDD', 'VSS'] and power_occupancy[stud_x][stud_z]:
+                score -= 10000
 
             # Prefer EVEN X for Rails, ODD for Small internal, or symmetric for Big
             target_parity = 0 if stud_z in [0, 14] else get_unified_parity(stud_x, is_big)
@@ -591,23 +623,28 @@ def generate_ldr(macro_data):
                 xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
                 zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
 
+                is_internal_obs = False
                 for gsx in range(w_studs):
                     for gsz in range(d_studs):
                         gx, gz = gsx * 20, gsz * 20
                         if is_stud_occupied(gx, gz, xmin_raw, xmax_raw, zmin_raw, zmax_raw):
                             obs_grid[gsx][gsz] = COLOR_METAL1_INTERNAL
                             has_obs = True
+                            if 1 < gsz < 13: is_internal_obs = True
 
                 obs_contacts = []
                 obs_upward = []
-                add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, {'name': 'OBS'}, obs_contacts, obs_upward, COLOR_METAL1_INTERNAL, obs_grid, added_coords)
+                # For internal obstructions in multi-stage cells, we MUST ensure a contact
+                # and if it is internal (Track 2-12), it might be a gate for the next stage.
+                # We use 'is_gate' flag for internal OBS to trigger Poly growth.
+                add_contacts_for_rect(xmin_raw, xmax_raw, zmin_raw, zmax_raw, {'name': 'Internal', 'is_gate': is_internal_obs}, obs_contacts, obs_upward, COLOR_METAL1_INTERNAL, obs_grid, added_coords)
                 if obs_contacts:
-                    contact_lines.append("0 // Obstructions")
+                    contact_lines.append("0 // Internal / Obstructions")
                     contact_lines.extend(obs_contacts)
                 metal2_plate_lines.extend(obs_upward)
 
         if has_obs:
-            metal1_lines.append("0 // Obstructions")
+            metal1_lines.append("0 // Internal / Obstructions")
             rect_tiles = get_best_plates_multi(obs_grid)
             for plate, tx_off, tz_off, c, rotated in rect_tiles:
                 metal1_lines.append(f"1 {c} {tx_off} {Y_METAL1} {tz_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
