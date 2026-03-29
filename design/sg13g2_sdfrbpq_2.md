@@ -86,29 +86,29 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | VSS2 | VSS3 | VSS4 | VSS5 | CLK | RESET_B | SCD | SCE | Q |
+| Silicon | VDD | VSS | CLK | RESET_B | SCD | SCE | Internal1 | Internal2 | Internal3 | Internal4 | Q |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |   |   |   |   |   |
-| NMOS2 |   | X | X | X | X |   |   |   | X |   | X |
-| PMOS1 | X |   | X | X |   | X |   |   |   |   | X |
+| NMOS2 |   | X |   |   | X |   | X | X | X |   | X |
+| PMOS1 | X |   |   |   |   |   | X | X |   | X | X |
 | PMOS2 | X |   |   |   |   |   |   |   |   |   |   |
-| Poly1 |   |   | X |   |   |   |   |   |   | X |   |
-| Poly10 |   |   |   | X |   | X |   |   |   |   |   |
-| Poly11 |   |   |   | X |   | X | X |   |   |   |   |
-| Poly12 |   |   |   | X |   | X |   |   |   |   |   |
-| Poly13 |   |   |   | X |   | X |   |   |   |   |   |
-| Poly14 |   |   |   | X |   | X |   |   |   |   |   |
-| Poly15 |   |   |   | X | X | X |   |   |   |   |   |
-| Poly16 |   |   |   | X |   |   |   |   |   |   |   |
-| Poly17 |   |   |   | X |   |   |   |   |   |   |   |
-| Poly2 |   |   | X |   |   |   |   |   | X |   |   |
-| Poly3 |   |   | X |   |   |   |   |   |   |   |   |
-| Poly4 |   |   | X |   |   |   |   |   |   |   |   |
-| Poly5 |   |   | X |   |   |   |   |   |   |   |   |
+| Poly1 |   |   |   |   |   | X | X |   |   |   |   |
+| Poly10 |   |   |   |   |   |   |   | X |   | X |   |
+| Poly11 |   |   | X |   |   |   |   | X |   | X |   |
+| Poly12 |   |   |   |   |   |   |   | X |   | X |   |
+| Poly13 |   |   |   |   |   |   |   | X |   | X |   |
+| Poly14 |   |   |   |   |   |   |   | X |   | X |   |
+| Poly15 |   |   |   |   |   |   |   | X | X | X |   |
+| Poly16 |   |   |   |   |   |   |   | X |   |   |   |
+| Poly17 |   |   |   |   |   |   |   | X |   |   |   |
+| Poly2 |   |   |   |   | X |   | X |   |   |   |   |
+| Poly3 |   |   |   |   |   |   | X |   |   |   |   |
+| Poly4 |   |   |   |   |   |   | X |   |   |   |   |
+| Poly5 |   |   |   |   |   |   | X |   |   |   |   |
 | Poly6 |   |   |   | X |   |   |   | X |   |   |   |
-| Poly7 |   |   |   | X |   |   |   |   |   |   |   |
-| Poly8 |   |   |   | X |   |   |   |   |   |   |   |
-| Poly9 |   |   |   | X |   |   |   |   |   |   |   |
+| Poly7 |   |   |   |   |   |   |   | X |   |   |   |
+| Poly8 |   |   |   |   |   |   |   | X |   |   |   |
+| Poly9 |   |   |   |   |   |   |   | X |   |   |   |
 
 ## Silicon Neighbourhood
 
