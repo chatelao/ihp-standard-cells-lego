@@ -131,6 +131,7 @@ def generate_gallery():
         name = os.path.splitext(ldr_file)[0]
 
         views = [
+            {'suffix': '_compare', 'label': 'Comparison'},
             {'suffix': '', 'label': 'Perspective'}
         ]
 
@@ -160,6 +161,7 @@ def generate_gallery():
             html_content += f'                    <span title="Instructions rendering pending" style="color: #555; cursor: help;">PDF</span>\n'
         if os.path.exists(os.path.join(design_dir, f"{name}.md")):
             html_content += f'                    <a href="{design_dir}/{name}.md" target="_blank">Design</a>\n'
+        html_content += f'                    <a href="comparison.html?model={name}" target="_blank">Compare</a>\n'
         if os.path.exists(os.path.join(spec_png_dir, f"{name}.png")):
             html_content += f'                    <a href="{spec_png_dir}/{name}.png" target="_blank">PNG</a>\n'
         if name in pdk_links:

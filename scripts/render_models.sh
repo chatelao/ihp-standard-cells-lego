@@ -28,7 +28,7 @@ for file in "$MODELS_DIR"/*.ldr; do
 
     # Top image
     echo "  Rendering top image..."
-    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=90 -Longitude=0 -SaveSnapshot="$OUTPUT_DIR/${filename}_top.jpg" > "$LOG_FILE" 2>&1; then
+    if ! "$LDVIEW_BIN" "$file" -AllowConfig=0 -AutoRotate=0 -FixedAngle=1 -Width=800 -Height=600 -LDrawDir="$LDRAW_DIR" -UseCamera=0 -Latitude=90 -Longitude=0 -BackgroundColor=0 -Autocrop=1 -SaveSnapshot="$OUTPUT_DIR/${filename}_top.jpg" > "$LOG_FILE" 2>&1; then
         echo "  Error: Failed to render top image for $filename"
         [ -f "$LOG_FILE" ] && cat "$LOG_FILE"
     fi
@@ -102,5 +102,9 @@ for file in "$MODELS_DIR"/*.ldr; do
     rm -rf "$TEMP_STEP_DIR"
 
 done
+
+# Generate comparison images
+echo "Generating comparison images..."
+python3 scripts/generate_comparison_images.py
 
 echo "Rendering complete. Log saved to $LOG_FILE"
