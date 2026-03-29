@@ -131,7 +131,6 @@ def generate_gallery():
         name = os.path.splitext(ldr_file)[0]
 
         views = [
-            {'suffix': '_compare', 'label': 'Comparison'},
             {'suffix': '', 'label': 'Perspective'}
         ]
 
