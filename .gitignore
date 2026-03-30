@@ -9,3 +9,7 @@ logs/
 *_results.txt
 *_final.txt
 library.zip
+
+# PDK Specifications
+!specifications/cells/*.gds
+!specifications/cells/*.cif
