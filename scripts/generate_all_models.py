@@ -8,6 +8,7 @@ def main():
     gen_design_docs_script = 'scripts/generate_design_docs.py'
     design_to_ldr_script = 'scripts/design_to_ldr.py'
     gen_construction_script = 'scripts/generate_construction_images.py'
+    gen_top_images_script = 'scripts/generate_top_images.py'
     gen_gallery_script = 'scripts/generate_gallery.py'
 
     if not os.path.exists(celllist_path):
@@ -42,6 +43,12 @@ def main():
         subprocess.run(['python3', gen_construction_script], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error running {gen_construction_script}: {e}")
+
+    print("Step 3.6: Generating top-down images...")
+    try:
+        subprocess.run(['python3', gen_top_images_script], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running {gen_top_images_script}: {e}")
 
     print("Step 4: Updating the HTML gallery...")
     try:
