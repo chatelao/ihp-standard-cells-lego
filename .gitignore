@@ -1,7 +1,6 @@
 instructions/*.pdf
 images/*.jpg
 index.html
-images/*.png
 logs/
 *.log
 *.txt
@@ -9,3 +8,6 @@ logs/
 *_results.txt
 *_final.txt
 library.zip
+# images/*.png is NOT ignored because we need top-down images for GH Pages
+# but construction images are many and might be considered artifacts.
+# The user wants "Top-down images for all models".
