@@ -1,6 +1,7 @@
 instructions/*.pdf
 images/*.jpg
 index.html
+images/*.png
 logs/
 *.log
 *.txt
