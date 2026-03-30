@@ -51,6 +51,9 @@ TILE_1X1 = "3070.dat"     # 1x1 flat tile
 # Snapping tolerance (LDU)
 SNAPPING_TOLERANCE = 9.0
 
+# CIF to LDU conversion: 1 unit = 1 nm, 270 nm = 20 LDU
+CIF_TO_LDU = 20 / 270
+
 # LDraw Colors (V3)
 COLOR_SUBSTRATE = 8      # Dark Gray
 COLOR_NWELL = 7         # Light Gray
@@ -126,6 +129,66 @@ def get_best_plates_multi(grid, prefer_rotated=False):
                     covered[x][z] = True
 
     return tiles
+
+def parse_cif(cif_path):
+    if not os.path.exists(cif_path):
+        return None
+    with open(cif_path, 'r') as f:
+        cif_content = f.read()
+
+    layers = {}
+    current_layer = None
+
+    # CIF units are nm. 1 LDU = 13.5 nm.
+    # Applying +10 LDU offset only to Z-axis (LEF Y) to align with existing logic and verify_top_view.py.
+    def to_ldr_x(val):
+        return val * CIF_TO_LDU
+    def to_ldr_z(val):
+        return val * CIF_TO_LDU + 10
+
+    commands = cif_content.split(';')
+    for cmd in commands:
+        cmd = cmd.strip()
+        if not cmd: continue
+
+        if cmd.startswith('L '):
+            current_layer = cmd[2:].strip()
+            if current_layer not in layers:
+                layers[current_layer] = []
+        elif cmd.startswith('B '):
+            if current_layer:
+                parts = re.split(r'\s+|,', cmd[2:].strip())
+                if len(parts) >= 4:
+                    try:
+                        w_nm, h_nm, xc_nm, yc_nm = map(float, parts[:4])
+                        x1 = to_ldr_x(xc_nm - w_nm/2)
+                        z1 = to_ldr_z(yc_nm - h_nm/2)
+                        x2 = to_ldr_x(xc_nm + w_nm/2)
+                        z2 = to_ldr_z(yc_nm + h_nm/2)
+                        layers[current_layer].append({
+                            'type': 'box',
+                            'coords': [x1, z1, x2, z2]
+                        })
+                    except ValueError:
+                        continue
+        elif cmd.startswith('P '):
+            if current_layer:
+                points_str = cmd[2:].strip().split()
+                points = []
+                for p in points_str:
+                    pt = p.split(',')
+                    if len(pt) == 2:
+                        try:
+                            px_nm, py_nm = float(pt[0]), float(pt[1])
+                            points.append((to_ldr_x(px_nm), to_ldr_z(py_nm)))
+                        except ValueError:
+                            continue
+                if points:
+                    layers[current_layer].append({
+                        'type': 'polygon',
+                        'points': points
+                    })
+    return layers
 
 def parse_lef_macro(lef_content, macro_name):
     pattern = rf"(?<!PROPERTYDEFINITIONS\n  )MACRO\s+{macro_name}(.*?)END\s+{macro_name}"
@@ -213,15 +276,72 @@ def is_stud_occupied(gx, gz, xmin, xmax, zmin, zmax):
 
     return is_occ_x and is_occ_z
 
-def get_unified_parity(stud_x, is_big):
+def is_point_in_poly(x, z, poly):
+    n = len(poly)
+    inside = False
+    p1x, p1z = poly[0]
+    for i in range(n + 1):
+        p2x, p2z = poly[i % n]
+        if z > min(p1z, p2z):
+            if z <= max(p1z, p2z):
+                if x <= max(p1x, p2x):
+                    if p1z != p2z:
+                        xints = (z - p1z) * (p2x - p1x) / (p2z - p1z) + p1x
+                    if p1x == p2x or x <= xints:
+                        inside = not inside
+        p1x, p1z = p2x, p2z
+    return inside
+
+def is_stud_occupied_geom(gx, gz, geom):
+    if geom['type'] == 'box':
+        xmin, zmin, xmax, zmax = geom['coords']
+        return is_stud_occupied(gx, gz, xmin, xmax, zmin, zmax)
+
+    if geom['type'] == 'polygon':
+        poly = geom['points']
+        xs = [p[0] for p in poly]
+        zs = [p[1] for p in poly]
+        xmin, zmin, xmax, zmax = min(xs), min(zs), max(xs), max(zs)
+
+        # Quick reject
+        if max(xmin, gx) >= min(xmax, gx+20) or max(zmin, gz) >= min(zmax, gz+20):
+            return False
+
+        width = xmax - xmin
+        height = zmax - zmin
+
+        # For polygons, we check center of stud
+        if is_point_in_poly(gx + 10, gz + 10, poly):
+            return True
+
+        # Also check if bbox overlap is significant for larger polygons
+        if width > 21.0 and height > 21.0:
+            overlap_x = min(xmax, gx + 20) - max(xmin, gx)
+            overlap_z = min(zmax, gz + 20) - max(zmin, gz)
+            if overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE:
+                # Still check center to be safe against concave shapes
+                return True
+
+    return False
+
+def get_expected_parity(stud_x, stud_z, is_big, is_drive_2):
     """
-    Unified parity rule for active and gate tracks (Z=2..12):
-    - Small models (width <= 7): Always ODD (1).
-    - Big models (> 7 studs): Symmetric parity - ODD if X < 8, EVEN if X >= 8.
+    Gold Standard Parity Rules (V3):
+    - VSS Rail (Track 0): ODD
+    - VDD Rail (Track 14): EVEN
+    - NMOS Contacts (Track 2, 4): ALWAYS EVEN
+    - PMOS Contacts (Track 8, 10, 12): Drive-1 Small=ODD, else EVEN
+    - Input Contacts (Track 6): Small=ODD, Big=Symmetric
     """
-    if not is_big:
-        return 1 # ODD
-    return 1 if stud_x < 8 else 0 # ODD if < 8, EVEN if >= 8
+    if stud_z == 0: return 1 # VSS
+    if stud_z == 14: return 0 # VDD
+    if stud_z in [2, 4]: return 0 # NMOS
+    if stud_z in [8, 10, 12]:
+        return 0 if (is_drive_2 or is_big) else 1
+    if stud_z == 6:
+        if not is_big: return 1
+        return 1 if stud_x < 8 else 0
+    return 1 # Fallback ODD
 
 def generate_ldr(macro_data):
     ldr_lines = [
@@ -263,19 +383,33 @@ def generate_ldr(macro_data):
     ldr_lines.append("0 STEP")
     ldr_lines.append("0 // Active Regions")
 
-    active_studs = w_studs - 2
+    # CIF Data Loading
+    cif_data = parse_cif(f"specifications/cells/{macro_data['name']}.cif")
+
     active_grid = [[(COLOR_SUBSTRATE if (z*20+10) < split_z else COLOR_NWELL) for z in range(d_studs)] for x in range(w_studs)]
+
+    active_studs = w_studs - 2
     if active_studs < 1: active_studs = 1
     x_start_active = (w_studs - active_studs) // 2
     x_end_active = x_start_active + active_studs
 
-    for x in range(x_start_active, x_end_active):
-        # NMOS (Studs 2-4, Z=40 to 100)
-        for z in range(2, 5):
-            active_grid[x][z] = COLOR_ACTIVE_NMOS
-        # PMOS (Studs 8-12, Z=160 to 260)
-        for z in range(8, 13):
-            active_grid[x][z] = COLOR_ACTIVE_PMOS
+    if cif_data and 'L1D0' in cif_data:
+        for geom in cif_data['L1D0']:
+            for i in range(w_studs):
+                for k in range(d_studs):
+                    if is_stud_occupied_geom(i*20, k*20, geom):
+                        if (k*20+10) < split_z:
+                            active_grid[i][k] = COLOR_ACTIVE_NMOS
+                        else:
+                            active_grid[i][k] = COLOR_ACTIVE_PMOS
+    else:
+        for x in range(x_start_active, x_end_active):
+            # NMOS (Studs 2-4, Z=40 to 100)
+            for z in range(2, 5):
+                active_grid[x][z] = COLOR_ACTIVE_NMOS
+            # PMOS (Studs 8-12, Z=160 to 260)
+            for z in range(8, 13):
+                active_grid[x][z] = COLOR_ACTIVE_PMOS
 
     # Cell-specific Active Region logic (Handmade optimizations)
     if macro_data['name'] == 'sg13g2_nand2b_2':
@@ -300,6 +434,18 @@ def generate_ldr(macro_data):
     is_drive_2 = macro_data['name'].endswith('_2')
     is_big = w_studs > 7
 
+    poly_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
+
+    # Use CIF Polysilicon if available
+    if cif_data and 'L5D0' in cif_data:
+        for geom in cif_data['L5D0']:
+            for i in range(w_studs):
+                for k in range(d_studs):
+                    if is_stud_occupied_geom(i*20, k*20, geom):
+                        # Polysilicon is restricted to Tracks 1-13 center area
+                        if 1 <= k <= 13:
+                            poly_grid[i][k] = COLOR_POLY
+
     # Identify Power Finger occupancy to avoid gate/contact overlaps
     power_occupancy = [[False for _ in range(d_studs)] for _ in range(w_studs)]
     for pin in macro_data['pins']:
@@ -314,6 +460,73 @@ def generate_ldr(macro_data):
                         for k in range(d_studs):
                             if is_stud_occupied(i*20, k*20, xmin, xmax, zmin, zmax):
                                 power_occupancy[i][k] = True
+
+    def is_compliant_global(stud_x, stud_z):
+        if stud_z % 2 != 0: return False
+        if stud_x % 2 != get_expected_parity(stud_x, stud_z, is_big, is_drive_2): return False
+        # NEVER overlap with power fingers
+        return not power_occupancy[stud_x][stud_z]
+
+    # Map CIF Metal 1 to LEF pins/nets
+    cif_net_map = {} # (stud_x, stud_z) -> net_name/pin_name
+    if cif_data and 'L6D0' in cif_data and 'L8D0' in cif_data:
+        # 1. Identify which LEF pin each CIF Metal 1 rectangle belongs to
+        cif_m1_to_net = [] # list of (geom, net_name)
+        for geom in cif_data['L8D0']:
+            # Find overlapping LEF pin
+            xs = [p[0] for p in geom['points']] if geom['type'] == 'polygon' else [geom['coords'][0], geom['coords'][2]]
+            zs = [p[1] for p in geom['points']] if geom['type'] == 'polygon' else [geom['coords'][1], geom['coords'][3]]
+            xmin, zmin, xmax, zmax = min(xs), min(zs), max(xs), max(zs)
+
+            matched_net = "Internal"
+            max_overlap = 0
+            for pin in macro_data['pins']:
+                for rect in pin['rects']:
+                    if rect['layer'] == 'Metal1':
+                        lx1, lz1 = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][1]) + 10
+                        lx2, lz2 = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
+                        l_xmin, l_xmax = min(lx1, lx2), max(lx1, lx2)
+                        l_zmin, l_zmax = min(lz1, lz2), max(lz1, lz2)
+
+                        overlap_x = min(xmax, l_xmax) - max(xmin, l_xmin)
+                        overlap_z = min(zmax, l_zmax) - max(zmin, l_zmin)
+                        if overlap_x > 0 and overlap_z > 0:
+                            area = overlap_x * overlap_z
+                            if area > max_overlap:
+                                max_overlap = area
+                                matched_net = pin['name']
+            cif_m1_to_net.append((geom, matched_net))
+
+        # 2. Map CIF contacts to nets via CIF Metal 1 overlap
+        for c_geom in cif_data['L6D0']:
+            c_xmin, c_zmin, c_xmax, c_zmax = c_geom['coords']
+            cx, cz = (c_xmin + c_xmax) / 2, (c_zmin + c_zmax) / 2
+
+            for m1_geom, net_name in cif_m1_to_net:
+                is_inside = False
+                if m1_geom['type'] == 'box':
+                    m_xmin, m_zmin, m_xmax, m_zmax = m1_geom['coords']
+                    if m_xmin <= cx <= m_xmax and m_zmin <= cz <= m_zmax:
+                        is_inside = True
+                elif m1_geom['type'] == 'polygon':
+                    if is_point_in_poly(cx, cz, m1_geom['points']):
+                        is_inside = True
+
+                if is_inside:
+                    # Snapping to nearest compliant stud
+                    best_stud = None
+                    min_dist = float('inf')
+                    for i in range(w_studs):
+                        for k in range(d_studs):
+                            sx, sz = i * 20 + 10, k * 20 + 10
+                            if is_compliant_global(i, k):
+                                dist = abs(sx - cx) + abs(sz - cz)
+                                if dist < min_dist:
+                                    min_dist = dist
+                                    best_stud = (i, k)
+                    if best_stud:
+                        cif_net_map[best_stud] = net_name
+                    break
 
     # Pre-calculate pin assignments for fixed columns
     input_pins = [p for p in macro_data['pins'] if p['direction'] == 'INPUT']
@@ -355,36 +568,34 @@ def generate_ldr(macro_data):
         # Distribution: 2 pins -> 1, 5. 3 pins -> 1, 5, 9. 4 pins -> 1, 5, 9, 13
         ideal_c_x = 4 * j + 1
 
-        def is_compliant_local(stud_x, stud_z):
-            if stud_z % 2 != 0: return False
-            # Rail Parity is strict: MUST be EVEN for Track 0 and 14
-            if stud_z in [0, 14]: return stud_x % 2 == 0
-            # Internal tracks follow unified parity
-            if stud_x % 2 != get_unified_parity(stud_x, is_big): return False
-            # NEVER overlap with power fingers
-            return not power_occupancy[stud_x][stud_z]
+        target_parity = get_expected_parity(ideal_c_x, 6, is_big, is_drive_2)
 
-        target_parity = get_unified_parity(ideal_c_x, is_big)
-        compliant_studs = [s for s in possible_studs if is_compliant_local(s[0], s[1])]
-
-        if not compliant_studs:
-            # Fallback: Find nearest compliant stud (even Z, correct X-parity, NO power)
-            best_c = None
-            min_dist = float('inf')
-            for i in range(w_studs):
-                for k in range(0, d_studs, 2): # Even Z only
-                    if i % 2 == get_unified_parity(i, is_big) and not power_occupancy[i][k]:
-                        dist = abs(k - 6) * 10 + abs(i - ideal_c_x)
-                        if dist < min_dist:
-                            min_dist = dist
-                            best_c = (i, k)
+        # Try to find a CIF contact for this pin first
+        cif_contacts = [s for s, net in cif_net_map.items() if net == pin['name']]
+        if cif_contacts:
+            # Prefer CIF contact closest to ideal Track 6 and ideal X
+            best_c = min(cif_contacts, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
         else:
-            # Prefer Track 6
-            at_6 = [s for s in compliant_studs if s[1] == 6]
-            if at_6:
-                best_c = min(at_6, key=lambda s: abs(s[0] - ideal_c_x))
+            compliant_studs = [s for s in possible_studs if is_compliant_global(s[0], s[1])]
+
+            if not compliant_studs:
+                # Fallback: Find nearest compliant stud (even Z, correct X-parity, NO power)
+                best_c = None
+                min_dist = float('inf')
+                for i in range(w_studs):
+                    for k in range(0, d_studs, 2): # Even Z only
+                        if is_compliant_global(i, k):
+                            dist = abs(k - 6) * 10 + abs(i - ideal_c_x)
+                            if dist < min_dist:
+                                min_dist = dist
+                                best_c = (i, k)
             else:
-                best_c = min(compliant_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
+                # Prefer Track 6
+                at_6 = [s for s in compliant_studs if s[1] == 6]
+                if at_6:
+                    best_c = min(at_6, key=lambda s: abs(s[0] - ideal_c_x))
+                else:
+                    best_c = min(compliant_studs, key=lambda s: (abs(s[1]-6)*10 + abs(s[0]-ideal_c_x)))
 
         # Determine gate stud(s)
         # Gold standard: gates at C-1 and C+1 for Big/Drive-2, or C+1 for Drive-1 Small
@@ -419,28 +630,29 @@ def generate_ldr(macro_data):
 
     poly_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
 
-    if is_decap:
-        # Specialized Polysilicon for DECAP: Fill all active regions
-        # We will later remove Poly where the Active-connected pin (VSS) has contacts.
-        for x in range(x_start_active, x_end_active):
-            for z in range(2, 13):
-                poly_grid[x][z] = COLOR_POLY
-    else:
-        for pin in macro_data['pins']:
-            if pin['direction'] == 'INPUT':
-                config = pin_assignments[pin['name']]
-                # Mark gates on grid
-                for gs in config['gate']:
-                    for gz in range(2, 13): # Studs 2-12 (~2/3 height)
-                        poly_grid[gs][gz] = COLOR_POLY
-                # Mark pad/bridge on grid
-                cx = config['contact']
-                cz = config['contact_z']
-                poly_grid[cx][cz] = COLOR_POLY
-                # Connect pad to gates (horizontal bridge)
-                for gx in config['gate']:
-                    for bx in range(min(cx, gx), max(cx, gx) + 1):
-                        poly_grid[bx][cz] = COLOR_POLY
+    if not (cif_data and 'L5D0' in cif_data):
+        if is_decap:
+            # Specialized Polysilicon for DECAP: Fill all active regions
+            # We will later remove Poly where the Active-connected pin (VSS) has contacts.
+            for x in range(x_start_active, x_end_active):
+                for z in range(2, 13):
+                    poly_grid[x][z] = COLOR_POLY
+        else:
+            for pin in macro_data['pins']:
+                if pin['direction'] == 'INPUT':
+                    config = pin_assignments[pin['name']]
+                    # Mark gates on grid
+                    for gs in config['gate']:
+                        for gz in range(2, 13): # Studs 2-12 (~2/3 height)
+                            poly_grid[gs][gz] = COLOR_POLY
+                    # Mark pad/bridge on grid
+                    cx = config['contact']
+                    cz = config['contact_z']
+                    poly_grid[cx][cz] = COLOR_POLY
+                    # Connect pad to gates (horizontal bridge)
+                    for gx in config['gate']:
+                        for bx in range(min(cx, gx), max(cx, gx) + 1):
+                            poly_grid[bx][cz] = COLOR_POLY
 
     # 5. Pins, Rails, and Contacts
     contact_lines = []
@@ -454,11 +666,7 @@ def generate_ldr(macro_data):
         is_diff = pin_data.get('is_diff', False) if isinstance(pin_data, dict) else False
 
         def is_compliant(stud_x, stud_z):
-            if stud_z % 2 != 0: return False
-            # Rail Parity is strict: MUST be EVEN for Track 0 and 14
-            if stud_z in [0, 14]: return stud_x % 2 == 0
-            # Internal tracks follow unified parity
-            return stud_x % 2 == get_unified_parity(stud_x, is_big)
+            return is_compliant_global(stud_x, stud_z)
 
         possible_studs = []
         compliant_studs = []
@@ -505,12 +713,20 @@ def generate_ldr(macro_data):
             if pin_name not in ['VDD', 'VSS'] and power_occupancy[stud_x][stud_z]:
                 score -= 10000
 
-            # Prefer EVEN X for Rails, ODD for Small internal, or symmetric for Big
-            target_parity = 0 if stud_z in [0, 14] else get_unified_parity(stud_x, is_big)
+            # Prefer expected parity
+            target_parity = get_expected_parity(stud_x, stud_z, is_big, is_drive_2)
             if stud_x % 2 == target_parity: score += 1000
             return score
 
-        best_studs = sorted(compliant_studs, key=lambda s: score_stud(*s), reverse=True)
+        # Prioritize CIF contacts for this pin/net
+        cif_contacts = [s for s, net in cif_net_map.items() if net == pin_name]
+        cif_studs = []
+        for csx, csz in cif_contacts:
+            stud_coords = (csx * 20 + 10, csz * 20 + 10)
+            if stud_coords in compliant_studs:
+                cif_studs.append(stud_coords)
+
+        best_studs = cif_studs + sorted([s for s in compliant_studs if s not in cif_studs], key=lambda s: score_stud(*s), reverse=True)
 
         for sx, sz in best_studs:
             if (sx, sz) not in added_coords:
