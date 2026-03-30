@@ -34,13 +34,20 @@ PLATE_DIMENSIONS = {
     "3062b.dat": (1, 1), "6141.dat": (1, 1),
 }
 
-def parse_ldr(ldr_path):
+def parse_ldr(ldr_path, limit_step=None):
     parts = []
     if not os.path.exists(ldr_path):
         return []
+    current_step = 1
     with open(ldr_path, 'r') as f:
         for line in f:
             line = line.strip()
+            if line.startswith('0 STEP'):
+                current_step += 1
+                if limit_step is not None and current_step > limit_step:
+                    break
+                continue
+
             if not line.startswith('1 '):
                 continue
             tokens = line.split()
@@ -67,11 +74,12 @@ def parse_ldr(ldr_path):
                 continue
     return parts
 
-def render(ldr_path, output_path):
-    parts = parse_ldr(ldr_path)
+def render(ldr_path, output_path=None, limit_step=None):
+    parts = parse_ldr(ldr_path, limit_step=limit_step)
     if not parts:
-        print(f"No parts found in {ldr_path}")
-        return
+        if not limit_step:
+            print(f"No parts found in {ldr_path}")
+        return None
 
     # Determine bounding box
     min_x, max_x = float('inf'), float('-inf')
@@ -166,11 +174,14 @@ def render(ldr_path, output_path):
                     h_rad = stud_radius * 0.6
                     draw.ellipse([sx - h_rad, sz - h_rad, sx - 1, sz - 1], fill=(int(min(255, color[0]*1.3)), int(min(255, color[1]*1.3)), int(min(255, color[2]*1.3))))
 
-    img.save(output_path)
-    print(f"Rendered to {output_path}")
+    if output_path:
+        img.save(output_path)
+        print(f"Rendered to {output_path}")
+    return img
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python render_ldr_top.py <input.ldr> <output.png>")
+        print("Usage: python render_ldr_top.py <input.ldr> <output.png> [limit_step]")
     else:
-        render(sys.argv[1], sys.argv[2])
+        limit = int(sys.argv[3]) if len(sys.argv) > 3 else None
+        render(sys.argv[1], sys.argv[2], limit_step=limit)

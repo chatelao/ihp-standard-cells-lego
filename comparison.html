@@ -95,6 +95,12 @@
             </div>
         </div>
         <div class="view-box">
+            <div class="view-label">Construction Passes</div>
+            <div class="view-content">
+                <img id="construction-img" src="" alt="Construction Passes">
+            </div>
+        </div>
+        <div class="view-box">
             <div class="view-label">Schematic</div>
             <div class="view-content schematic-box">
                 <img id="schematic-img" src="" alt="Schematic">
@@ -198,6 +204,8 @@
         } else {
             document.getElementById('model-name').innerText = modelName;
             document.getElementById('viewer-iframe').src = 'viewer.html?model=' + modelName + '&embed=1';
+
+            document.getElementById('construction-img').src = 'images/' + modelName + '_construction.png';
 
             const cellType = cellToPdk[modelName];
             if (cellType) {
