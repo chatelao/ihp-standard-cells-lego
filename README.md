@@ -9,9 +9,9 @@ The library consists of 84 standard cells. All cells have been physically mapped
 | Metric | Status | Pass Rate |
 |--------|--------|-----------|
 | **Total Cells** | 84 | - |
-| **Physical Mapping** | 84/84 | 100% |
-| **Geometric Accuracy** | 84/84 | 100% |
+| **Macro Dimensions** | 84/84 | 100% |
 | **Pin Existence** | 84/84 | 100% |
+| **Spatial Mapping** | 84/84 | 100% |
 | **V3 Gold Standard Compliance** | 45/84 | 53% |
 
 ## Goal
@@ -30,6 +30,12 @@ To provide a physical, LEGO-based representation of semiconductor standard cells
 The following diagram illustrates the generation and verification workflow:
 
 ![IHP Standard Cells LEGO Generation Workflow](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/chatelao/ihp-standard-cells-lego/main/specifications/workflow.puml)
+
+## Dependency Graph
+
+The relationship between the various scripts and data sources is shown below:
+
+![IHP Standard Cells LEGO Dependency Graph](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/chatelao/ihp-standard-cells-lego/main/specifications/dependency_graph.puml)
 
 ## Gallery
 The generated LEGO models can be viewed in the [IHP LEGO Models Gallery](https://chatelao.github.io/ihp-standard-cells-lego/).

@@ -1,0 +1,70 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title IHP Standard Cells LEGO Dependency Graph
+
+package "Input Data" {
+    [sg13g2_stdcell.lef] as LEF
+    [sg13g2_stdcell.celllist] as List
+    [handmade/*.md] as Handmade
+}
+
+package "Scripts" {
+    [lef_to_ldr.py] as LEF2LDR
+    [generate_design_docs.py] as GenDocs
+    [design_to_ldr.py] as Design2LDR
+    [generate_all_models.py] as GenAll
+    [render_models.sh] as Render
+    [generate_gallery.py] as GenGallery
+}
+
+package "Intermediate & Output Data" {
+    folder "/models/*.ldr" as LDRs
+    folder "/design/*.md" as DesignDocs
+    folder "/images/*.jpg" as Images
+    [index.html] as Gallery
+}
+
+package "Verification" {
+    [verify_models_v3.py] as V3
+    [verify_macro_dimensions.py] as Dim
+    [verify_pin_existence.py] as Pins
+    [verify_spatial_mapping.py] as Spatial
+    folder "/logs/*.log" as Logs
+}
+
+LEF --> LEF2LDR
+List --> LEF2LDR
+LEF2LDR --> LDRs
+
+LDRs --> GenDocs
+Handmade --> GenDocs
+GenDocs --> DesignDocs
+
+DesignDocs --> Design2LDR
+Design2LDR --> LDRs
+
+LDRs --> Render
+Render --> Images
+
+Images --> GenGallery
+GenGallery --> Gallery
+
+GenAll --> LEF2LDR : orchestrates
+GenAll --> GenDocs : orchestrates
+GenAll --> Design2LDR : orchestrates
+GenAll --> GenGallery : orchestrates
+
+LDRs --> V3
+LDRs --> Dim
+LDRs --> Pins
+LDRs --> Spatial
+
+V3 --> Logs
+Dim --> Logs
+Pins --> Logs
+Spatial --> Logs
+
+@enduml
