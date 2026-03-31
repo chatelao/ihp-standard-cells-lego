@@ -48,12 +48,15 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+          cache: 'pip'
 
       - name: Generate Gallery
-        run: python3 scripts/generate_gallery.py
+        run: |
+          pip install -r requirements.txt
+          python3 scripts/generate_gallery.py
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
