@@ -9,16 +9,16 @@
 - Before publishing a pull request to GitHub, pull main from the  origin and resolve all merge conflicts.
 
 # Project structure
-- / - Keep only GEMINI.md, README.md and ROADMAP.md in the root directory
-- /specifications - Download and store the original standard cell definitions from the IHP PDK here
-- /specifications - Convert "non .md" files for caching and readability purpose to Markdown here
-- /specifications/MAPPING_RULEBOOK.md - Instructions about how to draw the LEGO models from specifications and conversion logic from LEF to LDR
-- /models - The LEGO LDR models of the cells, the lego have to be arranged in a way "snapping" into each others
-- /images - The rendered LEGO models
-- /instructions - The automated instructions how to build the LEGO model as PDF (not committed to repo, only deployed to GitHub Pages)
-- /design - Layer-by-layer ASCII art design documentation for cells
-- /.github/workflows - For every push on every branch, re-render all models to images and instructions
-- README.md - Update overview of the product
+- `/` - Keep only GEMINI.md, README.md and ROADMAP.md in the root directory
+- `/specifications` - Download and store the original standard cell definitions from the IHP PDK and CIF here
+- `/specifications` - Convert "non .md" files for caching and readability purpose to Markdown here
+- `/specifications/MAPPING_RULEBOOK.md` - Instructions about how to draw the LEGO models from specifications and conversion logic from LEF to LDR
+- `/models` - The LEGO LDR models of the cells, the lego have to be arranged in a way "snapping" into each others
+- `/images` - The rendered LEGO models
+- `/instructions` - The automated instructions how to build the LEGO model as PDF (not committed to repo, only deployed to GitHub Pages)
+- `/design` - Layer-by-layer ASCII art design documentation for cells
+- `/.github/workflows` - For every push on every branch, re-render all models to images and instructions
+- `README.md` - Update overview of the product
 
 # Design Documentation Rules
 - For each standard cell, maintain a Markdown file in `/design` with layer-by-layer ASCII art.
