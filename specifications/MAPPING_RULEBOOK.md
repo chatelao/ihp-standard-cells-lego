@@ -1,6 +1,6 @@
 # LEF to LDR Mapping Rulebook (Derived from Data)
 
-This document defines the transformation rules from LEF (Library Exchange Format) to LDR (LDraw) LEGO models for the IHP SG13G2 process, derived from the handmade "Golden Standard" designs.
+This document defines the transformation rules from CIF (Caltech Intermediate Form) to LDR (LDraw) LEGO models for the IHP SG13G2 process, derived from the handmade "Golden Standard" designs.
 
 ## 1. Coordinate System Mapping
 - **Scale:**
