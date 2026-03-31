@@ -94,25 +94,24 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conne
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | Y | A_N | Internal1 |
-| --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |
-| NMOS2 |   |   |   | X |   |
-| NMOS3 |   | X | X |   | X |
-| PMOS1 | X |   |   | X |   |
-| PMOS2 | X |   | X |   |   |
-| PMOS3 | X |   |   |   |   |
-| Poly1 |   |   |   | X |   |
-| Poly2 |   |   | X |   |   |
-| Poly3 |   |   |   | X |   |
+| Silicon | VDD2 | VDD3 | VDD4 | VSS2 | VSS3 | A_N | B | Internal1 | Internal2 | Y |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS2 |   |   |   |   |   |   |   | X |   |   |
+| NMOS3 |   |   |   |   |   |   |   | X |   | X |
+| PMOS1 |   |   |   |   |   |   |   |   | X |   |
+| PMOS2 |   |   |   |   |   |   |   |   |   | X |
+| Poly1 | X | X |   | X |   | X |   | X | X | X |
+| Poly2 |   |   |   |   | X |   | X | X |   | X |
+| Poly3 |   |   | X |   |   |   |   | X |   | X |
+| Poly4 |   |   |   |   |   |   |   | X |   |   |
 
 ## Silicon Neighbourhood
 
-| Silicon | Poly1 | Poly2 | Poly3 |
-| --- | --- | --- | --- |
-| NMOS1 | N | N |   |
-| NMOS2 |   |   | O |
-| NMOS3 | O | O |   |
-| PMOS1 |   |   | O |
-| PMOS2 | O | O |   |
-| PMOS3 | S | S |   |
+| Silicon | Poly1 | Poly2 | Poly3 | Poly4 |
+| --- | --- | --- | --- | --- |
+| NMOS1 |   |   |   |   |
+| NMOS2 | O |   |   |   |
+| NMOS3 | O | O | O | O |
+| PMOS1 | O |   |   |   |
+| PMOS2 | O | O | O | O |
+| PMOS3 |   |   |   |   |
