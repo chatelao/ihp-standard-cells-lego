@@ -18,16 +18,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y unzip curl libgl1 libglu1-mesa libglx0 libopengl0 libgl1-mesa-dri zstd libosmesa6 libosmesa6-dev xvfb img2pdf
-          pip install Pillow
+          pip install -r requirements.txt
 
-      - name: Install LDraw parts library and LDView (OSMesa)
+      - name: Cache LDraw and LDView deb files
+        id: cache-deb
+        uses: actions/cache@v4
+        with:
+          path: |
+            ldraw.deb
+            ldview.deb
+          key: ${{ runner.os }}-debs-ldraw-2025.09-1-ldview-4.7-1
+
+      - name: Download LDraw parts library and LDView (OSMesa)
+        if: steps.cache-deb.outputs.cache-hit != 'true'
         run: |
           curl -L http://download.opensuse.org/repositories/home:/pbartfai/xUbuntu_24.04/amd64/ldraw_2025.09-1_amd64.deb -o ldraw.deb
           curl -L https://download.opensuse.org/repositories/home:/pbartfai/xUbuntu_24.04/amd64/ldview-osmesa_4.7-1_amd64.deb -o ldview.deb
+
+      - name: Install LDraw and LDView
+        run: |
           sudo apt-get install -y ./ldraw.deb ./ldview.deb
 
       - name: Create LDView config directory
