@@ -10,8 +10,8 @@
 
 # Project structure
 - `/` - Keep only GEMINI.md, README.md and ROADMAP.md in the root directory
-- `/specifications` - Download and store the original standard cell definitions from the IHP PDK and CIF here
-- `/specifications` - Convert "non .md" files for caching and readability purpose to Markdown here
+- `/specifications` - Download and store the original standard cell definitions from the IHP PDK here
+- `/specifications/cif` - The per cell cif and gds information
 - `/specifications/MAPPING_RULEBOOK.md` - Instructions about how to draw the LEGO models from specifications and conversion logic from LEF to LDR
 - `/models` - The LEGO LDR models of the cells, the lego have to be arranged in a way "snapping" into each others
 - `/images` - The rendered LEGO models
