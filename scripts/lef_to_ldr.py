@@ -307,19 +307,19 @@ def is_stud_occupied_geom(gx, gz, geom):
         if max(xmin, gx) >= min(xmax, gx+20) or max(zmin, gz) >= min(zmax, gz+20):
             return False
 
-        width = xmax - xmin
-        height = zmax - zmin
-
         # For polygons, we check center of stud
         if is_point_in_poly(gx + 10, gz + 10, poly):
             return True
 
-        # Also check if bbox overlap is significant for larger polygons
-        if width > 21.0 and height > 21.0:
+            # For long narrow polygons (like gates), check if they pass through the stud
+            # and have enough overlap.
             overlap_x = min(xmax, gx + 20) - max(xmin, gx)
             overlap_z = min(zmax, gz + 20) - max(zmin, gz)
+            if overlap_x >= 3.0 and overlap_z >= 15.0: # Very narrow but tall
+                return True
+            if overlap_x >= 15.0 and overlap_z >= 3.0: # Very short but wide
+                return True
             if overlap_x >= SNAPPING_TOLERANCE and overlap_z >= SNAPPING_TOLERANCE:
-                # Still check center to be safe against concave shapes
                 return True
 
     return False
@@ -327,21 +327,15 @@ def is_stud_occupied_geom(gx, gz, geom):
 def get_expected_parity(stud_x, stud_z, is_big, is_drive_2):
     """
     Gold Standard Parity Rules (V3):
-    - VSS Rail (Track 0): ODD
+    - VSS Rail (Track 0): EVEN
     - VDD Rail (Track 14): EVEN
-    - NMOS Contacts (Track 2, 4): ALWAYS EVEN
-    - PMOS Contacts (Track 8, 10, 12): Drive-1 Small=ODD, else EVEN
-    - Input Contacts (Track 6): Small=ODD, Big=Symmetric
+    - NMOS Contacts (Track 2, 4): ODD (Small), Symmetric (Big)
+    - PMOS Contacts (Track 8, 10, 12): ODD (Small), Symmetric (Big)
+    - Input Contacts (Track 6): ODD (Small), Symmetric (Big)
     """
-    if stud_z == 0: return 1 # VSS
-    if stud_z == 14: return 0 # VDD
-    if stud_z in [2, 4]: return 0 # NMOS
-    if stud_z in [8, 10, 12]:
-        return 0 if (is_drive_2 or is_big) else 1
-    if stud_z == 6:
-        if not is_big: return 1
-        return 1 if stud_x < 8 else 0
-    return 1 # Fallback ODD
+    if stud_z in [0, 14]: return 0 # Rail Parity (EVEN)
+    if not is_big: return 1 # ODD for all signal/nmos/pmos in small cells
+    return 1 if stud_x < 8 else 0 # Symmetric ODD/EVEN split for big cells
 
 def generate_ldr(macro_data):
     ldr_lines = [
@@ -442,12 +436,14 @@ def generate_ldr(macro_data):
             for i in range(w_studs):
                 for k in range(d_studs):
                     if is_stud_occupied_geom(i*20, k*20, geom):
-                        # Polysilicon is restricted to Tracks 1-13 center area
+                        # Polysilicon is allowed in Tracks 1-13
                         if 1 <= k <= 13:
                             poly_grid[i][k] = COLOR_POLY
 
     # Identify Power Finger occupancy to avoid gate/contact overlaps
     power_occupancy = [[False for _ in range(d_studs)] for _ in range(w_studs)]
+    # Metal 1 grid for all power rails and fingers
+    power_metal1_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
     for pin in macro_data['pins']:
         if pin['name'] in ['VDD', 'VSS']:
             for rect in pin['rects']:
@@ -460,11 +456,14 @@ def generate_ldr(macro_data):
                         for k in range(d_studs):
                             if is_stud_occupied(i*20, k*20, xmin, xmax, zmin, zmax):
                                 power_occupancy[i][k] = True
+                                power_metal1_grid[i][k] = COLOR_VDD if pin['name'] == 'VDD' else COLOR_VSS
 
     def is_compliant_global(stud_x, stud_z):
         if stud_z % 2 != 0: return False
         if stud_x % 2 != get_expected_parity(stud_x, stud_z, is_big, is_drive_2): return False
-        # NEVER overlap with power fingers
+        # NEVER overlap with power fingers for pins that are NOT VDD/VSS
+        # Power rails (0, 14) are allowed to overlap their own fingers
+        if stud_z in [0, 14]: return True
         return not power_occupancy[stud_x][stud_z]
 
     # Map CIF Metal 1 to LEF pins/nets
@@ -628,8 +627,6 @@ def generate_ldr(macro_data):
             'pad_part': pad_part
         }
 
-    poly_grid = [[None for _ in range(d_studs)] for _ in range(w_studs)]
-
     if not (cif_data and 'L5D0' in cif_data):
         if is_decap:
             # Specialized Polysilicon for DECAP: Fill all active regions
@@ -713,6 +710,11 @@ def generate_ldr(macro_data):
             if pin_name not in ['VDD', 'VSS'] and power_occupancy[stud_x][stud_z]:
                 score -= 10000
 
+            # Bonus for existing Polysilicon if we want to connect to a gate
+            is_to_poly = (stud_z == 6 or is_gate) and (pin_name not in ['VDD', 'VSS']) and not is_diff
+            if is_to_poly and poly_grid[stud_x][stud_z] == COLOR_POLY:
+                score += 2000
+
             # Prefer expected parity
             target_parity = get_expected_parity(stud_x, stud_z, is_big, is_drive_2)
             if stud_x % 2 == target_parity: score += 1000
@@ -751,8 +753,11 @@ def generate_ldr(macro_data):
 
                 if is_to_poly:
                     # Mark gates on grid and grow vertically (Studs 2-12)
-                    for gz in range(2, 13):
-                        poly_grid[stud_x][gz] = COLOR_POLY
+                    # If CIF is available, we only grow if there's already poly at this X in some track
+                    has_cif_poly = any(poly_grid[stud_x][gz] == COLOR_POLY for gz in range(1, 14))
+                    if not (cif_data and 'L5D0' in cif_data) or has_cif_poly:
+                        for gz in range(2, 13):
+                            poly_grid[stud_x][gz] = COLOR_POLY
                 else:
                     current_pin_contacts.append(f"1 {COLOR_CONTACT} {sx} {Y_POLY} {sz} 1 0 0 0 1 0 0 0 1 {ROUND_PLATE}")
                     if is_decap: poly_grid[stud_x][stud_z] = None
@@ -865,21 +870,15 @@ def generate_ldr(macro_data):
             for plate, tx_off, tz_off, c, rotated in rect_tiles:
                 metal1_lines.append(f"1 {c} {tx_off} {Y_METAL1} {tz_off} {'0 0 1 0 1 0 -1 0 0' if rotated else '1 0 0 0 1 0 0 0 1'} {plate}")
 
-    if not is_decap:
-        for pin in macro_data['pins']:
-            if pin['name'] in ['VDD', 'VSS']:
-                for rect in pin['rects']:
-                    if rect['layer'] == 'Metal1':
-                        lx1, lz1 = um_to_ldu_coord(rect['coords'][0]), um_to_ldu_coord(rect['coords'][1]) + 10
-                        lx2, lz2 = um_to_ldu_coord(rect['coords'][2]), um_to_ldu_coord(rect['coords'][3]) + 10
-                        xmin_raw, xmax_raw = min(lx1, lx2), max(lx1, lx2)
-                        zmin_raw, zmax_raw = min(lz1, lz2), max(lz1, lz2)
-                        for gsx in range(w_studs):
-                            for gsz in range(d_studs):
-                                gx, gz = gsx * 20, gsz * 20
-                                if min(xmax_raw, gx+20) - max(xmin_raw, gx) >= SNAPPING_TOLERANCE and \
-                                   min(zmax_raw, gz+20) - max(zmin_raw, gz) >= SNAPPING_TOLERANCE:
-                                    poly_grid[gsx][gsz] = None
+    # V3: Polysilicon is allowed to exist under VDD/VSS fingers in the physical layout.
+    # We no longer clear poly_grid based on power_occupancy here to preserve CIF accuracy.
+    # However, to avoid visual noise and maintain CMOS convention, we only keep Poly
+    # under power fingers if it came from CIF (actual gates/interconnects).
+    if not (cif_data and 'L5D0' in cif_data):
+        for x in range(w_studs):
+            for z in range(d_studs):
+                if power_occupancy[x][z]:
+                    poly_grid[x][z] = None
 
     poly_tiles = get_best_plates_multi(poly_grid)
     tiles3 = get_best_plates_multi(active_grid)
