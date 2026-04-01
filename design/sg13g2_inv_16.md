@@ -3,13 +3,13 @@
 ## Substrate
 ```
   0123456789012345678901234567890123
-4 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-2 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-1 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-0 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-9 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-8 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+4 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+9 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+8 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
@@ -25,39 +25,39 @@ Legend: N=N-Well, S=Substrate
 ```
   0123456789012345678901234567890123
 4 pppppppppppppppppppppppppppppppppp
-3 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-2 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-1 NppppppppppppppppppppppppppppppppN
-0 NppppppppppppppppppppppppppppppppN
-9 NppppppppppppppppppppppppppppppppN
-8 NppppppppppppppppppppppppppppppppN
+3 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+0 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+9 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+8 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 7 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 6 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 5 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-4 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
-3 SnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnS
+4 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+3 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 1 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 0 nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 ```
-Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P)
 
 ## Polysilicon
 ```
   0123456789012345678901234567890123
 4
 3
-2   G G G G          G G G G      G
-1   G G G G          G G G G      G
-0   G G G G          G G G G      G
-9   G G G G          G G G G      G
-8   G G G G          G G G G      G
-7   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-6   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-5   G G G G          G G G G      G
-4   G G G G          G G G G      G
-3   G G G G          G G G G      G
-2   G G G G          G G G G      G
+2   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+1   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+0   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+9   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+8   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+7   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+6   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+5   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+4   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+3   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+2   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 1
 0
 ```
@@ -66,21 +66,21 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   0123456789012345678901234567890123
-4 &+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+&+
-3  +   +   +   +  +   +   +   +   +
-2  + & +   +   +  +   +   +   +   +
-1  + O + O + O +O + O + O + O + O +
-0  + o + o + O +o + o + o + o + o +
-9  + O   O   O  O   O   O   O   O +
-8    oOoOooOoOoOoOoOoOoOoOoOoOoOo
-7    OOOOOOOOOOOOOOOOOOOOOOOO   III
-6    o   o   O  o   o   o   o   iIi
-5    O   O   O  O   O   O   O
-4  - o - o - O -o - o - o - oOoOo-
-3  - O - O - O -O - O - O - O - O-
-2  - _ -   -   -  -   -   -   -  -
-1  -   -   -   -  -   -   -   -  -
-0 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+4 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+3 ++++++++++++++++++++++++++++++++++
+2 +++&++++&+++&+++++++++&+++&+++&+++
+1 ++++++++++++++++++++++++++++++++++
+0 +++&+++&&+&+&+&+++&+++&+++&+++&+++
+9 ++++++++++++++++++++++++++++++++++
+8 +++&&&&&&&&&++&+++&+++&+++&+++&+++
+7    OOOOOOOOOOOOOOOOOOOOOOOOOOOO
+6    OOOOOOOOOOOOOOOOOOOOOOOOOOOici
+5    OOOOOOOOOOOOOOOOOOOOOOOOOOOO
+4 ---_---__-_-_-_---_---_---_-_-_-_-
+3 ----------------------------------
+2 ---_----_---_---------_---------_-
+1 ----------------------------------
+0 __________________________________
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
@@ -89,16 +89,6 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | Silicon | VDD | VSS | A | Y |
 | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |
-| NMOS2 |   |   |   | X |
-| PMOS1 |   |   |   | X |
-| PMOS2 | X |   |   |   |
-| Poly1 |   |   | X | X |
+| PMOS1 | X |   |   |   |
+| Poly1 | X | X | X | X |
 
-## Silicon Neighbourhood
-
-| Silicon | Poly1 |
-| --- | --- |
-| NMOS1 |   |
-| NMOS2 | O |
-| PMOS1 | O |
-| PMOS2 |   |

@@ -3,13 +3,13 @@
 ## Substrate
 ```
   012345678
-4 NNNNNNNNN
-3 NNNNNNNNN
-2 NNNNNNNNN
-1 NNNNNNNNN
-0 NNNNNNNNN
-9 NNNNNNNNN
-8 NNNNNNNNN
+4 SSSSSSSSS
+3 NNNNNNNSS
+2 NNNNNNNSS
+1 NNNNNNNSS
+0 NNNNNNNSS
+9 NNNNNNNSS
+8 SSSSSSSSS
 7 SSSSSSSSS
 6 SSSSSSSSS
 5 SSSSSSSSS
@@ -92,21 +92,19 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, C=Internal Conn
 
 ## Connectivity Matrix
 
-| Silicon | VDD2 | X | Input1 |
-| --- | --- | --- | --- |
-| NMOS1 |   | X |   |
-| NMOS2 |   | X |   |
-| PMOS1 | X |   |   |
-| PMOS2 | X |   |   |
-| Poly1 |   |   |   |
-| Poly2 |   | X |   |
-| Poly3 |   |   | X |
+| Silicon | VDD | VSS | A | X |
+| --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |
+| NMOS2 |   | X |   | X |
+| NMOS3 | X |   |   | X |
+| PMOS1 | X |   |   | X |
+| Poly1 | X | X | X | X |
 
 ## Silicon Neighbourhood
 
-| Silicon | Poly1 | Poly2 | Poly3 |
-| --- | --- | --- | --- |
-| NMOS1 |   |   |   |
-| NMOS2 | O | O | E |
-| PMOS1 | O | O | E |
-| PMOS2 |   |   |   |
+| Silicon | Poly1 |
+| --- | --- |
+| NMOS1 |   |
+| NMOS2 | O |
+| NMOS3 | O |
+| PMOS1 | O |

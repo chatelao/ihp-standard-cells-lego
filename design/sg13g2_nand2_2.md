@@ -3,13 +3,13 @@
 ## Substrate
 ```
   01234567890
-4 NNNNNNNNNNN
-3 NNNNNNNNNNN
-2 NNNNNNNNNNN
-1 NNNNNNNNNNN
-0 NNNNNNNNNNN
-9 NNNNNNNNNNN
-8 NNNNNNNNNNN
+4 SSSSSSSSSSS
+3 NNNNNNNSSSS
+2 NNNNNNNSSSS
+1 NNNNNNNSSSS
+0 SSSSSSSSSSS
+9 SSSSSSSSSSS
+8 SSSSSSSSSSS
 7 SSSSSSSSSSS
 6 SSSSSSSSSSS
 5 SSSSSSSSSSS
@@ -25,22 +25,22 @@ Legend: N=N-Well, S=Substrate
 ```
   01234567890
 4 ppppppppppp
-3 NNNNNNNNNNN
-2 NNNNNNNNNNN
-1 NpppppppppN
-0 NpppppppppN
-9 NpppppppppN
-8 NpppppppppN
+3 pppppppnnnn
+2 pppppppnnnn
+1 pppppppnnnn
+0 SnnnnnnnSSS
+9 SSSSSSSSSSS
+8 SSSSSSSSSSS
 7 SSSSSSSSSSS
 6 SSSSSSSSSSS
 5 SSSSSSSSSSS
-4 SnnnnnnnnnS
-3 SnnnnnnnnnS
+4 SSSSSSSSSSS
+3 SSSSSSSSSSS
 2 SSSSSSSSSSS
 1 SSSSSSSSSSS
 0 nnnnnnnnnnn
 ```
-Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P)
 
 ## Polysilicon
 ```
@@ -66,34 +66,33 @@ Legend: G=Polysilicon
 ## Metal 1
 ```
   01234567890
-4 &+&+&+&+&+&
-3  +   +   +
-2  +   +   +
-1  + O + O +
-0  + oOoOo +
-9  +   O   +
-8  +   o i +
-7    I O I
-6    i o i
-5      OOO
-4  cCcCc ocC
-3  C - C   C
-2  c - cCccC
-1    -
-0 _-_-_-_-_-_
+4 &&&&&&&&&&&
+3 +++++++++++
+2 +++&++++&++
+1 +++++++++++
+0 +++&+&+&&++
+9 +++++++++++
+8 +++&+&+&&++
+7    iIiIi
+6    iIiOi
+5    IIIOO
+4  _-_-_-__-
+3 -----------
+2 -_---_--_--
+1 -----------
+0 ___________
 ```
 Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Contacted metal (lowercase)
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | A | B | Internal1 | Y |
-| --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |   |
-| NMOS2 |   |   |   |   | X | X |
-| PMOS1 |   |   | X |   |   | X |
-| PMOS2 | X |   |   |   |   |   |
-| Poly1 |   |   |   | X | X | X |
-| Poly2 |   |   | X |   | X | X |
+| Silicon | VDD | VSS | B | Y |
+| --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |
+| NMOS2 | X |   |   | X |
+| PMOS1 | X |   |   | X |
+| Poly1 | X | X | X | X |
+| Poly2 | X | X | X | X |
 
 ## Silicon Neighbourhood
 
@@ -102,4 +101,3 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | NMOS1 |   |   |
 | NMOS2 | O | O |
 | PMOS1 | O | O |
-| PMOS2 |   |   |
