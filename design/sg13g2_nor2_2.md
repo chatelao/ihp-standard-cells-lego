@@ -3,21 +3,21 @@
 ## Substrate
 ```
   01234567890
-4 NNNNNNNNNNN
+4 SSSSSSSSSSS
 3 NNNNNNNNNNN
 2 NNNNNNNNNNN
 1 NNNNNNNNNNN
 0 NNNNNNNNNNN
 9 NNNNNNNNNNN
 8 NNNNNNNNNNN
-7 SSSSSSSSSSS
+7 NNNNNNNNNNN
 6 SSSSSSSSSSS
 5 SSSSSSSSSSS
 4 SSSSSSSSSSS
 3 SSSSSSSSSSS
 2 SSSSSSSSSSS
 1 SSSSSSSSSSS
-0 SSSSSSSSSSS
+0 NNNNNNNNNNN
 ```
 Legend: N=N-Well, S=Substrate
 
@@ -25,39 +25,39 @@ Legend: N=N-Well, S=Substrate
 ```
   01234567890
 4 ppppppppppp
-3 NNNNNNNNNNN
-2 NNNNNNNNNNN
-1 NpppppppppN
-0 NpppppppppN
-9 NpppppppppN
-8 NpppppppppN
-7 SSSSSSSSSSS
-6 SSSSSSSSSSS
-5 SSSSSSSSSSS
-4 SnnnnnnnnnS
-3 SnnnnnnnnnS
-2 SSSSSSSSSSS
-1 SSSSSSSSSSS
+3
+2
+1  ppppppppp
+0  ppppppppp
+9  ppppppppp
+8  ppppppppp
+7
+6
+5
+4  nnnnnnnnn
+3  nnnnnnnnn
+2
+1
 0 nnnnnnnnnnn
 ```
-Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+Legend: n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
   01234567890
 4
 3
-2   GGG GG
-1   GGG GG
-0   GGG GG
-9   GGG GG
-8   GGG GG
-7   GGG GG
+2   G G G
+1   G G G
+0   G G G
+9   G G G
+8   G G G
+7   G G G
 6   GGG GG
-5   GGG GG
-4   GGG GG
-3   GGG GG
-2   GGG GG
+5   G G G
+4   G G G
+3   G G G
+2   G G G
 1
 0
 ```
@@ -68,17 +68,17 @@ Legend: G=Polysilicon
   01234567890
 4 &+&+&+&+&+&
 3    +
-2  & +   c
+2  c & c  c
 1  C + CCCCC
-0  c + c ocC
-9  CCCCC OOO
-8    c    oO
+0  c & c OcC
+9  C   C O
+8  c   c c O
 7          O
-6    i  IioO
+6    i   i O
 5          O
-4  - oOoOooO
+4  _ oOOOoOO
 3  - O - O -
-2  -   -   -
+2  _ c _ cc-
 1  -   -   -
 0 _-_-_-_-_-_
 ```
@@ -86,14 +86,14 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VDD2 | VSS | A | B | Y |
-| --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   | X |   |   |   |
-| NMOS2 |   |   |   |   |   | X |
-| PMOS1 | X |   |   |   |   | X |
-| PMOS2 |   | X |   |   |   |   |
-| Poly1 | X |   |   | X |   | X |
-| Poly2 | X |   |   |   | X | X |
+| Silicon | VDD | VSS | Input1 | Input2 | Internal1 | Internal2 | Output1 | Output2 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |   |   |   |   |
+| NMOS2 |   | X |   |   |   |   | X |   |
+| PMOS1 | X |   |   |   | X | X |   | X |
+| PMOS2 | X |   |   |   |   |   |   |   |
+| Poly1 |   |   | X |   |   |   |   |   |
+| Poly2 |   |   |   | X |   |   |   |   |
 
 ## Silicon Neighbourhood
 

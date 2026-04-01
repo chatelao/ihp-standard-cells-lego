@@ -3,21 +3,21 @@
 ## Substrate
 ```
   0123456
-4 NNNNNNN
+4 SSSSSSS
 3 NNNNNNN
 2 NNNNNNN
 1 NNNNNNN
 0 NNNNNNN
 9 NNNNNNN
 8 NNNNNNN
-7 SSSSSSS
+7 NNNNNNN
 6 SSSSSSS
 5 SSSSSSS
 4 SSSSSSS
 3 SSSSSSS
 2 SSSSSSS
 1 SSSSSSS
-0 SSSSSSS
+0 NNNNNNN
 ```
 Legend: N=N-Well, S=Substrate
 
@@ -25,22 +25,22 @@ Legend: N=N-Well, S=Substrate
 ```
   0123456
 4 ppppppp
-3 NNNNNNN
-2 NNNNNNN
-1 NNNNNNN
-0 NNNNNNN
-9 NNNNNNN
-8 NNNNNNN
-7 SSSSSSS
-6 SSSSSSS
-5 SSSSSSS
-4 SSSSSSS
-3 SnnnnnS
-2 SnnnnnS
-1 SnnnnnS
+3
+2
+1
+0
+9
+8
+7
+6
+5
+4
+3  nnnnn
+2  nnnnn
+1  nnnnn
 0 nnnnnnn
 ```
-Legend: n=NMOS Active, p=PMOS Active, S=Substrate fill (P), N=Substrate fill (N)
+Legend: n=NMOS Active, p=PMOS Active
 
 ## Polysilicon
 ```
