@@ -274,6 +274,12 @@ def update_golden_standard_file(all_golden):
     elif new_text: content = content.strip() + "\n\n" + new_text
     with open(filepath, 'w', encoding='utf-8') as f: f.write(content)
 
+def silicon_sort_key(name):
+    if name.startswith("NMOS"): return (0, int(name[4:]) if name[4:].isdigit() else 0)
+    if name.startswith("PMOS"): return (1, int(name[4:]) if name[4:].isdigit() else 0)
+    if name.startswith("Poly"): return (2, int(name[4:]) if name[4:].isdigit() else 0)
+    return (3, name)
+
 def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, metal_blobs):
     silicon_blobs = nmos_blobs + pmos_blobs + poly_blobs
     connections = set()
@@ -284,8 +290,8 @@ def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, meta
         connected_metal = [b for b in metal_blobs if c_stud in b['studs']]
         for s in connected_silicon:
             for m in connected_metal: connections.add((s['name'], m['name'], m['color']))
-    if not connections: return ""
-    s_names = sorted(list(set(c[0] for c in connections)))
+    if not silicon_blobs: return ""
+    s_names = sorted([b['name'] for b in silicon_blobs], key=silicon_sort_key)
     m_info = {name: color for _, name, color in connections}
     def metal_sort_key(name):
         color = m_info[name]
@@ -306,12 +312,6 @@ def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, meta
 
 def generate_silicon_neighbourhood(parts, nmos_blobs, pmos_blobs, poly_blobs):
     if not poly_blobs or not (nmos_blobs + pmos_blobs): return ""
-
-    def silicon_sort_key(name):
-        if name.startswith("NMOS"): return (0, int(name[4:]) if name[4:].isdigit() else 0)
-        if name.startswith("PMOS"): return (1, int(name[4:]) if name[4:].isdigit() else 0)
-        if name.startswith("Poly"): return (2, int(name[4:]) if name[4:].isdigit() else 0)
-        return (3, name)
 
     xmos_blobs = sorted(nmos_blobs + pmos_blobs, key=lambda b: silicon_sort_key(b['name']))
     poly_blobs_sorted = sorted(poly_blobs, key=lambda b: silicon_sort_key(b['name']))

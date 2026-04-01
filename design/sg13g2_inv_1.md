@@ -91,8 +91,8 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conne
 | Silicon | VDD | VSS | A | Y |
 | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |
-| NMOS2 |   |   |   | X |
-| PMOS1 |   |   |   | X |
+| NMOS2 |   | X |   | X |
+| PMOS1 | X |   |   | X |
 | PMOS2 | X |   |   |   |
 | Poly1 |   |   | X |   |
 

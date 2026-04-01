@@ -728,7 +728,12 @@ def generate_ldr(macro_data):
             if stud_coords in compliant_studs:
                 cif_studs.append(stud_coords)
 
-        best_studs = cif_studs + sorted([s for s in compliant_studs if s not in cif_studs], key=lambda s: score_stud(*s), reverse=True)
+        if cif_data:
+            # If CIF is available, strictly use only contacts found in cif_net_map
+            best_studs = cif_studs
+        else:
+            # Fallback to scored studs if CIF is missing
+            best_studs = cif_studs + sorted([s for s in compliant_studs if s not in cif_studs], key=lambda s: score_stud(*s), reverse=True)
 
         for sx, sz in best_studs:
             if (sx, sz) not in added_coords:
@@ -747,9 +752,13 @@ def generate_ldr(macro_data):
 
                 # 3. Connectivity to underlying layers (Active or Poly)
                 # Gold Standard: Track 6 is for Polysilicon unless it is a Diffusion pin (is_diff)
-                is_to_poly = (stud_z == 6 or is_gate) and (pin_name not in ['VDD', 'VSS']) and not is_diff
-                if pin_name == 'VDD' and is_decap and stud_z != 14:
-                    is_to_poly = True
+                if cif_data:
+                    # If CIF is available, base connectivity solely on physical layout
+                    is_to_poly = (poly_grid[stud_x][stud_z] == COLOR_POLY)
+                else:
+                    is_to_poly = (stud_z == 6 or is_gate) and (pin_name not in ['VDD', 'VSS']) and not is_diff
+                    if pin_name == 'VDD' and is_decap and stud_z != 14:
+                        is_to_poly = True
 
                 if is_to_poly:
                     # Mark gates on grid and grow vertically (Studs 2-12)
