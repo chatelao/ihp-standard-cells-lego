@@ -24,7 +24,7 @@
   - [x] Clean up transient log files and verification results from the root directory.
   - [x] Update `.gitignore` to include all transient logs and result files.
   - [x] Centralize verification outputs into a dedicated `logs/` directory.
-  - [ ] Deprecate and remove obsolete V2 scripts (`scripts/migrate_models_v2.py`, `scripts/verify_models_v2.py`).
+  - [x] Deprecate and remove obsolete V2 scripts (`scripts/migrate_models_v2.py`, `scripts/verify_models_v2.py`).
 
 - [ ] **Phase 6: V3 Gold Standard Migration & Validation**
   - [x] Define V3 Gold Standard specifications (stacking, parity, dimensions).
