@@ -86,7 +86,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | A1 | S | Internal1 | X |
+| Silicon | VDD | VSS | A0 | S | Internal1 | X |
 | --- | --- | --- | --- | --- | --- | --- |
 | NMOS1 |   | X |   |   |   |   |
 | NMOS2 |   |   | X |   | X | X |
@@ -94,7 +94,10 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | PMOS2 | X |   |   |   |   |   |
 | Poly1 |   |   | X |   | X |   |
 | Poly2 |   |   | X |   | X |   |
+| Poly3 |   |   |   |   |   |   |
 | Poly4 |   |   |   | X |   |   |
+| Poly5 |   |   |   |   |   |   |
+| Poly6 |   |   |   |   |   |   |
 
 ## Silicon Neighbourhood
 

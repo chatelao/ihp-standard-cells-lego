@@ -97,6 +97,7 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conta
 | Poly1 |   |   | X |   |   | X |   |   |   |
 | Poly2 |   |   |   | X |   | X |   |   |   |
 | Poly3 |   |   |   |   | X | X | X | X |   |
+| Poly4 |   |   |   |   |   |   |   |   |   |
 
 ## Silicon Neighbourhood
 
