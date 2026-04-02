@@ -4,7 +4,7 @@ import subprocess
 def main():
     celllist_path = 'specifications/sg13g2_stdcell.celllist'
     lef_path = 'specifications/sg13g2_stdcell.lef'
-    lef_to_ldr_script = 'scripts/lef_to_ldr.py'
+    cif_to_ldr_script = 'scripts/cif_to_ldr.py'
     gen_design_docs_script = 'scripts/generate_design_docs.py'
     design_to_ldr_script = 'scripts/design_to_ldr.py'
     gen_construction_script = 'scripts/generate_construction_images.py'
@@ -18,13 +18,17 @@ def main():
     with open(celllist_path, 'r') as f:
         cells = [line.strip() for line in f if line.strip()]
 
-    print(f"Found {len(cells)} cells. Starting initial LDR generation from LEF...")
+    print(f"Found {len(cells)} cells. Starting initial LDR generation from CIF...")
     for cell in cells:
         print(f"  Generating {cell}...")
+        cif_path = f"specifications/cells/{cell}.cif"
+        if not os.path.exists(cif_path):
+            print(f"  Warning: CIF file not found for {cell} at {cif_path}")
+            continue
         try:
-            subprocess.run(['python3', lef_to_ldr_script, lef_path, cell], check=True)
+            subprocess.run(['python3', cif_to_ldr_script, cif_path], check=True)
         except subprocess.CalledProcessError as e:
-            print(f"  Error generating {cell} from LEF: {e}")
+            print(f"  Error generating {cell} from CIF: {e}")
 
     print("Step 2: Generating design documentation (preserving GOLDEN STANDARDs)...")
     try:
