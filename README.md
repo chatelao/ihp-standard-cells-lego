@@ -31,12 +31,6 @@ The following diagram illustrates the generation and verification workflow:
 
 ![IHP Standard Cells LEGO Generation Workflow](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/chatelao/ihp-standard-cells-lego/main/specifications/workflow.puml)
 
-## Dependency Graph
-
-The relationship between the various scripts and data sources is shown below:
-
-![IHP Standard Cells LEGO Dependency Graph](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/chatelao/ihp-standard-cells-lego/main/specifications/dependency_graph.puml)
-
 ## Gallery
 The generated LEGO models can be viewed in the [IHP LEGO Models Gallery](https://chatelao.github.io/ihp-standard-cells-lego/).
 
