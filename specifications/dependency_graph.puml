@@ -8,14 +8,17 @@ title IHP Standard Cells LEGO Dependency Graph
 package "Input Data" {
     [sg13g2_stdcell.lef] as LEF
     [sg13g2_stdcell.celllist] as List
+    folder "/cells/*.cif" as CIFs
     [handmade/*.md] as Handmade
 }
 
 package "Scripts" {
-    [lef_to_ldr.py] as LEF2LDR
+    [cif_to_ldr.py] as CIF2LDR
     [generate_design_docs.py] as GenDocs
     [design_to_ldr.py] as Design2LDR
     [generate_all_models.py] as GenAll
+    [generate_construction_images.py] as GenConst
+    [generate_top_images.py] as GenTop
     [render_models.sh] as Render
     [generate_gallery.py] as GenGallery
 }
@@ -23,21 +26,22 @@ package "Scripts" {
 package "Intermediate & Output Data" {
     folder "/models/*.ldr" as LDRs
     folder "/design/*.md" as DesignDocs
-    folder "/images/*.jpg" as Images
+    folder "/images/*.jpg" as ImagesJpg
+    folder "/images/*.png" as ImagesPng
     [index.html] as Gallery
 }
 
 package "Verification" {
     [verify_models_v3.py] as V3
+    [verify_top_view.py] as TopView
     [verify_macro_dimensions.py] as Dim
     [verify_pin_existence.py] as Pins
-    [verify_spatial_mapping.py] as Spatial
     folder "/logs/*.log" as Logs
 }
 
-LEF --> LEF2LDR
-List --> LEF2LDR
-LEF2LDR --> LDRs
+CIFs --> CIF2LDR
+List --> CIF2LDR
+CIF2LDR --> LDRs
 
 LDRs --> GenDocs
 Handmade --> GenDocs
@@ -46,25 +50,34 @@ GenDocs --> DesignDocs
 DesignDocs --> Design2LDR
 Design2LDR --> LDRs
 
-LDRs --> Render
-Render --> Images
+LDRs --> GenConst
+GenConst --> ImagesPng
 
-Images --> GenGallery
+LDRs --> GenTop
+GenTop --> ImagesPng
+
+LDRs --> Render
+Render --> ImagesJpg
+
+ImagesJpg --> GenGallery
+ImagesPng --> GenGallery
 GenGallery --> Gallery
 
-GenAll --> LEF2LDR : orchestrates
+GenAll --> CIF2LDR : orchestrates
 GenAll --> GenDocs : orchestrates
 GenAll --> Design2LDR : orchestrates
+GenAll --> GenConst : orchestrates
+GenAll --> GenTop : orchestrates
 GenAll --> GenGallery : orchestrates
 
 LDRs --> V3
+LDRs --> TopView
 LDRs --> Dim
 LDRs --> Pins
-LDRs --> Spatial
 
 V3 --> Logs
+TopView --> Logs
 Dim --> Logs
 Pins --> Logs
-Spatial --> Logs
 
 @enduml

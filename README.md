@@ -27,6 +27,17 @@ To provide a physical, LEGO-based representation of semiconductor standard cells
 
 ## Workflow
 
+The project utilizes a CIF-driven generation flow, orchestrated by `scripts/generate_all_models.py`. The workflow follows these steps:
+
+1.  **Initial Generation**: `scripts/cif_to_ldr.py` converts physical layout data (CIF) into base LDraw (LDR) models.
+2.  **Documentation Update**: `scripts/generate_design_docs.py` creates or updates Markdown documentation in `/design`, preserving `GOLDEN STANDARD` sections from `/handmade`.
+3.  **Model Refinement**: `scripts/design_to_ldr.py` propagates the refined physical mapping from documentation back into the LDR models.
+4.  **Specialty Imaging**:
+    *   `scripts/generate_construction_images.py` generates layer-by-layer assembly views.
+    *   `scripts/generate_top_images.py` (via `scripts/render_ldr_top.py`) produces orthographic top-down PNG renders.
+5.  **Final Rendering**: `scripts/render_models.sh` uses `LDView` to generate perspective JPGs and PDF instructions.
+6.  **Gallery Update**: `scripts/generate_gallery.py` refreshes the web-based gallery.
+
 The following diagram illustrates the generation and verification workflow:
 
 ![IHP Standard Cells LEGO Generation Workflow](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/chatelao/ihp-standard-cells-lego/main/specifications/workflow.puml)
