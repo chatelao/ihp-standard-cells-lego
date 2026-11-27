@@ -32,6 +32,7 @@ PLATE_DIMENSIONS = {
     "3023.dat": (2, 1),
     "3024.dat": (1, 1),
     "3070.dat": (1, 1),
+    "3070b.dat": (1, 1),
     "6141.dat": (1, 1),
     "3062b.dat": (1, 1),
 }
@@ -40,10 +41,12 @@ def get_dimensions(parts):
     if not parts:
         return 0, 0, 0, 0
 
+    # Measure cell footprint from Y=0 (Substrate Low) so Y=-8 East snapping tabs don't inflate width
+    base_parts = [p for p in parts if abs(p['y']) < 0.1] or parts
     min_x, max_x = float('inf'), float('-inf')
     min_z, max_z = float('inf'), float('-inf')
 
-    for p in parts:
+    for p in base_parts:
         pw, pd = PLATE_DIMENSIONS.get(p['part'], (1, 1))
         is_rotated = p['rot'][0] == 0
         if is_rotated:
@@ -151,14 +154,14 @@ def find_blobs(parts, y_levels, color_filter=None):
         for p in blob_parts: blob_studs.update(get_part_studs(p))
         labels = set(p['label'] for p in blob_parts if p['label'])
 
-        # Prioritize better labels
+        # Prioritize better labels deterministically
         label = None
         if labels:
-            pin_labels = [l for l in labels if l.startswith("Pin ")]
-            rail_labels = [l for l in labels if "Rail" in l]
+            pin_labels = sorted([l for l in labels if l.startswith("Pin ")])
+            rail_labels = sorted([l for l in labels if "Rail" in l])
             if pin_labels: label = pin_labels[0]
             elif rail_labels: label = rail_labels[0]
-            else: label = list(labels)[0]
+            else: label = sorted(list(labels))[0]
 
         blobs.append({'label': label, 'color': blob_parts[0]['color'], 'studs': blob_studs, 'parts': blob_parts})
     return blobs
@@ -178,7 +181,7 @@ def get_blob_name(blob, category_counters):
     if color == 0: # VSS
         category_counters['VSS'] += 1
         return "VSS" if category_counters['VSS'] == 1 else f"VSS{category_counters['VSS']}"
-    if color == 9: # Input
+    if color in (9, 212): # Input
         if label and not "Internal" in label: return label
         category_counters['Input'] += 1
         return f"Input{category_counters['Input']}"
@@ -223,18 +226,18 @@ def get_char_for_stud(parts, x, z, layer_y_list, color_map, connection_map):
             if (p['x'] - half_w <= x <= p['x'] + half_w) and (p['z'] - half_d <= z <= p['z'] + half_d):
                 char = color_map.get(p['color'], char)
     if layer_y_list[0] == -56:
-        has_contact_below = any(p['part'] == '3062b.dat' and p['y'] == -48 and abs(p['x']-x)<5 and abs(p['z']-z)<5 for p in parts)
-        has_plate_above = any((p['part'] == '3024.dat' or p['part'] == '3070.dat') and p['y'] == -64 and abs(p['x']-x)<5 and abs(p['z']-z)<5 for p in parts)
+        has_contact_below = any(p['part'] == '3062b.dat' and p['y'] == -48 and p['color'] != 47 and abs(p['x']-x)<5 and abs(p['z']-z)<5 for p in parts)
+        has_plate_above = any(p['part'] in ('3024.dat', '3070.dat', '3070b.dat') and p['y'] == -64 and abs(p['x']-x)<5 and abs(p['z']-z)<5 for p in parts)
         if has_contact_below or has_plate_above:
             return {'I': 'i', 'O': 'o', 'C': 'c', '+': '&', '-': '_'}.get(char, 'c')
     return char
 
-COLOR_MAP = {8: 'S', 7: 'N', 288: 'n', 38: 'p', 4: 'G', 9: 'I', 1: 'C', 272: 'O', 14: '+', 0: '-'}
+COLOR_MAP = {8: 'S', 72: 'S', 7: 'N', 71: 'N', 288: 'n', 38: 'p', 4: 'G', 9: 'I', 212: 'I', 1: 'C', 272: 'O', 14: '+', 0: '-'}
 
-def extract_golden_sections(design_dir):
+def extract_golden_sections(design_dir, include_all_handmade=False):
     golden_sections = {}
     gs_path = 'specifications/GOLDEN_STANDARD.md'
-    if os.path.exists(gs_path):
+    if not include_all_handmade and os.path.exists(gs_path):
         with open(gs_path, 'r', encoding='utf-8') as f: content = f.read()
         header = "## 7. Golden Design Examples"
         if header in content:
@@ -250,8 +253,10 @@ def extract_golden_sections(design_dir):
             with open(os.path.join(design_dir, filename), 'r', encoding='utf-8') as f: content = f.read()
             sections = content.split('\n## ')
             for section in sections[1:]:
-                if 'GOLDEN STANDARD' in section:
-                    layer_name = section.split('\n')[0].strip()
+                layer_name = section.split('\n')[0].strip()
+                if layer_name not in ("Substrate", "Active", "Polysilicon", "Metal 1"):
+                    continue
+                if include_all_handmade or 'GOLDEN STANDARD' in section:
                     golden_sections[(cell_name, layer_name)] = '## ' + section.strip()
     return golden_sections
 
@@ -283,7 +288,7 @@ def silicon_sort_key(name):
 def generate_connectivity_matrix(parts, nmos_blobs, pmos_blobs, poly_blobs, metal_blobs):
     silicon_blobs = nmos_blobs + pmos_blobs + poly_blobs
     connections = set()
-    contacts = [p for p in parts if p['part'] == '3062b.dat' and p['y'] == -48]
+    contacts = [p for p in parts if p['part'] == '3062b.dat' and p['y'] == -48 and p['color'] != 47]
     for c in contacts:
         c_stud = (int(round((c['x'] - 10) / 20)), int(round((c['z'] - 10) / 20)))
         connected_silicon = [b for b in silicon_blobs if c_stud in b['studs']]
@@ -392,7 +397,7 @@ def generate_design_doc(cell_name, parts, golden_sections):
     nmos_blobs = find_blobs(parts, [-16], [288])
     pmos_blobs = find_blobs(parts, [-16], [38])
     poly_blobs = find_blobs(parts, [-24], [4])
-    metal_blobs = find_blobs(parts, [-56, -64], [14, 0, 9, 272, 1])
+    metal_blobs = find_blobs(parts, [-56, -64], [14, 0, 9, 212, 272, 1])
     counters = {'NMOS': 0, 'PMOS': 0, 'Poly': 0, 'Input': 0, 'Output': 0, 'Internal': 0, 'VDD': 0, 'VSS': 0}
     for b in nmos_blobs: b['name'] = get_blob_name(b, counters)
     for b in pmos_blobs: b['name'] = get_blob_name(b, counters)
@@ -406,7 +411,11 @@ def generate_design_doc(cell_name, parts, golden_sections):
 def main():
     if not os.path.exists('design'): os.makedirs('design')
     golden = extract_golden_sections('design')
-    golden.update(extract_golden_sections('handmade'))
+    # Preserve all /handmade/*.md layers as best-practice references (AGENTS.md),
+    # while only mirroring sections tagged GOLDEN STANDARD into GOLDEN_STANDARD.md (GEMINI.md).
+    handmade_all = extract_golden_sections('handmade', include_all_handmade=True)
+    golden.update(handmade_all)
+    golden_only = {k: v for k, v in golden.items() if 'GOLDEN STANDARD' in v}
     for filename in os.listdir('models'):
         if filename.startswith('sg13g2_') and filename.endswith('.ldr'):
             cell_name = filename[:-4]
@@ -414,6 +423,6 @@ def main():
             doc = generate_design_doc(cell_name, parts, golden)
             with open(os.path.join('design', f"{cell_name}.md"), 'w', encoding='utf-8') as f: f.write(doc)
             print(f"Generated design/{cell_name}.md")
-    update_golden_standard_file(golden)
+    update_golden_standard_file(golden_only)
 
 if __name__ == "__main__": main()

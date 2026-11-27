@@ -1,3 +1,4 @@
+import math
 import os
 import re
 import sys
@@ -79,12 +80,16 @@ def verify_coverage(ldr_filepath):
     if global_min_x == float('inf'):
         return [f"No plates found in the first three layers (0, -8, -16)."]
 
-    # Align to grid using floor/ceil to avoid round-to-even issues
-    import math
-    global_min_x = int(math.floor(global_min_x / 20 + 0.1) * 20)
-    global_max_x = int(math.ceil(global_max_x / 20 - 0.1) * 20)
-    global_min_z = int(math.floor(global_min_z / 20 + 0.1) * 20)
-    global_max_z = int(math.ceil(global_max_z / 20 - 0.1) * 20)
+    # Determine cell footprint from Y=0 (Substrate Low)
+    y0_min_x = min(b[0][0] for b in layers_data[0]) if layers_data[0] else global_min_x
+    y0_max_x = max(b[0][2] for b in layers_data[0]) if layers_data[0] else global_max_x
+    y0_min_z = min(b[0][1] for b in layers_data[0]) if layers_data[0] else global_min_z
+    y0_max_z = max(b[0][3] for b in layers_data[0]) if layers_data[0] else global_max_z
+
+    global_min_x = int(math.floor(y0_min_x / 20 + 0.1) * 20)
+    global_max_x = int(math.ceil(y0_max_x / 20 - 0.1) * 20)
+    global_min_z = int(math.floor(y0_min_z / 20 + 0.1) * 20)
+    global_max_z = int(math.ceil(y0_max_z / 20 - 0.1) * 20)
 
     w_studs = (global_max_x - global_min_x) // 20
     d_studs = (global_max_z - global_min_z) // 20
@@ -93,7 +98,6 @@ def verify_coverage(ldr_filepath):
     for y in layers_to_check:
         grid = [[0 for _ in range(d_studs)] for _ in range(w_studs)]
         for (x1, z1, x2, z2), part in layers_data[y]:
-            # Snap to grid using math.floor to avoid floating point issues
             ix1 = int(math.floor((x1 - global_min_x) / 20 + 0.1))
             iz1 = int(math.floor((z1 - global_min_z) / 20 + 0.1))
             ix2 = int(math.floor((x2 - global_min_x) / 20 + 0.1))
@@ -103,11 +107,17 @@ def verify_coverage(ldr_filepath):
                 for j in range(iz1, iz2):
                     if 0 <= i < w_studs and 0 <= j < d_studs:
                         grid[i][j] += 1
+                    elif y == -8 and i == w_studs and j in (1, 13):
+                        pass  # Expected East +1 stud half-lap snapping tab
                     else:
                         errors.append(f"Plate {part} at Y={y} is out of global bounds: stud ({i},{j})")
 
         for i in range(w_studs):
             for j in range(d_studs):
+                if y == -8 and i == 0 and j in (1, 13):
+                    if grid[i][j] != 0:
+                        errors.append(f"Expected West snapping recess at Y=-8, stud (0, {j}) but found {grid[i][j]}")
+                    continue
                 if grid[i][j] == 0:
                     errors.append(f"Gap at Y={y}, stud ({i}, {j}) at world ({global_min_x + i*20}, {global_min_z + j*20})")
                 elif grid[i][j] > 1:

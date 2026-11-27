@@ -5,16 +5,21 @@ from PIL import Image, ImageDraw, ImageFont
 # LDraw Color ID to Name mapping (V3)
 COLOR_MAP = {
     8: 'Substrate (DG)',
+    72: 'Substrate (DBG)',
     7: 'N-Well (LG)',
+    71: 'N-Well (LBG)',
     288: 'NMOS (DG)',
     38: 'PMOS (DO)',
     4: 'Poly (Red)',
     9: 'M1 Input (LB)',
+    212: 'M1 Input (BLB)',
     1: 'M1 Conn (Blue)',
     272: 'M1 Output (DB)',
     14: 'VDD (Yellow)',
     0: 'VSS (Black)',
     15: 'Contact (White)',
+    47: 'Dielectric (Clear)',
+    25: 'Metal 2 (Orange)',
 }
 
 # LDraw Part ID to Name mapping
@@ -51,6 +56,7 @@ PART_MAP = {
     '3062b.dat': 'Brick 1x1 Round',
     '6141.dat': 'Plate 1x1 Round',
     '3070.dat': 'Tile 1x1',
+    '3070b.dat': 'Tile 1x1 Groove',
 }
 
 def parse_ldr_step(ldr_path, step_num):

@@ -16,7 +16,7 @@ PLATE_DIMENSIONS = {
     "3031.dat": (4, 4), "60479.dat": (12, 1), "3795.dat": (6, 2), "4477.dat": (10, 1),
     "3460.dat": (8, 1), "3020.dat": (4, 2), "3666.dat": (6, 1), "3021.dat": (3, 2),
     "3710.dat": (4, 1), "3022.dat": (2, 2), "3623.dat": (3, 1), "3023.dat": (2, 1),
-    "3024.dat": (1, 1), "3070.dat": (1, 1)
+    "3024.dat": (1, 1), "3070.dat": (1, 1), "3070b.dat": (1, 1)
 }
 
 def to_ldr_x(val): return val * CIF_TO_LDU
@@ -87,7 +87,7 @@ def get_ldr_data(ldr_path):
         if match:
             color, x, y, z, part = int(match.group(1)), float(match.group(2)), float(match.group(3)), float(match.group(4)), match.group(6).lower()
             if color == 4 and abs(y - (-24)) < 0.1: poly_parts.append({'x': x, 'z': z, 'part': part, 'line': line})
-            if color == 8 and abs(y - 0) < 0.1: substrate_parts.append({'x': x, 'z': z, 'part': part, 'line': line})
+            if color in (8, 72) and abs(y - 0) < 0.1: substrate_parts.append({'x': x, 'z': z, 'part': part, 'line': line})
     return poly_parts, substrate_parts
 
 def get_grid_from_parts(parts, w_studs):

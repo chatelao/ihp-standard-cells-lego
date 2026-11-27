@@ -67,17 +67,16 @@ def get_expected_contacts(macro):
                         if sz % 2 != 0: continue # Only EVEN tracks
                         cz = sz * 20 + 10
                         if lz1 <= cz <= lz2:
-                            # Apply Parity Rules
+                            # Apply Harmonized Parity Rules (EVEN for VDD/VSS rails)
                             if pin_name == 'VDD':
                                 if sz == 14:
                                     if sx % 2 == 0: expected.add((sx, sz))
                                 elif 2 <= sz <= 12:
-                                    # Unified parity for internal fingers
                                     if sx % 2 == (1 if sx < 8 or not is_big else 0):
                                         expected.add((sx, sz))
                             elif pin_name == 'VSS':
                                 if sz == 0:
-                                    if sx % 2 != 0: expected.add((sx, sz))
+                                    if sx % 2 == 0: expected.add((sx, sz))
                                 elif 2 <= sz <= 12:
                                     if sx % 2 == (1 if sx < 8 or not is_big else 0):
                                         expected.add((sx, sz))

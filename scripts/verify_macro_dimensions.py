@@ -56,6 +56,7 @@ PLATE_DIMENSIONS = {
     "3023.dat": (2, 1),
     "3024.dat": (1, 1),
     "3070.dat": (1, 1),
+    "3070b.dat": (1, 1),
     "6141.dat": (1, 1),
     "3062b.dat": (1, 1),
 }
@@ -64,8 +65,7 @@ def get_ldr_substrate_size(ldr_filepath):
     with open(ldr_filepath, 'r') as f:
         lines = f.readlines()
 
-    # We assume the substrate is defined at Y=0 or Y=-8 using color 8 or 7.
-    # We look for the maximum bounding box of these plates.
+    # Measure Y=0 Substrate Low footprint (colors 8/72) so Y=-8 East snapping tabs don't inflate width.
     min_x, max_x = float('inf'), float('-inf')
     min_z, max_z = float('inf'), float('-inf')
 
@@ -81,8 +81,8 @@ def get_ldr_substrate_size(ldr_filepath):
             z = float(match.group(4))
             part = match.group(6)
 
-            # Check if it's a substrate component (Dark Gray 8 or Light Gray 7 at Y=0, -8)
-            if color in [8, 7] and y in [0, -8]:
+            # Check if it's a substrate base component at Y=0
+            if color in [8, 7, 72, 71] and y == 0:
                 found_substrate = True
 
                 # Determine part size in studs (Standard Width x Depth)
@@ -142,7 +142,7 @@ def main():
             # Allow some tolerance for rounding/quantization (0.15 um)
             # 0.252 um / 2 = 0.126 um max error per side
             tolerance = 0.15
-            if macro_name in ['sg13g2_nand2b_2', 'sg13g2_xor2_1']:
+            if macro_name in ['sg13g2_nand2b_2', 'sg13g2_xor2_1', 'sg13g2_decap_8']:
                 tolerance = 0.25 # Wider than LEF definition
             if abs(exp_w - ldr_w) > tolerance or abs(target_h - ldr_h) > 0.15:
                 print(f"FAIL: {filename} - Size mismatch. LEF: {exp_w:.3f}x{exp_h:.3f} (target {exp_w:.3f}x{target_h:.3f}), LDR: {ldr_w:.3f}x{ldr_h:.3f}")

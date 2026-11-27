@@ -42,6 +42,7 @@ PLATE_DIMENSIONS = {
     "3023.dat": (2, 1),
     "3024.dat": (1, 1),
     "3070.dat": (1, 1), # Flat tile
+    "3070b.dat": (1, 1), # Flat tile with groove
 }
 
 def um_to_ldu_coord(um):

@@ -86,7 +86,7 @@ GOLDEN STANDARD
 5 IIi  C    C O
 4      C    c o _
 3 _-_  c
-2 ---
+2 ---            
 1 ---           -
 0 _-_-_-_-_-_-_-_
 ```
@@ -94,25 +94,23 @@ Legend: +/&=VDD, -/_=VSS, I/i=Metal 1 Input, O/o=Metal 1 Output, c/i/o/&/_=Conne
 
 ## Connectivity Matrix
 
-| Silicon | VDD | VSS | Input1 | Input2 | Internal1 | Internal2 | Internal3 | Internal4 | Internal5 | Internal6 | Output1 | Output2 | Output3 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| NMOS1 |   | X |   |   |   |   |   |   |   |   |   |   |   |
-| NMOS2 |   | X |   |   | X |   |   |   |   |   |   | X |   |
-| PMOS1 |   |   |   |   |   |   | X | X |   |   | X |   |   |
-| PMOS2 | X |   |   |   |   | X |   |   |   |   |   |   |   |
-| PMOS3 | X |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly1 |   | X | X |   |   |   |   |   |   |   |   |   |   |
-| Poly2 | X |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly3 |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| Poly4 |   |   |   | X |   |   |   | X | X | X | X |   | X |
-| Poly5 |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| Silicon | VDD | VSS | B | Internal1 | X |
+| --- | --- | --- | --- | --- | --- |
+| NMOS1 |   | X |   |   |   |
+| NMOS2 |   | X | X | X | X |
+| PMOS1 | X |   | X |   | X |
+| PMOS2 | X |   |   |   |   |
+| Poly1 | X |   |   |   |   |
+| Poly2 |   |   |   |   |   |
+| Poly3 |   |   | X |   |   |
+| Poly4 |   |   |   |   |   |
 
 ## Silicon Neighbourhood
 
-| Silicon | Poly1 | Poly2 | Poly3 | Poly4 | Poly5 |
-| --- | --- | --- | --- | --- | --- |
-| NMOS1 |   |   |   |   |   |
-| NMOS2 | O | O | O | N |   |
-| PMOS1 |   | O |   | O |   |
-| PMOS2 |   |   |   |   | O |
-| PMOS3 |   |   |   |   |   |
+| Silicon | Poly1 | Poly2 | Poly3 | Poly4 |
+| --- | --- | --- | --- | --- |
+| NMOS1 | N |   |   |   |
+| NMOS2 | O | O | O | O |
+| PMOS1 | O | O | O | O |
+| PMOS2 | S | S | S | S |
+
