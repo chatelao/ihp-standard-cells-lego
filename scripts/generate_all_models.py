@@ -39,6 +39,7 @@ def main():
     print("Step 3: Propagating design documentation back to LDR models...")
     try:
         subprocess.run(['python3', design_to_ldr_script], check=True)
+        subprocess.run(['python3', gen_design_docs_script], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error running {design_to_ldr_script}: {e}")
 

@@ -102,7 +102,7 @@ GOLDEN STANDARD
 5  O   CCC --_
 4  O     C -
 3  OOo   c -
-2      _   -Ti
+2      _   - i
 1      -   -
 0 -_-_-_-_-_-_
 ```
@@ -125,8 +125,8 @@ GOLDEN STANDARD
 5     G G G G
 4     G G G G
 3     G G G G
-2     G G G G
-1     G G G GG
+2     G G G GG
+1
 0
 ```
 Legend: G=Polysilicon
@@ -378,7 +378,7 @@ GOLDEN STANDARD
 5 IIi  C    C O
 4      C    c o _
 3 _-_  c
-2 ---
+2 ---            
 1 ---           -
 0 _-_-_-_-_-_-_-_
 ```

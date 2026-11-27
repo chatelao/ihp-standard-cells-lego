@@ -4,15 +4,17 @@ This project aims to create LEGO models for all IHP Standard Cells using the LDr
 
 ## Project Status
 
-The library consists of 84 standard cells. All cells have been physically mapped from LEF to LDR. Migration to the high-fidelity V3 Gold Standard is currently in progress.
+The library consists of 84 standard cells. All 84 cells are physically mapped from CIF+LEF to buildable LDR models with seam-staggered interlocking bases, half-lap cell-to-cell snapping tabs, Trans-Clear dielectric support pillars, and BrickLink-available LEGO elements.
 
 | Metric | Status | Pass Rate |
 |--------|--------|-----------|
 | **Total Cells** | 84 | - |
-| **Macro Dimensions** | 84/84 | 100% |
-| **Pin Existence** | 84/84 | 100% |
-| **Spatial Mapping** | 84/84 | 100% |
-| **V3 Gold Standard Compliance** | 45/84 | 53% |
+| **3D LEGO Buildability (`verify_buildability.py`)** | 84/84 | 100% |
+| **Base Layer Coverage (`verify_layers_coverage.py`)** | 84/84 | 100% |
+| **Macro Dimensions (`verify_macro_dimensions.py`)** | 84/84 | 100% |
+| **Pin Existence (`verify_pin_existence.py`)** | 84/84 | 100% |
+| **Spatial Mapping (`verify_spatial_mapping.py`)** | 84/84 | 100% |
+| **V3 Gold Standard Compliance (`verify_models_v3.py`)** | 84/84 | 100% |
 
 ## Goal
 To provide a physical, LEGO-based representation of semiconductor standard cells from the IHP PDK, specifically targeting the SG13G2 process.
